@@ -41,12 +41,10 @@ function FeatureBlock() {
         />
         <StudyDesc
           studyTitle="Eye tracking"
-          studyDesc="This study investigates how social context affects children’s 
-        attempts to solve a puzzle, as well as how these attempts may differ 
-        from adults."
+          studyDesc="This study tracks the eyes and which area of the screen they are looking at."
           imgURI="/assets/eye_tracking_study.svg"
           imgAlt="eye tracking study"
-          ageRange="7 to 10 years old"
+          ageRange="0 to 2 years old"
           studyInfoURI="/study/eyetracking"
         />
       </div>
