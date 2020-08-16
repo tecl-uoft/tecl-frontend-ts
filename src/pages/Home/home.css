@@ -1,0 +1,9 @@
+#hero-block {
+    background: rgb(237, 242, 247);
+    background: linear-gradient(
+      45deg,
+      rgba(237, 242, 247, 1) 53%,
+      rgba(232, 183, 141, 1) 100%
+    );
+}
+  
