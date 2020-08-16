@@ -1,24 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense } from "react";
+import { BrowserRouter, Switch, Redirect, Route } from "react-router-dom";
+
+import Header from "./components/Header";
+
+/* Route Pages */
+import Home from "./pages/Home";
+import ErrorNotFound from "./pages/ErrorNotFound";
+import Loading from "./pages/Loading";
+
+/* End Route Pages */
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Suspense fallback={Loading}>
+        <BrowserRouter>
+          <Header />
+          <Switch>
+            <Route exact path="/" component={Home} />
+
+            <Route path="/404" component={ErrorNotFound} />
+            <Redirect to="/404" />
+          </Switch>
+        </BrowserRouter>
+      </Suspense>
     </div>
   );
 }
