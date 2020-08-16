@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./home.css";
 import StudyDesc from "../../components/StudyDesc";
+import studyInfo from "./studyInfo.json";
 
 function Home() {
   return (
@@ -13,40 +14,25 @@ function Home() {
 }
 
 function FeatureBlock() {
+  const currentStudies = studyInfo.currentStudies;
   return (
     <section className="container mx-auto pb-24 px-10 pt-6">
       <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
         Current Online Studies
       </h2>
       <div className="flex flex-col sm:flex-row">
-        <StudyDesc
-          studyTitle="Teams"
-          studyDesc="We’re interested in how kids understand social exclusion, and how 
-        belonging to social groups changes how they reason about when exclusion 
-        is or isn't okay."
-          imgURI="/assets/fair_study.svg"
-          imgAlt="fairness study"
-          ageRange="4 to 7 years old"
-          studyInfoURI="/study/fairness"
-        />
-        <StudyDesc
-          studyTitle="Frogger"
-          studyDesc="This study investigates how social context affects children’s 
-        attempts to solve a puzzle, as well as how these attempts may differ 
-        from adults."
-          imgURI="/assets/frogger_study.svg"
-          imgAlt="frogger study"
-          ageRange="7 to 10 years old"
-          studyInfoURI="/study/frogger"
-        />
-        <StudyDesc
-          studyTitle="Eye tracking"
-          studyDesc="This study tracks the eyes and which area of the screen they are looking at."
-          imgURI="/assets/eye_tracking_study.svg"
-          imgAlt="eye tracking study"
-          ageRange="0 to 2 years old"
-          studyInfoURI="/study/eyetracking"
-        />
+        {currentStudies.map((currentStudyDesc) => {
+          return (
+            <StudyDesc
+              studyTitle={currentStudyDesc.studyTitle}
+              studyDesc={currentStudyDesc.studyDesc}
+              imgURI={currentStudyDesc.imgURI}
+              imgAlt={currentStudyDesc.imgAlt}
+              ageRange={currentStudyDesc.ageRange}
+              studyInfoURI={currentStudyDesc.studyInfoURI}
+            />
+          );
+        })}
       </div>
     </section>
   );
