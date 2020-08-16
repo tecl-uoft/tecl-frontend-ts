@@ -21,9 +21,10 @@ function FeatureBlock() {
         Current Online Studies
       </h2>
       <div className="flex flex-col sm:flex-row">
-        {currentStudies.map((currentStudyDesc) => {
+        {currentStudies.map((currentStudyDesc, idx) => {
           return (
             <StudyDesc
+              key={idx}
               studyTitle={currentStudyDesc.studyTitle}
               studyDesc={currentStudyDesc.studyDesc}
               imgURI={currentStudyDesc.imgURI}
