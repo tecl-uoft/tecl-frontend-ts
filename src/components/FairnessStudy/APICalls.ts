@@ -1,5 +1,5 @@
 /* Get randomized numbers needed for study setup */
-function getSetup(
+export function getSetup(
   setResult: (result: any) => void,
   setError: (err: any) => void,
   setIsLoaded: (isLoaded: boolean) => void
@@ -16,7 +16,7 @@ function getSetup(
 }
 
 /* Send the results of the study */
-function postResults(
+export function postResults(
   body: any,
   setResult: (result: any) => void,
   setError: (err: any) => void,
@@ -36,5 +36,3 @@ function postResults(
     })
     .catch((err) => setError(err));
 }
-
-export { getSetup, postResults };
