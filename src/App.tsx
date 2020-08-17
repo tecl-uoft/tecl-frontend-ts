@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import ErrorNotFound from "./pages/ErrorNotFound";
 import Loading from "./pages/Loading";
 import TeamsStudyEntry from "./pages/TeamsStudyEntry";
+import FroggerStudyEntry from "./pages/FroggerStudyEntry";
 
 /* End Route Pages */
 
@@ -23,6 +24,11 @@ function App() {
               exact
               path="/study/fairness/information"
               component={TeamsStudyEntry}
+            />
+            <Route
+              exact
+              path="/study/frogger/information"
+              component={FroggerStudyEntry}
             />
 
             <Route path="/404" component={ErrorNotFound} />
