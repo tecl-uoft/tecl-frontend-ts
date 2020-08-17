@@ -9,6 +9,7 @@ import ErrorNotFound from "./pages/ErrorNotFound";
 import Loading from "./pages/Loading";
 import TeamsStudyEntry from "./pages/TeamsStudyEntry";
 import FroggerStudyEntry from "./pages/FroggerStudyEntry";
+import EyeTrackingEntry from "./pages/EyeTrackingEntry";
 
 /* End Route Pages */
 
@@ -29,6 +30,11 @@ function App() {
               exact
               path="/study/frogger/information"
               component={FroggerStudyEntry}
+            />
+            <Route
+              exact
+              path="/study/eyetracking/information"
+              component={EyeTrackingEntry}
             />
 
             <Route path="/404" component={ErrorNotFound} />
