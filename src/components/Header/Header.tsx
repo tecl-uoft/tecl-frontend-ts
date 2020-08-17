@@ -20,7 +20,7 @@ function Header() {
         <Link className="font-bold text-2xl lg:text-4xl" to="/">
           <img
             className="h-8 lg:h-16"
-            src={process.env.PUBLIC_URL + "assets/tecl-logo-full.png"}
+            src={process.env.PUBLIC_URL + "/assets/tecl-logo-full.png"}
             alt="tecl logo"
           />
         </Link>

@@ -12,7 +12,7 @@ function EyeTrackingEntry() {
         This study tracks the eyes and which area of the screen they are looking at.
         This study tracks the eyes and which area of the screen they are looking at."
         studyImgURI="/assets/eye_tracking_study.svg"
-        studyImgAlt="Frogger Study"
+        studyImgAlt="Eyetracking Study"
         studyTrialURI="/study/eyetracking/game"
       />
     </div>
