@@ -15,7 +15,7 @@ function FroggerStudyEntry() {
         social behavior. We’re interested in how kids understand fair and
         unfair scenarios, helping and hindering situations, and how this
         influences their social behavior."
-        studyImgURI="/assets/fair_study.svg"
+        studyImgURI="/assets/frogger_study.svg"
         studyImgAlt="Frogger Study"
         studyTrialURI="/study/frogger/game"
       />
