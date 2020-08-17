@@ -1,10 +1,10 @@
 import React from "react";
-import StudyInfoBlock from "../../components/StudyInfoBlock";
+import StudyEntryBlock from "../../components/StudyEntryBlock";
 
 function FroggerStudyEntry() {
   return (
     <div id="frogger-study-entry">
-      <StudyInfoBlock
+      <StudyEntryBlock
         studyTitle="Frogger"
         ageRange="7 to 10 years old"
         studyDesc="We’re interested in how kids understand fair and unfair scenarios,

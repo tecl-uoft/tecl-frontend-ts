@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import IStudyInfoBlockProps from "./IStudyInfoBlockProps";
+import IStudyEntryBlockProps from "./IStudyEntryBlockProps";
 
-function StudyInfoBlock(props: IStudyInfoBlockProps) {
+function StudyEntryBlock(props: IStudyEntryBlockProps) {
   return (
     <div className="container mx-auto px-2 pt-4">
       <h2 className="text-4xl font-bold text-center text-gray-800">
@@ -37,4 +37,4 @@ function StudyInfoBlock(props: IStudyInfoBlockProps) {
   );
 }
 
-export default StudyInfoBlock;
+export default StudyEntryBlock;

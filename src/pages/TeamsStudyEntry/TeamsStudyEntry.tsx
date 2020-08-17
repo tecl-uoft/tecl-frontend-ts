@@ -1,11 +1,11 @@
-import React, { Fragment } from "react";
-import StudyInfoBlock from "../../components/StudyInfoBlock";
+import React from "react";
+import StudyEntryBlock from "../../components/StudyEntryBlock";
 
 function TeamsStudyEntry() {
   return (
-    <Fragment>
-      <StudyInfoBlock
-      studyTitle="Teams"
+    <div id="teams-study-entry">
+      <StudyEntryBlock
+        studyTitle="Teams"
         ageRange="4 to 7 years old"
         studyDesc="We’re interested in how kids understand fair and unfair scenarios,
             helping and hindering situations, and how this influences their
@@ -19,7 +19,7 @@ function TeamsStudyEntry() {
         studyImgAlt="Teams Study"
         studyTrialURI="/study/fairness/game"
       />
-    </Fragment>
+    </div>
   );
 }
 

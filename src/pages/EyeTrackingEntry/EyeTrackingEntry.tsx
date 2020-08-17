@@ -1,10 +1,10 @@
 import React from "react";
-import StudyInfoBlock from "../../components/StudyInfoBlock";
+import StudyEntryBlock from "../../components/StudyEntryBlock";
 
 function EyeTrackingEntry() {
   return (
     <div id="eye-tracking-entry">
-      <StudyInfoBlock
+      <StudyEntryBlock
         studyTitle="Frogger"
         ageRange="0 to 2 years old"
         studyDesc="This study tracks the eyes and which area of the screen they are looking at."
