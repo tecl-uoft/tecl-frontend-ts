@@ -7,6 +7,7 @@ import Header from "./components/Header";
 import Home from "./pages/Home";
 import ErrorNotFound from "./pages/ErrorNotFound";
 import Loading from "./pages/Loading";
+import TeamsStudyEntry from "./pages/TeamsStudyEntry";
 
 /* End Route Pages */
 
@@ -18,6 +19,11 @@ function App() {
           <Header />
           <Switch>
             <Route exact path="/" component={Home} />
+            <Route
+              exact
+              path="/study/fairness/information"
+              component={TeamsStudyEntry}
+            />
 
             <Route path="/404" component={ErrorNotFound} />
             <Redirect to="/404" />
