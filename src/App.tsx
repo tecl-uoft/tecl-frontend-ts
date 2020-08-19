@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, lazy } from "react";
 import { BrowserRouter, Switch, Redirect, Route } from "react-router-dom";
 
 import Header from "./components/Header";
@@ -10,6 +10,7 @@ import Loading from "./pages/Loading";
 import TeamsStudyEntry from "./pages/TeamsStudyEntry";
 import FroggerStudyEntry from "./pages/FroggerStudyEntry";
 import EyeTrackingEntry from "./pages/EyeTrackingEntry";
+const EyeTrackingGame = lazy(() => import("./pages/EyeTrackingGame"));
 
 /* End Route Pages */
 
@@ -35,6 +36,11 @@ function App() {
               exact
               path="/study/eyetracking/information"
               component={EyeTrackingEntry}
+            />
+            <Route
+              exact
+              path="/study/eyetracking/game"
+              component={EyeTrackingGame}
             />
 
             <Route path="/404" component={ErrorNotFound} />
