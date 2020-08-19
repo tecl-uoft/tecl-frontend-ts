@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import EyeTrackingConsent from "./EyeTrackingConsent";
 import ErrorNotFound from "../../pages/ErrorNotFound";
+import EyeTrackingInstructions from "./EyeTrackingInstructions";
 /* import EyeTrackingDemo from "./EyeTrackingDemo";
 import EyeTrackingInstructions from "./EyeTrackingInstructions"; */
 
@@ -20,7 +21,16 @@ function EyeTrackingStudy() {
         return (
           <EyeTrackingConsent
             consentFunc={() => setStudyState(studyStates.EyeTracking)}
-            noConsentFunc={() => setStudyState(studyStates.AskConsent)}
+            noConsentFunc={() => setStudyState(studyStates.EyeTrackingInstructions)}
+          />
+        );
+      case studyStates.EyeTrackingInstructions:
+        return (
+          <EyeTrackingInstructions
+            webgazer={webgazer}
+            nextState={() => {
+              setStudyState(studyStates.EyeTracking);
+            }}
           />
         );
       default:
