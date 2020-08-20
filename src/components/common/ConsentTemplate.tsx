@@ -36,7 +36,7 @@ function ConsentTemplate(props: IConsentTemplateProps) {
       <h3 className="text-3xl font-bold text-center text-gray-800 mb-8">
         Research Consent Form
       </h3>
-      <p className="text-gray-800 text-xl mt-16">
+      <div className="text-gray-800 text-xl mt-16">
         Principal Investigator: {props.pi} <br />
         props.Address: {props.address} <br />
         props.Telephone: {props.telephone} <br />
@@ -51,7 +51,7 @@ function ConsentTemplate(props: IConsentTemplateProps) {
         </a>
         <br /> <br />
         {props.bodyComponent}
-      </p>
+      </div>
       <ChooseConsentButtons consent={consent} setConsent={setConsent} />
       {consent ? (
         <SubmitConsentButton
@@ -76,19 +76,27 @@ function ChooseConsentButtons(props: IChooseConsentButtonsProps) {
       <div className="flex justify-around space-x-12 w-full">
         <button
           onClick={() => {
-            setConsent(ConsentChoices.Agree);
+            setConsent(ConsentChoices.Disagree);
           }}
           className={`bg-orange-100 hover:bg-orange-200 w-1/2 font-bold rounded-lg py-4 px-8 shadow-lg focus:outline-none uppercase tracking-wider 
-              ${consent === ConsentChoices.Agree ? " bg-orange-300 hover:bg-orange-300" : ""}`}
+              ${
+                consent === ConsentChoices.Disagree
+                  ? " bg-orange-300 hover:bg-orange-300"
+                  : ""
+              }`}
         >
           I Do Not Consent
         </button>
         <button
           onClick={() => {
-            setConsent(ConsentChoices.Disagree);
+            setConsent(ConsentChoices.Agree);
           }}
           className={`bg-orange-100 hover:bg-orange-200 w-1/2 font-bold rounded-lg py-4 px-8 shadow-lg focus:outline-none uppercase tracking-wider
-              ${consent === ConsentChoices.Disagree ? "bg-orange-300 hover:bg-orange-300" : ""}`}
+              ${
+                consent === ConsentChoices.Agree
+                  ? "bg-orange-300 hover:bg-orange-300"
+                  : ""
+              }`}
         >
           I Consent
         </button>

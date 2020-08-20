@@ -6,7 +6,7 @@ function FairnessStudy() {
     
     return (
         <div id="fairness-study">
-           
+            
         </div>
     )
 }

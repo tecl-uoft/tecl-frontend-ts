@@ -10,14 +10,15 @@ import Loading from "./pages/Loading";
 import TeamsStudyEntry from "./pages/TeamsStudyEntry";
 import FroggerStudyEntry from "./pages/FroggerStudyEntry";
 import EyeTrackingEntry from "./pages/EyeTrackingEntry";
-const EyeTrackingGame = lazy(() => import("./pages/EyeTrackingGame"));
 
+const EyeTrackingGame = lazy(() => import("./pages/EyeTrackingGame"));
+const FroggerStudyGame = lazy(() => import("./pages/FroggerStudyGame"));
 /* End Route Pages */
 
 function App() {
   return (
     <div className="App">
-      <Suspense fallback={Loading}>
+      <Suspense fallback={<Loading />}>
         <BrowserRouter>
           <Header />
           <Switch>
@@ -31,6 +32,11 @@ function App() {
               exact
               path="/study/frogger/information"
               component={FroggerStudyEntry}
+            />
+            <Route
+              exact
+              path="/study/frogger/game"
+              component={FroggerStudyGame}
             />
             <Route
               exact
