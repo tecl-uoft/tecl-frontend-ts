@@ -10,6 +10,7 @@ import Loading from "./pages/Loading";
 import TeamsStudyEntry from "./pages/TeamsStudyEntry";
 import FroggerStudyEntry from "./pages/FroggerStudyEntry";
 import EyeTrackingEntry from "./pages/EyeTrackingEntry";
+import TeamsStudyGame from "./pages/TeamsStudyGame";
 
 const EyeTrackingGame = lazy(() => import("./pages/EyeTrackingGame"));
 const FroggerStudyGame = lazy(() => import("./pages/FroggerStudyGame"));
@@ -27,6 +28,11 @@ function App() {
               exact
               path="/study/fairness/information"
               component={TeamsStudyEntry}
+            />
+            <Route
+              exact
+              path="/study/fairness/game"
+              component={TeamsStudyGame}
             />
             <Route
               exact

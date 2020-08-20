@@ -1,0 +1,131 @@
+.front-alien-i {
+  margin-top: 10px;
+  margin-left: -50px;
+}
+
+#front-alien-i-head {
+  position: absolute;
+  height: 70px;
+  width: 70px;
+  background-color: rgb(92, 124, 221);
+  border-radius: 55%;
+  margin-top: -40px;
+  margin-left: 25px;
+  z-index: 6;
+}
+
+#front-alien-i-body-1 {
+  position: absolute;
+  height: 140px;
+  width: 120px;
+  background-color: rgb(92, 124, 221);
+  border-radius: 35%;
+  z-index: 5;
+}
+
+.front-alien-i-eye {
+  position: absolute;
+  height: 16px;
+  width: 16px;
+  background-color: rgb(92, 124, 221);
+  border-radius: 50%;
+  padding: 4px;
+  margin-top: -40px;
+  z-index: 10;
+}
+
+#front-alien-i-eye-right {
+  margin-left: 75px;
+}
+
+#front-alien-i-eye-left {
+  margin-left: 30px;
+}
+
+.front-alien-i-ret-line {
+  position: absolute;
+  height: 8px;
+  width: 8px;
+  background-color: white;
+  border-radius: 50%;
+  padding: 1px;
+}
+
+.front-alien-i-ret {
+  position: absolute;
+  height: 6px;
+  width: 6px;
+  background-color: black;
+  border-radius: 50%;
+}
+
+/* #front-alien-i-mouth {
+  position: absolute;
+  height: 20px;
+  width: 40px;
+  background-color: black;
+  border-radius: 5px 5px 40px 40px;
+  margin-top: 0px;
+  margin-left: 40px;
+  z-index: 6;
+} */
+
+#front-alien-i-right-arm {
+  position: absolute;
+  height: 30px;
+  width: 80px;
+  background-color: rgb(92, 124, 221);
+  border-radius: 10px;
+  margin-left: -55px;
+  margin-top: 40px;
+  transform: rotate(20deg);
+  transform-origin: right;
+  z-index: 10;
+  /* animation: 1s infinite alternate front-wave; */
+}
+
+#front-alien-i-left-arm {
+  position: absolute;
+  height: 30px;
+  width: 80px;
+  background-color: rgb(92, 124, 221);
+  border-radius: 10px;
+  margin-left: 90px;
+  margin-top: 40px;
+  transform-origin: left;
+  transform: rotate(-20deg);
+  /* animation: 1s infinite alternate-reverse front-wave; */
+  z-index: 10;
+}
+
+#front-alien-i-right-leg {
+  position: absolute;
+  height: 80px;
+  width: 30px;
+  background-color: rgb(92, 124, 221);
+  margin-top: 90px;
+  margin-left: 70px;
+  border-radius: 10px;
+  z-index: 1;
+}
+
+#front-alien-i-left-leg {
+  position: absolute;
+  height: 80px;
+  width: 30px;
+  background-color: rgb(92, 124, 221);
+  border-radius: 10px;
+  margin-top: 90px;
+  margin-left: 20px;
+  z-index: 1;
+}
+
+@keyframes front-wave {
+  from {
+    transform: rotate(20deg);
+  }
+
+  to {
+    transform: rotate(-20deg);
+  }
+}

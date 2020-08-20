@@ -1,0 +1,126 @@
+.front-alien-g {
+  margin-top: 50px;
+  margin-left: -45px;
+}
+
+#front-alien-g-body {
+  position: absolute;
+  height: 130px;
+  width: 100px;
+  background-color: yellowgreen;
+  border-radius: 45px 45px 10px 10px;
+  z-index: 5;
+}
+
+.front-alien-g-eye {
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  background-color: white;
+  border-radius: 30px;
+  padding: 3px;
+  z-index: 6;
+  margin-top: 25px;
+  overflow: hidden;
+}
+
+#front-alien-g-left-eye {
+  margin-left: 65px;
+}
+
+#front-alien-g-right-eye {
+    margin-top: 20px;
+  margin-left: 40px;
+}
+
+#front-alien-g-top-eye {
+  margin-left: 15px;
+}
+
+.front-alien-g-ret-line {
+  position: absolute;
+  height: 14px;
+  width: 14px;
+  background-color: rgb(209, 99, 99);
+  border-radius: 30px;
+  padding: 2px;
+}
+
+.front-alien-g-ret {
+  position: absolute;
+  height: 10px;
+  width: 10px;
+  background-color: black;
+  border-radius: 30px;
+}
+
+/* #front-alien-g-mouth {
+  position: absolute;
+  height: 30px;
+  width: 50px;
+  background-color: black;
+  border-radius: 5px 5px 40px 40px;
+  margin-top: 70px;
+  margin-left: 25px;
+  z-index: 6;
+} */
+
+#front-alien-g-right-arm {
+  position: absolute;
+  height: 20px;
+  width: 60px;
+  background-color: yellowgreen;
+  border-radius: 10px;
+  margin-left: -50px;
+  margin-top: 60px;
+  transform: rotate(20deg);
+  transform-origin: right;
+  z-index: 10;
+  /* animation: 1s infinite alternate front-wave; */
+}
+
+#front-alien-g-left-arm {
+  position: absolute;
+  height: 20px;
+  width: 60px;
+  background-color: yellowgreen;
+  border-radius: 10px;
+  margin-left: 90px;
+  margin-top: 60px;
+  transform-origin: left;
+  transform: rotate(-20deg);
+  /* animation: 1s infinite alternate-reverse front-wave; */
+  z-index: 10;
+}
+
+/* #front-alien-g-right-leg {
+  position: absolute;
+  height: 40px;
+  width: 20px;
+  background-color: yellowgreen;
+  margin-top: 110px;
+  margin-left: 70px;
+  border-radius: 10px;
+  z-index: 8;
+}
+
+#front-alien-g-left-leg {
+  position: absolute;
+  height: 40px;
+  width: 20px;
+  background-color: yellowgreen;
+  border-radius: 10px;
+  margin-top: 110px;
+  margin-left: 10px;
+  z-index: 8;
+} */
+
+@keyframes front-wave {
+  from {
+    transform: rotate(20deg);
+  }
+
+  to {
+    transform: rotate(-20deg);
+  }
+}

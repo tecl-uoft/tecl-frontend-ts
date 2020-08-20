@@ -1,0 +1,129 @@
+.front-alien-e {
+  margin-top: 32px;
+  margin-left: 16px;
+}
+
+
+#front-alien-e-body {
+  position: absolute;
+  height: 150px;
+  width: 80px;
+  background-color: lightgreen;
+  border-radius: 45px 45px 10px 45px;
+  z-index: 5;
+  overflow: hidden;
+}
+
+.front-alien-e-head-line {
+  position: absolute;
+  height: 50px;
+  width: 10px;
+  background-color: lightgreen;
+  border-radius: 5px;
+  transform: rotate(10deg);
+  margin-top: -20px;
+  margin-left: 55px;
+  z-index: 4;
+}
+
+#front-alien-e-head-line-left {
+  margin-left: 15px;
+  transform: rotate(-10deg);
+}
+
+#front-alien-e-shell {
+  position: absolute;
+  height: 80px;
+  width: 80px;
+  margin-top: 70px;
+  margin-left: -40px;
+  background-color: lightgreen;
+  border-radius: 40px 40px 0px 10px;
+  z-index: 4;
+}
+
+.front-alien-e-eye {
+  position: absolute;
+  height: 25px;
+  width: 25px;
+  background-color: white;
+  border-radius: 30px;
+  padding: 5px;
+  z-index: 6;
+  overflow: hidden;
+}
+
+#front-alien-e-left-eye {
+  margin-top: 10px;
+  margin-left: 42px;
+}
+
+#front-alien-e-right-eye {
+  margin-top: 10px;
+  margin-left: 12px;
+}
+
+.front-alien-e-ret-line {
+  position: absolute;
+  height: 17px;
+  width: 17px;
+  margin-top: 0px;
+  margin-left: -1px;
+  background-color: rgb(87, 100, 12);
+  border-radius: 30px;
+  padding: 4px;
+}
+
+.front-alien-e-ret {
+  position: absolute;
+  height: 10px;
+  width: 10px;
+  margin-top: -1px;
+  background-color: black;
+  border-radius: 30px;
+}
+
+/* #front-alien-e-mouth {
+  position: absolute;
+  height: 20px;
+  width: 40px;
+  margin-top: 40px;
+  margin-left: 20px;
+  border-radius: 5px 0px 40px 40px;
+  background-color: black;
+  z-index: 6;
+} */
+
+#front-alien-e-left-arm {
+  position: absolute;
+  height: 10px;
+  width: 60px;
+  border-radius: 10px;
+  background-color: lightgreen;
+  margin-left: 70px;
+  margin-top: 50px;
+  transform: rotate(0deg);
+  transform-origin: left;
+  /* animation: 1s infinite alternate side-wave; */
+  z-index: 10;
+}
+
+#front-alien-e-right-arm {
+  position: absolute;
+  height: 10px;
+  width: 60px;
+  background-color: lightgreen;
+  border-radius: 10px;
+  margin-left: 10px;
+  margin-top: 55px;
+  transform: rotate(200deg);
+  transform-origin: left;
+  /* animation: 1s infinite alternate side-wave; */
+  z-index: 8;
+}
+
+@keyframes side-wave {
+  to {
+    transform: rotate(-20deg);
+  }
+}

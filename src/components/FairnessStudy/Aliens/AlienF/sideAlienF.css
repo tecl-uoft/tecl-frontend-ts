@@ -1,0 +1,117 @@
+.side-alien-f {
+  margin-top: 46px;
+  margin-left: -24px;
+}
+
+#side-alien-f-body {
+  position: absolute;
+  height: 90px;
+  width: 140px;
+  background-color: lightslategray;
+  border-radius: 45px;
+  overflow: hidden;
+  z-index: 5;
+}
+
+#side-alien-f-eye {
+  position: absolute;
+  height: 50px;
+  width: 65px;
+  background-color: lightslategray;
+  border-radius: 50%;
+  margin-top: -30px;
+  margin-left: 40px;
+  padding: 8px;
+  padding-left: 25px;
+  overflow: hidden;
+  z-index: 6;
+}
+
+#side-alien-f-ret-line {
+  position: absolute;
+  height: 34px;
+  width: 34px;
+  background-color: white;
+  border-radius: 50%;
+  padding: 4px;
+}
+
+#side-alien-f-ret {
+  position: absolute;
+  height: 26px;
+  width: 26px;
+  background-color: black;
+  border-radius: 50%;
+}
+/* 
+#side-alien-f-mouth {
+  position: absolute;
+  height: 30px;
+  width: 50px;
+  background-color: black;
+  border-radius: 5px 5px 40px 40px;
+  margin-top: 40px;
+  margin-left: 65px;
+  z-index: 6;
+} */
+
+#side-alien-f-right-arm {
+  position: absolute;
+  height: 20px;
+  width: 60px;
+  background-color: lightslategray;
+  border-radius: 10px;
+  margin-left: 120px;
+  margin-top: 25px;
+  transform: rotate(20deg);
+  transform-origin: left;
+  z-index: 10;
+  /* animation: 1s infinite alternate front-wave; */
+}
+
+#side-alien-f-left-arm {
+  position: absolute;
+  height: 20px;
+  width: 60px;
+  background-color: lightslategray;
+  border-radius: 10px;
+  margin-left: 120px;
+  margin-top: 20px;
+  transform-origin: left;
+  transform: rotate(0deg);
+  /* animation: 1s infinite alternate-reverse front-wave; */
+  z-index: 4;
+}
+
+#side-alien-f-right-leg {
+  position: absolute;
+  height: 60px;
+  width: 20px;
+  background-color: lightslategray;
+  margin-top: 70px;
+  margin-left: 30px;
+  border-radius: 10px;
+  z-index: 1;
+}
+
+#side-alien-f-left-leg {
+  position: absolute;
+  height: 60px;
+  width: 20px;
+  background-color: lightslategray;
+  border-radius: 10px;
+  margin-top: 60px;
+  margin-left: 90px;
+
+  z-index: 1;
+}
+
+@keyframes front-wave {
+  from {
+    transform: rotate(20deg);
+  }
+
+  to {
+    transform: rotate(-20deg);
+  }
+}

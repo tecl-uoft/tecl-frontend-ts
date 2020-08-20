@@ -1,0 +1,19 @@
+#rec-alien {
+  transform: scaleX(-1);
+  margin-left: 500px;
+}
+
+.alien-ball {
+  position: absolute;
+  /* visibility: hidden; */
+  z-index: 6;
+}
+
+.main-alien-ball {
+  /* position: absolute; */
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-color: cornflowerblue;
+  z-index: 6;
+}

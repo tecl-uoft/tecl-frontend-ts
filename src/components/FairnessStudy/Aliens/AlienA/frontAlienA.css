@@ -1,0 +1,113 @@
+.front-alien {
+  margin-top: 20px;
+  margin-left: -10px;
+}
+
+#front-alien-body {
+  position: absolute;
+  height: 130px;
+  width: 80px;
+  background-color: lightskyblue;
+  border-radius: 45px;
+  z-index: 5;
+}
+
+#front-alien-eye {
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  background-color: white;
+  border-radius: 50%;
+  margin-top: 10px;
+  margin-left: 15px;
+  padding: 8px;
+  z-index: 6;
+}
+
+#front-alien-ret-line {
+  position: absolute;
+  height: 34px;
+  width: 34px;
+  background-color: rgb(201, 69, 91);
+  border-radius: 50%;
+  padding: 4px;
+}
+
+#front-alien-ret {
+  position: absolute;
+  height: 26px;
+  width: 26px;
+  background-color: black;
+  border-radius: 50%;
+}
+/* 
+#front-alien-mouth {
+  position: absolute;
+  height: 30px;
+  width: 50px;
+  background-color: black;
+  border-radius: 5px 5px 40px 40px;
+  margin-top: 80px;
+  margin-left: 15px;
+  z-index: 6;
+} */
+
+#front-alien-right-arm {
+  position: absolute;
+  height: 20px;
+  width: 60px;
+  background-color: lightskyblue;
+  border-radius: 10px;
+  margin-left: -50px;
+  margin-top: 60px;
+  transform: rotate(20deg);
+  transform-origin: right;
+  z-index: 1;
+  /* animation: 1s infinite alternate front-wave; */
+}
+
+#front-alien-left-arm {
+  position: absolute;
+  height: 20px;
+  width: 60px;
+  background-color: lightskyblue;
+  border-radius: 10px;
+  margin-left: 70px;
+  margin-top: 60px;
+  transform-origin: left;
+  transform: rotate(-20deg);
+  /* animation: 1s infinite alternate-reverse front-wave; */
+  z-index: 1;
+}
+
+#front-alien-right-leg {
+  position: absolute;
+  height: 60px;
+  width: 20px;
+  background-color: lightskyblue;
+  margin-top: 100px;
+  margin-left: 10px;
+  border-radius: 10px;
+  z-index: 1;
+}
+
+#front-alien-left-leg {
+  position: absolute;
+  height: 60px;
+  width: 20px;
+  background-color: lightskyblue;
+  border-radius: 10px;
+  margin-top: 100px;
+  margin-left: 50px;
+  z-index: 1;
+}
+
+@keyframes front-wave {
+  from {
+    transform: rotate(20deg);
+  }
+
+  to {
+    transform: rotate(-20deg);
+  }
+}

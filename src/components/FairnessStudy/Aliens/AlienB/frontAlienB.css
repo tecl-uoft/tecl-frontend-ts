@@ -1,0 +1,143 @@
+.front-alien-b {
+  margin-left: -5px;
+}
+
+#front-alien-b-body {
+  position: absolute;
+  height: 160px;
+  width: 60px;
+  background-color: lightcoral;
+  border-radius: 45px;
+  z-index: 5;
+  overflow: hidden;
+}
+
+.front-alien-b-eye-line {
+  position: absolute;
+  height: 50px;
+  width: 10px;
+  background-color: lightcoral;
+  border-radius: 5px;
+}
+
+#front-alien-b-left-eye-line {
+  transform: rotate(30deg);
+  margin-top: -30px;
+  margin-left: 50px;
+  z-index: 6;
+}
+
+#front-alien-b-right-eye-line {
+  transform: rotate(-30deg);
+  margin-top: -30px;
+  margin-left: 0px;
+  z-index: 6;
+}
+
+.front-alien-b-eye {
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  background-color: lightcoral;
+  border-radius: 30px;
+  padding: 5px;
+  overflow: hidden;
+  z-index: 6;
+}
+
+#front-alien-b-left-eye {
+  margin-top: -45px;
+  margin-left: 55px;
+}
+
+#front-alien-b-right-eye {
+  margin-top: -45px;
+  margin-left: -25px;
+}
+
+.front-alien-b-ret-line {
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  margin-left: 0px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 4px;
+}
+
+.front-alien-b-ret {
+  position: absolute;
+  height: 12px;
+  width: 12px;
+  background-color: navy;
+  border-radius: 5px;
+}
+
+/* #front-alien-b-mouth {
+  position: absolute;
+  height: 30px;
+  width: 40px;
+  margin-top: 30px;
+  margin-left: 10px;
+  border-radius: 5px 5px 40px 40px;
+  background-color: black;
+  box-shadow: inset 4px 2px transparent;
+  z-index: 6;
+} */
+
+#front-alien-b-left-arm {
+  position: absolute;
+  height: 10px;
+  width: 60px;
+  border-radius: 10px;
+  background-color: lightcoral;
+  margin-left: 40px;
+  margin-top: 60px;
+  transform: rotate(-20deg);
+  transform-origin: left;
+  /* animation: 1s infinite alternate side-wave; */
+  /* animation: 1s infinite alternate-reverse front-wave; */
+  z-index: 5;
+}
+
+#front-alien-b-right-arm {
+  position: absolute;
+  height: 10px;
+  width: 60px;
+  background-color: lightcoral;
+  border-radius: 10px;
+  margin-left: 20px;
+  margin-top: 60px;
+  transform: rotate(200deg);
+  transform-origin: left;
+  /* animation: 1s infinite alternate side-wave; */
+  z-index: 5;
+}
+
+#front-alien-b-right-leg {
+  position: absolute;
+  height: 50px;
+  width: 10px;
+  background-color: lightcoral;
+  border-radius: 10px;
+  margin-top: 130px;
+  margin-left: 10px;
+  z-index: 1;
+}
+
+#front-alien-b-left-leg {
+  position: absolute;
+  height: 50px;
+  width: 10px;
+  background-color: lightcoral;
+  border-radius: 10px;
+  margin-top: 130px;
+  margin-left: 40px;
+  z-index: 1;
+}
+
+@keyframes side-wave {
+  to {
+    transform: rotate(-20deg);
+  }
+}

@@ -1,0 +1,150 @@
+.front-alien-h {
+  margin-left: -10px;
+  margin-top: 20px;
+}
+
+#front-alien-h-body-left {
+  position: absolute;
+  height: 130px;
+  width: 60px;
+  background-color: lightpink;
+  border-radius: 45px;
+  transform: rotate(30deg);
+  z-index: 5;
+}
+
+#front-alien-h-body-right {
+  position: absolute;
+  height: 130px;
+  width: 60px;
+  margin-left: 40px;
+  background-color: lightpink;
+  border-radius: 45px;
+  transform: rotate(-30deg);
+  z-index: 5;
+}
+
+#front-alien-h-body-bot {
+  position: absolute;
+  height: 130px;
+  width: 60px;
+  margin-left: 20px;
+  margin-top: 30px;
+  background-color: lightpink;
+  border-radius: 45px;
+  transform: rotate(90deg);
+  z-index: 5;
+}
+
+.front-alien-h-eye {
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  background-color: white;
+  border-radius: 30px;
+  padding: 3px;
+  z-index: 6;
+  margin-top: 30px;
+  overflow: hidden;
+}
+
+#front-alien-h-left-eye {
+  margin-left: 60px;
+}
+
+#front-alien-h-right-eye {
+  margin-left: 20px;
+}
+
+#front-alien-h-top-eye {
+  margin-top: 10px;
+  margin-left: 40px;
+}
+
+.front-alien-h-ret-line {
+  position: absolute;
+  height: 14px;
+  width: 14px;
+  background-color: lightskyblue;
+  border-radius: 30px;
+  padding: 2px;
+}
+
+.front-alien-h-ret {
+  position: absolute;
+  height: 10px;
+  width: 10px;
+  background-color: black;
+  border-radius: 30px;
+}
+/* 
+#front-alien-h-mouth {
+  position: absolute;
+  height: 30px;
+  width: 50px;
+  background-color: black;
+  border-radius: 5px 5px 40px 40px;
+  margin-top: 80px;
+  margin-left: 25px;
+  z-index: 6;
+} */
+
+#front-alien-h-right-arm {
+  position: absolute;
+  height: 20px;
+  width: 60px;
+  background-color: lightpink;
+  border-radius: 10px;
+  margin-left: -50px;
+  margin-top: 50px;
+  transform: rotate(20deg);
+  transform-origin: right;
+  z-index: 10;
+  /* animation: 1s infinite alternate front-wave; */
+}
+
+#front-alien-h-left-arm {
+  position: absolute;
+  height: 20px;
+  width: 60px;
+  background-color: lightpink;
+  border-radius: 10px;
+  margin-left: 90px;
+  margin-top: 50px;
+  transform-origin: left;
+  transform: rotate(-20deg);
+  /* animation: 1s infinite alternate-reverse front-wave; */
+  z-index: 10;
+}
+
+#front-alien-h-right-leg {
+  position: absolute;
+  height: 60px;
+  width: 20px;
+  background-color: lightpink;
+  margin-top: 100px;
+  margin-left: 20px;
+  border-radius: 10px;
+  z-index: 1;
+}
+
+#front-alien-h-left-leg {
+  position: absolute;
+  height: 60px;
+  width: 20px;
+  background-color: lightpink;
+  border-radius: 10px;
+  margin-top: 100px;
+  margin-left: 60px;
+  z-index: 1;
+}
+
+@keyframes front-wave {
+  from {
+    transform: rotate(20deg);
+  }
+
+  to {
+    transform: rotate(-20deg);
+  }
+}

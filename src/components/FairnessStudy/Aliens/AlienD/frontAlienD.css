@@ -1,0 +1,134 @@
+.front-alien-d {
+  margin-top: 20px;
+  margin-left: -20px;
+}
+
+#front-alien-d-body {
+  position: absolute;
+  height: 130px;
+  width: 80px;
+  background-color: lightsteelblue;
+  border-radius: 45px;
+  z-index: 5;
+  overflow: hidden;
+}
+
+.front-alien-d-eye-line {
+  position: absolute;
+  height: 50px;
+  width: 10px;
+  background-color: lightsteelblue;
+  border-radius: 5px;
+  transform: rotate(0deg);
+  margin-top: -20px;
+  margin-left: 35px;
+  z-index: 4;
+}
+
+.front-alien-d-eye {
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  background-color: lightsteelblue;
+  border-radius: 30px;
+  padding: 5px;
+  overflow: hidden;
+  z-index: 6;
+  margin-top: -40px;
+  margin-left: 25px;
+}
+
+.front-alien-d-ret-line {
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  margin-left: 0px;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.front-alien-d-ret {
+  position: absolute;
+  height: 12px;
+  width: 12px;
+  margin-top: 4px;
+  margin-left: 4px;
+  background-color: royalblue;
+  border-radius: 5px;
+  padding: 3px;
+}
+
+.front-alien-d-ret-inner {
+  position: absolute;
+  height: 6px;
+  width: 6px;
+  background-color: black;
+  border-radius: 10px;
+}
+
+/* #front-alien-d-mouth {
+  position: absolute;
+  height: 30px;
+  width: 50px;
+  margin-top: 70px;
+  margin-left: 16px;
+  border-radius: 5px 0px 40px 40px;
+  background-color: black;
+  z-index: 6;
+} */
+
+#front-alien-d-left-arm {
+  position: absolute;
+  height: 15px;
+  width: 80px;
+  border-radius: 10px;
+  background-color: lightsteelblue;
+  margin-left: 60px;
+  margin-top: 40px;
+  transform: rotate(-20deg);
+  transform-origin: left;
+  /* animation: 1s infinite alternate side-wave; */
+  z-index: 8;
+}
+
+#front-alien-d-right-arm {
+  position: absolute;
+  height: 15px;
+  width: 80px;
+  background-color: lightsteelblue;
+  border-radius: 10px;
+  margin-left: 20px;
+  margin-top: 40px;
+  transform: rotate(200deg);
+  transform-origin: left;
+  /* animation: 1s infinite alternate side-wave; */
+  z-index: 8;
+}
+
+#front-alien-d-right-leg {
+  position: absolute;
+  height: 50px;
+  width: 15px;
+  background-color: lightsteelblue;
+  border-radius: 10px;
+  margin-top: 110px;
+  margin-left: 10px;
+  z-index: 1;
+}
+
+#front-alien-d-left-leg {
+  position: absolute;
+  height: 50px;
+  width: 15px;
+  background-color: lightsteelblue;
+  border-radius: 10px;
+  margin-top: 110px;
+  margin-left: 55px;
+  z-index: 1;
+}
+
+@keyframes side-wave {
+  to {
+    transform: rotate(-20deg);
+  }
+}
