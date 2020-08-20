@@ -26,7 +26,6 @@ enum FairnessStudyStates {
 function FairnessStudy() {  
   const [trialNum, setTrialNum] = useState(FairnessStudyStates.AskConsent);
   const [randomizedElements, setRandomizedElements] = useState(null as any);
-  const [apiLoaded, setAPILoaded] = useState(false);
 
   const [trialInfo, setTrialInfo] = useState(null as any);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -36,7 +35,7 @@ function FairnessStudy() {
   useEffect(() => {
     // don't call GET request after first load
     if (!isLoaded) {
-      getSetup(setRandomizedElements, console.error, setAPILoaded);
+      getSetup(setRandomizedElements, console.error, null);
     }
 
     // after we have recived random elements from the server

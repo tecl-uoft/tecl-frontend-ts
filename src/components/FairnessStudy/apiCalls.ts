@@ -2,14 +2,17 @@
 export function getSetup(
   setResult: (result: any) => void,
   setError: (err: any) => void,
-  setIsLoaded: (isLoaded: boolean) => void
+  setIsLoaded: ((isLoaded: boolean) => void) | null
 ) {
   fetch("/api/v1/fairness-study/setup", {
     method: "GET",
   })
     .then((res) => res.json())
     .then((result) => {
-      setIsLoaded(true);
+      if (setIsLoaded) {
+        setIsLoaded(true);
+      }
+
       setResult(result);
     })
     .catch((err) => setError(err));
