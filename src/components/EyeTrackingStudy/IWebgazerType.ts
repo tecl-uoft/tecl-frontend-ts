@@ -1,3 +1,12 @@
+export interface IWebgazer {
+  addRegression(name: RegressionType): IWebgazer;
+  getCurrentPrediction(): null | WebgazerPredictionObject;
+  pause(): void;
+  resume(): Promise<void>;
+  params: WebgazerParams;
+  end(): void;
+}
+
 export enum RegressionType {
   Ridge = "ridge",
   WeightedRidge = "weightedRidge",
@@ -7,15 +16,6 @@ export enum RegressionType {
 export interface WebgazerPredictionObject {
   x: number;
   y: number;
-}
-
-export interface IWebgazer {
-  addRegression(name: RegressionType): IWebgazer;
-  getCurrentPrediction(): null | WebgazerPredictionObject;
-  pause(): void;
-  resume(): Promise<void>;
-  params: WebgazerParams;
-  end(): void;
 }
 
 interface WebgazerParams {
