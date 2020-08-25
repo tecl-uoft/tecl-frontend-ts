@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
-import { WebgazerPredictionObject } from "./IWebgazerType";
+import { WebgazerPredictionObject, IWebgazer } from "./IWebgazerType";
 
 interface IEyeTrackingCalibrationProps {
   nextState(): void;
-  webgazer: any;
+  webgazer: IWebgazer;
 }
 
 function EyeTrackingCalibration(props: IEyeTrackingCalibrationProps) {
@@ -12,18 +12,19 @@ function EyeTrackingCalibration(props: IEyeTrackingCalibrationProps) {
   const [justifyCalEl, setJustifyCalEl] = useState("justify-start");
   const [justifyCalRemoveEl, setJustifyCalRemoveEl] = useState("justify-end");
   const [calCount, setCalCount] = useState(0);
-  const calibrationContainerEl = useRef<HTMLInputElement>(null);
+  const calibrationContainerEl = useRef<HTMLDivElement>(null);
 
   async function resumeWebgazer() {
     /* await webgazer.resume(); */
     setTimeout(() => {
-      const calibrationContainer = calibrationContainerEl.current as HTMLElement;
+      const calibrationContainer = calibrationContainerEl.current as HTMLDivElement;
       calibrationContainer.classList.remove(justifyCalRemoveEl);
       calibrationContainer.classList.add(justifyCalEl);
       setJustifyCalEl(justifyCalRemoveEl);
       setJustifyCalRemoveEl(justifyCalEl);
       setCalCount(calCount + 1);
       if (calCount < 10) {
+        webgazer.pause()
       } else {
         calibrationContainer.classList.add("hidden");
       }
@@ -48,7 +49,7 @@ function EyeTrackingCalibration(props: IEyeTrackingCalibrationProps) {
         <img
           id="rattler-pt1"
           className="cursor-pointer hover:bg-orange-200"
-          onClick={resumeWebgazer}
+          onClick={() => resumeWebgazer()}
           src="/assets/eye_tracking/rattle.gif"
           alt="rattle"
         />

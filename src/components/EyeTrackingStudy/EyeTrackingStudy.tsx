@@ -3,6 +3,7 @@ import EyeTrackingConsent from "./EyeTrackingConsent";
 import ErrorNotFound from "../../pages/ErrorNotFound";
 import EyeTrackingInstructions from "./EyeTrackingInstructions";
 import EyeTrackingCalibration from "./EyeTrackingCalibration";
+import { IWebgazer } from "./IWebgazerType";
 /* import EyeTrackingDemo from "./EyeTrackingDemo";
 import EyeTrackingInstructions from "./EyeTrackingInstructions"; */
 
@@ -18,7 +19,7 @@ function EyeTrackingStudy() {
       ? studyStates.EyeTrackingInstructions
       : studyStates.AskConsent
   );
-  const [webgazer, setWebgazer] = useState(null);
+  const [webgazer, setWebgazer] = useState<IWebgazer | undefined>(undefined);
 
   function cycleStudyStates(studyState: studyStates) {
     switch (studyState) {
@@ -43,7 +44,7 @@ function EyeTrackingStudy() {
       case studyStates.EyeTrackingCalibration:
         return (
           <EyeTrackingCalibration
-            webgazer={webgazer}
+            webgazer={webgazer as IWebgazer}
             nextState={() => {
               setStudyState(studyStates.EyeTrackingCalibration);
             }}
@@ -75,7 +76,7 @@ async function setWebgazerScript(
   const headEl = document.querySelector("head") as HTMLHeadElement;
   headEl.appendChild(webgazerScriptEl);
   webgazerScriptEl.onload = () => {
-    webgazerSetter((window as any).webgazer);
+    webgazerSetter((window as any).webgazer as IWebgazer);
   };
 }
 
