@@ -24,8 +24,7 @@ function EyeTrackingInstructions(props: IEyeTrackingInstructionsProps) {
       displayCalibration(webgazer);
 
       return () => {
-        webgazer.end()
-        /* videoContainer.classList.add("hidden") */
+        webgazer.end();
         webgazer.params.showVideoPreview = false;
       };
     }
@@ -65,7 +64,9 @@ async function displayCalibration(webgazer: any) {
 
   //start the webgazer tracker
   await webgazer
-    .setRegression(RegressionType.Ridge) /* currently must set regression and tracker */
+    .setRegression(
+      RegressionType.Ridge
+    ) /* currently must set regression and tracker */
     .setGazeListener(function (data: WebgazerPredictionObject, clock: Date) {
       //   console.log(data); /* data is an object containing an x and y key which are the x and y prediction coordinates (no bounds limiting) */
       //   console.log(clock); /* elapsed time in milliseconds since webgazer.begin() was called */

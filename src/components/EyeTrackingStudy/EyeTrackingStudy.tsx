@@ -2,17 +2,22 @@ import React, { useState, useEffect } from "react";
 import EyeTrackingConsent from "./EyeTrackingConsent";
 import ErrorNotFound from "../../pages/ErrorNotFound";
 import EyeTrackingInstructions from "./EyeTrackingInstructions";
+import EyeTrackingCalibration from "./EyeTrackingCalibration";
 /* import EyeTrackingDemo from "./EyeTrackingDemo";
 import EyeTrackingInstructions from "./EyeTrackingInstructions"; */
 
 enum studyStates {
   AskConsent = "askConsent",
   EyeTrackingInstructions = "eyeTrackingInstructions",
-  EyeTracking = "eyeTracking",
+  EyeTrackingCalibration = "eyeTrackingCalibration",
 }
 
 function EyeTrackingStudy() {
-  const [studyState, setStudyState] = useState(studyStates.AskConsent);
+  const [studyState, setStudyState] = useState(
+    process.env.NODE_ENV === "development"
+      ? studyStates.EyeTrackingInstructions
+      : studyStates.AskConsent
+  );
   const [webgazer, setWebgazer] = useState(null);
 
   function cycleStudyStates(studyState: studyStates) {
@@ -20,8 +25,10 @@ function EyeTrackingStudy() {
       case studyStates.AskConsent:
         return (
           <EyeTrackingConsent
-            consentFunc={() => setStudyState(studyStates.EyeTracking)}
-            noConsentFunc={() => setStudyState(studyStates.EyeTrackingInstructions)}
+            consentFunc={() =>
+              setStudyState(studyStates.EyeTrackingInstructions)
+            }
+            noConsentFunc={() => setStudyState(studyStates.AskConsent)}
           />
         );
       case studyStates.EyeTrackingInstructions:
@@ -29,7 +36,16 @@ function EyeTrackingStudy() {
           <EyeTrackingInstructions
             webgazer={webgazer}
             nextState={() => {
-              setStudyState(studyStates.EyeTracking);
+              setStudyState(studyStates.EyeTrackingCalibration);
+            }}
+          />
+        );
+      case studyStates.EyeTrackingCalibration:
+        return (
+          <EyeTrackingCalibration
+            webgazer={webgazer}
+            nextState={() => {
+              setStudyState(studyStates.EyeTrackingCalibration);
             }}
           />
         );
