@@ -38,9 +38,9 @@ function ConsentTemplate(props: IConsentTemplateProps) {
       </h3>
       <div className="text-gray-800 text-xl mt-16">
         Principal Investigator: {props.pi} <br />
-        props.Address: {props.address} <br />
-        props.Telephone: {props.telephone} <br />
-        props.Email:{" "}
+        Address: {props.address} <br />
+        Telephone: {props.telephone} <br />
+        Email:{" "}
         <a
           className="text-blue-500"
           href={`mailto:${props.email}`}
