@@ -26,7 +26,7 @@ enum FairnessStudyStates {
 function FairnessStudy() {
   const [trialNum, setTrialNum] = useState(
     process.env.NODE_ENV === "development"
-      ? FairnessStudyStates.GameOne
+      ? FairnessStudyStates.GameTwo
       : FairnessStudyStates.AskConsent
   );
   const [randomizedElements, setRandomizedElements] = useState(null as any);
@@ -189,9 +189,9 @@ function FairnessStudy() {
                 alienC={trialInfo.trialEqual.alienC}
                 alienUser={trialInfo.trialEqual.alienUser}
                 alienCharNames={{
-                  trial1: { Left: "Bob", Middle: "Iris", Right: "Anna" },
-                  trial2: { Left: "Tim", Middle: "Mia", Right: "Ava" },
-                  trial3: { Left: "Jack", Middle: "Ioanna", Right: "Maya" },
+                  A1: "David",
+                  A2: "Julia",
+                  B: "Maya",
                 }}
                 allThrowEvents={trialInfo.trialEqual.allThrowEvents}
                 setTrialFunc={() => setTrialNum(3)}
@@ -208,9 +208,9 @@ function FairnessStudy() {
                 alienC={trialInfo.trialOne.alienC}
                 alienUser={trialInfo.trialOne.alienUser}
                 alienCharNames={{
-                  trial1: { Left: "Lily", Middle: "Brian", Right: "Josh" },
-                  trial2: { Left: "David", Middle: "Yegor", Right: "Liz" },
-                  trial3: { Left: "Cora", Middle: "Eli", Right: "Sean" },
+                  A1: "Josh",
+                  A2: "Yegor",
+                  B: "Brian",
                 }}
                 allThrowEvents={trialInfo.trialOne.allThrowEvents}
                 setTrialFunc={() => setTrialNum(4)}
@@ -228,9 +228,9 @@ function FairnessStudy() {
                 alienC={trialInfo.trialTwo.alienC}
                 alienUser={trialInfo.trialTwo.alienUser}
                 alienCharNames={{
-                  trial1: { Left: "Zach", Middle: "Albert", Right: "Julia" },
-                  trial2: { Left: "Marko", Middle: "Kacey", Right: "Grace" },
-                  trial3: { Left: "Leo", Middle: "Sarah", Right: "Rachael" },
+                  A1: "Marko",
+                  A2: "Kacey",
+                  B: "Sean",
                 }}
                 allThrowEvents={trialInfo.trialTwo.allThrowEvents}
                 setTrialFunc={() => setTrialNum(5)}
@@ -248,13 +248,9 @@ function FairnessStudy() {
                 alienC={trialInfo.trialTwo.alienC}
                 alienUser={trialInfo.trialThree.alienUser}
                 alienCharNames={{
-                  trial1: { Left: "Arpit", Middle: "Jojo", Right: "Tarun" },
-                  trial2: { Left: "Omar", Middle: "Alex", Right: "Sohail" },
-                  trial3: {
-                    Left: "Martin",
-                    Middle: "Matt",
-                    Right: "Celine",
-                  },
+                  A1: "Omar",
+                  A2: "Arpit",
+                  B: "Celine",
                 }}
                 allThrowEvents={trialInfo.trialThree.allThrowEvents}
                 setTrialFunc={() => setTrialNum(6)}

@@ -8,7 +8,9 @@ function BallTossPlay(props) {
     rightAlien,
     trialNum,
     gameNum,
-    alienTrialCharNames,
+    leftAlienFirstName,
+    middleAlienFirstName,
+    rightAlienFirstName,
     throwEvent,
   } = props;
 
@@ -735,15 +737,18 @@ function BallTossPlay(props) {
         break;
     }
     totalAnimationDuration += 500;
-    window.setTimeout(() => {
-      setShowPlayText(true);
-    }, process.env.NODE_ENV === "development" ? 0 : totalAnimationDuration);
+    window.setTimeout(
+      () => {
+        setShowPlayText(true);
+      },
+      process.env.NODE_ENV === "development" ? 0 : totalAnimationDuration
+    );
     // }, 1);
   }, [trialNum, gameNum, throwEvent]);
 
   return (
     <div>
-      <div class="flex justify-between text-gray-800 text-2xl mt-32">
+      <div class="flex justify-between text-gray-800 text-2xl mt-64">
         <div
           ref={
             gameNum === "2" && throwEvent === "allPlay"
@@ -753,7 +758,7 @@ function BallTossPlay(props) {
           class="ml-16"
         >
           {<leftAlien.Side />}
-          <p class="alien-label font-bold flex"> {leftAlien.name} </p>
+          <p class="alien-label font-bold flex"> {leftAlienFirstName + " " + leftAlien.name} </p>
         </div>
         <div class="-mt-64 md:ml-20">
           {/* throwEvent === "otherPlay" || throwEvent === "allPlay" ?  */}
@@ -768,7 +773,10 @@ function BallTossPlay(props) {
             {<middleAlien.Side />}
           </div>
 
-          <p class="alien-label font-bold flex"> {middleAlien.name} {alienTrialCharNames} </p>
+          <p class="alien-label font-bold flex">
+            {" "}
+            {middleAlienFirstName + " " + middleAlien.name}{" "}
+          </p>
         </div>
         <div class="mr-16">
           <div
@@ -781,7 +789,7 @@ function BallTossPlay(props) {
           >
             {<rightAlien.Side />}
           </div>
-          <p class="alien-label font-bold flex"> {rightAlien.name} </p>
+          <p class="alien-label font-bold flex"> {rightAlienFirstName + " " + rightAlien.name} </p>
         </div>
         <div ref={alienBallRef} class="alien-ball">
           <div class="main-alien-ball" />

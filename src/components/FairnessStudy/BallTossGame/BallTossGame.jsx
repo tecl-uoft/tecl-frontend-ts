@@ -36,6 +36,7 @@ function BallTossGame(props) {
 
   // sets game mode for kids only
   useEffect(() => {
+    /* console.log(alienCharNames.trial1, alienCharNames) */
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get("game_type") === "kids") {
       setIsKidMode(true);
@@ -102,10 +103,15 @@ function BallTossGame(props) {
               trialNum="1"
               gameNum="1"
               throwEvent={allThrowEvents.event1}
-              alienTrialCharNames={alienCharNames.trail1}
               leftAlien={alienA}
+              leftAlienFirstName={alienCharNames.A1}
               middleAlien={
                 allThrowEvents.event1 === "selfPlay" ? alienA : alienB
+              }
+              middleAlienFirstName={
+                allThrowEvents.event1 === "selfPlay"
+                  ? alienCharNames.A2
+                  : alienCharNames.B
               }
               rightAlien={
                 {
@@ -114,6 +120,11 @@ function BallTossGame(props) {
                   betweenPlay: alienA,
                   otherPlay: alienA,
                 }[allThrowEvents.event1]
+              }
+              rightAlienFirstName={
+                allThrowEvents.event1 === "selfPlay"
+                  ? alienCharNames.B
+                  : alienCharNames.A2
               }
               nextFunc={() => setFrameCount(2)}
             />
@@ -126,8 +137,14 @@ function BallTossGame(props) {
               throwEvent={allThrowEvents.event2}
               alienTrialCharNames={alienCharNames}
               leftAlien={alienA}
+              leftAlienFirstName={alienCharNames.A1}
               middleAlien={
                 allThrowEvents.event2 === "selfPlay" ? alienA : alienB
+              }
+              middleAlienFirstName={
+                allThrowEvents.event2 === "selfPlay"
+                  ? alienCharNames.A2
+                  : alienCharNames.B
               }
               rightAlien={
                 {
@@ -136,6 +153,11 @@ function BallTossGame(props) {
                   betweenPlay: alienA,
                   otherPlay: alienA,
                 }[allThrowEvents.event2]
+              }
+              rightAlienFirstName={
+                allThrowEvents.event2 === "selfPlay"
+                  ? alienCharNames.B
+                  : alienCharNames.A2
               }
               nextFunc={() => setFrameCount(3)}
             />
@@ -146,10 +168,12 @@ function BallTossGame(props) {
               trialNum="1"
               gameNum="3"
               throwEvent={allThrowEvents.event3}
-              alienTrialCharNames={alienCharNames.trail3}
               leftAlien={alienA}
+              leftAlienFirstName={alienCharNames.A1}
               middleAlien={alienB}
+              middleAlienFirstName={alienCharNames.B}
               rightAlien={alienA}
+              rightAlienFirstName={alienCharNames.A2}
               nextFunc={() => setFrameCount(4)}
             />
           ),
