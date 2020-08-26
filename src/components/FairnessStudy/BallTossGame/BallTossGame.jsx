@@ -20,6 +20,7 @@ function BallTossGame(props) {
     alienB,
     alienC,
     alienUser,
+    alienCharNames,
     allThrowEvents,
     setTrialFunc,
     endText,
@@ -29,6 +30,17 @@ function BallTossGame(props) {
 
   const [frameCount, setFrameCount] = useState(0);
   const [ingameQuestions, setIngameQuestions] = useState([]);
+  const [isKidMode, setIsKidMode] = useState(
+    process.env.NODE_ENV === "development" ? true : false
+  );
+
+  // sets game mode for kids only
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get("game_type") === "kids") {
+      setIsKidMode(true);
+    }
+  }, []);
 
   useEffect(() => {
     // send q&a to server after finishing all set of ingame questions
@@ -66,9 +78,9 @@ function BallTossGame(props) {
   // reset as we change to a new frame
   useEffect(() => {
     // TODO double check as setframecount is set to 0 twice
-    // by the previous use effect i,.e change ingameq updates setTrialFun
+    // by the previous use effect i.e change ingameq updates setTrialFun
 
-    setFrameCount(0);
+    setFrameCount(process.env.NODE_ENV === "development" ? 1 : 0);
   }, [setTrialFunc]);
 
   return (
@@ -77,6 +89,7 @@ function BallTossGame(props) {
         {
           0: (
             <BallTossIntro
+              isKidMode={isKidMode}
               alienA={alienA}
               alienB={alienB}
               alienC={alienC}
@@ -89,6 +102,7 @@ function BallTossGame(props) {
               trialNum="1"
               gameNum="1"
               throwEvent={allThrowEvents.event1}
+              alienTrialCharNames={alienCharNames.trail1}
               leftAlien={alienA}
               middleAlien={
                 allThrowEvents.event1 === "selfPlay" ? alienA : alienB
@@ -110,6 +124,7 @@ function BallTossGame(props) {
               trialNum="1"
               gameNum="2"
               throwEvent={allThrowEvents.event2}
+              alienTrialCharNames={alienCharNames}
               leftAlien={alienA}
               middleAlien={
                 allThrowEvents.event2 === "selfPlay" ? alienA : alienB
@@ -131,6 +146,7 @@ function BallTossGame(props) {
               trialNum="1"
               gameNum="3"
               throwEvent={allThrowEvents.event3}
+              alienTrialCharNames={alienCharNames.trail3}
               leftAlien={alienA}
               middleAlien={alienB}
               rightAlien={alienA}
@@ -145,12 +161,15 @@ function BallTossGame(props) {
             />
           ),
           // “Who will you throw to?” A/B
+          // if kid mode only ask throw question once
           5: (
             <BallTossPickAlien
               alienA={alienA}
               alienB={alienB}
               rep={1}
-              nextFunc={() => setFrameCount(6)}
+              nextFunc={
+                isKidMode ? () => setFrameCount(8) : () => setFrameCount(6)
+              }
               setIngameQuestions={setIngameQuestions}
               ingameQuestions={ingameQuestions}
             />
@@ -183,6 +202,7 @@ function BallTossGame(props) {
               alienA={alienA}
               alienB={alienB}
               rep={0}
+              isKidMode={isKidMode}
               nextFunc={() => setFrameCount(9)}
               setIngameQuestions={setIngameQuestions}
               ingameQuestions={ingameQuestions}
@@ -195,6 +215,7 @@ function BallTossGame(props) {
               adj="like"
               alienA={alienA}
               alienB={alienB}
+              isKidMode={isKidMode}
               nextFunc={() => setFrameCount(10)}
               setIngameQuestions={setIngameQuestions}
               ingameQuestions={ingameQuestions}

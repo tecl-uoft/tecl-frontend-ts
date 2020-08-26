@@ -4,12 +4,14 @@ import "./ballTossIntro.css";
 function BallTossIntro(props) {
   const [showPlayText, setShowPlayText] = useState(false);
   window.setTimeout(() => setShowPlayText(true), 2000);
-  const { alienA, alienB } = props;
+  const { alienA, alienB, isKidMode } = props;
 
   return (
     <div>
       <h3 class="text-4xl font-bold text-center text-gray-800 mb-16">
-        Here are the names of their species and what they look like:
+        {isKidMode
+          ? "Here are the family names of the aliens we are watching!"
+          : "Here are the names of their species and what they look like:"}
         {/* Now you're going to learn about some aliens that live on this planet. */}
       </h3>
       <div class="flex justify-around text-gray-800 text-2xl mb-16">

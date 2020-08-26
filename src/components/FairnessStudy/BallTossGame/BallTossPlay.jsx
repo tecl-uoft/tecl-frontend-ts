@@ -8,6 +8,7 @@ function BallTossPlay(props) {
     rightAlien,
     trialNum,
     gameNum,
+    alienTrialCharNames,
     throwEvent,
   } = props;
 
@@ -736,13 +737,13 @@ function BallTossPlay(props) {
     totalAnimationDuration += 500;
     window.setTimeout(() => {
       setShowPlayText(true);
-    }, totalAnimationDuration);
+    }, process.env.NODE_ENV === "development" ? 0 : totalAnimationDuration);
     // }, 1);
   }, [trialNum, gameNum, throwEvent]);
 
   return (
     <div>
-      <div class="flex justify-between text-gray-800 text-2xl mt-64">
+      <div class="flex justify-between text-gray-800 text-2xl mt-32">
         <div
           ref={
             gameNum === "2" && throwEvent === "allPlay"
@@ -767,7 +768,7 @@ function BallTossPlay(props) {
             {<middleAlien.Side />}
           </div>
 
-          <p class="alien-label font-bold flex"> {middleAlien.name} </p>
+          <p class="alien-label font-bold flex"> {middleAlien.name} {alienTrialCharNames} </p>
         </div>
         <div class="mr-16">
           <div
@@ -803,7 +804,7 @@ function BallTossPlay(props) {
               Let's find out what kind of alien you would be!
             </p>
           )}
-          <div class="flex justify-around">
+          <div class="flex justify-around mb-16">
             <button
               onClick={() => {
                 setShowPlayText(false);

@@ -12,6 +12,7 @@ function BallTossPickAlien(props) {
     alienB,
     nextFunc,
     rep,
+    isKidMode,
     setIngameQuestions,
     ingameQuestions,
   } = props;
@@ -108,7 +109,9 @@ function BallTossPickAlien(props) {
             }`}
           </h3>
           <h3 class="text-2xl font-bold text-center text-gray-800 mb-16">
-            Why did you throw it to them in this manner?
+            {isKidMode
+              ? `Why did you pick them?`
+              : "Why did you throw it to them in this manner?"}
           </h3>
           <div className="flex justify-around text-gray-800 text-2xl mb-16 mt-16">
             <div className="mx-32">
@@ -146,7 +149,6 @@ function BallTossPickAlien(props) {
                 //  0 (throw to the excluding character) or 1 (throw to the excluded character)
                 // record the answer to ball throw question
 
-                // on third repetition update question answer for post req
                 await submitResponse();
                 setSelected(0);
 
