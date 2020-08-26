@@ -32,7 +32,7 @@ interface WebgazerParams {
   faceFeedbackBoxRatio: number;
   faceOverlayId: "webgazerFaceOverlay";
   gazeDotId: "webgazerGazeDot";
-  getEventTypes(): any;
+  getEventTypes(): string[];
   mirrorVideo: boolean;
   moveTickSize: number;
   showFaceFeedbackBox: boolean;
