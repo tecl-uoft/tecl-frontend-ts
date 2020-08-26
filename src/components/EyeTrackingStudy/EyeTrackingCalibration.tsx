@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { WebgazerPredictionObject, IWebgazer } from "./IWebgazerType";
+import StudyNextButton from "../common/StudyNextButton";
 
 interface IEyeTrackingCalibrationProps {
   nextState(): void;
@@ -54,6 +55,7 @@ function EyeTrackingCalibration(props: IEyeTrackingCalibrationProps) {
           alt="rattle"
         />
       </div>
+      <StudyNextButton nextStateFunc={nextState} />
     </div>
   );
 }
