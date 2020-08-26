@@ -740,6 +740,7 @@ function BallTossPlay(props) {
     window.setTimeout(
       () => {
         setShowPlayText(true);
+        window.scrollTo(0, document.body.scrollHeight)
       },
       process.env.NODE_ENV === "development" ? 0 : totalAnimationDuration
     );
