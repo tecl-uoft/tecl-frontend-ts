@@ -10,8 +10,8 @@ import Loading from "./pages/Loading";
 import TeamsStudyEntry from "./pages/TeamsStudyEntry";
 import FroggerStudyEntry from "./pages/FroggerStudyEntry";
 import EyeTrackingEntry from "./pages/EyeTrackingEntry";
-import TeamsStudyGame from "./pages/TeamsStudyGame";
 
+const TeamsStudyGame = lazy(() => import("./pages/TeamsStudyGame"));
 const EyeTrackingGame = lazy(() => import("./pages/EyeTrackingGame"));
 const FroggerStudyGame = lazy(() => import("./pages/FroggerStudyGame"));
 /* End Route Pages */
