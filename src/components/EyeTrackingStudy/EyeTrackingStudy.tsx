@@ -16,7 +16,7 @@ enum studyStates {
 function EyeTrackingStudy() {
   const [studyState, setStudyState] = useState(
     process.env.NODE_ENV === "development"
-      ? studyStates.EyeTrackingInstructions
+      ? studyStates.EyeTrackingCalibration
       : studyStates.AskConsent
   );
   const [webgazer, setWebgazer] = useState<IWebgazer | undefined>(undefined);

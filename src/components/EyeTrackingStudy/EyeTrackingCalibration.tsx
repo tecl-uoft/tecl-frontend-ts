@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, MouseEvent } from "react";
 import { WebgazerPredictionObject, IWebgazer } from "./IWebgazerType";
 import StudyNextButton from "../common/StudyNextButton";
 
@@ -9,28 +9,57 @@ interface IEyeTrackingCalibrationProps {
 
 function EyeTrackingCalibration(props: IEyeTrackingCalibrationProps) {
   const { nextState, webgazer } = props;
+  const ROUND_COUNT = 0;
 
-  const [justifyCalEl, setJustifyCalEl] = useState("justify-start");
   const [justifyCalRemoveEl, setJustifyCalRemoveEl] = useState("justify-end");
+  const [clickColor, setClickColor] = useState(200);
+  const [showButton, setShowButton] = useState(false);
   const [calCount, setCalCount] = useState(0);
-  const calibrationContainerEl = useRef<HTMLDivElement>(null);
+  const calibrationContainerRef = useRef<HTMLDivElement>(null);
 
-  async function resumeWebgazer() {
-    /* await webgazer.resume(); */
-    setTimeout(() => {
-      const calibrationContainer = calibrationContainerEl.current as HTMLDivElement;
-      calibrationContainer.classList.remove(justifyCalRemoveEl);
-      calibrationContainer.classList.add(justifyCalEl);
-      setJustifyCalEl(justifyCalRemoveEl);
-      setJustifyCalRemoveEl(justifyCalEl);
-      setCalCount(calCount + 1);
-      if (calCount < 10) {
-        webgazer.pause()
-      } else {
-        calibrationContainer.classList.add("hidden");
+  async function activateWebgazer(event: MouseEvent<HTMLImageElement>) {
+    const calibrationContainerEl = calibrationContainerRef.current as HTMLDivElement;
+    const claibrationImageEl = event.target as HTMLImageElement;
+    claibrationImageEl.classList.remove(`bg-orange-${clickColor - 100}`);
+
+    if (clickColor < 800) {
+      setClickColor(clickColor + 100);
+      claibrationImageEl.classList.add(`bg-orange-${clickColor}`);
+      await webgazer.resume();
+    } else {
+      await webgazer.pause();
+      claibrationImageEl.classList.remove(`bg-orange-800`);
+      setClickColor(100);
+      calibrationContainerEl.classList.remove(justifyCalRemoveEl);
+      let nextJustify = justifyCalRemoveEl;
+      switch (justifyCalRemoveEl) {
+        case "justify-end":
+          nextJustify = "justify-center";
+          break;
+        case "justify-center":
+          nextJustify = "justify-start";
+          break;
+        case "justify-start":
+          nextJustify = "justify-end";
+          break;
       }
-    }, 5000);
+      setCalCount(calCount + 1);
+      calibrationContainerEl.classList.add(nextJustify);
+      setJustifyCalRemoveEl(nextJustify);
+      if (calCount >= ROUND_COUNT) {
+        finishCalibrationRound(calibrationContainerEl);
+      }
+    }
   }
+
+  function finishCalibrationRound(el: HTMLDivElement) {
+    /* el.classList.add("hidden"); */
+    setShowButton(true);
+  }
+
+  useEffect(() => {
+    console.log(showButton);
+  }, [showButton]);
 
   useEffect(() => {
     if (webgazer) {
@@ -46,16 +75,20 @@ function EyeTrackingCalibration(props: IEyeTrackingCalibrationProps) {
   return (
     <div className="">
       {/* <canvas id="plotting_canvas" width="100%" height="100%"></canvas> */}
-      <div className="flex  justify-end mt-64" ref={calibrationContainerEl}>
+      <div className="flex  justify-end mt-64" ref={calibrationContainerRef}>
         <img
-          id="rattler-pt1"
-          className="cursor-pointer hover:bg-orange-200"
-          onClick={() => resumeWebgazer()}
+          className="cursor-pointer bg-orange-100 rounded-full"
+          onClick={activateWebgazer}
+          style={{ userSelect: "none" }}
           src="/assets/eye_tracking/rattle.gif"
           alt="rattle"
         />
       </div>
-      <StudyNextButton nextStateFunc={nextState} />
+      {showButton ? (
+        <div className="container mx-auto hidden">
+          <StudyNextButton nextStateFunc={nextState} />
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -80,7 +113,7 @@ async function displayCalibration(webgazer: any) {
   await webgazer.resume();
 
   // Set to true if you want to save the data even if you reload the page.
-  /* webgazer.saveDataAcrossSessions = true; */
+  webgazer.saveDataAcrossSessions = false;
 }
 
 export default EyeTrackingCalibration;
