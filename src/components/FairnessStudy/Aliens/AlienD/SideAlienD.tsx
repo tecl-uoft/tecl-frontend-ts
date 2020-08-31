@@ -14,6 +14,7 @@ function SideAlienD() {
       </div>
       <div id="side-alien-d-body">
         <div id="side-alien-d-mouth"></div>
+        <div className="side-alien-d-pants" />
       </div>
       <div id="side-alien-d-right-leg" className="right-leg"></div>
       <div id="side-alien-d-left-leg" className="left-leg"></div>
