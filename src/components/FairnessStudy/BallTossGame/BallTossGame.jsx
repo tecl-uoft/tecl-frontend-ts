@@ -31,7 +31,7 @@ function BallTossGame(props) {
   const [frameCount, setFrameCount] = useState(0);
   const [ingameQuestions, setIngameQuestions] = useState([]);
   const [isKidMode, setIsKidMode] = useState(
-    process.env.NODE_ENV === "development" ? true : false
+    process.env.NODE_ENV === "development" ? false : false
   );
 
   // sets game mode for kids only
@@ -40,6 +40,7 @@ function BallTossGame(props) {
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get("game_type") === "kids") {
       setIsKidMode(true);
+      require("./uniqueAliens.css")
     }
   }, []);
 
@@ -104,6 +105,7 @@ function BallTossGame(props) {
               gameNum="1"
               throwEvent={allThrowEvents.event1}
               leftAlien={alienA}
+              isKidMode={isKidMode}
               leftAlienFirstName={alienCharNames.A1}
               middleAlien={
                 allThrowEvents.event1 === "selfPlay" ? alienA : alienB
@@ -134,6 +136,7 @@ function BallTossGame(props) {
             <BallTossPlay
               trialNum="1"
               gameNum="2"
+              isKidMode={isKidMode}
               throwEvent={allThrowEvents.event2}
               alienTrialCharNames={alienCharNames}
               leftAlien={alienA}
@@ -167,6 +170,7 @@ function BallTossGame(props) {
             <BallTossPlay
               trialNum="1"
               gameNum="3"
+              isKidMode={isKidMode}
               throwEvent={allThrowEvents.event3}
               leftAlien={alienA}
               leftAlienFirstName={alienCharNames.A1}

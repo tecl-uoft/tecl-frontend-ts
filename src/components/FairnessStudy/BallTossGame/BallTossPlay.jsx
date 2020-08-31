@@ -1,5 +1,5 @@
 import React, { useState, useLayoutEffect, useRef } from "react";
-import "./uniqueAliens.css"
+/* import "./uniqueAliens.css" */
 // import "./alienBall.css";
 
 function BallTossPlay(props) {
@@ -7,6 +7,7 @@ function BallTossPlay(props) {
     leftAlien,
     middleAlien,
     rightAlien,
+    isKidMode,
     trialNum,
     gameNum,
     leftAlienFirstName,
@@ -765,7 +766,8 @@ function BallTossPlay(props) {
           {<leftAlien.Side />}
           <p class="alien-label font-bold flex">
             {" "}
-            {leftAlienFirstName + " " + leftAlien.name}{" "}
+            {isKidMode ? leftAlienFirstName + " " : null}
+            {leftAlien.name}{" "}
           </p>
         </div>
         <div class="-mt-64 md:ml-20">
@@ -784,7 +786,7 @@ function BallTossPlay(props) {
 
           <p class="alien-label font-bold flex">
             {" "}
-            {middleAlienFirstName + " " + middleAlien.name}{" "}
+            {isKidMode ? middleAlienFirstName + " " : null} {middleAlien.name}{" "}
           </p>
         </div>
         <div class="mr-16">
@@ -801,7 +803,8 @@ function BallTossPlay(props) {
           </div>
           <p class="alien-label font-bold flex">
             {" "}
-            {rightAlienFirstName + " " + rightAlien.name}{" "}
+            {isKidMode ? rightAlienFirstName + " " : null}
+            {rightAlien.name}{" "}
           </p>
         </div>
         <div ref={alienBallRef} class="alien-ball">

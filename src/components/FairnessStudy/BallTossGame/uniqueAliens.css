@@ -20,10 +20,17 @@
   border-radius: 5px 25px 25px 5px;
 }
 
+#Sean .side-alien-d-pants {
+  background-color: khaki;
+}
+
 #Celine .side-alien-c-pants {
   background-color: rebeccapurple;
 }
 
+#Maya .side-alien-l-pants {
+  background-color: brown;
+}
 
 #Tracey .side-alien-c-pants {
   background-color: orange;
