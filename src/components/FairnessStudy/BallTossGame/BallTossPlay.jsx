@@ -1,4 +1,5 @@
 import React, { useState, useLayoutEffect, useRef } from "react";
+import "./uniqueAliens.css"
 // import "./alienBall.css";
 
 function BallTossPlay(props) {
@@ -740,9 +741,11 @@ function BallTossPlay(props) {
     window.setTimeout(
       () => {
         setShowPlayText(true);
-        window.scrollTo(0, document.body.scrollHeight)
+        window.scrollTo(0, document.body.scrollHeight);
       },
-      process.env.NODE_ENV === "development" ? 0 : totalAnimationDuration
+      process.env.NODE_ENV === "development"
+        ? totalAnimationDuration
+        : totalAnimationDuration
     );
     // }, 1);
   }, [trialNum, gameNum, throwEvent]);
@@ -751,6 +754,7 @@ function BallTossPlay(props) {
     <div>
       <div class="flex justify-between text-gray-800 text-2xl mt-64">
         <div
+          id={leftAlienFirstName}
           ref={
             gameNum === "2" && throwEvent === "allPlay"
               ? alienRightRef
@@ -759,11 +763,15 @@ function BallTossPlay(props) {
           class="ml-16"
         >
           {<leftAlien.Side />}
-          <p class="alien-label font-bold flex"> {leftAlienFirstName + " " + leftAlien.name} </p>
+          <p class="alien-label font-bold flex">
+            {" "}
+            {leftAlienFirstName + " " + leftAlien.name}{" "}
+          </p>
         </div>
         <div class="-mt-64 md:ml-20">
           {/* throwEvent === "otherPlay" || throwEvent === "allPlay" ?  */}
           <div
+            id={middleAlienFirstName}
             ref={alienMiddleRef}
             style={{
               transform: `scaleX(${
@@ -781,6 +789,7 @@ function BallTossPlay(props) {
         </div>
         <div class="mr-16">
           <div
+            id={rightAlienFirstName}
             ref={
               gameNum === "2" && throwEvent === "allPlay"
                 ? alienLeftRef
@@ -790,7 +799,10 @@ function BallTossPlay(props) {
           >
             {<rightAlien.Side />}
           </div>
-          <p class="alien-label font-bold flex"> {rightAlienFirstName + " " + rightAlien.name} </p>
+          <p class="alien-label font-bold flex">
+            {" "}
+            {rightAlienFirstName + " " + rightAlien.name}{" "}
+          </p>
         </div>
         <div ref={alienBallRef} class="alien-ball">
           <div class="main-alien-ball" />
