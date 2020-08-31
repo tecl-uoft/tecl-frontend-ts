@@ -26,7 +26,7 @@ enum FairnessStudyStates {
 function FairnessStudy() {
   const [trialNum, setTrialNum] = useState(
     process.env.NODE_ENV === "development"
-      ? FairnessStudyStates.GameThree
+      ? FairnessStudyStates.GameFour
       : FairnessStudyStates.AskConsent
   );
   const [randomizedElements, setRandomizedElements] = useState(null as any);
@@ -250,7 +250,7 @@ function FairnessStudy() {
                 alienCharNames={{
                   A1: "Omar",
                   A2: "Arpit",
-                  B: "Celine",
+                  B: "Rebecca",
                 }}
                 allThrowEvents={trialInfo.trialThree.allThrowEvents}
                 setTrialFunc={() => setTrialNum(6)}

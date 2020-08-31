@@ -1,6 +1,5 @@
 .side-alien-f {
   margin-top: 46px;
-  margin-left: -24px;
 }
 
 #side-alien-f-body {
@@ -9,6 +8,17 @@
   width: 140px;
   background-color: lightslategray;
   border-radius: 45px;
+  overflow: hidden;
+  z-index: 5;
+}
+
+.side-alien-f-pants {
+  position: absolute;
+  margin-top: 60px;
+  height: 30px;
+  width: 140px;
+  background-color: thistle;
+  border-radius: 0px;
   overflow: hidden;
   z-index: 5;
 }

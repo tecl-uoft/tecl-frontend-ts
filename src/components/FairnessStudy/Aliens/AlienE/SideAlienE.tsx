@@ -21,6 +21,7 @@ function SideAlienE() {
           </div>
         </div>
         <div id="side-alien-e-mouth"></div>
+        <div className="side-alien-e-pants" />
       </div>
       <div className=" right-leg"></div>
       <div id="side-alien-e-shell" className="left-leg"></div>
