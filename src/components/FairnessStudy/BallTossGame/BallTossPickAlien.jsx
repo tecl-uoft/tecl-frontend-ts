@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import SingleFairnessQuestion from "../FairnessStudyQuestions/SingleFairnessQuestion";
 
 function BallTossPickAlien(props) {
   const [selected, setSelected] = useState(0);
@@ -98,46 +99,77 @@ function BallTossPickAlien(props) {
         </div>
       ) : (
         <div>
-          <h3 class="text-3xl font-bold text-center text-gray-800 mb-8">
-            You picked{" "}
-            {`the ${alienA.name} ${alienAPicked} time${
-              alienAPicked > 1 ? "s" : ""
-            }`}
-            <br /> and
-            {` the ${alienB.name} ${alienBPicked} time${
-              alienBPicked > 1 ? "s" : ""
-            }`}
-          </h3>
-          <h3 class="text-2xl font-bold text-center text-gray-800 mb-16">
-            {isKidMode
-              ? `Why did you pick them?`
-              : "Why did you throw it to them in this manner?"}
-          </h3>
+          {isKidMode ? (
+            <h3 className="text-3xl font-bold text-center text-gray-800 mb-2">
+              {" "}
+              <p>You picked {alienAPicked > 0 ? alienA.name : alienB.name} </p>{" "}
+            </h3>
+          ) : (
+            <h3 className="text-3xl font-bold text-center text-gray-800 mb-8">
+              <p>
+                {`You picked the ${alienA.name} ${alienAPicked} time${
+                  alienAPicked > 1 ? "s" : ""
+                }`}
+                <br /> and
+                {` the ${alienB.name} ${alienBPicked} time${
+                  alienBPicked > 1 ? "s" : ""
+                }`}{" "}
+              </p>{" "}
+            </h3>
+          )}
+
+          {isKidMode ? (
+            <SingleFairnessQuestion
+              questionSol={pickResponse}
+              setQuestionSol={setPickResponse}
+              key={1}
+              setNum={3}
+              scale={[1, 2, 3, 4, 5, 6, 7, 8, 9]}
+              number={1}
+              question={{
+                text: `How likely do you think it is that a ${
+                  alienAPicked > 0 ? alienA.name : alienB.name
+                } will throw back to you`,
+              }}
+            />
+          ) : (
+            <h3 class="text-2xl font-bold text-center text-gray-800 mb-16">
+              "Why did you throw it to them in this manner?"{" "}
+            </h3>
+          )}
+
           <div className="flex justify-around text-gray-800 text-2xl mb-16 mt-16">
             <div className="mx-32">
               {<alienA.Front />}
               <p class="alien-label font-bold flex">
                 {alienA.name} <br />
-                {`(${alienAPicked} time${alienAPicked > 1 ? "s" : ""})`}
+                {isKidMode
+                  ? null
+                  : `(${alienAPicked} time${alienAPicked > 1 ? "s" : ""})`}
               </p>
             </div>
             <div className="mx-32">
               {<alienB.Front />}
               <p class="alien-label font-bold flex">
                 {alienB.name} <br />
-                {`(${alienBPicked} time${alienBPicked > 1 ? "s" : ""})`}
+                {isKidMode
+                  ? null
+                  : `(${alienBPicked} time${alienBPicked > 1 ? "s" : ""})`}
               </p>
             </div>
           </div>
-          <div class="flex flex-wrap  text-lg -mx-3 mb-2">
-            <div class="px-3 w-full flex justify-center">
-              <textarea
-                onChange={(e) => setPickResponse(e.target.value)}
-                class="appearance-none block w-3/4 h-32 bg-gray-300 placeholder-gray-700 text-gray-800 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                placeholder="Add your thoughts here..."
-              />
+
+          {isKidMode ? null : (
+            <div class="flex flex-wrap  text-lg -mx-3 mb-2">
+              <div class="px-3 w-full flex justify-center">
+                <textarea
+                  onChange={(e) => setPickResponse(e.target.value)}
+                  class="appearance-none block w-3/4 h-32 bg-gray-300 placeholder-gray-700 text-gray-800 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  placeholder="Add your thoughts here..."
+                />
+              </div>
             </div>
-          </div>
+          )}
         </div>
       )}
 

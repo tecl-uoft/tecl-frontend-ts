@@ -31,7 +31,7 @@ function BallTossGame(props) {
   const [frameCount, setFrameCount] = useState(0);
   const [ingameQuestions, setIngameQuestions] = useState([]);
   const [isKidMode, setIsKidMode] = useState(
-    process.env.NODE_ENV === "development" ? false : false
+    process.env.NODE_ENV === "development" ? true : false
   );
 
   // sets game mode for kids only
@@ -82,7 +82,7 @@ function BallTossGame(props) {
     // TODO double check as setframecount is set to 0 twice
     // by the previous use effect i.e change ingameq updates setTrialFun
 
-    setFrameCount(process.env.NODE_ENV === "development" ? 1 : 0);
+    setFrameCount(process.env.NODE_ENV === "development" ? 4 : 0);
   }, [setTrialFunc]);
 
   return (
