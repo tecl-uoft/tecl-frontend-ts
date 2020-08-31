@@ -82,7 +82,7 @@ function BallTossGame(props) {
     // TODO double check as setframecount is set to 0 twice
     // by the previous use effect i.e change ingameq updates setTrialFun
 
-    setFrameCount(process.env.NODE_ENV === "development" ? 4 : 0);
+    setFrameCount(process.env.NODE_ENV === "development" ? 11 : 0);
   }, [setTrialFunc]);
 
   return (
