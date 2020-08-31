@@ -26,7 +26,7 @@ enum FairnessStudyStates {
 function FairnessStudy() {
   const [trialNum, setTrialNum] = useState(
     process.env.NODE_ENV === "development"
-      ? FairnessStudyStates.GameTwo
+      ? FairnessStudyStates.GameOne
       : FairnessStudyStates.AskConsent
   );
   const [randomizedElements, setRandomizedElements] = useState(null as any);

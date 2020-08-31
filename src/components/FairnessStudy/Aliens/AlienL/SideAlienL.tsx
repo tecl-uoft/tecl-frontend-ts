@@ -10,6 +10,7 @@ function SideAlienL() {
             <div className="side-alien-l-ret" />
           </div>
         </div>
+        <div className="side-alien-l-pants" />
       </div>
       <div id="side-alien-l-mouth"></div>
       <div id="side-alien-l-right-leg" className="right-leg"></div>

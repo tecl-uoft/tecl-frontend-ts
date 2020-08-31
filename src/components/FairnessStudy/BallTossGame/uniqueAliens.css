@@ -9,3 +9,13 @@
 #Brian .side-alien-b-pants {
   background-color: gold;
 }
+
+#Julia #side-alien-h-body-bot {
+  background-color: papayawhip;
+  border-radius: 5px 25px 25px 5px;
+}
+
+#David #side-alien-h-body-bot {
+  background-color: olivedrab;
+  border-radius: 5px 25px 25px 5px;
+}

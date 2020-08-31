@@ -8,6 +8,7 @@ function FrontAlienI() {
       <div id="front-alien-i-body-1">
         <div id="front-alien-i-right-arm"></div>
         <div id="front-alien-i-left-arm"></div>
+        <div className="front-alien-i-pants" />
       </div>
       <div id="front-alien-i-mouth"></div>
       <div className="front-alien-i-eye" id="front-alien-i-eye-right">

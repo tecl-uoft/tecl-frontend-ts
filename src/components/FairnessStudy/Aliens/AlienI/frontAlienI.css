@@ -23,6 +23,16 @@
   z-index: 5;
 }
 
+/* .front-alien-i-pants {
+  position: absolute;
+  margin-top: 80px;
+  height: 60px;
+  width: 120px;
+  background-color: rebeccapurple;
+  border-radius: 35%;
+  z-index: 5;
+} */
+
 .front-alien-i-eye {
   position: absolute;
   height: 16px;

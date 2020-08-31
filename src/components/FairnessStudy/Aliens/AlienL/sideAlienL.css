@@ -10,7 +10,7 @@
   background-color: burlywood;
   overflow: hidden;
   border-radius: 45%;
-  z-index: 5;
+  z-index: 11;
 }
 
 .side-alien-l-eye {
@@ -19,8 +19,19 @@
   width: 60px;
   background-color: white;
   border-radius: 50%;
-  padding: 8px; 
+  padding: 8px;
   z-index: 6;
+}
+
+.side-alien-l-pants {
+  position: absolute;
+  margin-top: 80px;
+  height: 40px;
+  width: 100px;
+  background-color: brown;
+  overflow: hidden;
+  border-radius: 0px 0px 45% 0px;
+  z-index: 11;
 }
 
 #side-alien-l-eye-right {

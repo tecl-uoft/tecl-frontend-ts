@@ -22,7 +22,9 @@ function SideAlienH() {
           </div>
         </div>
       </div>
-      <div id="side-alien-h-body-bot"></div>
+      <div id="side-alien-h-body-bot">
+        <div className="side-alien-h-pants" />
+      </div>
 
       <div id="side-alien-h-mouth"></div>
       <div id="side-alien-h-right-leg"></div>
