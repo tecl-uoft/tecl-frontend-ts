@@ -9,8 +9,8 @@ interface IFroggerPracticeProps {
 function FroggerPractice(props: IFroggerPracticeProps) {
   const { nextState } = props;
   const unityContent = new UnityContent(
-    "/scripts/unity/Frogger_RealGame_v5.json",
-    "/scripts/unity/UnityLoader.js"
+    "/scripts/frogger_practice/Frogger_Practice_v2.json",
+    "/scripts/frogger_practice/UnityLoader.js"
   );
 
   return (

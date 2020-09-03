@@ -44,8 +44,8 @@ function FroggerGame(props: IFroggerGameProps) {
 
   const { nextState } = props;
   const unityContent = new UnityContent(
-    "/scripts/unity/Frogger_RealGame_v5.json",
-    "/scripts/unity/UnityLoader.js"
+    "/scripts/frogger_real/Frogger_RealGame_v5.json",
+    "/scripts/frogger_real/UnityLoader.js"
   );
   unityContent.on("progress", (progression: number) => {
     setLoadingProgress(progression);
