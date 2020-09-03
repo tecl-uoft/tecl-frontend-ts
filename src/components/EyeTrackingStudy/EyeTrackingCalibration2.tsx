@@ -38,9 +38,6 @@ function EyeTrackingCalibration(props: IEyeTrackingCalibrationProps) {
           nextJustify = "justify-center";
           break;
         case "justify-center":
-          nextJustify = "justify-start";
-          break;
-        case "justify-start":
           nextJustify = "justify-end";
           break;
       }
@@ -74,14 +71,13 @@ function EyeTrackingCalibration(props: IEyeTrackingCalibrationProps) {
   }, [webgazer]);
 
   return (
-    <div className="">
-      {/* <canvas id="plotting_canvas" width="100%" height="100%"></canvas> */}
-      <div className="flex  justify-end mt-64" ref={calibrationContainerRef}>
+    <div className="h-screen w-screen">
+      <div className="flex  justify-end" ref={calibrationContainerRef}>
         <img
-          className="cursor-pointer bg-orange-100 rounded-full"
+          className="cursor-pointer bg-orange-100 rounded-full h-64"
           onClick={activateWebgazer}
           style={{ userSelect: "none" }}
-          src="/assets/eye_tracking/rattle.gif"
+          src="/assets/eye_tracking/dancing_baby.gif"
           alt="rattle"
         />
       </div>

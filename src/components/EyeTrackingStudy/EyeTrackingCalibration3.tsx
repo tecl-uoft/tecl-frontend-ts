@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef, MouseEvent } from "react";
-import { IWebgazer } from "./IWebgazerType";
+import { WebgazerPredictionObject, IWebgazer } from "./IWebgazerType";
 import StudyNextButton from "../common/StudyNextButton";
-import { displayCalibration } from "./calibrationScript";
 
 interface IEyeTrackingCalibrationProps {
   nextState(): void;
@@ -10,7 +9,7 @@ interface IEyeTrackingCalibrationProps {
 
 function EyeTrackingCalibration(props: IEyeTrackingCalibrationProps) {
   const { nextState, webgazer } = props;
-  const ROUND_COUNT = 1;
+  const ROUND_COUNT = 0;
 
   const [justifyCalRemoveEl, setJustifyCalRemoveEl] = useState("justify-end");
   const [clickColor, setClickColor] = useState(200);
@@ -38,9 +37,6 @@ function EyeTrackingCalibration(props: IEyeTrackingCalibrationProps) {
           nextJustify = "justify-center";
           break;
         case "justify-center":
-          nextJustify = "justify-start";
-          break;
-        case "justify-start":
           nextJustify = "justify-end";
           break;
       }
@@ -54,7 +50,7 @@ function EyeTrackingCalibration(props: IEyeTrackingCalibrationProps) {
   }
 
   function finishCalibrationRound(el: HTMLDivElement) {
-    el.classList.add("hidden");
+    /* el.classList.add("hidden"); */
     setShowButton(true);
   }
 
@@ -74,24 +70,47 @@ function EyeTrackingCalibration(props: IEyeTrackingCalibrationProps) {
   }, [webgazer]);
 
   return (
-    <div className="">
+    <div className="h-screen w-screen">
       {/* <canvas id="plotting_canvas" width="100%" height="100%"></canvas> */}
-      <div className="flex  justify-end mt-64" ref={calibrationContainerRef}>
+      <div className="flex  justify-end" ref={calibrationContainerRef}>
         <img
-          className="cursor-pointer bg-orange-100 rounded-full"
+          className="cursor-pointer bg-orange-100 rounded-full h-64"
           onClick={activateWebgazer}
           style={{ userSelect: "none" }}
-          src="/assets/eye_tracking/rattle.gif"
+          src="/assets/eye_tracking/color_circle.gif"
           alt="rattle"
         />
       </div>
-      {showButton && (
-        <div className="container mx-auto mt-64">
+      {showButton ? (
+        <div className="container mx-auto hidden">
           <StudyNextButton nextStateFunc={nextState} />
         </div>
-      )}
+      ) : null}
     </div>
   );
+}
+
+async function displayCalibration(webgazer: any) {
+  webgazer.params.showVideoPreview = true;
+
+  //start the webgazer tracker
+  await webgazer
+    .setRegression("ridge") /* currently must set regression and tracker */
+    .setGazeListener(function (data: WebgazerPredictionObject, clock: Date) {
+      //   console.log(data); /* data is an object containing an x and y key which are the x and y prediction coordinates (no bounds limiting) */
+      //   console.log(clock); /* elapsed time in milliseconds since webgazer.begin() was called */
+    })
+    .begin();
+  webgazer.showPredictionPoints(
+    true
+  ); /* shows a square every 100 milliseconds where current prediction is */
+
+  // Kalman Filter defaults to on. Can be toggled by user.
+  webgazer.applyKalmanFilter = true;
+  await webgazer.resume();
+
+  // Set to true if you want to save the data even if you reload the page.
+  webgazer.saveDataAcrossSessions = false;
 }
 
 export default EyeTrackingCalibration;

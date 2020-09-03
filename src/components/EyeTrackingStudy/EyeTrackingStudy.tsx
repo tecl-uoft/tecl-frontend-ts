@@ -3,14 +3,18 @@ import EyeTrackingConsent from "./EyeTrackingConsent";
 import ErrorNotFound from "../../pages/ErrorNotFound";
 import EyeTrackingInstructions from "./EyeTrackingInstructions";
 import EyeTrackingCalibration from "./EyeTrackingCalibration";
+import EyeTrackingCalibration2 from "./EyeTrackingCalibration2";
+import EyeTrackingAccuracyCheck from "./EyeTrackingAccuracyCheck";
 import { IWebgazer } from "./IWebgazerType";
 /* import EyeTrackingDemo from "./EyeTrackingDemo";
 import EyeTrackingInstructions from "./EyeTrackingInstructions"; */
 
 enum studyStates {
-  AskConsent = "askConsent",
-  EyeTrackingInstructions = "eyeTrackingInstructions",
-  EyeTrackingCalibration = "eyeTrackingCalibration",
+  AskConsent = 0,
+  EyeTrackingInstructions = 1,
+  EyeTrackingCalibration = 2,
+  EyeTrackingCalibration2 = 3,
+  AccuracyCheck = 4,
 }
 
 function EyeTrackingStudy() {
@@ -46,10 +50,21 @@ function EyeTrackingStudy() {
           <EyeTrackingCalibration
             webgazer={webgazer as IWebgazer}
             nextState={() => {
-              setStudyState(studyStates.EyeTrackingCalibration);
+              setStudyState(studyStates.EyeTrackingCalibration2);
             }}
           />
         );
+      case studyStates.EyeTrackingCalibration2:
+        return (
+          <EyeTrackingCalibration2
+            webgazer={webgazer as IWebgazer}
+            nextState={() => {
+              setStudyState(studyStates.AccuracyCheck);
+            }}
+          />
+        );
+      case studyStates.AccuracyCheck:
+        return <EyeTrackingAccuracyCheck webgazer={webgazer as IWebgazer} />;
       default:
         return <ErrorNotFound />;
     }
