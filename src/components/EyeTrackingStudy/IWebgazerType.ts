@@ -2,11 +2,15 @@ export interface IWebgazer {
   params: WebgazerParams;
   applyKalmanFilter: boolean;
   saveDataAcrossSessions: boolean;
+  isReady(): boolean;
   addRegression(name: RegressionType): IWebgazer;
   setRegression(name: RegressionType): IWebgazer;
   setGazeListener(
     setter: (data: WebgazerPredictionObject, clock: Date) => void
   ): IWebgazer;
+  showFaceOverlay(show: boolean): void;
+  showFaceFeedbackBox(show: boolean): void;
+  showVideo(show: boolean): void;
   showPredictionPoints(isShown: boolean): void;
   getCurrentPrediction(): null | WebgazerPredictionObject;
   begin(): Promise<IWebgazer>;
