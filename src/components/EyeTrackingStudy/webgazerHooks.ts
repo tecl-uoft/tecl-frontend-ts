@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { IWebgazer, WebgazerPredictionObject } from "./IWebgazerType";
+import { IWebgazer, WebgazerPredictionObject, RegressionType } from "./IWebgazerType";
 
 export function useWebgazerCalibration(webgazer: IWebgazer) {
   useEffect(() => {
@@ -20,12 +20,12 @@ export function useWebgazerCalibration(webgazer: IWebgazer) {
   }, [webgazer]);
 }
 
-async function displayCalibration(webgazer: any) {
+async function displayCalibration(webgazer: IWebgazer) {
   webgazer.params.showVideoPreview = true;
 
   //start the webgazer tracker
   await webgazer
-    .setRegression("ridge") /* currently must set regression and tracker */
+    .setRegression(RegressionType.Ridge) /* currently must set regression and tracker */
     .setGazeListener(function (data: WebgazerPredictionObject, clock: Date) {
       //   console.log(data); /* data is an object containing an x and y key which are the x and y prediction coordinates (no bounds limiting) */
       //   console.log(clock); /* elapsed time in milliseconds since webgazer.begin() was called */

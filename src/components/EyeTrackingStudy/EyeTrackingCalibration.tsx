@@ -64,7 +64,7 @@ function EyeTrackingCalibration(props: IEyeTrackingCalibrationProps) {
       {/* <canvas id="plotting_canvas" width="100%" height="100%"></canvas> */}
       <div className="flex  justify-end mt-64" ref={calibrationContainerRef}>
         <img
-          className="cursor-pointer h-64 bg-orange-100 rounded-full"
+          className="cursor-pointer w-64 bg-orange-100 rounded-full"
           onClick={activateWebgazer}
           style={{ userSelect: "none" }}
           src="/assets/eye_tracking/rattle.gif"
