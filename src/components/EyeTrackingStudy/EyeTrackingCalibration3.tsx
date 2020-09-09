@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useRef, MouseEvent } from "react";
+import React, { useState, useRef, MouseEvent } from "react";
 import { WebgazerPredictionObject, IWebgazer } from "./IWebgazerType";
 import StudyNextButton from "../common/StudyNextButton";
+import { useWebgazerCalibration } from "./webgazerHooks";
 
 interface IEyeTrackingCalibrationProps {
   nextState(): void;
@@ -10,6 +11,7 @@ interface IEyeTrackingCalibrationProps {
 function EyeTrackingCalibration(props: IEyeTrackingCalibrationProps) {
   const { nextState, webgazer } = props;
   const ROUND_COUNT = 0;
+  useWebgazerCalibration(webgazer);
 
   const [justifyCalRemoveEl, setJustifyCalRemoveEl] = useState("justify-end");
   const [clickColor, setClickColor] = useState(200);
@@ -53,21 +55,6 @@ function EyeTrackingCalibration(props: IEyeTrackingCalibrationProps) {
     /* el.classList.add("hidden"); */
     setShowButton(true);
   }
-
-  useEffect(() => {
-    console.log(showButton);
-  }, [showButton]);
-
-  useEffect(() => {
-    if (webgazer) {
-      displayCalibration(webgazer);
-      console.log(webgazer);
-      return () => {
-        webgazer.params.showVideoPreview = false;
-        webgazer.end();
-      };
-    }
-  }, [webgazer]);
 
   return (
     <div className="h-screen w-screen">

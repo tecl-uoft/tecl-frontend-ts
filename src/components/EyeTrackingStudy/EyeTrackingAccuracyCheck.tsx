@@ -29,6 +29,7 @@ function EyeTrackingAccuracyCheck(props: IEyeTrackingAccuracyCheck) {
       const lookTargetEl = lookTargetRef.current as HTMLImageElement;
       displayCalibration(webgazer, lookTargetEl, hitStateDispatch);
       return () => {
+        
         webgazer.params.showVideoPreview = false;
         webgazer.end();
       };

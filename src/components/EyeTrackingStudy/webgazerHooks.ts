@@ -1,6 +1,24 @@
-import { WebgazerPredictionObject } from "./IWebgazerType";
+import { useEffect } from "react";
+import { IWebgazer, WebgazerPredictionObject } from "./IWebgazerType";
 
-export async function displayCalibration(webgazer: any) {
+export function useWebgazerCalibration(webgazer: IWebgazer) {
+  useEffect(() => {
+    if (webgazer) {
+      webgazer.resume();
+      displayCalibration(webgazer);
+      return () => {
+        const predictionPointEl = document.querySelector(
+          `#${webgazer.params.gazeDotId}`
+        );
+        predictionPointEl?.remove();
+        webgazer.params.showVideoPreview = false;
+        webgazer.pause();
+      };
+    }
+  }, [webgazer]);
+}
+
+async function displayCalibration(webgazer: any) {
   webgazer.params.showVideoPreview = true;
 
   //start the webgazer tracker
