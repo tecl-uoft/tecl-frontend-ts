@@ -38,9 +38,10 @@ function EyeTrackingAccuracyCheck(props: IEyeTrackingAccuracyCheck) {
   return (
     <div className="h-full w-screen">
       <h5 className="text-xl font-bold text-center text-gray-800 mt-8">
-        {hitState.total &&  `Accuracy: ${
-          Math.round((hitState.hit / hitState.total) * 1000) / 10
-        }%`}
+        {hitState.total &&
+          `Accuracy: ${
+            Math.round((hitState.hit / hitState.total) * 1000) / 10
+          }%`}
       </h5>
       <div className="flex justify-center mt-64">
         <img
@@ -59,7 +60,6 @@ function EyeTrackingAccuracyCheck(props: IEyeTrackingAccuracyCheck) {
 function hitStateReducer(state: HitStateType, action: HitActionType) {
   switch (action.type) {
     case "hit":
-      console.log(state.hit, state.total);
       return { miss: state.miss, hit: state.hit + 1, total: state.total + 1 };
     case "miss":
       return { miss: state.miss + 1, hit: state.hit, total: state.total + 1 };
@@ -73,7 +73,6 @@ async function displayCalibration(
   lookTargetEl: HTMLImageElement,
   hitStateDispatch: Function
 ) {
-  console.log("look tgt", lookTargetEl);
   webgazer.params.showVideoPreview = true;
 
   //start the webgazer tracker
