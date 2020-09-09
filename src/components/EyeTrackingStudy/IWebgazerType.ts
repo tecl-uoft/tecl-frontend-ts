@@ -1,5 +1,6 @@
 export interface IWebgazer {
   addRegression(name: RegressionType): IWebgazer;
+  showPredictionPoints(isShown: boolean): void;
   getCurrentPrediction(): null | WebgazerPredictionObject;
   pause(): void;
   resume(): Promise<void>;

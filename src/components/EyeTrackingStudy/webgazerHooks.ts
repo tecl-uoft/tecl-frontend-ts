@@ -4,13 +4,15 @@ import { IWebgazer, WebgazerPredictionObject } from "./IWebgazerType";
 export function useWebgazerCalibration(webgazer: IWebgazer) {
   useEffect(() => {
     if (webgazer) {
-      webgazer.resume();
       displayCalibration(webgazer);
       return () => {
-        const predictionPointEl = document.querySelector(
+        /* const predictionPointEl = document.querySelector(
           `#${webgazer.params.gazeDotId}`
         );
-        predictionPointEl?.remove();
+        predictionPointEl?.remove(); */
+        webgazer.showPredictionPoints(
+          false
+        );
         webgazer.params.showVideoPreview = false;
         webgazer.pause();
       };
@@ -35,7 +37,7 @@ async function displayCalibration(webgazer: any) {
 
   // Kalman Filter defaults to on. Can be toggled by user.
   webgazer.applyKalmanFilter = true;
-  await webgazer.resume();
+  webgazer.pause();
 
   // Set to true if you want to save the data even if you reload the page.
   webgazer.saveDataAcrossSessions = false;
