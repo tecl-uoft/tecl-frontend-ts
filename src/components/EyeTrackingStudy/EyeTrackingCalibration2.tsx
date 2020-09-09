@@ -11,7 +11,7 @@ interface IEyeTrackingCalibrationProps {
 function EyeTrackingCalibration(props: IEyeTrackingCalibrationProps) {
   const { nextState, webgazer } = props;
   useWebgazerCalibration(webgazer);
-  const ROUND_COUNT = 1;
+  const ROUND_COUNT = 2;
 
   const [justifyCalRemoveEl, setJustifyCalRemoveEl] = useState("justify-end");
   const [clickColor, setClickColor] = useState(200);

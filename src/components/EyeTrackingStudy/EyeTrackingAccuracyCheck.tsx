@@ -44,7 +44,7 @@ function EyeTrackingAccuracyCheck(props: IEyeTrackingAccuracyCheck) {
             Math.round((hitState.hit / hitState.total) * 1000) / 10
           }%`}
       </h5>
-      <div className="flex justify-center mt-64">
+      <div className="flex justify-end mt-64">
         <img
           ref={lookTargetRef}
           id="look-target"

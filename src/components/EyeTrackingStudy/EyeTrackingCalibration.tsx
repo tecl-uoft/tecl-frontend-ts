@@ -10,7 +10,7 @@ interface IEyeTrackingCalibrationProps {
 
 function EyeTrackingCalibration(props: IEyeTrackingCalibrationProps) {
   const { nextState, webgazer } = props;
-  const ROUND_COUNT = 1;
+  const ROUND_COUNT = 2;
 
   useWebgazerCalibration(webgazer);
   const [justifyCalRemoveEl, setJustifyCalRemoveEl] = useState("justify-end");
@@ -64,7 +64,7 @@ function EyeTrackingCalibration(props: IEyeTrackingCalibrationProps) {
       {/* <canvas id="plotting_canvas" width="100%" height="100%"></canvas> */}
       <div className="flex  justify-end mt-64" ref={calibrationContainerRef}>
         <img
-          className="cursor-pointer bg-orange-100 rounded-full"
+          className="cursor-pointer h-64 bg-orange-100 rounded-full"
           onClick={activateWebgazer}
           style={{ userSelect: "none" }}
           src="/assets/eye_tracking/rattle.gif"

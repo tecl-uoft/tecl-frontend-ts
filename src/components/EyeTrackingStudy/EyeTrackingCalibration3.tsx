@@ -10,7 +10,7 @@ interface IEyeTrackingCalibrationProps {
 
 function EyeTrackingCalibration(props: IEyeTrackingCalibrationProps) {
   const { nextState, webgazer } = props;
-  const ROUND_COUNT = 0;
+  const ROUND_COUNT = 2;
   useWebgazerCalibration(webgazer);
 
   const [justifyCalRemoveEl, setJustifyCalRemoveEl] = useState("justify-end");
