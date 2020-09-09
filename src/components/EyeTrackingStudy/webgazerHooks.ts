@@ -6,10 +6,6 @@ export function useWebgazerCalibration(webgazer: IWebgazer) {
     if (webgazer) {
       displayCalibration(webgazer);
       return () => {
-        /* const predictionPointEl = document.querySelector(
-          `#${webgazer.params.gazeDotId}`
-        );
-        predictionPointEl?.remove(); */
         webgazer.showPredictionPoints(
           false
         );
