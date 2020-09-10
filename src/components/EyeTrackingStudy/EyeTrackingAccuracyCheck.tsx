@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useReducer } from "react";
 import { IWebgazer, WebgazerPredictionObject } from "./IWebgazerType";
+import { useWebgazerCalibration } from "./webgazerHooks";
 
 interface IEyeTrackingAccuracyCheck {
   webgazer: IWebgazer;
@@ -24,13 +25,13 @@ function EyeTrackingAccuracyCheck(props: IEyeTrackingAccuracyCheck) {
     initalHitState
   );
 
+  useWebgazerCalibration(webgazer);
+
   useEffect(() => {
     if (webgazer && lookTargetRef) {
       const lookTargetEl = lookTargetRef.current as HTMLImageElement;
       displayCalibration(webgazer, lookTargetEl, hitStateDispatch);
       return () => {
-        
-        webgazer.params.showVideoPreview = false;
         webgazer.end();
       };
     }
@@ -74,39 +75,33 @@ async function displayCalibration(
   lookTargetEl: HTMLImageElement,
   hitStateDispatch: Function
 ) {
-  webgazer.params.showVideoPreview = true;
 
   //start the webgazer tracker
-  await webgazer
-    .setRegression("ridge") /* currently must set regression and tracker */
-    .setGazeListener(function (data: WebgazerPredictionObject, clock: Date) {
-      const targetBox = lookTargetEl.getBoundingClientRect();
-      if (
-        data &&
-        targetBox.left <= data.x &&
-        targetBox.right >= data.x &&
-        targetBox.top <= data.y &&
-        targetBox.bottom >= data.y
-      ) {
-        hitStateDispatch({ type: "hit" });
-      } else if (data) {
-        hitStateDispatch({ type: "miss" });
-      }
+  webgazer.setGazeListener(function (
+    data: WebgazerPredictionObject,
+    clock: Date
+  ) {
+    const targetBox = lookTargetEl.getBoundingClientRect();
+    if (
+      data &&
+      targetBox.left <= data.x &&
+      targetBox.right >= data.x &&
+      targetBox.top <= data.y &&
+      targetBox.bottom >= data.y
+    ) {
+      hitStateDispatch({ type: "hit" });
+    } else if (data) {
+      hitStateDispatch({ type: "miss" });
+    }
 
-      /* data is an object containing an x and y key which are the x and y prediction coordinates (no bounds limiting) */
-      //   console.log(clock); /* elapsed time in milliseconds since webgazer.begin() was called */
-    })
-    .begin();
+    /* data is an object containing an x and y key which are the x and y prediction coordinates (no bounds limiting) */
+    //   console.log(clock); /* elapsed time in milliseconds since webgazer.begin() was called */
+  });
   webgazer.showPredictionPoints(
     true
   ); /* shows a square every 100 milliseconds where current prediction is */
-
-  // Kalman Filter defaults to on. Can be toggled by user.
-  webgazer.applyKalmanFilter = true;
   await webgazer.resume();
 
-  // Set to true if you want to save the data even if you reload the page.
-  webgazer.saveDataAcrossSessions = false;
 
   setTimeout(() => {
     webgazer.pause();
