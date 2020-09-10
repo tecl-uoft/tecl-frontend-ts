@@ -64,7 +64,9 @@ function EyeTrackingStudy() {
           />
         );
       case studyStates.AccuracyCheck:
-        return <EyeTrackingAccuracyCheck webgazer={webgazer as IWebgazer} />;
+        return <EyeTrackingAccuracyCheck webgazer={webgazer as IWebgazer} nextState={() => {
+          setStudyState(studyStates.EyeTrackingCalibration);
+        }} />;
       default:
         return <ErrorNotFound />;
     }

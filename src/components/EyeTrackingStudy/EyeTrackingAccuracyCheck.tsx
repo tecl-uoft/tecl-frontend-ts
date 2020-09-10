@@ -1,9 +1,11 @@
-import React, { useEffect, useRef, useReducer } from "react";
+import React, { useEffect, useRef, useReducer, useState } from "react";
 import { IWebgazer, WebgazerPredictionObject } from "./IWebgazerType";
 import { useWebgazerCalibration } from "./webgazerHooks";
+import StudyNextButton from "../common/StudyNextButton";
 
 interface IEyeTrackingAccuracyCheck {
   webgazer: IWebgazer;
+  nextState(): void;
 }
 
 type HitActionType = {
@@ -24,16 +26,43 @@ function EyeTrackingAccuracyCheck(props: IEyeTrackingAccuracyCheck) {
     hitStateReducer,
     initalHitState
   );
+  const [showNextBtn, setShowNextBtn] = useState(false);
+  const [imgJustify, setImageJustify] = useState("end");
+  function switchImgJustify() {
+    switch (imgJustify) {
+      case "end":
+        setImageJustify("start");
+        break;
+      case "start":
+        setImageJustify("center");
+        break;
+      default:
+        props.nextState();
+      /* setImageJustify("end"); */
+    }
+  }
 
   useWebgazerCalibration(webgazer);
+  useEffect(() => {
+    const lookTargetEl = lookTargetRef.current as HTMLImageElement;
+    displayCalibration(webgazer, lookTargetEl, hitStateDispatch);
+    setShowNextBtn(false);
+    setTimeout(() => {
+      webgazer.pause();
+      setShowNextBtn(true);
+    }, 4000);
+    // eslint-disable-next-line
+  }, [imgJustify]);
 
   useEffect(() => {
     if (webgazer && lookTargetRef) {
       const lookTargetEl = lookTargetRef.current as HTMLImageElement;
       displayCalibration(webgazer, lookTargetEl, hitStateDispatch);
-      return () => {
-        webgazer.end();
-      };
+      setShowNextBtn(false);
+      setTimeout(() => {
+        webgazer.pause();
+        setShowNextBtn(true);
+      }, 4000);
     }
   }, [webgazer]);
 
@@ -45,7 +74,7 @@ function EyeTrackingAccuracyCheck(props: IEyeTrackingAccuracyCheck) {
             Math.round((hitState.hit / hitState.total) * 1000) / 10
           }%`}
       </h5>
-      <div className="flex justify-end mt-64">
+      <div className={`flex justify-${imgJustify} mt-64`}>
         <img
           ref={lookTargetRef}
           id="look-target"
@@ -54,6 +83,21 @@ function EyeTrackingAccuracyCheck(props: IEyeTrackingAccuracyCheck) {
           src="/assets/eye_tracking/color_circle.gif"
           alt="rattle"
         />
+      </div>
+      <div className="container mx-auto">
+        {hitState.hit / hitState.total < 0.6 &&
+          imgJustify === "center" &&
+          showNextBtn &&
+          "Your score was below 60%. Please go through the recalibration process again."}
+        {showNextBtn && (
+          <StudyNextButton
+            nextStateFunc={
+              hitState.hit / hitState.total < 0.6
+                ? switchImgJustify
+                : () => true
+            }
+          />
+        )}{" "}
       </div>
     </div>
   );
@@ -75,7 +119,6 @@ async function displayCalibration(
   lookTargetEl: HTMLImageElement,
   hitStateDispatch: Function
 ) {
-
   //start the webgazer tracker
   webgazer.setGazeListener(function (
     data: WebgazerPredictionObject,
@@ -101,11 +144,6 @@ async function displayCalibration(
     true
   ); /* shows a square every 100 milliseconds where current prediction is */
   await webgazer.resume();
-
-
-  setTimeout(() => {
-    webgazer.pause();
-  }, 4000);
 }
 
 export default EyeTrackingAccuracyCheck;
