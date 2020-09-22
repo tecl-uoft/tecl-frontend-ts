@@ -90,8 +90,9 @@ function NavPanel(props: INavPanel) {
   return (
     <nav className="hidden lg:block">
       <ol className="text-white inline-flex">
-        {panelOptions.map((option) => (
+        {panelOptions.map((option, idx) => (
           <li
+            key={idx}
             onClick={() => {
               setSelected(option.text);
             }}
