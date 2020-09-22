@@ -51,8 +51,8 @@ function HeroBlock() {
           infants and young children.
         </h3>
         <Link to="/signup">
-          <button className="bg-white focus:outline-none hover:bg-orange-400 font-bold text-gray-800 rounded-full py-4 px-8 shadow-lg uppercase tracking-wider">
-            Sign Up!
+          <button className="bg-orange-500 focus:outline-none hover:bg-orange-700 font-bold text-white rounded py-3 px-6 shadow-lg tracking-wider">
+            Sign Up
           </button>
         </Link>
       </div>
