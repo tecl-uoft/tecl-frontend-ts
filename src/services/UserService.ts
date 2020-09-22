@@ -43,7 +43,7 @@ export interface TeclUserInput {
 /**
  * Logs in a verified tecl user with any role
  */
-export async function login(user: TeclUserInput) {
+async function login(user: TeclUserInput) {
   const request = await fetch(`/api/v1/user/login`, {
     method: "POST",
     headers: {
@@ -66,11 +66,11 @@ export async function login(user: TeclUserInput) {
   }
 }
 
-export async function logout() {
+async function logout() {
   await fetch(`/api/v1/user/logout`);
 }
 
-export async function fetchAuthUser() {
+async function fetchAuthUser() {
   const request = await fetch(`/api/v1/user/me`);
   if (!request.ok) {
     return null;
@@ -79,3 +79,10 @@ export async function fetchAuthUser() {
     return user;
   }
 }
+
+export const Service = {
+  fetchAuthUser,
+  login,
+  logout,
+  create,
+};

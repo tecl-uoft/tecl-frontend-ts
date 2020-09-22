@@ -1,9 +1,12 @@
 import React, { createContext, useState } from "react";
-import { UserAuthState, TeclUserInput } from "../services/UserService";
+import { Service, UserAuthState, TeclUserInput } from "../services/UserService";
 
-const AuthContext = createContext(null);
+const AuthContext = createContext({
+    isLoggedIn: false,
+    user: undefined,
+  });
 
-function AuthProvider() {
+export function AuthProvider() {
   const defaultAuthState: UserAuthState = {
     isLoggedIn: false,
     user: undefined,
@@ -12,7 +15,11 @@ function AuthProvider() {
 
   const login = (teclUserInput: TeclUserInput) => {};
 
-  const logout = () => {};
+  const logout = () => {
+    Service.logout();
+  };
 
   const register = () => {};
+
+
 }
