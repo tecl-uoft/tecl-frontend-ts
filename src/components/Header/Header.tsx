@@ -62,7 +62,7 @@ function MobileNavPanel() {
   );
 }
 
-type NavOptions = "Home" | "Login";
+type NavOptions = "Home" | "Login" | "Schedule";
 
 interface INavPanel {
   setSelected(slected: NavOptions): void;
@@ -86,6 +86,10 @@ function NavPanel(props: INavPanel) {
       link: "/login",
       text: "Login",
     },
+    {
+      link: "/scheduling",
+      text: "Schedule"
+    }
   ];
   return (
     <nav className="hidden lg:block">
