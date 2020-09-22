@@ -1,0 +1,7 @@
+.fc {
+    height: 80vh;
+}
+
+.fc .fc-scrollgrid table tbody {
+    cursor: pointer;
+}

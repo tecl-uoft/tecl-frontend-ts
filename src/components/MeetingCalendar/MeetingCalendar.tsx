@@ -1,19 +1,23 @@
 import React from "react";
-import {Calendar, momentLocalizer} from "react-big-calendar";
-import "react-big-calendar/lib/css/react-big-calendar.css";
-import moment from "moment";
+import "./meetingCalendar.css";
+import FullCalendar from '@fullcalendar/react'
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import interactionPlugin from "@fullcalendar/interaction";
 
 function MeetingCalendar() {
-  const localizer = momentLocalizer(moment);
-  
   return (
     <div className="">
-      <Calendar
+      <FullCalendar
+        headerToolbar={{
+          left: "prev,next today",
+          center: "title",
+          right: "dayGridMonth,timeGridWeek,timeGridDay",
+        }}
         selectable
-        localizer={localizer}
-        events={[]}
-        defaultView={"week"}
-        onSelectEvent={(event) => alert()}
+        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+        initialView="timeGridWeek"
+        select={((props: any) => console.log("hi"))}
       />
     </div>
   );
