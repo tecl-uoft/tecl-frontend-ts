@@ -14,7 +14,16 @@ function Header() {
     }
   }, [location.pathname, hidden]);
 
+
   const [selected, setSelected] = useState("Home" as NavOptions);
+
+  useLayoutEffect(() => {
+    if (location.pathname.endsWith("/")) {
+      setSelected("Home");
+    } else if (location.pathname.endsWith("/login")) {
+      setSelected("Login");
+    }
+  }, [location.pathname, hidden]);
 
   return (
     <header className={`bg-gray-800 ${hidden ? "hidden" : ""}`}>
