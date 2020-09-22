@@ -14,6 +14,8 @@ function Header() {
     }
   }, [location.pathname, hidden]);
 
+  const [selected, setSelected] = useState("Home" as NavOptions);
+
   return (
     <header className={`bg-gray-800 ${hidden ? "hidden" : ""}`}>
       <div className="container mx-auto px-6 py-2 flex justify-between items-center">
@@ -25,7 +27,7 @@ function Header() {
           />
         </Link>
         <MobileNavPanel />
-        <NavPanel />
+        <NavPanel selected={selected} setSelected={setSelected} />
       </div>
     </header>
   );
@@ -34,8 +36,10 @@ function Header() {
 function MobileNavPanel() {
   return (
     <nav className="block lg:hidden">
-      <button className="flex items-center px-3 py-2 border rounded text-gray-500 
-      border-gray-600 hover:text-gray-800 hover:border-teal-500 appearance-none focus:outline-none">
+      <button
+        className="flex items-center px-3 py-2 border rounded text-gray-500 
+      border-gray-600 hover:text-gray-800 hover:border-teal-500 appearance-none focus:outline-none"
+      >
         <svg
           className="fill-current h-3 w-3"
           viewBox="0 0 20 20"
@@ -49,16 +53,51 @@ function MobileNavPanel() {
   );
 }
 
-function NavPanel() {
+type NavOptions = "Home" | "Login";
+
+interface INavPanel {
+  setSelected(slected: NavOptions): void;
+  selected: NavOptions;
+}
+
+interface IPanelOptions {
+  link: string;
+  text: NavOptions;
+}
+
+function NavPanel(props: INavPanel) {
+  const { selected, setSelected } = props;
+
+  const panelOptions: IPanelOptions[] = [
+    {
+      link: "/",
+      text: "Home",
+    },
+    {
+      link: "/login",
+      text: "Login",
+    },
+  ];
   return (
     <nav className="hidden lg:block">
-      <ul className="text-white inline-flex">
-        <li>
-          <Link className="px-4 font-bold text-orange-500" to="/">
-            Home
-          </Link>
-        </li>
-      </ul>
+      <ol className="text-white inline-flex">
+        {panelOptions.map((option) => (
+          <li
+            onClick={() => {
+              setSelected(option.text);
+            }}
+          >
+            <Link
+              className={`px-4 font-bold ${
+                option.text === selected ? " text-orange-500" : ""
+              } `}
+              to={option.link}
+            >
+              {option.text}
+            </Link>
+          </li>
+        ))}
+      </ol>
     </nav>
   );
 }
