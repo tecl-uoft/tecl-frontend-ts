@@ -1,7 +1,13 @@
 .fc {
-    height: 80vh;
+  height: 80vh;
 }
 
 .fc .fc-scrollgrid table tbody {
-    cursor: pointer;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 767px) {
+  .fc .fc-toolbar {
+    flex-direction: column;
+  }
 }

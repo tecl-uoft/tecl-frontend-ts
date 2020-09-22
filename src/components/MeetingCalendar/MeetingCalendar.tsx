@@ -7,7 +7,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 
 function MeetingCalendar() {
   return (
-    <div className="">
+    <div className="pb-6">
       <FullCalendar
         headerToolbar={{
           left: "prev,next today",
@@ -17,7 +17,7 @@ function MeetingCalendar() {
         selectable
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="timeGridWeek"
-        select={((props: any) => console.log("hi"))}
+        select={((props: any) => {})}
       />
     </div>
   );
