@@ -22,6 +22,8 @@ function Header() {
       setSelected("Home");
     } else if (location.pathname.endsWith("/login")) {
       setSelected("Login");
+    } else if (location.pathname.endsWith("/scheduling")) {
+      setSelected("Schedule");
     }
   }, [location.pathname, hidden]);
 
