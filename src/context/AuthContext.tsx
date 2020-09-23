@@ -2,13 +2,13 @@ import React, { createContext, useCallback, useState } from "react";
 
 import UserSerivce, {
   UserAuthState,
-  TeclUserInput,
+  TeclUserInput,, TeclUserCreateInput
 } from "../services/UserService";
 
 interface IAuthContext {
   login(teclUserInput: TeclUserInput): void;
   logout(): void;
-  register(): void;
+  register(user: TeclUserCreateInput): void;
 }
 export const AuthContext = createContext<IAuthContext | undefined>(undefined);
 
@@ -28,9 +28,12 @@ export function AuthProvider({ children = null }) {
 
   const logout = () => {
     UserSerivce.logout();
+    setTeclUser(defaultAuthState);
   };
 
-  const register = () => {};
+  const register = (user: TeclUserCreateInput) => {
+    UserSerivce.create(user);
+  };
 
   const contextValue = {
     login,
@@ -39,8 +42,6 @@ export function AuthProvider({ children = null }) {
   };
 
   return (
-    <AuthContext.Provider value={contextValue}>
-      {children}{" "}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 }
