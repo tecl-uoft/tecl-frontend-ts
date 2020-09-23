@@ -8,7 +8,7 @@ export interface TeclUserCreateInput {
 type UserRoles = "PARTICIPANT" | "RA" | "ADMIN";
 
 export interface UserAuthState {
-  isLoggedIn: boolean;
+  isAuthenticated: boolean;
   user?: { email: string; userRoles: UserRoles };
 }
 
@@ -80,7 +80,7 @@ async function fetchAuthUser() {
   }
 }
 
-export const Service = {
+export default {
   fetchAuthUser,
   login,
   logout,
