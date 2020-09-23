@@ -2,7 +2,8 @@ import React, { createContext, useCallback, useState } from "react";
 
 import UserSerivce, {
   UserAuthState,
-  TeclUserInput,, TeclUserCreateInput
+  TeclUserInput,
+  TeclUserCreateInput,
 } from "../services/UserService";
 
 interface IAuthContext {
