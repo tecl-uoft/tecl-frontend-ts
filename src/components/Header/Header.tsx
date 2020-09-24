@@ -14,7 +14,6 @@ function Header() {
     }
   }, [location.pathname, hidden]);
 
-
   const [selected, setSelected] = useState("Home" as NavOptions);
 
   useLayoutEffect(() => {
@@ -24,6 +23,8 @@ function Header() {
       setSelected("Login");
     } else if (location.pathname.endsWith("/scheduling")) {
       setSelected("Schedule");
+    } else {
+      setSelected("");
     }
   }, [location.pathname, hidden]);
 
@@ -38,7 +39,7 @@ function Header() {
           />
         </Link>
         <MobileNavPanel />
-        <NavPanel selected={selected} setSelected={setSelected} />
+        <NavPanel selected={selected} />
       </div>
     </header>
   );
@@ -64,10 +65,9 @@ function MobileNavPanel() {
   );
 }
 
-type NavOptions = "Home" | "Login" | "Schedule";
+type NavOptions = "Home" | "Login" | "Schedule" | "";
 
 interface INavPanel {
-  setSelected(slected: NavOptions): void;
   selected: NavOptions;
 }
 
@@ -77,7 +77,7 @@ interface IPanelOptions {
 }
 
 function NavPanel(props: INavPanel) {
-  const { selected, setSelected } = props;
+  const { selected } = props;
 
   const panelOptions: IPanelOptions[] = [
     {
@@ -90,28 +90,21 @@ function NavPanel(props: INavPanel) {
     },
     {
       link: "/scheduling",
-      text: "Schedule"
-    }
+      text: "Schedule",
+    },
   ];
   return (
     <nav className="hidden lg:block">
       <ol className="text-white inline-flex">
         {panelOptions.map((option, idx) => (
-          <li
-            key={idx}
-            onClick={() => {
-              setSelected(option.text);
-            }}
+          <Link
+            className={`px-4 font-bold ${
+              option.text === selected ? " text-orange-500" : ""
+            } `}
+            to={option.link}
           >
-            <Link
-              className={`px-4 font-bold ${
-                option.text === selected ? " text-orange-500" : ""
-              } `}
-              to={option.link}
-            >
-              {option.text}
-            </Link>
-          </li>
+            <li key={idx}>{option.text}</li>
+          </Link>
         ))}
       </ol>
     </nav>
