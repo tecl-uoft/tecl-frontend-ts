@@ -29,7 +29,7 @@ function Login() {
         </div>
         <div className="flex items-center justify-between">
           <button
-            className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-gray-800 hover:text-orange-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="button"
           >
             Sign In
@@ -43,12 +43,14 @@ function Login() {
       <label className="block text-gray-700 text-sm font-bold mb-2">
         Don't have an account?
       </label>
-      <button
-        className="w-full bg-gray-800 hover:text-orange-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-        type="button"
-      >
-        Signup
-      </button>
+      <Link to="/signup">
+        <button
+          className="w-full bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          type="button"
+        >
+          Signup
+        </button>
+      </Link>
     </div>
   );
 }

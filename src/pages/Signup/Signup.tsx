@@ -2,37 +2,28 @@ import React from "react";
 
 function Signup() {
   return (
-    <div className="container mx-auto mx-">
-      <h2 className="text-4xl font-bold text-center text-gray-800 mb-8">
-        Contact Us
+    <div className="mx-auto w-full max-w-4xl px-4">
+      <h2 className="text-4xl font-bold text-center text-gray-800 my-4">
+        TECL Signup
       </h2>
-      <p className="text-gray-600 text-xl mb-8">
-        You can contact us at{" "}
-        <a className="text-blue-700" href="mailto:takion.consult@gmail.com">
-          takion.consult@gmail.com
-        </a>{" "}
-        or fill out the form below:
-      </p>
-      <form className="w-full px-4">
-        <div className="flex flex-wrap -mx-3 mb-6">
+      <form className="bg-white shadow-md rounded px-8 py-6">
+        <div className="flex flex-wrap -mx-3">
           <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-              First Name
+            <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2">
+              First Name *
             </label>
             <input
               className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-              id="grid-first-name"
               type="text"
               placeholder="Jane"
             />
           </div>
           <div className="w-full md:w-1/2 px-3">
-            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+            <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2">
               Last Name
             </label>
             <input
               className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              id="grid-last-name"
               type="text"
               placeholder="Doe"
             />
@@ -40,7 +31,7 @@ function Signup() {
         </div>
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full px-3">
-            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+            <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2">
               Email
             </label>
             <input
@@ -52,34 +43,29 @@ function Signup() {
           </div>
         </div>
         <div className="flex flex-wrap -mx-3 mb-6">
-          <div className="w-full px-3">
-            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-              Subject
+          <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+            <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2">
+              Password *
             </label>
             <input
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              id="grid-subject"
-              type="text"
-              placeholder="Web development contract"
+              className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+              type="password"
+              placeholder="****************"
             />
           </div>
-        </div>
-        <div className="flex flex-wrap -mx-3 mb-6">
-          <div className="w-full px-3">
-            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-              Message Content
+          <div className="w-full md:w-1/2 px-3">
+            <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2">
+              Confirm Password *
             </label>
-            <textarea
-              className="appearance-none block w-full h-64 bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              placeholder="We have an exiting opportunity for you..."
+            <input
+              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              type="password"
+              placeholder="****************"
             />
-            <p className="text-gray-600 text-xs italic">
-              Make it as long and as crazy as you'd like
-            </p>
           </div>
         </div>
-        <div className="flex justify-center mb-6">
-          <button className="hover:text-blue-500 font-bold rounded-full py-4 px-8 shadow-lg uppercase tracking-wider">
+        <div className="flex justify-center">
+          <button className="hover:text-blue-500 font-bold rounded py-4 px-8 shadow-lg tracking-wider">
             Submit Message
           </button>
         </div>
