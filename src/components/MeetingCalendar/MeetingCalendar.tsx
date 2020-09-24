@@ -1,6 +1,6 @@
 import React from "react";
 import "./meetingCalendar.css";
-import FullCalendar from '@fullcalendar/react'
+import FullCalendar, { DateSelectArg } from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -17,7 +17,19 @@ function MeetingCalendar() {
         selectable
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="timeGridWeek"
-        select={((props: any) => {})}
+        select={(selectInfo: DateSelectArg) => {
+          const title = prompt("Event Title:");
+          const calendarApi = selectInfo.view.calendar;
+          if (title) {
+            calendarApi.addEvent({
+              title: title,
+              start: selectInfo.startStr,
+              end: selectInfo.endStr,
+              allDay: selectInfo.allDay,
+            });
+          }
+          calendarApi.unselect();
+        }}
       />
     </div>
   );
