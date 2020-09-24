@@ -12,6 +12,7 @@ import FroggerStudyEntry from "./pages/FroggerStudyEntry";
 import EyeTrackingEntry from "./pages/EyeTrackingEntry";
 import { Scheduling } from "./pages/Scheduling";
 import { Login } from "./pages/Login";
+import { Signup } from "./pages/Signup";
 
 const TeamsStudyGame = lazy(() => import("./pages/TeamsStudyGame"));
 const EyeTrackingGame = lazy(() => import("./pages/EyeTrackingGame"));
@@ -27,6 +28,7 @@ function App() {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/signup" component={Signup} />
             <Route exact path="/scheduling" component={Scheduling} />
             <Route
               exact
