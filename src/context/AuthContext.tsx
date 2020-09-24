@@ -33,7 +33,7 @@ export function AuthProvider({ children = null }) {
   };
 
   const register = (user: TeclUserCreateInput) => {
-    UserSerivce.create(user);
+    UserSerivce.signup(user);
   };
 
   const contextValue = {

@@ -15,24 +15,20 @@ export interface UserAuthState {
 /**
  * Create an unverified tecl user with a participant role
  */
-export async function create(
-  user: TeclUserCreateInput
-): Promise<UserAuthState> {
-  const request = await fetch(`/api/v1/user`, {
+async function signup(user: TeclUserCreateInput): Promise<UserAuthState | undefined> {
+  const response = await fetch(`/api/v1/users/signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(user),
+    body: JSON.stringify({ user }),
   });
 
-  if (!request.ok) {
-    const error = await request.json();
-    throw error;
-  } else {
-    const user = await request.json();
-    console.log("created", user);
+  if (response.ok) {
+    const user = await response.json();
     return user;
+  } else {
+    alert(`sign up at ${response}`)
   }
 }
 
@@ -45,7 +41,7 @@ export interface TeclUserInput {
  * Logs in a verified tecl user with any role
  */
 async function login(user: TeclUserInput) {
-  const request = await fetch(`/api/v1/user/login`, {
+  const request = await fetch(`/api/v1/users/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -68,11 +64,11 @@ async function login(user: TeclUserInput) {
 }
 
 async function logout() {
-  await fetch(`/api/v1/user/logout`);
+  await fetch(`/api/v1/users/logout`);
 }
 
 async function fetchAuthUser() {
-  const request = await fetch(`/api/v1/user/me`);
+  const request = await fetch(`/api/v1/users/me`);
   if (!request.ok) {
     return null;
   } else {
@@ -85,5 +81,5 @@ export default {
   fetchAuthUser,
   login,
   logout,
-  create,
+  signup,
 };
