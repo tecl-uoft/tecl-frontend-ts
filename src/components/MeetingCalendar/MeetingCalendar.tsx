@@ -5,13 +5,18 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { CalendarRemoveModal } from "../CalendarRemoveModal";
+import { CalendarEventModal } from "../CalendarEventModal";
 
 function MeetingCalendar() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showEventModal, setShowEventModal] = useState(false);
   const [eventClick, setEventClick] = useState<EventApi | undefined>(undefined)
+  const [selectInfo, setSelectInfo] = useState<DateSelectArg | undefined>(undefined)
 
   const handleDateSelect = (selectInfo: DateSelectArg) => {
-    const title = prompt("Event Title:");
+    setSelectInfo(selectInfo);
+    setShowEventModal(true)
+    /* const title = prompt("Event Title:");
     const calendarApi = selectInfo.view.calendar;
     if (title) {
       calendarApi.addEvent({
@@ -21,7 +26,7 @@ function MeetingCalendar() {
         allDay: selectInfo.allDay,
       });
     }
-    calendarApi.unselect();
+    calendarApi.unselect(); */
   }
 
   const handleEventClick = (clickInfo: EventClickArg) => {
@@ -47,6 +52,7 @@ function MeetingCalendar() {
         eventClick={handleEventClick}
       />
       {showDeleteModal && <CalendarRemoveModal onCancel={() => setShowDeleteModal(false)} onDelete={eventClick} />}
+      {showEventModal && <CalendarEventModal selectInfo={selectInfo} setShowEventModal={setShowEventModal} />}
     </div>
   );
 }
