@@ -1,12 +1,18 @@
-import React from "react";
+import React, { FormEvent } from "react";
 
 function Signup() {
+
+    const handleRegister = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        console.log(e)
+    } 
+
   return (
     <div className="mx-auto w-full max-w-4xl px-4">
       <h2 className="text-4xl font-bold text-center text-gray-800 my-4">
         Account Sign Up
       </h2>
-      <form className="bg-white shadow-md rounded px-8 py-6">
+      <form onSubmit={handleRegister} className="bg-white shadow-md rounded px-8 py-6">
         <div className="flex flex-wrap -mx-3">
           <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
             <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2">

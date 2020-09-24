@@ -31,6 +31,7 @@ export async function create(
     throw error;
   } else {
     const user = await request.json();
+    console.log("created", user);
     return user;
   }
 }
