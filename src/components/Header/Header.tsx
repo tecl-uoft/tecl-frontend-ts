@@ -101,9 +101,10 @@ function NavPanel(props: INavPanel) {
             className={`px-4 font-bold ${
               option.text === selected ? " text-orange-500" : ""
             } `}
+            key={idx}
             to={option.link}
           >
-            <li key={idx}>{option.text}</li>
+            <li >{option.text}</li>
           </Link>
         ))}
       </ol>
