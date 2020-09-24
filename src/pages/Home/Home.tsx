@@ -50,6 +50,7 @@ function HeroBlock() {
           Help our team investigate social, cognitive, and moral development in
           infants and young children.
         </h3>
+       
         <Link to="/signup">
           <button className="bg-orange-500 focus:outline-none hover:bg-orange-700 font-bold text-white rounded py-3 px-6 shadow-lg tracking-wider">
             Sign Up

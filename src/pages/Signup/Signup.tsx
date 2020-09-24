@@ -4,7 +4,7 @@ function Signup() {
   return (
     <div className="mx-auto w-full max-w-4xl px-4">
       <h2 className="text-4xl font-bold text-center text-gray-800 my-4">
-        TECL Signup
+        Account Sign Up
       </h2>
       <form className="bg-white shadow-md rounded px-8 py-6">
         <div className="flex flex-wrap -mx-3">
@@ -29,7 +29,7 @@ function Signup() {
             />
           </div>
         </div>
-        <div className="flex flex-wrap -mx-3 mb-6">
+        <div className="flex flex-wrap -mx-3 mb-2">
           <div className="w-full px-3">
             <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2">
               Email
@@ -65,8 +65,11 @@ function Signup() {
           </div>
         </div>
         <div className="flex justify-center">
-          <button className="hover:text-blue-500 font-bold rounded py-4 px-8 shadow-lg tracking-wider">
-            Submit Message
+          <button
+            className="w-full bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="button"
+          >
+            Register
           </button>
         </div>
       </form>
