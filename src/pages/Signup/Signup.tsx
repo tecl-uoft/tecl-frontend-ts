@@ -25,6 +25,7 @@ function Signup() {
         lastName: "",
         email,
         password,
+        passwordConfirm
       };
       if (lastName) {
         user.lastName = lastName;

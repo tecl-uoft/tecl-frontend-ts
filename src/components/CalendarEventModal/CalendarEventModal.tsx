@@ -26,11 +26,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
 
   function formatDate(date: Date) {
     return `${
-      date.getHours() < 10
-        ? "0" + date.getHours()
-        : date.getHours() % 12 === 0
-        ? 12
-        : date.getHours() % 12
+      date.getHours() < 10 ? (date.getHours() === 0 ? 12 : "0" + date.getHours()) : date.getHours() % 12
     }:${
       date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()
     }  ${date.getHours() >= 12 ? "p.m." : "a.m."}, ${
