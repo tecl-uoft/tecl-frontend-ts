@@ -25,16 +25,27 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
   ];
 
   function formatDate(date: Date) {
-    return `${date.getHours() < 10 ? "0" + date.getHours() : date.getHours()}:${
+    return `${
+      date.getHours() < 10
+        ? "0" + date.getHours()
+        : date.getHours() % 12 === 0
+        ? 12
+        : date.getHours() % 12
+    }:${
       date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()
-    }  ${date.getHours() >= 12 ? "p.m." : "a.m."}, ${MONTHS[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()} `;
+    }  ${date.getHours() >= 12 ? "p.m." : "a.m."}, ${
+      MONTHS[date.getMonth()]
+    } ${date.getDate()}, ${date.getFullYear()} `;
   }
 
   const onAdd = () => {
     const selectInfo = props.selectInfo;
-    if (selectInfo) {
+    const firstName = document.querySelector<HTMLInputElement>("#firstName")
+      ?.value;
+    if (selectInfo && firstName) {
       const calendarApi = selectInfo.view.calendar;
       calendarApi.addEvent({
+        title: firstName,
         start: selectInfo.startStr,
         end: selectInfo.endStr,
         allDay: selectInfo.allDay,
