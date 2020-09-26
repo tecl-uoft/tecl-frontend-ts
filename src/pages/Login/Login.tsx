@@ -1,7 +1,30 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import UserService from "../../services/UserService";
 
 function Login() {
+  const history = useHistory();
+  const handleLogin = async () => {
+    const email = document.querySelector<HTMLInputElement>("#email")?.value;
+    const password = document.querySelector<HTMLInputElement>("#password")
+      ?.value;
+    if (!email || !password) {
+      alert("You have not entered your username or password");
+    } else {
+      const user = {
+        email,
+        password,
+      };
+      try {
+        const acceptedUser = await UserService.login(user);
+        console.log(acceptedUser)
+        history.push("/");
+      } catch (err) {
+        console.log(err)
+      }
+      
+    }
+  };
   return (
     <div className="mx-auto pt-16 w-full max-w-md px-4">
       <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -31,6 +54,7 @@ function Login() {
           <button
             className="bg-gray-800 hover:text-orange-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="button"
+            onClick={handleLogin}
           >
             Sign In
           </button>

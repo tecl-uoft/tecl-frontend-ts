@@ -2,34 +2,45 @@ import React, { createContext, useCallback, useState } from "react";
 
 import UserSerivce, {
   UserAuthState,
-  TeclUserInput,
+  TeclUserLoginInput,
   TeclUserCreateInput,
 } from "../services/UserService";
+import { Props } from "./commonTypes";
 
 interface IAuthContext {
-  login(teclUserInput: TeclUserInput): void;
+  login(teclUserLoginInput: TeclUserLoginInput): void;
   logout(): void;
   register(user: TeclUserCreateInput): void;
 }
 export const AuthContext = createContext<IAuthContext | undefined>(undefined);
 
-export function AuthProvider({ children = null }) {
+export function AuthProvider({ children }: Props) {
   const defaultAuthState: UserAuthState = {
     isAuthenticated: false,
     user: undefined,
   };
-  const [teclUser, setTeclUser] = useState(defaultAuthState);
+  const [authState, setAuthState] = useState(defaultAuthState);
 
   const login = useCallback(
-    (teclUserInput: TeclUserInput) => {
-      UserSerivce.login(teclUserInput).then((user) => setTeclUser(user));
+    (teclUserLoginInput: TeclUserLoginInput) => {
+      UserSerivce.login(teclUserLoginInput)
+        .then((loggedInUser) => {
+          const loggedInAuthState = {
+            isAuthenticated: false,
+            user: loggedInUser,
+          };
+          setAuthState(loggedInAuthState);
+        })
+        .catch((err) => {
+          throw err;
+        });
     },
-    [setTeclUser]
+    [setAuthState]
   );
 
   const logout = () => {
     UserSerivce.logout();
-    setTeclUser(defaultAuthState);
+    setAuthState(defaultAuthState);
   };
 
   const register = (user: TeclUserCreateInput) => {
@@ -37,12 +48,15 @@ export function AuthProvider({ children = null }) {
   };
 
   const contextValue = {
+    authState,
     login,
     logout,
     register,
   };
 
   return (
-    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>
+      {children}
+    </AuthContext.Provider>
   );
 }

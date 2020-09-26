@@ -10,13 +10,21 @@ type UserRoles = "PARTICIPANT" | "RA" | "ADMIN";
 
 export interface UserAuthState {
   isAuthenticated: boolean;
-  user?: { email: string; userRoles: UserRoles };
+  user?: UserState;
+}
+
+export interface UserState {
+  email: string;
+  firstName: string;
+  userRoles: UserRoles;
 }
 
 /**
  * Create an unverified tecl user with a participant role
  */
-async function signup(user: TeclUserCreateInput): Promise<UserAuthState | undefined> {
+async function signup(
+  user: TeclUserCreateInput
+): Promise<UserAuthState | undefined> {
   const response = await fetch(`/api/v1/users/signup`, {
     method: "POST",
     headers: {
@@ -26,14 +34,15 @@ async function signup(user: TeclUserCreateInput): Promise<UserAuthState | undefi
   });
 
   if (response.ok) {
+    console.log(response)
     const user = await response.json();
     return user;
   } else {
-    alert(`sign up at ${response}`)
+    alert(`sign up at ${response}`);
   }
 }
 
-export interface TeclUserInput {
+export interface TeclUserLoginInput {
   email: string;
   password: string;
 }
@@ -41,26 +50,20 @@ export interface TeclUserInput {
 /**
  * Logs in a verified tecl user with any role
  */
-async function login(user: TeclUserInput) {
-  const request = await fetch(`/api/v1/users/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(user),
-  });
-
-  if (!request.ok) {
-    let error = null;
-    if (request.status === 401) {
-      error = await request.json();
-    } else {
-      error = await request.text();
-    }
-    throw error;
-  } else {
-    const user = await request.json();
-    return user;
+async function login(user: TeclUserLoginInput): Promise<UserState> {
+  try {
+    const response = await fetch(`/api/v1/users/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ user }),
+    });
+    console.log(response)
+    const loggedInUser = await response.json();
+    return loggedInUser
+  } catch (err) {
+    throw err;
   }
 }
 
