@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useState } from "react";
+import React, { createContext, useCallback, useContext, useState } from "react";
 
 import UserSerivce, {
   UserAuthState,
@@ -11,6 +11,7 @@ interface IAuthContext {
   login(teclUserLoginInput: TeclUserLoginInput): void;
   logout(): void;
   register(user: TeclUserCreateInput): void;
+  authState: UserAuthState;
 }
 export const AuthContext = createContext<IAuthContext | undefined>(undefined);
 
@@ -26,7 +27,7 @@ export function AuthProvider({ children }: Props) {
       UserSerivce.login(teclUserLoginInput)
         .then((loggedInUser) => {
           const loggedInAuthState = {
-            isAuthenticated: false,
+            isAuthenticated: true,
             user: loggedInUser,
           };
           setAuthState(loggedInAuthState);
@@ -55,8 +56,8 @@ export function AuthProvider({ children }: Props) {
   };
 
   return (
-    <AuthContext.Provider value={contextValue}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 }
+
+export const useAuth = () => useContext(AuthContext);

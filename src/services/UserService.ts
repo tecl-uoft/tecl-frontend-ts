@@ -34,7 +34,6 @@ async function signup(
   });
 
   if (response.ok) {
-    console.log(response)
     const user = await response.json();
     return user;
   } else {
@@ -59,7 +58,6 @@ async function login(user: TeclUserLoginInput): Promise<UserState> {
       },
       body: JSON.stringify({ user }),
     });
-    console.log(response)
     const loggedInUser = await response.json();
     return loggedInUser
   } catch (err) {

@@ -1,8 +1,10 @@
 import React, { useLayoutEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 function Header() {
   const [hidden, setHidden] = useState(false);
+  const auth = useAuth();
   let location = useLocation();
 
   // disable header for all games
@@ -39,7 +41,11 @@ function Header() {
           />
         </Link>
         <MobileNavPanel />
-        <NavPanel selected={selected} />
+        <NavPanel
+          selected={selected}
+          isLoggedIn={auth?.authState.isAuthenticated}
+          logout={auth?.logout}
+        />
       </div>
     </header>
   );
@@ -69,6 +75,8 @@ type NavOptions = "Home" | "Login" | "Schedule" | "";
 
 interface INavPanel {
   selected: NavOptions;
+  isLoggedIn: boolean | undefined;
+  logout: undefined | (() => void)
 }
 
 interface IPanelOptions {
@@ -77,8 +85,7 @@ interface IPanelOptions {
 }
 
 function NavPanel(props: INavPanel) {
-  const { selected } = props;
-
+  const { selected, isLoggedIn, logout } = props;
   const panelOptions: IPanelOptions[] = [
     {
       link: "/",
@@ -93,20 +100,33 @@ function NavPanel(props: INavPanel) {
       text: "Schedule",
     },
   ];
+
   return (
     <nav className="hidden lg:block">
       <ol className="text-white inline-flex">
-        {panelOptions.map((option, idx) => (
-          <Link
-            className={`px-4 font-bold ${
-              option.text === selected ? " text-orange-500" : ""
-            } `}
-            key={idx}
-            to={option.link}
-          >
-            <li >{option.text}</li>
-          </Link>
-        ))}
+        {panelOptions.map((option, idx) =>
+          isLoggedIn && option.text === "Login" ? (
+            <button
+              className={`px-4 font-bold ${
+                option.text === selected ? " text-orange-500" : ""
+              }`}
+              key={idx}
+              onClick={ () => logout ? logout() : null }
+            >
+              <li>Logout</li>
+            </button>
+          ) : (
+            <Link
+              className={`px-4 font-bold ${
+                option.text === selected ? " text-orange-500" : ""
+              } `}
+              key={idx}
+              to={option.link}
+            >
+              <li>{option.text}</li>
+            </Link>
+          )
+        )}
       </ol>
     </nav>
   );

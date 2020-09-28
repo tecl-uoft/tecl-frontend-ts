@@ -1,9 +1,10 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
-import UserService from "../../services/UserService";
+import { useAuth } from "../../context/AuthContext";
 
 function Login() {
   const history = useHistory();
+  const auth = useAuth();
   const handleLogin = async () => {
     const email = document.querySelector<HTMLInputElement>("#email")?.value;
     const password = document.querySelector<HTMLInputElement>("#password")
@@ -16,7 +17,7 @@ function Login() {
         password,
       };
       try {
-        const acceptedUser = await UserService.login(user);
+        const acceptedUser = auth?.login(user);
         console.log(acceptedUser)
         history.push("/");
       } catch (err) {
