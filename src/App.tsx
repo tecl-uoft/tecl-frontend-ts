@@ -14,6 +14,7 @@ import { Scheduling } from "./pages/Scheduling";
 import { Login } from "./pages/Login";
 import { Signup } from "./pages/Signup";
 import { AuthProvider } from "./context/AuthContext";
+import { Dashboard } from "./pages/Dashboard";
 
 const TeamsStudyGame = lazy(() => import("./pages/TeamsStudyGame"));
 const EyeTrackingGame = lazy(() => import("./pages/EyeTrackingGame"));
@@ -32,6 +33,7 @@ function App() {
               <Route exact path="/login" component={Login} />
               <Route exact path="/signup" component={Signup} />
               <Route exact path="/scheduling" component={Scheduling} />
+              <Route exact path="/dashboard" component={Dashboard} />
               <Route
                 exact
                 path="/study/fairness/information"

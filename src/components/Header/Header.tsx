@@ -25,7 +25,9 @@ function Header() {
       setSelected("Login");
     } else if (location.pathname.endsWith("/scheduling")) {
       setSelected("Schedule");
-    } else {
+    } else if (location.pathname.endsWith("/dashboard")) {
+      setSelected("Dashboard");
+    }  else {
       setSelected("");
     }
   }, [location.pathname, hidden]);
@@ -71,7 +73,7 @@ function MobileNavPanel() {
   );
 }
 
-type NavOptions = "Home" | "Login" | "Schedule" | "";
+type NavOptions = "Home" | "Login" | "Schedule" | "Dashboard" | "";
 
 interface INavPanel {
   selected: NavOptions;
@@ -86,20 +88,29 @@ interface IPanelOptions {
 
 function NavPanel(props: INavPanel) {
   const { selected, isLoggedIn, logout } = props;
+  const auth = useAuth();
+  console.log(auth)
+
   const panelOptions: IPanelOptions[] = [
     {
       link: "/",
       text: "Home",
     },
     {
-      link: "/login",
-      text: "Login",
-    },
-    {
       link: "/scheduling",
       text: "Schedule",
     },
+    {
+      link: "/login",
+      text: "Login",
+    },
   ];
+  if (auth?.authState.isAuthenticated) {
+    panelOptions.push({
+      link: "/dashboard",
+      text: "Dashboard"
+    })
+  }
 
   return (
     <nav className="hidden lg:block">
