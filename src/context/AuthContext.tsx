@@ -1,4 +1,10 @@
-import React, { createContext, useCallback, useContext, useState } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 import UserSerivce, {
   UserAuthState,
@@ -39,10 +45,25 @@ export function AuthProvider({ children }: Props) {
     [setAuthState]
   );
 
-  const logout = () => {
+  const logout = useCallback(() => {
     UserSerivce.logout();
     setAuthState(defaultAuthState);
-  };
+  }, [setAuthState, defaultAuthState]);
+
+  useEffect(() => {
+    UserSerivce.fetchAuthUser()
+      .then((user) => {
+        if (user) {
+          login(user);
+        } else {
+          logout();
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        logout();
+      });
+  }, [login, logout]);
 
   const register = (user: TeclUserCreateInput) => {
     UserSerivce.signup(user);
