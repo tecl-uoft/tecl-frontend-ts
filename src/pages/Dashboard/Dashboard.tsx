@@ -1,20 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
+import { MeetingCalendar } from "../../components/MeetingCalendar";
 import { useAuth } from "../../context/AuthContext";
 
 function Dashboard() {
   const auth = useAuth();
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <div className="container mx-auto px-8 pt-4 flex flex-col">
+      {showModal && <StudyHoursModal setShowModal={setShowModal} />}
       <h1 className="text-3xl font-bold mx-auto">
         Hello {`${auth?.authState.user?.firstName}!`}
       </h1>
-      <AppointmentPanel />
+      <AppointmentPanel setShowModal={setShowModal} />
       <RAPanel />
     </div>
   );
 }
 
-function AppointmentPanel() {
+function StudyHoursModal(props: any) {
+  return (
+    <div className="fixed z-10 inset-0 overflow-y-auto">
+      <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div className="fixed inset-0 transition-opacity cursor-pointer" onClick={() => props.setShowModal(false)}>
+          <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+        {/* <!-- This element is to trick the browser into centering the modal contents. --> */}
+        <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
+        &#8203;
+        <div
+          className="inline-block w-10/12 p-6 align-bottom bg-white rounded-lg transform transition-all my-8 align-middle "
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-headline"
+        >
+            <h2>
+
+            </h2>
+            <MeetingCalendar />
+          
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AppointmentPanel(props: any) {
   return (
     <div className="py-4 w-full">
       <div className="flex justify-between">
@@ -25,7 +56,7 @@ function AppointmentPanel() {
       </div>
       <div className="flex justify-between mt-4">
         <h3 className="text-2xl font-semibold">Frogger Study:</h3>
-        <button className="bg-orange-500 hover:bg-orange-800 text-white px-4 rounded focus:outline-none focus:shadow-outline">
+        <button onClick={() => props.setShowModal(true)} className="bg-orange-500 hover:bg-orange-800 text-white px-4 rounded focus:outline-none focus:shadow-outline">
           + Set Study Hours
         </button>
       </div>
