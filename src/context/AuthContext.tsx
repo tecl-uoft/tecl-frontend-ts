@@ -55,12 +55,10 @@ export function AuthProvider({ children }: Props) {
       .then((user) => {
         if (user) {
           login(user);
-        } else {
-          logout();
         }
       })
       .catch((err) => {
-        console.error(err);
+        /* console.error(err); */
         logout();
       });
   }, [login, logout]);
