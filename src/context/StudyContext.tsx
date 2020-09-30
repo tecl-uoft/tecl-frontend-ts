@@ -4,12 +4,11 @@ import { Props } from './commonTypes'
 
 export const StudyContext = createContext<any | undefined>(undefined);
 
-function StudyProvider({ children }: Props) {
+export function StudyProvider({ children }: Props) {
 
-    
+
     return (
-        <StudyContext.Provider value={{}}></StudyContext.Provider>
+        <StudyContext.Provider value={{}}>{children}</StudyContext.Provider>
     )
 }
 
-export default StudyContext
