@@ -3,9 +3,11 @@ import { AddStudyForm } from "../../components/AddStudyForm";
 import { FocusedModal } from "../../components/FocusedModal";
 import { MeetingCalendar } from "../../components/MeetingCalendar";
 import { useAuth } from "../../context/AuthContext";
+import { useStudy } from "../../context/StudyContext";
 
 function Dashboard() {
   const auth = useAuth();
+  const study = useStudy();
   const [showModal, setShowModal] = useState(false);
   const [showAddStudyModal, setShowAddStudyModal] = useState(true);
 
@@ -25,7 +27,12 @@ function Dashboard() {
         </button>
         {showAddStudyModal && (
           <FocusedModal setShowModal={setShowAddStudyModal}>
-            <AddStudyForm />
+            <AddStudyForm
+              addStudySubmitFunc={() => {
+                setShowAddStudyModal(false);
+              }}
+              studyCreateFunc={study?.createStudy}
+            />
           </FocusedModal>
         )}
       </div>

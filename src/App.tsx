@@ -15,6 +15,7 @@ import { Login } from "./pages/Login";
 import { Signup } from "./pages/Signup";
 import { AuthProvider } from "./context/AuthContext";
 import { Dashboard } from "./pages/Dashboard";
+import { StudyProvider } from "./context/StudyContext";
 
 const TeamsStudyGame = lazy(() => import("./pages/TeamsStudyGame"));
 const EyeTrackingGame = lazy(() => import("./pages/EyeTrackingGame"));
@@ -25,51 +26,53 @@ function App() {
   return (
     <div className="App">
       <AuthProvider>
-        <Suspense fallback={<Loading />}>
-          <BrowserRouter>
-            <Header />
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/signup" component={Signup} />
-              <Route exact path="/scheduling" component={Scheduling} />
-              <Route exact path="/dashboard" component={Dashboard} />
-              <Route
-                exact
-                path="/study/fairness/information"
-                component={TeamsStudyEntry}
-              />
-              <Route
-                exact
-                path="/study/fairness/game"
-                component={TeamsStudyGame}
-              />
-              <Route
-                exact
-                path="/study/frogger/information"
-                component={FroggerStudyEntry}
-              />
-              <Route
-                exact
-                path="/study/frogger/game"
-                component={FroggerStudyGame}
-              />
-              <Route
-                exact
-                path="/study/eyetracking/information"
-                component={EyeTrackingEntry}
-              />
-              <Route
-                exact
-                path="/study/eyetracking/game"
-                component={EyeTrackingGame}
-              />
+        <StudyProvider>
+          <Suspense fallback={<Loading />}>
+            <BrowserRouter>
+              <Header />
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/signup" component={Signup} />
+                <Route exact path="/scheduling" component={Scheduling} />
+                <Route exact path="/dashboard" component={Dashboard} />
+                <Route
+                  exact
+                  path="/study/fairness/information"
+                  component={TeamsStudyEntry}
+                />
+                <Route
+                  exact
+                  path="/study/fairness/game"
+                  component={TeamsStudyGame}
+                />
+                <Route
+                  exact
+                  path="/study/frogger/information"
+                  component={FroggerStudyEntry}
+                />
+                <Route
+                  exact
+                  path="/study/frogger/game"
+                  component={FroggerStudyGame}
+                />
+                <Route
+                  exact
+                  path="/study/eyetracking/information"
+                  component={EyeTrackingEntry}
+                />
+                <Route
+                  exact
+                  path="/study/eyetracking/game"
+                  component={EyeTrackingGame}
+                />
 
-              <Route path="/404" component={ErrorNotFound} />
-              <Redirect to="/404" />
-            </Switch>
-          </BrowserRouter>
-        </Suspense>
+                <Route path="/404" component={ErrorNotFound} />
+                <Redirect to="/404" />
+              </Switch>
+            </BrowserRouter>
+          </Suspense>
+        </StudyProvider>
       </AuthProvider>
     </div>
   );
