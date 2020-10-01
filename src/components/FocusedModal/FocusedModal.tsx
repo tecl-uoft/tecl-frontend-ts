@@ -19,7 +19,7 @@ function FocusedModal(props: IFocusedModalProps) {
         <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
         &#8203;
         <div
-          className="inline-block w-10/12 p-6 align-bottom bg-white rounded-lg transform transition-all my-8 align-middle "
+          className="inline-block p-6 bg-white rounded-lg transform transition-all my-8 align-middle "
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-headline"
