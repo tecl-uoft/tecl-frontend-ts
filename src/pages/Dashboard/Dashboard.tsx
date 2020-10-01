@@ -9,7 +9,7 @@ function Dashboard() {
   const auth = useAuth();
   const study = useStudy();
   const [showModal, setShowModal] = useState(false);
-  const [showAddStudyModal, setShowAddStudyModal] = useState(true);
+  const [showAddStudyModal, setShowAddStudyModal] = useState(false);
 
   return (
     <div className="container mx-auto px-8 pt-4 flex flex-col">
@@ -36,10 +36,16 @@ function Dashboard() {
           </FocusedModal>
         )}
       </div>
-      <h3 className="text-2xl mt-4 font-semibold">Frogger Study:</h3>
-      {   }
-      <AppointmentPanel setShowModal={setShowModal} />
-      <RAPanel />
+      
+      {auth?.authState.user?.studies.map((study) => {
+        return (
+          <>
+            <h3 className="text-2xl mt-4 font-semibold">{study.studyName} Study:</h3>
+            <AppointmentPanel setShowModal={setShowModal} />
+            <RAPanel />
+          </>
+        );
+      })}
     </div>
   );
 }
@@ -114,7 +120,7 @@ function AppointmentPanel(props: any) {
           + Add Appointment
         </button>
       </div>
-      <div className="rounded my-4 mx-2 h-64 overflow-auto">
+      <div className="rounded my-4 mx-2 max-h-64 overflow-auto">
         <table className="min-w-full bg-white">
           <thead className="bg-gray-700 text-white text-md font-semibold">
             <tr>
@@ -180,7 +186,7 @@ function RAPanel() {
           + Add Members
         </button>
       </div>
-      <div className="rounded my-4 mx-2 h-64 overflow-auto">
+      <div className="rounded my-4 mx-2 max-h-64 overflow-auto">
         <table className="min-w-full bg-white">
           <thead className="bg-gray-700 text-white text-md font-semibold">
             <tr>

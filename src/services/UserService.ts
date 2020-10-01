@@ -17,6 +17,11 @@ export interface UserState {
   email: string;
   firstName: string;
   userRoles: UserRoles;
+  lastName: string;
+  role: string;
+  scheduleEvents: any[];
+  studies: any[];
+  verified: boolean;
 }
 
 /**
@@ -59,7 +64,7 @@ async function login(user: TeclUserLoginInput): Promise<UserState> {
       body: JSON.stringify({ user }),
     });
     const loggedInUser = await response.json();
-    return loggedInUser
+    return loggedInUser;
   } catch (err) {
     throw err;
   }
@@ -70,7 +75,9 @@ async function logout() {
 }
 
 async function fetchAuthUser() {
-  const res = await fetch(`/api/v1/user/`);
+  const res = await fetch(`/api/v1/user/`, {
+    method: "GET",
+  });
   if (!res.ok) {
     return null;
   } else {

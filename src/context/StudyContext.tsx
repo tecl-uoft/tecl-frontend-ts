@@ -13,13 +13,14 @@ export function StudyProvider({ children }: Props) {
   const [studyState, setStudyState] = useState<any>(undefined);
 
   const createStudy = (study: any) => {
+    console.log("studyy", study)
     StudyService.create(study)
       .then((studyRes) => {
         setStudyState(studyRes);
-        console.log(studyRes)
+        console.log("loggin study", studyRes)
       })
       .catch((err) => {
-        alert(`Error ${err.code}: ${err.message}`);
+        alert(`Error in study context, Code ${err.code}: ${err.message}`);
       });
   };
 
