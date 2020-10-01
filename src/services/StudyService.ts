@@ -1,6 +1,7 @@
 export default {
   create,
   read,
+  list
 };
 
 async function create(study: any): Promise<void> {
@@ -17,6 +18,22 @@ async function create(study: any): Promise<void> {
     return studyPostRes;
   } else {
     alert(`Create schedule event failed`);
+  }
+}
+
+async function list(): Promise<any> {
+  const response = await fetch(`/api/v1/studies`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (response.ok) {
+    const studyGetRes = await response.json();
+    return studyGetRes;
+  } else {
+    alert(`Getting study failed`);
   }
 }
 
