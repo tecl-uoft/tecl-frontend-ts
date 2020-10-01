@@ -6,6 +6,17 @@
   cursor: pointer;
 }
 
+.fc .fc-timegrid tbody {
+  background-color: rgb(245, 245, 245);
+}
+
+.fc .fc-scroller {
+  overflow-y: hidden;
+  background-color: rgb(245, 245, 245);
+  width: 100%;
+}
+
+
 @media only screen and (max-width: 767px) {
   .fc .fc-toolbar {
     flex-direction: column;
