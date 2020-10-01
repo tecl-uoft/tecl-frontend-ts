@@ -58,6 +58,7 @@ export function AuthProvider({ children }: Props) {
         }
       })
       .catch((err) => {
+        alert(`Error ${err.code}: ${err.message}`)
         /* console.error(err); */
         logout();
       });
