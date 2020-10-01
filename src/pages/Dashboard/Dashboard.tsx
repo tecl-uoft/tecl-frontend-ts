@@ -37,13 +37,13 @@ function Dashboard() {
         )}
       </div>
       
-      {auth?.authState.user?.studies.map((study) => {
+      {auth?.authState.user?.studies.map((study, idx) => {
         return (
-          <>
+          <div key={idx}>
             <h3 className="text-2xl mt-4 font-semibold">{study.studyName} Study:</h3>
             <AppointmentPanel setShowModal={setShowModal} />
             <RAPanel />
-          </>
+          </div>
         );
       })}
     </div>

@@ -15,7 +15,6 @@ function Scheduling() {
 
   return (
     <div className="container mx-auto px-8 pt-4 flex flex-col">
-      {studyList ? studyList.map((study: any) => study.studyName) : null}
       <div className="flex mb-3 flex-col">
         <h3 className="text-4xl font-bold mx-auto underline">
           {currentStudy && currentStudy.studyName} Schedule
