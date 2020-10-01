@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { AddStudyForm } from "../../components/AddStudyForm";
+import { FocusedModal } from "../../components/FocusedModal";
 import { MeetingCalendar } from "../../components/MeetingCalendar";
 import { useAuth } from "../../context/AuthContext";
 
 function Dashboard() {
   const auth = useAuth();
   const [showModal, setShowModal] = useState(false);
+  const [showAddStudyModal, setShowAddStudyModal] = useState(true);
 
   return (
     <div className="container mx-auto px-8 pt-4 flex flex-col">
@@ -14,9 +17,17 @@ function Dashboard() {
       </h1>
       <div className="flex">
         <h2 className="text-3xl font-semibold">Current Studies</h2>
-        <button className="bg-gray-800 hover:text-orange-500 text-white px-2 ml-4 rounded focus:outline-none focus:shadow-outline">
+        <button
+          onClick={() => setShowAddStudyModal(true)}
+          className="bg-gray-800 hover:text-orange-500 text-white px-2 ml-4 rounded focus:outline-none focus:shadow-outline"
+        >
           Add Study
         </button>
+        {showAddStudyModal && (
+          <FocusedModal setShowModal={setShowAddStudyModal}>
+            <AddStudyForm />
+          </FocusedModal>
+        )}
       </div>
       <h3 className="text-2xl mt-4 font-semibold">Frogger Study:</h3>
       <AppointmentPanel setShowModal={setShowModal} />
