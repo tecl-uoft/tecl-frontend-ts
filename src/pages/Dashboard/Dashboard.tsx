@@ -36,16 +36,27 @@ function Dashboard() {
           </FocusedModal>
         )}
       </div>
-      
-      {auth?.authState.user?.studies.map((study, idx) => {
-        return (
-          <div key={idx}>
-            <h3 className="text-2xl mt-4 font-semibold">{study.studyName} Study:</h3>
-            <AppointmentPanel setShowModal={setShowModal} />
-            <RAPanel />
-          </div>
-        );
-      })}
+
+      {auth?.authState.user?.studies &&
+        auth?.authState.user?.studies.map((study, idx) => {
+          return (
+            <div key={idx}>
+              <h3 className="text-2xl mt-4 font-semibold">
+                {study.studyName} Study:
+              </h3>
+              <div className="flex mt-2">
+                <button
+                  onClick={() => setShowModal(true)}
+                  className="bg-orange-500 h-10 hover:bg-orange-800 text-white px-2 ml-4 rounded focus:outline-none focus:shadow-outline"
+                >
+                  Set Study Times
+                </button>
+              </div>
+              <AppointmentPanel setShowModal={setShowModal} />
+              <RAPanel />
+            </div>
+          );
+        })}
     </div>
   );
 }

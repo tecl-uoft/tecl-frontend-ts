@@ -1,5 +1,6 @@
 import { DateSelectArg } from "@fullcalendar/react";
 import React, { Dispatch, SetStateAction } from "react";
+/* import { useStudy } from "../../context/StudyContext"; */
 
 interface ICalendarEventModalProps {
   selectInfo: DateSelectArg | undefined;
@@ -7,6 +8,8 @@ interface ICalendarEventModalProps {
 }
 
 function CalendarEventModal(props: ICalendarEventModalProps) {
+ /*  const study = useStudy(); */
+
   const startDate = new Date(props.selectInfo?.startStr as string);
   const endDate = new Date(props.selectInfo?.endStr as string);
   const MONTHS = [
@@ -45,6 +48,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
         start: selectInfo.startStr,
         end: selectInfo.endStr,
         allDay: selectInfo.allDay,
+        color: "#e53e3e"
       });
       calendarApi.unselect();
       props.setShowEventModal(false);

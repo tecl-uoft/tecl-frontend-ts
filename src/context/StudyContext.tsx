@@ -26,8 +26,8 @@ export function StudyProvider({ children }: Props) {
   const listStudy = () => {
     StudyService.list()
       .then((studyRes) => {
-        setStudyState(studyRes[0]);
-        return studyRes
+        setStudyState(studyRes.study[0]);
+        return studyRes.study
       })
       .catch((err) => {
         alert(`Error in study context, Code ${err.code}: ${err.message}`);

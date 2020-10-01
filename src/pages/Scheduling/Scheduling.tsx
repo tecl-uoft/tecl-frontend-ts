@@ -5,7 +5,7 @@ import StudyService from "../../services/StudyService";
 function Scheduling() {
   const [studyList, setStudyList] = useState<any>(undefined);
   const [currentStudy, setCurrentStudy] = useState<any>(undefined);
-
+  
   useEffect(() => {
     StudyService.list().then((listObject) => {
       setStudyList(listObject.study);
