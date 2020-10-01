@@ -12,6 +12,13 @@ function Dashboard() {
       <h1 className="text-3xl font-bold mx-auto">
         Hello {`${auth?.authState.user?.firstName}!`}
       </h1>
+      <div className="flex">
+        <h2 className="text-3xl font-semibold">Current Studies</h2>
+        <button className="bg-gray-800 hover:text-orange-500 text-white px-2 ml-4 rounded focus:outline-none focus:shadow-outline">
+          Add Study
+        </button>
+      </div>
+      <h3 className="text-2xl mt-4 font-semibold">Frogger Study:</h3>
       <AppointmentPanel setShowModal={setShowModal} />
       <RAPanel />
     </div>
@@ -37,7 +44,6 @@ function StudyHoursModal(props: any) {
           aria-modal="true"
           aria-labelledby="modal-headline"
         >
-          
           <MeetingCalendar />
         </div>
       </div>
@@ -79,20 +85,14 @@ function AppointmentPanel(props: any) {
     },
   ];
   return (
-    <div className="py-4 w-full">
-      <div className="flex">
-        <h2 className="text-3xl font-semibold">Current Studies</h2>
-        <button className="bg-gray-800 hover:text-orange-500 text-white px-2 ml-4 rounded focus:outline-none focus:shadow-outline">
-          Add Study
-        </button>
-      </div>
-      <div className="flex justify-between mt-4">
-        <h3 className="text-2xl font-semibold">Frogger Study:</h3>
+    <div className="py-4 md:p-4 w-full">
+      <div className="flex justify-between">
+        <h4 className="text-xl">Upcoming Appointments</h4>
         <button
           onClick={() => props.setShowModal(true)}
           className="bg-orange-500 hover:bg-orange-800 text-white px-4 rounded focus:outline-none focus:shadow-outline"
         >
-          + Set Study Hours
+          + Add Appointment
         </button>
       </div>
       <div className="rounded my-4 mx-2 h-64 overflow-auto">
@@ -101,7 +101,7 @@ function AppointmentPanel(props: any) {
             <tr>
               <th className="text-left py-2 px-4">Name</th>
               <th className="text-left py-2 px-4">Parent</th>
-              <th className="text-left py-2 px-4">Appointment</th>
+              <th className="text-left py-2 px-4">Appointment Date</th>
               <th className="text-left py-2 px-4">Email</th>
               <th className="text-left py-2 px-4"></th>
             </tr>
@@ -151,7 +151,16 @@ function RAPanel() {
   ];
 
   return (
-    <div>
+    <div className="py-4 md:p-4 w-full">
+      <div className="flex justify-between">
+        <h4 className="text-xl">Members</h4>
+        <button
+          /* onClick={() => props.setShowModal(true)} */
+          className="bg-orange-500 hover:bg-orange-800 text-white px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          + Add Members
+        </button>
+      </div>
       <div className="rounded my-4 mx-2 h-64 overflow-auto">
         <table className="min-w-full bg-white">
           <thead className="bg-gray-700 text-white text-md font-semibold">
@@ -175,9 +184,7 @@ function RAPanel() {
                   <td className="text-left py-2 px-4">
                     {ra.nextAppointmentBooked}
                   </td>
-                  <td className="text-left py-2 px-4">
-                    {"link"}
-                  </td>
+                  <td className="text-left py-2 px-4">{"link"}</td>
                 </tr>
               );
             })}
