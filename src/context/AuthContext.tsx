@@ -45,8 +45,8 @@ export function AuthProvider({ children }: Props) {
     [setAuthState]
   );
 
-  const logout = useCallback(() => {
-    UserSerivce.logout();
+  const logout = useCallback(async () => {
+    await UserSerivce.logout();
     setAuthState(defaultAuthState);
   }, [setAuthState, defaultAuthState]);
 
@@ -54,15 +54,16 @@ export function AuthProvider({ children }: Props) {
     UserSerivce.fetchAuthUser()
       .then((user) => {
         if (user) {
-          login(user);
+          setAuthState({ isAuthenticated: true, user });
         }
       })
       .catch((err) => {
-        alert(`Error ${err.code}: ${err.message}`)
+        alert(`Error ${err.code}: ${err.message}`);
         /* console.error(err); */
         logout();
       });
-  }, [login, logout]);
+    // eslint-disable-next-line
+  }, []);
 
   const register = (user: TeclUserCreateInput) => {
     UserSerivce.signup(user);

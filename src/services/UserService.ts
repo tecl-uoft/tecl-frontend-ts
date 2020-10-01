@@ -72,7 +72,6 @@ async function logout() {
 async function fetchAuthUser() {
   const res = await fetch(`/api/v1/user/`);
   if (!res.ok) {
-    console.log(res)
     return null;
   } else {
     const user = await res.json();

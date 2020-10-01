@@ -89,7 +89,7 @@ interface IPanelOptions {
 function NavPanel(props: INavPanel) {
   const { selected, isLoggedIn, logout } = props;
   const auth = useAuth();
-  console.log(auth)
+  console.log("header", auth)
 
   const panelOptions: IPanelOptions[] = [
     {
@@ -105,6 +105,7 @@ function NavPanel(props: INavPanel) {
       text: "Login",
     },
   ];
+  
   if (auth?.authState.isAuthenticated) {
     panelOptions.push({
       link: "/dashboard",

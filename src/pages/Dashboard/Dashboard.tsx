@@ -37,6 +37,7 @@ function Dashboard() {
         )}
       </div>
       <h3 className="text-2xl mt-4 font-semibold">Frogger Study:</h3>
+      {   }
       <AppointmentPanel setShowModal={setShowModal} />
       <RAPanel />
     </div>
