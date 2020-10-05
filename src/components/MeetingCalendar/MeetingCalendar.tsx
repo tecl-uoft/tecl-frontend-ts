@@ -10,18 +10,22 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { CalendarRemoveModal } from "../CalendarRemoveModal";
 import { CalendarEventModal } from "../CalendarEventModal";
+import { AddSEventModal } from "../AddSEventModal";
 
-function MeetingCalendar() {
+function MeetingCalendar(props: any) {
+  const [showAddSEventModal, setShowAddSEventModal] = useState(true);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEventModal, setShowEventModal] = useState(false);
   const [eventClick, setEventClick] = useState<EventApi | undefined>(undefined);
   const [selectInfo, setSelectInfo] = useState<DateSelectArg | undefined>(
     undefined
   );
+  const { isMainCal } = props;
 
   const handleDateSelect = (selectInfo: DateSelectArg) => {
     setSelectInfo(selectInfo);
     setShowEventModal(true);
+
     /* const title = prompt("Event Title:");
     const calendarApi = selectInfo.view.calendar;
     if (title) {
@@ -36,7 +40,11 @@ function MeetingCalendar() {
   };
 
   const handleEventClick = (clickInfo: EventClickArg) => {
-    setShowDeleteModal(true);
+    if (isMainCal) {
+      setShowDeleteModal(true);
+    } else {
+      setShowAddSEventModal(true);
+    }
 
     setEventClick(clickInfo.event);
   };
@@ -47,7 +55,7 @@ function MeetingCalendar() {
         headerToolbar={{
           left: "prev,next today",
           center: "title",
-          right: "dayGridMonth,timeGridWeek,timeGridDay",
+          right: "dayGridMonth,timeGridWeek",
         }}
         selectable
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -66,6 +74,9 @@ function MeetingCalendar() {
           selectInfo={selectInfo}
           setShowEventModal={setShowEventModal}
         />
+      )}
+      {showAddSEventModal && (
+        <AddSEventModal setShowAddSEventModal={setShowAddSEventModal} />
       )}
     </div>
   );

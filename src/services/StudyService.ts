@@ -1,7 +1,8 @@
 export default {
   create,
   read,
-  list
+  list,
+  update,
 };
 
 async function create(study: any): Promise<void> {
@@ -16,6 +17,22 @@ async function create(study: any): Promise<void> {
   if (response.ok) {
     const studyPostRes = await response.json();
     return studyPostRes;
+  } else {
+    alert(`Create schedule event failed`);
+  }
+}
+
+async function update(studyToUpdate: any): Promise<void> {
+  const response = await fetch(`/api/v1/study`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ study: studyToUpdate }),
+  });
+
+  if (response.ok) {
+    return;
   } else {
     alert(`Create schedule event failed`);
   }

@@ -7,7 +7,7 @@ import { useStudy } from "../../context/StudyContext";
 
 function Dashboard() {
   const auth = useAuth();
-  const study = useStudy();
+  const studyCtx = useStudy();
   const [showModal, setShowModal] = useState(false);
   const [showAddStudyModal, setShowAddStudyModal] = useState(false);
 
@@ -31,22 +31,35 @@ function Dashboard() {
               addStudySubmitFunc={() => {
                 setShowAddStudyModal(false);
               }}
-              studyCreateFunc={study?.createStudy}
+              studyCreateFunc={studyCtx?.createStudy}
             />
           </FocusedModal>
         )}
       </div>
 
       {auth?.authState.user?.studies &&
-        auth?.authState.user?.studies.map((study, idx) => {
+        auth?.authState.user?.studies.slice(0).reverse().map((study, idx) => {
           return (
             <div key={idx}>
               <h3 className="text-2xl mt-4 font-semibold">
                 {study.studyName} Study:
               </h3>
+
               <div className="flex mt-2">
+                <div
+                  className="block p-2 rounded"
+                  style={{ backgroundColor: study.keyColor }}
+                >
+                  {" "}
+                  Key Color{" "}
+                </div>
                 <button
-                  onClick={() => setShowModal(true)}
+                  onClick={() => {
+                    setShowModal(true);
+                    if (studyCtx) {
+                      studyCtx.setStudyState(study);
+                    }
+                  }}
                   className="bg-orange-500 h-10 hover:bg-orange-800 text-white px-2 ml-4 rounded focus:outline-none focus:shadow-outline"
                 >
                   Set Study Times
@@ -80,7 +93,7 @@ function StudyHoursModal(props: any) {
           aria-modal="true"
           aria-labelledby="modal-headline"
         >
-          <MeetingCalendar />
+          <MeetingCalendar isMainCal={false} />
         </div>
       </div>
     </div>
@@ -139,7 +152,7 @@ function AppointmentPanel(props: any) {
               <th className="text-left py-2 px-4">Parent</th>
               <th className="text-left py-2 px-4">Appointment Date</th>
               <th className="text-left py-2 px-4">Email</th>
-              <th className="text-left py-2 px-4"></th>
+              <th className="text-left py-2 px-4">Date of Birth</th>
             </tr>
           </thead>
           <tbody className="text-gray-700">

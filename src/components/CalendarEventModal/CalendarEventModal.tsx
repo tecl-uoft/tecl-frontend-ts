@@ -1,6 +1,7 @@
 import { DateSelectArg } from "@fullcalendar/react";
 import React, { Dispatch, SetStateAction } from "react";
-/* import { useStudy } from "../../context/StudyContext"; */
+import { useAuth } from "../../context/AuthContext";
+import { useStudy } from "../../context/StudyContext";
 
 interface ICalendarEventModalProps {
   selectInfo: DateSelectArg | undefined;
@@ -8,7 +9,8 @@ interface ICalendarEventModalProps {
 }
 
 function CalendarEventModal(props: ICalendarEventModalProps) {
- /*  const study = useStudy(); */
+  const studyCtx = useStudy();
+  const authCtx = useAuth();
 
   const startDate = new Date(props.selectInfo?.startStr as string);
   const endDate = new Date(props.selectInfo?.endStr as string);
@@ -29,7 +31,11 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
 
   function formatDate(date: Date) {
     return `${
-      date.getHours() < 10 ? (date.getHours() === 0 ? 12 : "0" + date.getHours()) : date.getHours() % 12
+      date.getHours() < 10
+        ? date.getHours() === 0
+          ? 12
+          : "0" + date.getHours()
+        : date.getHours() % 12
     }:${
       date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()
     }  ${date.getHours() >= 12 ? "p.m." : "a.m."}, ${
@@ -41,15 +47,26 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
     const selectInfo = props.selectInfo;
     const firstName = document.querySelector<HTMLInputElement>("#firstName")
       ?.value;
-    if (selectInfo && firstName) {
+    if (selectInfo && firstName && studyCtx) {
       const calendarApi = selectInfo.view.calendar;
-      calendarApi.addEvent({
-        title: firstName,
-        start: selectInfo.startStr,
-        end: selectInfo.endStr,
-        allDay: selectInfo.allDay,
-        color: "#e53e3e"
-      });
+      if (!authCtx || !authCtx.authState.user) {
+        calendarApi.addEvent({
+          title: firstName,
+          start: selectInfo.startStr,
+          end: selectInfo.endStr,
+          allDay: selectInfo.allDay,
+          color: studyCtx.studyState.keyColor,
+        });
+      } else {
+        calendarApi.addEvent({
+          title: `Coordinator: ${authCtx?.authState.user?.firstName}`,
+          start: selectInfo.startStr,
+          end: selectInfo.endStr,
+          allDay: selectInfo.allDay,
+          color: studyCtx.studyState.keyColor,
+        });
+      }
+
       calendarApi.unselect();
       props.setShowEventModal(false);
     }

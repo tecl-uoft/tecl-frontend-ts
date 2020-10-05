@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { MeetingCalendar } from "../../components/MeetingCalendar";
+import { useStudy } from "../../context/StudyContext";
 import StudyService from "../../services/StudyService";
 
 function Scheduling() {
   const [studyList, setStudyList] = useState<any>(undefined);
   const [currentStudy, setCurrentStudy] = useState<any>(undefined);
-  
+  const studyCtx = useStudy();
+
   useEffect(() => {
     StudyService.list().then((listObject) => {
       setStudyList(listObject.study);
       setCurrentStudy(listObject.study[0]);
+      studyCtx?.setStudyState(listObject.study[0]);
     });
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -24,7 +28,10 @@ function Scheduling() {
             ? studyList.map((study: any, idx: number) => {
                 return (
                   <button
-                    onClick={() => setCurrentStudy(study)}
+                    onClick={() => {
+                      setCurrentStudy(study);
+                      studyCtx?.setStudyState(study);
+                    }}
                     style={{ backgroundColor: study.keyColor }}
                     className={`text-md font-semibold rounded p-1 px-2 text-white
                 ${
@@ -41,7 +48,7 @@ function Scheduling() {
             : null}
         </nav>
       </div>
-      <MeetingCalendar />
+      <MeetingCalendar isMainCal={false} />
     </div>
   );
 }
