@@ -6,6 +6,7 @@ import { useStudy } from "../../context/StudyContext";
 interface ICalendarEventModalProps {
   selectInfo: DateSelectArg | undefined;
   setShowEventModal: Dispatch<SetStateAction<boolean>>;
+  createEventFunc(): void;
 }
 
 function CalendarEventModal(props: ICalendarEventModalProps) {
@@ -50,21 +51,26 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
     if (selectInfo && firstName && studyCtx) {
       const calendarApi = selectInfo.view.calendar;
       if (!authCtx || !authCtx.authState.user) {
-        calendarApi.addEvent({
+        /* calendarApi.addEvent({
           title: firstName,
           start: selectInfo.startStr,
           end: selectInfo.endStr,
           allDay: selectInfo.allDay,
           color: studyCtx.studyState.keyColor,
-        });
+        }); */
+        alert("Must be logged in to make a change")
       } else {
-        calendarApi.addEvent({
-          title: `Coordinator: ${authCtx?.authState.user?.firstName}`,
+        const eventTitle = `Coordinator: ${authCtx?.authState.user?.firstName}`
+        const event = { 
+          title: eventTitle,
           start: selectInfo.startStr,
           end: selectInfo.endStr,
           allDay: selectInfo.allDay,
           color: studyCtx.studyState.keyColor,
-        });
+        };
+        calendarApi.addEvent(event);
+        const availability = { start: selectInfo.start, end: selectInfo.end, title: eventTitle}
+        studyCtx.addStudyAvailability(availability);
       }
 
       calendarApi.unselect();
@@ -73,8 +79,8 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
   };
 
   return (
-    <div className="fixed z-10 inset-0 overflow-y-auto">
-      <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+    <div className="fixed inset-0 z-10 overflow-y-auto">
+      <div className="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
         {/* <!--
             Background overlay, show/hide based on modal state.
       
@@ -92,20 +98,20 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
         <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
         &#8203;
         <div
-          className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+          className="inline-block overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-headline"
         >
-          <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+          <div className="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
             <div className="sm:flex sm:items-start">
-              <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
+              <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 mx-auto bg-green-100 rounded-full sm:mx-0 sm:h-10 sm:w-10">
                 {/* <!-- Heroicon name: exclamation --> */}
                 <svg
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
-                  className="h-6 w-6 text-green-600"
+                  className="w-6 h-6 text-green-600"
                   height="24"
                   width="24"
                   xmlns="http://www.w3.org/2000/svg"
@@ -121,7 +127,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
               </div>
               <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                 <h3
-                  className="text-lg leading-6 font-medium text-gray-900"
+                  className="text-lg font-medium leading-6 text-gray-900"
                   id="modal-headline"
                 >
                   Event Date: <br />
@@ -132,23 +138,23 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
             </div>
             <EventForm />
           </div>
-          <div className="bg-gray-50 px-4 pb-4 sm:px-6 sm:flex sm:flex-row-reverse">
+          <div className="px-4 pb-4 bg-gray-50 sm:px-6 sm:flex sm:flex-row-reverse">
             <span className="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
               <button
                 onClick={() => {
                   onAdd();
                 }}
                 type="button"
-                className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-green-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+                className="inline-flex justify-center w-full px-4 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green sm:text-sm sm:leading-5"
               >
                 Add
               </button>
             </span>
-            <span className="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
+            <span className="flex w-full mt-3 rounded-md shadow-sm sm:mt-0 sm:w-auto">
               <button
                 onClick={() => props.setShowEventModal(false)}
                 type="button"
-                className="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+                className="inline-flex justify-center w-full px-4 py-2 text-base font-medium leading-6 text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue sm:text-sm sm:leading-5"
               >
                 Cancel
               </button>
@@ -164,36 +170,36 @@ function EventForm() {
   return (
     <form className="px-8 pt-4">
       <div className="flex flex-wrap -mx-3">
-        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-          <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2">
+        <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+          <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700">
             First Name *
           </label>
           <input
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+            className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border rounded appearance-none focus:outline-none focus:bg-white"
             type="text"
             id="firstName"
             placeholder="Jane"
           />
         </div>
-        <div className="w-full md:w-1/2 px-3">
-          <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2">
+        <div className="w-full px-3 md:w-1/2">
+          <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700">
             Last Name
           </label>
           <input
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            className="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
             type="text"
             id="lastName"
             placeholder="Doe"
           />
         </div>
       </div>
-      <div className="flex flex-wrap -mx-3 my-2">
+      <div className="flex flex-wrap my-2 -mx-3">
         <div className="w-full px-3">
-          <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2">
+          <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700">
             Email *
           </label>
           <input
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            className="block w-full px-2 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
             id="email"
             type="email"
             placeholder="test@test.ca"
@@ -202,11 +208,11 @@ function EventForm() {
       </div>
       <div className="flex flex-wrap -mx-3">
         <div className="w-full px-3 mb-6 md:mb-0">
-          <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2">
+          <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700">
             Additional Notes
           </label>
           <input
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+            className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border rounded appearance-none focus:outline-none focus:bg-white"
             type="text"
           />
         </div>

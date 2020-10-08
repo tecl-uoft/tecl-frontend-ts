@@ -1,7 +1,11 @@
 import React from "react";
 import { FocusedModal } from "../FocusedModal";
 
-function AddSEventModal(props: any) {
+interface IAddSEventModalProps {
+  setShowAddSEventModal(showModal: boolean): void;
+}
+
+function AddSEventModal(props: IAddSEventModalProps) {
   const { setShowAddSEventModal } = props;
   return (
     <div>

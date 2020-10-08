@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { AddStudyForm } from "../../components/AddStudyForm";
 import { FocusedModal } from "../../components/FocusedModal";
-import { MeetingCalendar } from "../../components/MeetingCalendar";
+import { StudyHoursSetterModal } from "../../components/StudyHoursSetterModal";
 import { useAuth } from "../../context/AuthContext";
 import { useStudy } from "../../context/StudyContext";
 
@@ -12,16 +12,16 @@ function Dashboard() {
   const [showAddStudyModal, setShowAddStudyModal] = useState(false);
 
   return (
-    <div className="container mx-auto px-8 pt-4 flex flex-col">
-      {showModal && <StudyHoursModal setShowModal={setShowModal} />}
-      <h1 className="text-3xl font-bold mx-auto">
+    <div className="container flex flex-col px-8 pt-4 mx-auto">
+      {showModal && <StudyHoursSetterModal setShowModal={setShowModal} />}
+      <h1 className="mx-auto text-3xl font-bold">
         Hello {`${auth?.authState.user?.firstName}!`}
       </h1>
       <div className="flex">
         <h2 className="text-3xl font-semibold">Current Studies</h2>
         <button
           onClick={() => setShowAddStudyModal(true)}
-          className="bg-gray-800 hover:text-orange-500 text-white px-2 ml-4 rounded focus:outline-none focus:shadow-outline"
+          className="px-2 ml-4 text-white bg-gray-800 rounded hover:text-orange-500 focus:outline-none focus:shadow-outline"
         >
           Add Study
         </button>
@@ -38,64 +38,41 @@ function Dashboard() {
       </div>
 
       {auth?.authState.user?.studies &&
-        auth?.authState.user?.studies.slice(0).reverse().map((study, idx) => {
-          return (
-            <div key={idx}>
-              <h3 className="text-2xl mt-4 font-semibold">
-                {study.studyName} Study:
-              </h3>
+        auth?.authState.user?.studies
+          .slice(0)
+          .reverse()
+          .map((study, idx) => {
+            return (
+              <div key={idx}>
+                <h3 className="mt-4 text-2xl font-semibold">
+                  {study.studyName} Study:
+                </h3>
 
-              <div className="flex mt-2">
-                <div
-                  className="block p-2 rounded"
-                  style={{ backgroundColor: study.keyColor }}
-                >
-                  {" "}
-                  Key Color{" "}
+                <div className="flex mt-2">
+                  <div
+                    className="block p-2 rounded"
+                    style={{ backgroundColor: study.keyColor }}
+                  >
+                    {" "}
+                    Key Color{" "}
+                  </div>
+                  <button
+                    onClick={() => {
+                      setShowModal(true);
+                      if (studyCtx) {
+                        studyCtx.setStudyState(study);
+                      }
+                    }}
+                    className="h-10 px-2 ml-4 text-white bg-orange-500 rounded hover:bg-orange-800 focus:outline-none focus:shadow-outline"
+                  >
+                    Set Study Times
+                  </button>
                 </div>
-                <button
-                  onClick={() => {
-                    setShowModal(true);
-                    if (studyCtx) {
-                      studyCtx.setStudyState(study);
-                    }
-                  }}
-                  className="bg-orange-500 h-10 hover:bg-orange-800 text-white px-2 ml-4 rounded focus:outline-none focus:shadow-outline"
-                >
-                  Set Study Times
-                </button>
+                <AppointmentPanel setShowModal={setShowModal} />
+                <RAPanel />
               </div>
-              <AppointmentPanel setShowModal={setShowModal} />
-              <RAPanel />
-            </div>
-          );
-        })}
-    </div>
-  );
-}
-
-function StudyHoursModal(props: any) {
-  return (
-    <div className="fixed z-10 inset-0 overflow-y-auto">
-      <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <div
-          className="fixed inset-0 transition-opacity cursor-pointer"
-          onClick={() => props.setShowModal(false)}
-        >
-          <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-        </div>
-        {/* <!-- This element is to trick the browser into centering the modal contents. --> */}
-        <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
-        &#8203;
-        <div
-          className="inline-block w-10/12 p-6 align-bottom bg-white rounded-lg transform transition-all my-8 align-middle "
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="modal-headline"
-        >
-          <MeetingCalendar isMainCal={false} />
-        </div>
-      </div>
+            );
+          })}
     </div>
   );
 }
@@ -134,39 +111,39 @@ function AppointmentPanel(props: any) {
     },
   ];
   return (
-    <div className="py-4 md:p-4 w-full">
+    <div className="w-full py-4 md:p-4">
       <div className="flex justify-between">
         <h4 className="text-xl">Upcoming Appointments</h4>
         <button
           onClick={() => props.setShowModal(true)}
-          className="bg-orange-500 hover:bg-orange-800 text-white px-4 rounded focus:outline-none focus:shadow-outline"
+          className="px-4 text-white bg-orange-500 rounded hover:bg-orange-800 focus:outline-none focus:shadow-outline"
         >
           + Add Appointment
         </button>
       </div>
-      <div className="rounded my-4 mx-2 max-h-64 overflow-auto">
+      <div className="mx-2 my-4 overflow-auto rounded max-h-64">
         <table className="min-w-full bg-white">
-          <thead className="bg-gray-700 text-white text-md font-semibold">
+          <thead className="font-semibold text-white bg-gray-700 text-md">
             <tr>
-              <th className="text-left py-2 px-4">Name</th>
-              <th className="text-left py-2 px-4">Parent</th>
-              <th className="text-left py-2 px-4">Appointment Date</th>
-              <th className="text-left py-2 px-4">Email</th>
-              <th className="text-left py-2 px-4">Date of Birth</th>
+              <th className="px-4 py-2 text-left">Name</th>
+              <th className="px-4 py-2 text-left">Parent</th>
+              <th className="px-4 py-2 text-left">Appointment Date</th>
+              <th className="px-4 py-2 text-left">Email</th>
+              <th className="px-4 py-2 text-left">Date of Birth</th>
             </tr>
           </thead>
           <tbody className="text-gray-700">
             {appointments.map((apmnt, idx) => {
               return (
                 <tr key={idx} className={`${idx % 2 === 0 && "bg-orange-200"}`}>
-                  <td className="text-left py-2 px-4">{apmnt.name}</td>
-                  <td className="text-left py-2 px-4">{apmnt.name}</td>
+                  <td className="px-4 py-2 text-left">{apmnt.name}</td>
+                  <td className="px-4 py-2 text-left">{apmnt.name}</td>
 
-                  <td className="text-left py-2 px-4">
+                  <td className="px-4 py-2 text-left">
                     {apmnt.date + ", " + apmnt.time}
                   </td>
-                  <td className="text-left py-2 px-4">{apmnt.email}</td>
-                  <td className="text-left py-2 px-4">{"see notes"}</td>
+                  <td className="px-4 py-2 text-left">{apmnt.email}</td>
+                  <td className="px-4 py-2 text-left">{"see notes"}</td>
                 </tr>
               );
             })}
@@ -200,40 +177,40 @@ function RAPanel() {
   ];
 
   return (
-    <div className="py-4 md:p-4 w-full">
+    <div className="w-full py-4 md:p-4">
       <div className="flex justify-between">
         <h4 className="text-xl">Members</h4>
         <button
           /* onClick={() => props.setShowModal(true)} */
-          className="bg-orange-500 hover:bg-orange-800 text-white px-4 rounded focus:outline-none focus:shadow-outline"
+          className="px-4 text-white bg-orange-500 rounded hover:bg-orange-800 focus:outline-none focus:shadow-outline"
         >
           + Add Members
         </button>
       </div>
-      <div className="rounded my-4 mx-2 max-h-64 overflow-auto">
+      <div className="mx-2 my-4 overflow-auto rounded max-h-64">
         <table className="min-w-full bg-white">
-          <thead className="bg-gray-700 text-white text-md font-semibold">
+          <thead className="font-semibold text-white bg-gray-700 text-md">
             <tr>
-              <th className="text-left py-2 px-4">Name</th>
-              <th className="text-left py-2 px-4">Role</th>
-              <th className="text-left py-2 px-4">Last Appointment Date</th>
-              <th className="text-left py-2 px-4">Next Appointment Date</th>
-              <th className="text-left py-2 px-4"></th>
+              <th className="px-4 py-2 text-left">Name</th>
+              <th className="px-4 py-2 text-left">Role</th>
+              <th className="px-4 py-2 text-left">Last Appointment Date</th>
+              <th className="px-4 py-2 text-left">Next Appointment Date</th>
+              <th className="px-4 py-2 text-left"></th>
             </tr>
           </thead>
           <tbody className="text-gray-700">
             {researchAssistants.map((ra, idx) => {
               return (
                 <tr key={idx} className={`${idx % 2 === 1 && "bg-gray-200"}`}>
-                  <td className="text-left py-2 px-4">{ra.name}</td>
-                  <td className="text-left py-2 px-4">{ra.role}</td>
-                  <td className="text-left py-2 px-4">
+                  <td className="px-4 py-2 text-left">{ra.name}</td>
+                  <td className="px-4 py-2 text-left">{ra.role}</td>
+                  <td className="px-4 py-2 text-left">
                     {ra.lastAppointmentBooked}
                   </td>
-                  <td className="text-left py-2 px-4">
+                  <td className="px-4 py-2 text-left">
                     {ra.nextAppointmentBooked}
                   </td>
-                  <td className="text-left py-2 px-4">{"link"}</td>
+                  <td className="px-4 py-2 text-left">{"link"}</td>
                 </tr>
               );
             })}

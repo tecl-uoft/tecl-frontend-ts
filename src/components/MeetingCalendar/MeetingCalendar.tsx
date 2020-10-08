@@ -11,9 +11,10 @@ import interactionPlugin from "@fullcalendar/interaction";
 import { CalendarRemoveModal } from "../CalendarRemoveModal";
 import { CalendarEventModal } from "../CalendarEventModal";
 import { AddSEventModal } from "../AddSEventModal";
+import { useStudy } from "../../context/StudyContext";
 
 function MeetingCalendar(props: any) {
-  const [showAddSEventModal, setShowAddSEventModal] = useState(true);
+  const [showAddSEventModal, setShowAddSEventModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEventModal, setShowEventModal] = useState(false);
   const [eventClick, setEventClick] = useState<EventApi | undefined>(undefined);
@@ -21,11 +22,11 @@ function MeetingCalendar(props: any) {
     undefined
   );
   const { isMainCal } = props;
+  const studyCtx = useStudy();
 
   const handleDateSelect = (selectInfo: DateSelectArg) => {
     setSelectInfo(selectInfo);
     setShowEventModal(true);
-
     /* const title = prompt("Event Title:");
     const calendarApi = selectInfo.view.calendar;
     if (title) {
@@ -57,6 +58,7 @@ function MeetingCalendar(props: any) {
           center: "title",
           right: "dayGridMonth,timeGridWeek",
         }}
+        initialEvents={studyCtx?.studyState.availableTimeSlots}
         selectable
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="timeGridWeek"
@@ -71,6 +73,7 @@ function MeetingCalendar(props: any) {
       )}
       {showEventModal && (
         <CalendarEventModal
+          createEventFunc={() => {}}
           selectInfo={selectInfo}
           setShowEventModal={setShowEventModal}
         />

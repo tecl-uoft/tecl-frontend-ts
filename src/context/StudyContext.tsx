@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState } from "react";
-import ScheduleEventService from "../services/ScheduleEventService";
 import StudyService from "../services/StudyService";
 import { Props } from "./commonTypes";
 
@@ -8,7 +7,7 @@ interface IStudyContext {
   listStudy(): any[];
   studyState: any;
   setStudyState(studyState: any): void;
-  addScheduleEvent(scheduleEvent: any): void;
+  addStudyAvailability:(availability: { start: Date; end: Date, title: string }) => void;
   updateAvailableTimeSlots(timeslot: any): void;
 }
 
@@ -31,6 +30,7 @@ export function StudyProvider({ children }: Props) {
     StudyService.list()
       .then((studyRes) => {
         setStudyState(studyRes.study[0]);
+        console.log("study service", studyRes.study);
         return studyRes.study;
       })
       .catch((err) => {
@@ -48,13 +48,15 @@ export function StudyProvider({ children }: Props) {
     });
   };
 
-  const addScheduleEvent = (scheduleEvent: any) => {
-    ScheduleEventService.create(scheduleEvent)
-      .then((createdSE) => {
-        const newStudyState = studyState;
-        newStudyState.scheduleEvents.push(createdSE);
-        setStudyState(newStudyState);
-        console.log("see", createdSE, newStudyState, studyState);
+  const addStudyAvailability = (
+    availability: { start: Date; end: Date, title: string }
+  ) => {
+    StudyService.createAvailability(studyState.studyName, availability)
+      .then(() => {
+        const newTimeSlots = studyState.availableTimeSlots.concat([{...availability, color: studyState.keyColor}]);
+        setStudyState({...studyState, availableTimeSlots: newTimeSlots})
+        console.log(studyState.availableTimeSlots)
+        return;
       })
       .catch((err) => {
         alert(`Error in study context, Code ${err.code}: ${err.message}`);
@@ -66,8 +68,8 @@ export function StudyProvider({ children }: Props) {
     studyState,
     listStudy,
     setStudyState,
-    addScheduleEvent,
-    updateAvailableTimeSlots
+    addStudyAvailability,
+    updateAvailableTimeSlots,
   };
 
   return (

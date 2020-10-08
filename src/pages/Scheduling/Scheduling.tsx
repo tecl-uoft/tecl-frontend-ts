@@ -10,20 +10,27 @@ function Scheduling() {
 
   useEffect(() => {
     StudyService.list().then((listObject) => {
+      console.log("", listObject)
       setStudyList(listObject.study);
-      setCurrentStudy(listObject.study[0]);
-      studyCtx?.setStudyState(listObject.study[0]);
+      const default_study = listObject.study[0]
+      setCurrentStudy(default_study);
+      studyCtx?.setStudyState(default_study);
+      
     });
     // eslint-disable-next-line
   }, []);
 
+  useEffect(() => {
+    
+  }, [currentStudy])
+
   return (
-    <div className="container mx-auto px-8 pt-4 flex flex-col">
-      <div className="flex mb-3 flex-col">
-        <h3 className="text-4xl font-bold mx-auto underline">
+    <div className="container flex flex-col px-8 pt-4 mx-auto">
+      <div className="flex flex-col mb-3">
+        <h3 className="mx-auto text-4xl font-bold underline">
           {currentStudy && currentStudy.studyName} Schedule
         </h3>
-        <nav className="space-x-2 mt-2 mx-auto">
+        <nav className="mx-auto mt-2 space-x-2">
           {studyList && currentStudy
             ? studyList.map((study: any, idx: number) => {
                 return (
