@@ -1,83 +1,42 @@
 import React, { useState } from "react";
 import "./meetingCalendar.css";
-import FullCalendar, {
-  DateSelectArg,
-  EventApi,
-  EventClickArg,
-} from "@fullcalendar/react";
+import FullCalendar, { EventClickArg } from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { CalendarRemoveModal } from "../CalendarRemoveModal";
-import { CalendarEventModal } from "../CalendarEventModal";
 import { AddSEventModal } from "../AddSEventModal";
 import { useStudy } from "../../context/StudyContext";
 
-function MeetingCalendar(props: any) {
+function MeetingCalendar() {
   const [showAddSEventModal, setShowAddSEventModal] = useState(false);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showEventModal, setShowEventModal] = useState(false);
-  const [eventClick, setEventClick] = useState<EventApi | undefined>(undefined);
-  const [selectInfo, setSelectInfo] = useState<DateSelectArg | undefined>(
-    undefined
-  );
-  const { isMainCal } = props;
+
   const studyCtx = useStudy();
 
-  const handleDateSelect = (selectInfo: DateSelectArg) => {
-    setSelectInfo(selectInfo);
-    setShowEventModal(true);
-    /* const title = prompt("Event Title:");
-    const calendarApi = selectInfo.view.calendar;
-    if (title) {
-      calendarApi.addEvent({
-        title: title,
-        start: selectInfo.startStr,
-        end: selectInfo.endStr,
-        allDay: selectInfo.allDay,
-      });
-    }
-    calendarApi.unselect(); */
-  };
-
   const handleEventClick = (clickInfo: EventClickArg) => {
-    if (isMainCal) {
-      setShowDeleteModal(true);
-    } else {
-      setShowAddSEventModal(true);
-    }
-
-    setEventClick(clickInfo.event);
+    setShowAddSEventModal(false);
+    /* setEventClick(clickInfo.event); */
   };
 
   return (
     <div className="pb-6">
-      <FullCalendar
-        headerToolbar={{
-          left: "prev,next today",
-          center: "title",
-          right: "dayGridMonth,timeGridWeek",
-        }}
-        initialEvents={studyCtx?.studyState.availableTimeSlots}
-        selectable
-        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-        initialView="timeGridWeek"
-        select={handleDateSelect}
-        eventClick={handleEventClick}
-      />
-      {showDeleteModal && (
-        <CalendarRemoveModal
-          onCancel={() => setShowDeleteModal(false)}
-          onDelete={eventClick}
-        />
+      {studyCtx?.studyState && console.log(studyCtx?.studyState)}
+      {studyCtx?.studyState && (
+        <div key={studyCtx?.studyState.studyName}>
+          <FullCalendar
+            headerToolbar={{
+              left: "prev,next today",
+              center: "title",
+              right: "dayGridMonth,timeGridWeek",
+            }}
+            initialEvents={studyCtx?.studyState.availableTimeSlots}
+            selectable
+            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+            initialView="timeGridWeek"
+            eventClick={handleEventClick}
+          />
+        </div>
       )}
-      {showEventModal && (
-        <CalendarEventModal
-          createEventFunc={() => {}}
-          selectInfo={selectInfo}
-          setShowEventModal={setShowEventModal}
-        />
-      )}
+
       {showAddSEventModal && (
         <AddSEventModal setShowAddSEventModal={setShowAddSEventModal} />
       )}

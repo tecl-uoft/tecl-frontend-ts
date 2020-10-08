@@ -10,19 +10,16 @@ function Scheduling() {
 
   useEffect(() => {
     StudyService.list().then((listObject) => {
-      console.log("", listObject)
+      console.log("", listObject);
       setStudyList(listObject.study);
-      const default_study = listObject.study[0]
+      const default_study = listObject.study[0];
       setCurrentStudy(default_study);
       studyCtx?.setStudyState(default_study);
-      
     });
     // eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
-    
-  }, [currentStudy])
+  useEffect(() => {}, [currentStudy]);
 
   return (
     <div className="container flex flex-col px-8 pt-4 mx-auto">
@@ -55,7 +52,7 @@ function Scheduling() {
             : null}
         </nav>
       </div>
-      <MeetingCalendar isMainCal={false} />
+      <MeetingCalendar />
     </div>
   );
 }
