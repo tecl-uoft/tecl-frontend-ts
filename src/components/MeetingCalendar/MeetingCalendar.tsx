@@ -13,13 +13,12 @@ function MeetingCalendar() {
   const studyCtx = useStudy();
 
   const handleEventClick = (clickInfo: EventClickArg) => {
-    setShowAddSEventModal(false);
+    setShowAddSEventModal(true);
     /* setEventClick(clickInfo.event); */
   };
 
   return (
     <div className="pb-6">
-      {studyCtx?.studyState && console.log(studyCtx?.studyState)}
       {studyCtx?.studyState && (
         <div key={studyCtx?.studyState.studyName}>
           <FullCalendar

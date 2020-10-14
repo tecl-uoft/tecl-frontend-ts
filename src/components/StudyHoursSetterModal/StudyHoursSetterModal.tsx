@@ -28,15 +28,14 @@ function StudyHoursSetterModal(props: IStudyHoursSetterModalProps) {
     setShowEventModal(true);
     setSelectInfo(selectInfo);
   };
-
   const handleEventClick = (clickInfo: EventClickArg) => {
     setShowDeleteModal(true);
     setEventClick(clickInfo.event);
   };
 
   useEffect(() => {
-    console.log("hoursetter", studyCtx?.studyState)
-  }, [studyCtx])
+    console.log("hoursetter", studyCtx?.studyState);
+  }, [studyCtx]);
 
   return (
     <div className="fixed inset-0 z-10 overflow-y-auto">
@@ -57,19 +56,21 @@ function StudyHoursSetterModal(props: IStudyHoursSetterModalProps) {
           aria-labelledby="modal-headline"
         >
           <div className="pb-6">
-          {studyCtx && <FullCalendar
-              headerToolbar={{
-                left: "prev,next today",
-                center: "title",
-                right: "dayGridMonth,timeGridWeek",
-              }}
-              initialEvents={studyCtx?.studyState.availableTimeSlots}
-              selectable
-              plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-              initialView="timeGridWeek"
-              select={handleDateSelect}
-              eventClick={handleEventClick}
-            />}
+            {studyCtx && (
+              <FullCalendar
+                headerToolbar={{
+                  left: "prev,next today",
+                  center: "title",
+                  right: "dayGridMonth,timeGridWeek",
+                }}
+                initialEvents={studyCtx?.studyState.availableTimeSlots}
+                selectable
+                plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                initialView="timeGridWeek"
+                select={handleDateSelect}
+                eventClick={handleEventClick}
+              />
+            )}
             {showDeleteModal && (
               <CalendarRemoveModal
                 onCancel={() => setShowDeleteModal(false)}

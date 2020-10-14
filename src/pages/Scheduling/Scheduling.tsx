@@ -23,6 +23,7 @@ function Scheduling() {
 
   return (
     <div className="container flex flex-col px-8 pt-4 mx-auto">
+
       <div className="flex flex-col mb-3">
         <h3 className="mx-auto text-4xl font-bold underline">
           {currentStudy && currentStudy.studyName} Schedule
@@ -56,5 +57,9 @@ function Scheduling() {
     </div>
   );
 }
-
+/* 
+function instructions() {
+  
+}
+ */
 export default Scheduling;
