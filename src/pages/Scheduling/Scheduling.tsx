@@ -10,7 +10,6 @@ function Scheduling() {
 
   useEffect(() => {
     StudyService.list().then((listObject) => {
-      console.log("", listObject);
       setStudyList(listObject.study);
       const default_study = listObject.study[0];
       setCurrentStudy(default_study);

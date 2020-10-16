@@ -7,7 +7,11 @@ interface IStudyContext {
   listStudy(): any[];
   studyState: any;
   setStudyState(studyState: any): void;
-  addStudyAvailability:(availability: { start: Date; end: Date, title: string }) => void;
+  addStudyAvailability: (availability: {
+    start: Date;
+    end: Date;
+    title: string;
+  }) => void;
   updateAvailableTimeSlots(timeslot: any): void;
 }
 
@@ -48,14 +52,42 @@ export function StudyProvider({ children }: Props) {
     });
   };
 
-  const addStudyAvailability = (
-    availability: { start: Date; end: Date, title: string }
-  ) => {
+  const bookStudyAvailability = (availability: {
+    start: Date;
+    end: Date;
+    title: string;
+    id: string;
+  }) => {
+    const newTimeSlots = studyState.availableTimeSlots.concat([
+      { ...availability, color: studyState.keyColor, position: "background" },
+    ]);
+    setStudyState({ ...studyState, availableTimeSlots: newTimeSlots });
+    /* StudyService.createAvailability(studyState.studyName, availability)
+      .then(() => {
+        const newTimeSlots = studyState.availableTimeSlots.concat([
+          { ...availability, color: studyState.keyColor },
+        ]);
+        setStudyState({ ...studyState, availableTimeSlots: newTimeSlots });
+        
+        return;
+      })
+      .catch((err) => {
+        alert(`Error in study context, Code ${err.code}: ${err.message}`);
+      }); */
+  };
+
+  const addStudyAvailability = (availability: {
+    start: Date;
+    end: Date;
+    title: string;
+  }) => {
     StudyService.createAvailability(studyState.studyName, availability)
       .then(() => {
-        const newTimeSlots = studyState.availableTimeSlots.concat([{...availability, color: studyState.keyColor}]);
-        setStudyState({...studyState, availableTimeSlots: newTimeSlots})
-        console.log(studyState.availableTimeSlots)
+        const newTimeSlots = studyState.availableTimeSlots.concat([
+          { ...availability, color: studyState.keyColor, display: 'background' },
+        ]);
+        setStudyState({ ...studyState, availableTimeSlots: newTimeSlots });
+        console.log(studyState)
         return;
       })
       .catch((err) => {

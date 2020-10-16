@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./meetingCalendar.css";
-import FullCalendar, { EventClickArg } from "@fullcalendar/react";
+import FullCalendar, { EventApi, EventClickArg } from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -9,12 +9,13 @@ import { useStudy } from "../../context/StudyContext";
 
 function MeetingCalendar() {
   const [showAddSEventModal, setShowAddSEventModal] = useState(false);
+  const [eventClick, setEventClick] = useState<undefined | EventApi>(undefined)
 
   const studyCtx = useStudy();
 
   const handleEventClick = (clickInfo: EventClickArg) => {
     setShowAddSEventModal(true);
-    /* setEventClick(clickInfo.event); */
+    setEventClick(clickInfo.event);
   };
 
   return (
@@ -37,7 +38,7 @@ function MeetingCalendar() {
       )}
 
       {showAddSEventModal && (
-        <AddSEventModal setShowAddSEventModal={setShowAddSEventModal} />
+        <AddSEventModal eventClick={eventClick} setShowAddSEventModal={setShowAddSEventModal} />
       )}
     </div>
   );

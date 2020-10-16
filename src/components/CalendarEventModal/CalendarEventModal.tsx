@@ -60,13 +60,13 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
         }); */
         alert("Must be logged in to make a change")
       } else {
-        const eventTitle = `Coordinator: ${authCtx?.authState.user?.firstName}`
+        const eventTitle = `${authCtx?.authState.user?.firstName}`
         const event = { 
           title: eventTitle,
           start: selectInfo.startStr,
           end: selectInfo.endStr,
           allDay: selectInfo.allDay,
-          color: studyCtx.studyState.keyColor,
+          color: studyCtx.studyState.keyColor
         };
         calendarApi.addEvent(event);
         const availability = { start: selectInfo.start, end: selectInfo.end, title: eventTitle}
