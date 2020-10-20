@@ -28,22 +28,29 @@ function AddSEventModal(props: IAddSEventModalProps) {
   return (
     <div>
       <FocusedModal setShowModal={setShowAddSEventModal}>
-        <h1 className="mb-2 text-2xl">
+        <div className="flex justify-end -mb-4">
+          <div className="h-6 px-2 text-white bg-red-500 rounded pointer-cursor">exit</div>
+        </div>
+        <h1 className="flex justify-center mx-2 mb-1 text-xl">
           {" "}
-          Join Study {studyCtx?.studyState.studyName}, 
-          <br /> 
-          Sesion Lead by:{" "}{eventClick?.title}{" "}
+          Join study:{" "}
+          <div className="mx-2 text-xl font-bold">
+            {studyCtx?.studyState.studyName},{" "}
+          </div>
+          lead by:{" "}
+          <div className="mx-2 text-xl font-bold">{eventClick?.title} </div>
         </h1>
 
         <form className="max-w-lg">
           <h2 className="block mb-2 text-xl text-gray-700">
             {" "}
+            Date:{" "}
             {eventClick?.start?.toLocaleString() +
               " - " +
               eventClick?.end?.toLocaleTimeString()}
           </h2>
 
-          <h2 className="block mb-2 text-xl font-bold text-gray-700">
+          <h2 className="block mb-2 text-lg font-bold text-gray-700">
             Parent Information
           </h2>
 
@@ -80,7 +87,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
               ></input>
             </div>
           </div>
-          <h2 className="block mb-2 text-xl font-bold text-gray-700">
+          <h2 className="block mb-2 text-lg font-bold text-gray-700">
             Child Information
           </h2>
           <div key={childrenInputs.length}>
@@ -88,14 +95,16 @@ function AddSEventModal(props: IAddSEventModalProps) {
               [...Array(showAddChild).keys()].map((obj, idx) => {
                 return (
                   <div key={idx} className="mb-4">
-                    <h3 className="flex justify-between block px-4 mb-2 text-lg font-bold text-gray-700 bg-orange-300 rounded">
+                    <h3 className="flex justify-between block px-4 py-1 mb-2 text-lg font-bold text-gray-700 bg-orange-300 rounded">
                       <div className="my-auto">Child {idx + 1}</div>
-                      <button
-                        onClick={removeChild(idx)}
-                        className="px-2 py-1 m-1 text-sm font-semibold bg-red-200 rounded"
-                      >
-                        - Remove
-                      </button>
+                      {idx > 0 && (
+                        <button
+                          onClick={removeChild(idx)}
+                          className="px-2 py-1 m-1 text-sm font-semibold bg-red-200 rounded"
+                        >
+                          - Remove
+                        </button>
+                      )}
                     </h3>
                     <div className="flex flex-wrap mb-2 -mx-3">
                       <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
