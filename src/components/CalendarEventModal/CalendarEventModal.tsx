@@ -2,6 +2,7 @@ import { DateSelectArg } from "@fullcalendar/react";
 import React, { Dispatch, SetStateAction } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useStudy } from "../../context/StudyContext";
+import { ICreateScheduleEventProps } from "../../services/ScheduleEventService";
 
 interface ICalendarEventModalProps {
   selectInfo: DateSelectArg | undefined;
@@ -58,19 +59,24 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
           allDay: selectInfo.allDay,
           color: studyCtx.studyState.keyColor,
         }); */
-        alert("Must be logged in to make a change")
+        alert("Must be logged in to make a change");
       } else {
-        const eventTitle = `${authCtx?.authState.user?.firstName}`
-        const event = { 
+        const eventTitle = `${authCtx?.authState.user?.firstName}`;
+        const event = {
           title: eventTitle,
           start: selectInfo.startStr,
           end: selectInfo.endStr,
           allDay: selectInfo.allDay,
-          color: studyCtx.studyState.keyColor
+          color: studyCtx.studyState.keyColor,
         };
         calendarApi.addEvent(event);
-        const availability = { start: selectInfo.start, end: selectInfo.end, title: eventTitle}
-        studyCtx.addStudyAvailability(availability);
+        const availability: ICreateScheduleEventProps = {
+          start: selectInfo.start,
+          end: selectInfo.end,
+          title: eventTitle,
+        };
+        studyCtx.createScheduleEvent(studyCtx.studyState.studyName, availability);
+        console.log(studyCtx.studyState, "event modal")
       }
 
       calendarApi.unselect();

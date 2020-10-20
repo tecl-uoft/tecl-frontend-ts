@@ -22,13 +22,14 @@ function MeetingCalendar() {
     <div className="pb-6">
       {studyCtx?.studyState && (
         <div key={studyCtx?.studyState.studyName}>
+          {console.log(studyCtx?.studyState.scheduleEvents)}
           <FullCalendar
             headerToolbar={{
               left: "prev,next today",
               center: "title",
               right: "dayGridMonth,timeGridWeek",
             }}
-            initialEvents={studyCtx?.studyState.availableTimeSlots}
+            initialEvents={studyCtx?.studyState.scheduleEvents}
             selectable
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             initialView="timeGridWeek"

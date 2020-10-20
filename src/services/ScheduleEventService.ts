@@ -2,16 +2,24 @@ export default {
   create,
 };
 
-interface ICreateScheduleEvent {
+export interface ICreateScheduleEventProps {
   title: string;
   start: Date;
   end: Date;
 }
 
+export interface ICreateScheduleEventVal {
+  title: string;
+  start: string;
+  end: string;
+  calId: string;
+  color: string;
+}
+
 async function create(
   studyName: string,
-  scheduleEvent: ICreateScheduleEvent
-): Promise<void> {
+  scheduleEvent: ICreateScheduleEventProps
+): Promise<ICreateScheduleEventVal[] | undefined> {
   const response = await fetch(`/api/v1/schedule-event`, {
     method: "POST",
     headers: {
@@ -22,7 +30,7 @@ async function create(
 
   if (response.ok) {
     const scheduleEventRes = await response.json();
-    return scheduleEventRes;
+    return scheduleEventRes.schedulesCreated;
   } else {
     alert(`Create schedule event failed failed`);
   }

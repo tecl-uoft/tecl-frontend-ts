@@ -63,7 +63,7 @@ function StudyHoursSetterModal(props: IStudyHoursSetterModalProps) {
                   center: "title",
                   right: "dayGridMonth,timeGridWeek",
                 }}
-                initialEvents={studyCtx?.studyState.availableTimeSlots}
+                initialEvents={studyCtx?.studyState.scheduleEvents}
                 selectable
                 plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                 initialView="timeGridWeek"

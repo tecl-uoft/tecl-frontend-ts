@@ -1,18 +1,30 @@
 import React, { createContext, useContext, useState } from "react";
+import ScheduleEventService, {
+  ICreateScheduleEventProps,
+  ICreateScheduleEventVal,
+} from "../services/ScheduleEventService";
 import StudyService from "../services/StudyService";
 import { Props } from "./commonTypes";
 
 interface IStudyContext {
   createStudy(study: any): void;
+  createScheduleEvent(
+    studyName: string,
+    createScheduleEventProps: ICreateScheduleEventProps
+  ): void;
   listStudy(): any[];
   studyState: any;
   setStudyState(studyState: any): void;
-  addStudyAvailability: (availability: {
-    start: Date;
-    end: Date;
-    title: string;
-  }) => void;
-  updateAvailableTimeSlots(timeslot: any): void;
+}
+
+interface IStudy {
+  studyName: string;
+  leadResearchers: any[];
+  researchAssitants: any[];
+  scheduleEvents: ICreateScheduleEventVal[];
+  startDate: Date;
+  endDate: Date;
+  keyColor: string;
 }
 
 export const StudyContext = createContext<IStudyContext | undefined>(undefined);
@@ -33,6 +45,7 @@ export function StudyProvider({ children }: Props) {
   const listStudy = () => {
     StudyService.list()
       .then((studyRes) => {
+        console.log("stdy", studyRes)
         setStudyState(studyRes.study[0]);
         console.log("study service", studyRes.study);
         return studyRes.study;
@@ -43,52 +56,25 @@ export function StudyProvider({ children }: Props) {
     return [];
   };
 
-  const updateAvailableTimeSlots = (timeslot: { from: Date; to: Date }) => {
-    const newAvailableTimeSlots = studyState.availableTimeSlots;
-    studyState.availableTimeSlots.push(timeslot);
-    StudyService.update({
-      studyName: studyState.studyName,
-      availableTimeSlots: newAvailableTimeSlots,
-    });
-  };
-
-  const bookStudyAvailability = (availability: {
-    start: Date;
-    end: Date;
-    title: string;
-    id: string;
-  }) => {
-    const newTimeSlots = studyState.availableTimeSlots.concat([
-      { ...availability, color: studyState.keyColor, position: "background" },
-    ]);
-    setStudyState({ ...studyState, availableTimeSlots: newTimeSlots });
-    /* StudyService.createAvailability(studyState.studyName, availability)
-      .then(() => {
-        const newTimeSlots = studyState.availableTimeSlots.concat([
-          { ...availability, color: studyState.keyColor },
-        ]);
-        setStudyState({ ...studyState, availableTimeSlots: newTimeSlots });
-        
-        return;
-      })
-      .catch((err) => {
-        alert(`Error in study context, Code ${err.code}: ${err.message}`);
-      }); */
-  };
-
-  const addStudyAvailability = (availability: {
-    start: Date;
-    end: Date;
-    title: string;
-  }) => {
-    StudyService.createAvailability(studyState.studyName, availability)
-      .then(() => {
-        const newTimeSlots = studyState.availableTimeSlots.concat([
-          { ...availability, color: studyState.keyColor, display: 'background' },
-        ]);
-        setStudyState({ ...studyState, availableTimeSlots: newTimeSlots });
-        console.log(studyState)
-        return;
+  /* Add a schedule event for a particular study */
+  const createScheduleEvent = (
+    studyName: string,
+    createScheduleEventProps: ICreateScheduleEventProps
+  ) => {
+    ScheduleEventService.create(studyName, createScheduleEventProps)
+      .then((createdScheduleEvents) => {
+        /* Add Created events to existing set of events in study */
+        if (createdScheduleEvents) {
+          console.log("bfore", studyState)
+          setStudyState({
+            ...studyState,
+            scheduleEvents: [
+              ...studyState.scheduleEvents,
+              ...createdScheduleEvents,
+            ],
+          });
+          console.log("blblb", studyState)
+        }
       })
       .catch((err) => {
         alert(`Error in study context, Code ${err.code}: ${err.message}`);
@@ -97,11 +83,10 @@ export function StudyProvider({ children }: Props) {
 
   const defaultContextValue = {
     createStudy,
+    createScheduleEvent,
     studyState,
     listStudy,
     setStudyState,
-    addStudyAvailability,
-    updateAvailableTimeSlots,
   };
 
   return (
