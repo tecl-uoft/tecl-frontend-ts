@@ -2,13 +2,22 @@ export default {
   create,
 };
 
-async function create(scheduleEvent: any): Promise<void> {
+interface ICreateScheduleEvent {
+  title: string;
+  start: Date;
+  end: Date;
+}
+
+async function create(
+  studyName: string,
+  scheduleEvent: ICreateScheduleEvent
+): Promise<void> {
   const response = await fetch(`/api/v1/schedule-event`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ scheduleEvent }),
+    body: JSON.stringify({ studyName, scheduleEvent }),
   });
 
   if (response.ok) {
