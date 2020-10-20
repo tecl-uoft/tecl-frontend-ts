@@ -1,5 +1,6 @@
 import { EventApi } from "@fullcalendar/react";
 import React, { MouseEvent, useState } from "react";
+import { useStudy } from "../../context/StudyContext";
 import { FocusedModal } from "../FocusedModal";
 
 interface IAddSEventModalProps {
@@ -11,6 +12,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
   const [showAddChild, setshowAddChild] = useState(1);
   const [childrenInputs, setChildrenInputs] = useState<Object[]>([]);
   const { setShowAddSEventModal, eventClick } = props;
+  const studyCtx = useStudy();
 
   function submitJoinStudy(e: MouseEvent<HTMLInputElement>) {
     setShowAddSEventModal(false);
@@ -26,8 +28,13 @@ function AddSEventModal(props: IAddSEventModalProps) {
   return (
     <div>
       <FocusedModal setShowModal={setShowAddSEventModal}>
-        <h1 className="mb-2 text-3xl"> Join Study, < br /> Lead by: {eventClick?.title} </h1>
-        
+        <h1 className="mb-2 text-2xl">
+          {" "}
+          Join Study {studyCtx?.studyState.studyName}, 
+          <br /> 
+          Sesion Lead by:{" "}{eventClick?.title}{" "}
+        </h1>
+
         <form className="max-w-lg">
           <h2 className="block mb-2 text-xl text-gray-700">
             {" "}
