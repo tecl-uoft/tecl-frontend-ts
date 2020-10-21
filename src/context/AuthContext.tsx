@@ -5,6 +5,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
+import UserService from "../services/UserService";
 
 import UserSerivce, {
   UserAuthState,
@@ -15,6 +16,7 @@ import { Props } from "./commonTypes";
 
 interface IAuthContext {
   login(teclUserLoginInput: TeclUserLoginInput): void;
+  googleLogin(): void;
   logout(): void;
   register(user: TeclUserCreateInput): void;
   authState: UserAuthState;
@@ -45,6 +47,14 @@ export function AuthProvider({ children }: Props) {
     [setAuthState]
   );
 
+  const googleLogin = () => {
+    UserService.googleLogin()
+      .then()
+      .catch((err) => {
+        alert(err);
+      });
+  };
+
   const logout = useCallback(async () => {
     await UserSerivce.logout();
     setAuthState(defaultAuthState);
@@ -60,7 +70,7 @@ export function AuthProvider({ children }: Props) {
       .catch((err) => {
         alert(`Error ${err.code}: ${err.message}`);
         /* console.error(err); */
-       /*  logout(); */
+        /*  logout(); */
       });
     // eslint-disable-next-line
   }, []);
@@ -72,6 +82,7 @@ export function AuthProvider({ children }: Props) {
   const contextValue = {
     authState,
     login,
+    googleLogin,
     logout,
     register,
   };

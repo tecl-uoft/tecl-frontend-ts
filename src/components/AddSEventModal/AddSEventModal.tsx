@@ -29,7 +29,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
     <div>
       <FocusedModal setShowModal={setShowAddSEventModal}>
         <div className="flex justify-end -mb-4">
-          <div className="h-6 px-2 text-white bg-red-500 rounded pointer-cursor">exit</div>
+          <div className="h-6 px-2 text-white bg-red-300 rounded cursor-pointer hover:bg-red-500" onClick={() => setShowAddSEventModal(false)}>exit</div>
         </div>
         <h1 className="flex justify-center mx-2 mb-1 text-xl">
           {" "}

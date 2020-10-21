@@ -29,7 +29,14 @@ function MeetingCalendar() {
               center: "title",
               right: "dayGridMonth,timeGridWeek",
             }}
-            initialEvents={studyCtx?.studyState.scheduleEvents}
+            initialEvents={[...studyCtx?.studyState.scheduleEvents, {
+              groupId: 'testGroupId',
+              start: Date.now(),
+              end: Date.now(),
+              display: 'inverse-background',
+              color: "#cbd5e0",
+              allDay: true
+            }]}
             selectable
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             initialView="timeGridWeek"

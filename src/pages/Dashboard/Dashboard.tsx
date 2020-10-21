@@ -12,8 +12,8 @@ function Dashboard() {
   const [showAddStudyModal, setShowAddStudyModal] = useState(false);
 
   useEffect(() => {
-    console.log(studyCtx, "testing")
-  }, [studyCtx])
+    console.log(studyCtx, "testing");
+  }, [studyCtx]);
 
   return (
     <div className="container flex flex-col px-8 pt-4 mx-auto">
@@ -27,7 +27,10 @@ function Dashboard() {
           onClick={() => setShowAddStudyModal(true)}
           className="px-2 ml-4 text-white bg-gray-800 rounded hover:text-orange-500 focus:outline-none focus:shadow-outline"
         >
-          Add Study
+          + Add Study
+        </button>
+        <button className="px-2 ml-4 text-white bg-orange-800 rounded hover:text-orange-300 focus:outline-none focus:shadow-outline">
+          Sync Google Calendar
         </button>
         {showAddStudyModal && (
           <FocusedModal setShowModal={setShowAddStudyModal}>
@@ -65,9 +68,9 @@ function Dashboard() {
                     onClick={() => {
                       setShowModal(true);
                       if (studyCtx) {
-                        console.log(studyCtx.studyState)
+                        console.log(studyCtx.studyState);
                         studyCtx.setStudyState(study);
-                        console.log(studyCtx.studyState, "dsafda")
+                        console.log(studyCtx.studyState, "dsafda");
                       }
                     }}
                     className="h-10 px-2 ml-4 text-white bg-orange-500 rounded hover:bg-orange-800 focus:outline-none focus:shadow-outline"
