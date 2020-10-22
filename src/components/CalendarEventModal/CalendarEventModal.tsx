@@ -52,13 +52,6 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
     if (selectInfo && firstName && studyCtx) {
       const calendarApi = selectInfo.view.calendar;
       if (!authCtx || !authCtx.authState.user) {
-        /* calendarApi.addEvent({
-          title: firstName,
-          start: selectInfo.startStr,
-          end: selectInfo.endStr,
-          allDay: selectInfo.allDay,
-          color: studyCtx.studyState.keyColor,
-        }); */
         alert("Must be logged in to make a change");
       } else {
         const eventTitle = `${authCtx?.authState.user?.firstName}`;
@@ -71,12 +64,11 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
         };
         calendarApi.addEvent(event);
         const availability: ICreateScheduleEventProps = {
-          start: selectInfo.start,
-          end: selectInfo.end,
+          start: selectInfo.startStr,
+          end: selectInfo.endStr,
           title: eventTitle,
         };
-        studyCtx.createScheduleEvent(studyCtx.studyState.studyName, availability);
-        console.log(studyCtx.studyState, "event modal")
+        studyCtx.createScheduleEvent(availability);
       }
 
       calendarApi.unselect();

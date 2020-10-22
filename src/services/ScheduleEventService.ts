@@ -4,34 +4,36 @@ export default {
 
 export interface ICreateScheduleEventProps {
   title: string;
-  start: Date;
-  end: Date;
+  start: string;
+  end: string;
 }
 
-export interface ICreateScheduleEventVal {
+export interface IScheduleEvent {
   title: string;
   start: string;
   end: string;
-  calId: string;
+  id: string;
   color: string;
 }
 
+/* Function to create a schedule event linked with a particular study */
 async function create(
   studyName: string,
-  scheduleEvent: ICreateScheduleEventProps
-): Promise<ICreateScheduleEventVal[] | undefined> {
-  const response = await fetch(`/api/v1/schedule-event`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ studyName, scheduleEvent }),
-  });
-
-  if (response.ok) {
-    const scheduleEventRes = await response.json();
-    return scheduleEventRes.schedulesCreated;
-  } else {
-    alert(`Create schedule event failed failed`);
+  scheduleEvent: IScheduleEvent
+): Promise<void> {
+  try {
+    const res = await fetch(`/api/v1/schedule-event`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ studyName, scheduleEvent }),
+    });
+    if (!res.ok || res.status !== 201) {
+      throw Error("Expected HTTP error status 201, got:" + res.status);
+    }
+    return;
+  } catch (err) {
+    throw err;
   }
 }

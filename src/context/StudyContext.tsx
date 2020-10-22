@@ -1,17 +1,17 @@
 import React, { createContext, useContext, useState } from "react";
 import ScheduleEventService, {
   ICreateScheduleEventProps,
-  ICreateScheduleEventVal,
+  IScheduleEvent,
 } from "../services/ScheduleEventService";
 import StudyService, { ICreateStudyProps } from "../services/StudyService";
 import { useAuth } from "./AuthContext";
 import { Props } from "./commonTypes";
+import { v4 as uuidv4 } from "uuid";
 
 interface IStudyContext {
   /* Create a study to set up a scheduling system for */
   createStudy(study: ICreateStudyProps): void;
   createScheduleEvent(
-    studyName: string,
     createScheduleEventProps: ICreateScheduleEventProps
   ): void;
   listStudy(): any[];
@@ -23,7 +23,7 @@ interface IStudy {
   studyName: string;
   leadResearchers: any[];
   researchAssitants: any[];
-  scheduleEvents: ICreateScheduleEventVal[];
+  scheduleEvents: IScheduleEvent[];
   startDate: Date;
   endDate: Date;
   keyColor: string;
@@ -60,27 +60,32 @@ export function StudyProvider({ children }: Props) {
   };
 
   /* Add a schedule event for a particular study */
-  const createScheduleEvent = (
-    studyName: string,
+  function createScheduleEvent(
     createScheduleEventProps: ICreateScheduleEventProps
-  ) => {
-    ScheduleEventService.create(studyName, createScheduleEventProps)
-      .then((createdScheduleEvents) => {
-        /* Add Created events to existing set of events in study */
-        if (createdScheduleEvents) {
-          /*  setStudyState({
+  ) {
+    if (studyState) {
+      const { title, start, end } = createScheduleEventProps;
+      /*  Convert the input into a proper format for a schedule event */
+      const scheduleEvent = {
+        title,
+        start,
+        end,
+        color: studyState.keyColor,
+        id: uuidv4(),
+      };
+      ScheduleEventService.create(studyState.studyName, scheduleEvent)
+        .then(() => {
+          /* Add Created events to existing set of events in study */
+          setStudyState({
             ...studyState,
-            scheduleEvents: [
-              ...studyState.scheduleEvents,
-              ...createdScheduleEvents,
-            ],
-          }); */
-        }
-      })
-      .catch((err) => {
-        alert(`Error in study context, Code ${err.code}: ${err.message}`);
-      });
-  };
+            scheduleEvents: [...studyState.scheduleEvents, scheduleEvent],
+          });
+        })
+        .catch((err) => {
+          alert(`Error in Study context, Received: ${err.message}`);
+        });
+    }
+  }
 
   const defaultContextValue = {
     createStudy,
