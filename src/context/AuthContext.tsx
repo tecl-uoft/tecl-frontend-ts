@@ -1,13 +1,7 @@
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-import UserService from "../services/UserService";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { ICreateStudyProps } from "../services/StudyService";
 
-import UserSerivce, {
+import UserService, {
   UserAuthState,
   TeclUserLoginInput,
   TeclUserCreateInput,
@@ -20,6 +14,7 @@ interface IAuthContext {
   logout(): void;
   register(user: TeclUserCreateInput): void;
   authState: UserAuthState;
+  addCreatedStudyToUser(createdStudy: ICreateStudyProps): void;
 }
 export const AuthContext = createContext<IAuthContext | undefined>(undefined);
 
@@ -30,22 +25,19 @@ export function AuthProvider({ children }: Props) {
   };
   const [authState, setAuthState] = useState(defaultAuthState);
 
-  const login = useCallback(
-    (teclUserLoginInput: TeclUserLoginInput) => {
-      UserSerivce.login(teclUserLoginInput)
-        .then((loggedInUser) => {
-          const loggedInAuthState = {
-            isAuthenticated: true,
-            user: loggedInUser,
-          };
-          setAuthState(loggedInAuthState);
-        })
-        .catch((err) => {
-          throw err;
-        });
-    },
-    [setAuthState]
-  );
+  function login(teclUserLoginInput: TeclUserLoginInput) {
+    UserService.login(teclUserLoginInput)
+      .then((loggedInUser) => {
+        const loggedInAuthState = {
+          isAuthenticated: true,
+          user: loggedInUser,
+        };
+        setAuthState(loggedInAuthState);
+      })
+      .catch((err) => {
+        throw err;
+      });
+  }
 
   const googleLogin = () => {
     UserService.googleLogin()
@@ -55,28 +47,43 @@ export function AuthProvider({ children }: Props) {
       });
   };
 
-  const logout = useCallback(async () => {
-    await UserSerivce.logout();
-    setAuthState(defaultAuthState);
-  }, [setAuthState, defaultAuthState]);
+  function logout() {
+    UserService.logout()
+      .then(() => {
+        setAuthState(defaultAuthState);
+      })
+      .catch((err) => {
+        alert("Could not log out, recived error: " + err);
+      });
+  }
+
+  function addCreatedStudyToUser(createdStudy: ICreateStudyProps): void {
+    if (authState.isAuthenticated && authState.user) {
+      setAuthState({
+        ...authState,
+        user: {
+          ...authState.user,
+          studies: [...authState.user.studies, createdStudy],
+        },
+      });
+    }
+    return;
+  }
 
   useEffect(() => {
-    UserSerivce.fetchAuthUser()
+    UserService.fetchAuthUser()
       .then((user) => {
         if (user) {
           setAuthState({ isAuthenticated: true, user });
         }
       })
       .catch((err) => {
-        alert(`Error ${err.code}: ${err.message}`);
-        /* console.error(err); */
-        /*  logout(); */
+        alert(`Could not check session, recived err: ${err}`);
       });
-    // eslint-disable-next-line
   }, []);
 
   const register = (user: TeclUserCreateInput) => {
-    UserSerivce.signup(user);
+    UserService.signup(user);
   };
 
   const contextValue = {
@@ -85,6 +92,7 @@ export function AuthProvider({ children }: Props) {
     googleLogin,
     logout,
     register,
+    addCreatedStudyToUser,
   };
 
   return (

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { AddStudyForm } from "../../components/AddStudyForm";
 import { FocusedModal } from "../../components/FocusedModal";
 import { StudyHoursSetterModal } from "../../components/StudyHoursSetterModal";
@@ -10,10 +10,6 @@ function Dashboard() {
   const studyCtx = useStudy();
   const [showModal, setShowModal] = useState(false);
   const [showAddStudyModal, setShowAddStudyModal] = useState(false);
-
-  useEffect(() => {
-    console.log(studyCtx, "testing");
-  }, [studyCtx]);
 
   return (
     <div className="container flex flex-col px-8 pt-4 mx-auto">
@@ -38,7 +34,6 @@ function Dashboard() {
               addStudySubmitFunc={() => {
                 setShowAddStudyModal(false);
               }}
-              studyCreateFunc={studyCtx?.createStudy}
             />
           </FocusedModal>
         )}
@@ -54,23 +49,21 @@ function Dashboard() {
                 <h3 className="mt-4 text-2xl font-semibold">
                   {study.studyName} Study:
                 </h3>
-                {console.log("as", study)}
+
                 <div className="flex mt-2">
                   <div
-                    className="block p-2 rounded"
+                    className="block p-2 text-white rounded"
                     style={{ backgroundColor: study.keyColor }}
                   >
                     {" "}
                     Key Color{" "}
                   </div>
-                  {console.log(studyCtx, "dsafda")}
+
                   <button
                     onClick={() => {
                       setShowModal(true);
                       if (studyCtx) {
-                        console.log(studyCtx.studyState);
                         studyCtx.setStudyState(study);
-                        console.log(studyCtx.studyState, "dsafda");
                       }
                     }}
                     className="h-10 px-2 ml-4 text-white bg-orange-500 rounded hover:bg-orange-800 focus:outline-none focus:shadow-outline"

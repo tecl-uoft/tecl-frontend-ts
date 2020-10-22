@@ -3,11 +3,13 @@ import ScheduleEventService, {
   ICreateScheduleEventProps,
   ICreateScheduleEventVal,
 } from "../services/ScheduleEventService";
-import StudyService from "../services/StudyService";
+import StudyService, { ICreateStudyProps } from "../services/StudyService";
+import { useAuth } from "./AuthContext";
 import { Props } from "./commonTypes";
 
 interface IStudyContext {
-  createStudy(study: any): void;
+  /* Create a study to set up a scheduling system for */
+  createStudy(study: ICreateStudyProps): void;
   createScheduleEvent(
     studyName: string,
     createScheduleEventProps: ICreateScheduleEventProps
@@ -30,24 +32,25 @@ interface IStudy {
 export const StudyContext = createContext<IStudyContext | undefined>(undefined);
 
 export function StudyProvider({ children }: Props) {
-  const [studyState, setStudyState] = useState<any>(undefined);
+  const [studyState, setStudyState] = useState<IStudy | undefined>(undefined);
+  const authCtx = useAuth();
 
-  const createStudy = (study: any) => {
+  /* Create a study which needs to be set up with a scheduling system. */
+  function createStudy(study: ICreateStudyProps) {
     StudyService.create(study)
-      .then((studyRes) => {
-        setStudyState(studyRes);
+      .then(() => {
+        /* When create is sucessful, update the user's studies property */
+        authCtx?.addCreatedStudyToUser(study);
       })
       .catch((err) => {
-        alert(`Error in study context, Code ${err.code}: ${err.message}`);
+        alert(`Error in Study context: ${err}`);
       });
-  };
+  }
 
   const listStudy = () => {
     StudyService.list()
       .then((studyRes) => {
-        console.log("stdy", studyRes)
         setStudyState(studyRes.study[0]);
-        console.log("study service", studyRes.study);
         return studyRes.study;
       })
       .catch((err) => {
@@ -65,15 +68,13 @@ export function StudyProvider({ children }: Props) {
       .then((createdScheduleEvents) => {
         /* Add Created events to existing set of events in study */
         if (createdScheduleEvents) {
-          console.log("bfore", studyState)
-          setStudyState({
+          /*  setStudyState({
             ...studyState,
             scheduleEvents: [
               ...studyState.scheduleEvents,
               ...createdScheduleEvents,
             ],
-          });
-          console.log("blblb", studyState)
+          }); */
         }
       })
       .catch((err) => {

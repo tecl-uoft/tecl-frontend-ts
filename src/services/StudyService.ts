@@ -6,26 +6,38 @@ export default {
   createAvailability,
 };
 
-async function create(study: any): Promise<void> {
-  const response = await fetch(`/api/v1/study`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ study }),
-  });
+export interface ICreateStudyProps {
+  studyName: string;
+  startDate: string;
+  endDate: string;
+  keyColor: string;
+  minAgeDays: number;
+  maxAgeDays: number;
+}
 
-  if (response.ok) {
-    const studyPostRes = await response.json();
-    return studyPostRes;
-  } else {
-    alert(`Create schedule event failed`);
+async function create(study: ICreateStudyProps): Promise<void> {
+  try {
+    const response = await fetch(`/api/v1/study`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ study }),
+    });
+    if (response.status !== 201) {
+      throw Error(
+        "Status indicates study has not been update. Got status: " +
+          response.status
+      );
+    }
+  } catch (err) {
+    throw err;
   }
 }
 
 async function createAvailability(
   studyName: string,
-  availability: { start: Date; end: Date, title: string }
+  availability: { start: Date; end: Date; title: string }
 ): Promise<void> {
   const response = await fetch(`/api/v1/study/availability`, {
     method: "POST",
