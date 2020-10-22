@@ -33,10 +33,6 @@ function StudyHoursSetterModal(props: IStudyHoursSetterModalProps) {
     setEventClick(clickInfo.event);
   };
 
-  useEffect(() => {
-    console.log("hoursetter", studyCtx?.studyState);
-  }, [studyCtx]);
-
   return (
     <div className="fixed inset-0 z-10 overflow-y-auto">
       <div className="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
@@ -56,6 +52,7 @@ function StudyHoursSetterModal(props: IStudyHoursSetterModalProps) {
           aria-labelledby="modal-headline"
         >
           <div className="pb-6">
+            {console.log(studyCtx?.studyState)}
             {studyCtx && (
               <FullCalendar
                 headerToolbar={{
@@ -63,6 +60,7 @@ function StudyHoursSetterModal(props: IStudyHoursSetterModalProps) {
                   center: "title",
                   right: "dayGridMonth,timeGridWeek",
                 }}
+                /* initialEvents={[]} */
                 initialEvents={studyCtx?.studyState.scheduleEvents}
                 selectable
                 plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}

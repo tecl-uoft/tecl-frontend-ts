@@ -61,10 +61,10 @@ function Dashboard() {
 
                   <button
                     onClick={() => {
-                      setShowModal(true);
                       if (studyCtx) {
                         studyCtx.setStudyState(study);
                       }
+                      setShowModal(true);
                     }}
                     className="h-10 px-2 ml-4 text-white bg-orange-500 rounded hover:bg-orange-800 focus:outline-none focus:shadow-outline"
                   >
