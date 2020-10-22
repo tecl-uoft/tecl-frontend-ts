@@ -3,7 +3,6 @@ export default {
   read,
   list,
   update,
-  createAvailability,
 };
 
 export interface ICreateStudyProps {
@@ -32,25 +31,6 @@ async function create(study: ICreateStudyProps): Promise<void> {
     }
   } catch (err) {
     throw err;
-  }
-}
-
-async function createAvailability(
-  studyName: string,
-  availability: { start: Date; end: Date; title: string }
-): Promise<void> {
-  const response = await fetch(`/api/v1/study/availability`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ study: { studyName, availability } }),
-  });
-
-  if (response.ok) {
-    return;
-  } else {
-    alert(`Create schedule event failed`);
   }
 }
 
