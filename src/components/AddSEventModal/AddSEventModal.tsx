@@ -15,8 +15,11 @@ function AddSEventModal(props: IAddSEventModalProps) {
   const { setShowAddSEventModal, eventClick, studyState } = props;
 
   function submitJoinStudy(e: MouseEvent<HTMLInputElement>) {
+    if (eventClick) {
+      eventClick.setProp("display", "background")
+    }
     setShowAddSEventModal(false);
-    eventClick?.remove();
+    /* eventClick?.remove(); */
   }
 
   const removeChild = (idx: number) => (e: MouseEvent<HTMLButtonElement>) => {

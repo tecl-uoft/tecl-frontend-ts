@@ -1,5 +1,6 @@
 export default {
   create,
+  remove,
 };
 
 export interface ICreateScheduleEventProps {
@@ -33,6 +34,23 @@ async function create(
       throw Error("Expected HTTP error status 201, got:" + res.status);
     }
     return;
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function remove(calId: string): Promise<void> {
+  try {
+    const res = await fetch(`/api/v1/schedule-event`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ scheduleEvent: { calId } }),
+    });
+    if (!res.ok || res.status !== 202) {
+      throw Error("Expected HTTP error status 202, got:" + res.status);
+    }
   } catch (err) {
     throw err;
   }

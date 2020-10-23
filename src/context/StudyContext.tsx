@@ -6,12 +6,14 @@ import StudyService, { IStudy } from "../services/StudyService";
 
 import { Props } from "./commonTypes";
 import { v4 as uuidv4 } from "uuid";
+import _ from "lodash";
 
 interface IStudyContext {
   /* Create a study to set up a scheduling system for */
   createScheduleEvent(
     createScheduleEventProps: ICreateScheduleEventProps
   ): void;
+  removeScheduleEvent(calId: string): void;
   studyState: IStudy | undefined;
   findAndSetStudy(studyName: string): void;
 }
@@ -32,6 +34,26 @@ export function StudyProvider({ children }: Props) {
         alert(`${err}`);
       });
     return;
+  }
+
+  /* Remove schedule event from the current study */
+  function removeScheduleEvent(calId: string): void {
+    if (studyState) {
+      ScheduleEventService.remove(calId)
+        .then(() => {
+          const unremovedScheduleEvents = _.filter(
+            studyState.scheduleEvents,
+            (se) => {
+              return se.id !== calId;
+            }
+          );
+          setStudyState({
+            ...studyState,
+            scheduleEvents: unremovedScheduleEvents,
+          });
+        })
+        .catch((err) => alert(err));
+    }
   }
 
   /* Add a schedule event for the current study state */
@@ -66,6 +88,7 @@ export function StudyProvider({ children }: Props) {
 
   const defaultContextValue = {
     createScheduleEvent,
+    removeScheduleEvent,
     findAndSetStudy,
     studyState,
   };

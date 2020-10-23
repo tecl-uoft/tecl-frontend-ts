@@ -77,7 +77,7 @@ function StudyHoursSetterModal(props: IStudyHoursSetterModalProps) {
             {showDeleteModal && (
               <CalendarRemoveModal
                 onCancel={() => setShowDeleteModal(false)}
-                onDelete={eventClick}
+                eventClick={eventClick}
               />
             )}
             {showEventModal && (
