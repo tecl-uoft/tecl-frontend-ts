@@ -1,13 +1,8 @@
 export default {
   create,
   remove,
+  updateParticipantInfo,
 };
-
-export interface ICreateScheduleEventProps {
-  title: string;
-  start: string;
-  end: string;
-}
 
 export interface IScheduleEvent {
   title: string;
@@ -17,6 +12,11 @@ export interface IScheduleEvent {
   color: string;
 }
 
+export interface ICreateScheduleEventProps {
+  title: string;
+  start: string;
+  end: string;
+}
 /* Function to create a schedule event linked with a particular study */
 async function create(
   studyName: string,
@@ -50,6 +50,36 @@ async function remove(calId: string): Promise<void> {
     });
     if (!res.ok || res.status !== 202) {
       throw Error("Expected HTTP error status 202, got:" + res.status);
+    }
+  } catch (err) {
+    throw err;
+  }
+}
+
+interface IUpdateScheduleEventProps {
+  participantInfo: {
+    calId: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    child: {
+      firstName: string;
+      lastName: string;
+      dob: string;
+    };
+  };
+}
+async function updateParticipantInfo(scheduleEvent: IUpdateScheduleEventProps): Promise<void> {
+  try {
+    const res = await fetch(`/api/v1/schedule-event/participant-info`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ scheduleEvent }),
+    });
+    if (!res.ok) {
+      throw Error("Expected HTTP status 204, got: " + res.status);
     }
   } catch (err) {
     throw err;
