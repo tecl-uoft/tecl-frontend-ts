@@ -2,6 +2,7 @@ export default {
   create,
   remove,
   updateParticipantInfo,
+  listBooked,
 };
 
 export interface IScheduleEvent {
@@ -69,7 +70,9 @@ interface IUpdateScheduleEventProps {
     };
   };
 }
-async function updateParticipantInfo(scheduleEvent: IUpdateScheduleEventProps): Promise<void> {
+async function updateParticipantInfo(
+  scheduleEvent: IUpdateScheduleEventProps
+): Promise<void> {
   try {
     const res = await fetch(`/api/v1/schedule-event/participant-info`, {
       method: "PATCH",
@@ -81,6 +84,23 @@ async function updateParticipantInfo(scheduleEvent: IUpdateScheduleEventProps): 
     if (!res.ok) {
       throw Error("Expected HTTP status 204, got: " + res.status);
     }
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function listBooked(studyName: string) {
+  try {
+    const res = await fetch(`/api/v1/schedule-events?${studyName}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (!res.ok) {
+      throw Error("Expected HTTP status 204, got: " + res.status);
+    }
+    return res.json();
   } catch (err) {
     throw err;
   }

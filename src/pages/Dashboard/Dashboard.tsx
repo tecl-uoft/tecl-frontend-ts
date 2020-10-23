@@ -73,7 +73,7 @@ function Dashboard() {
                     }}
                     className="h-10 px-2 ml-4 text-white bg-orange-500 rounded hover:bg-orange-800 focus:outline-none focus:shadow-outline"
                   >
-                    Set Study Times
+                    Modifiy Study Availability
                   </button>
                 )}
               </div>
@@ -83,43 +83,6 @@ function Dashboard() {
           );
         })}
 
-      {/*  {auth?.authState.user?.studies &&
-        auth?.authState.user?.studies
-          .slice(0)
-          .reverse()
-          .map((study, idx) => {
-            return (
-              <div key={idx}>
-                <h3 className="mt-4 text-2xl font-semibold">
-                  {study.studyName} Study:
-                </h3>
-
-                <div className="flex mt-2">
-                  <div
-                    className="block p-2 text-white rounded"
-                    style={{ backgroundColor: study.keyColor }}
-                  >
-                    {" "}
-                    Key Color{" "}
-                  </div>
-
-                  <button
-                    onClick={() => {
-                      if (studyCtx) {
-                        studyCtx.setStudyState(study);
-                      }
-                      setShowModal(true);
-                    }}
-                    className="h-10 px-2 ml-4 text-white bg-orange-500 rounded hover:bg-orange-800 focus:outline-none focus:shadow-outline"
-                  >
-                    Set Study Times
-                  </button>
-                </div>
-                <AppointmentPanel setShowModal={setShowModal} />
-                <RAPanel />
-              </div>
-            );
-          })} */}
       {showModal && <StudyHoursSetterModal setShowModal={setShowModal} />}
       {showAddStudyModal && (
         <FocusedModal setShowModal={setShowAddStudyModal}>
@@ -173,9 +136,9 @@ function AppointmentPanel(props: any) {
         <h4 className="text-xl">Upcoming Appointments</h4>
         <button
           onClick={() => props.setShowModal(true)}
-          className="px-4 text-white bg-orange-500 rounded hover:bg-orange-800 focus:outline-none focus:shadow-outline"
+          className="px-4 py-2 mx-2 text-white bg-orange-500 rounded hover:bg-orange-800 focus:outline-none focus:shadow-outline"
         >
-          + Add Appointment
+          Check Booked Appointments 
         </button>
       </div>
       <div className="mx-2 my-4 overflow-auto rounded max-h-64">

@@ -60,9 +60,22 @@ function Scheduling() {
             <div className="underline ">Age Range</div>
             <div className="">
               {" "}
-              {currentStudy?.minAgeDays &&
+              {currentStudy &&
+                `${
+                  currentStudy.minAgeDays % 30 === 0
+                    ? (currentStudy.minAgeDays / 30 )
+                    : Math.floor(currentStudy.minAgeDays / 30)
+                } months to `}
+              {currentStudy &&
+                `${
+                  currentStudy.maxAgeDays % 30 === 0
+                    ? (currentStudy.maxAgeDays / 30 )
+                    : Math.floor(currentStudy.maxAgeDays/ 30)
+                } months`}
+
+             {/*  {currentStudy?.minAgeDays &&
                 currentStudy?.maxAgeDays &&
-                `${currentStudy?.minAgeDays}  days to ${currentStudy?.maxAgeDays} days`}{" "}
+                ` to ${currentStudy?.maxAgeDays} days`}{" "} */}
             </div>
           </h3>
         </div>
