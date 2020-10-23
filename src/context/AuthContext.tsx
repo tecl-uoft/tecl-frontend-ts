@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { ICreateStudyProps } from "../services/StudyService";
 
 import UserService, {
   UserAuthState,
@@ -14,7 +13,6 @@ interface IAuthContext {
   logout(): void;
   register(user: TeclUserCreateInput): void;
   authState: UserAuthState;
-  addCreatedStudyToUser(createdStudy: ICreateStudyProps): void;
 }
 export const AuthContext = createContext<IAuthContext | undefined>(undefined);
 
@@ -35,7 +33,7 @@ export function AuthProvider({ children }: Props) {
         setAuthState(loggedInAuthState);
       })
       .catch((err) => {
-        throw err;
+        alert(`${err}`);
       });
   }
 
@@ -55,19 +53,6 @@ export function AuthProvider({ children }: Props) {
       .catch((err) => {
         alert("Could not log out, recived error: " + err);
       });
-  }
-
-  function addCreatedStudyToUser(createdStudy: ICreateStudyProps): void {
-    if (authState.isAuthenticated && authState.user) {
-      setAuthState({
-        ...authState,
-        user: {
-          ...authState.user,
-          studies: [...authState.user.studies, createdStudy],
-        },
-      });
-    }
-    return;
   }
 
   useEffect(() => {
@@ -92,7 +77,6 @@ export function AuthProvider({ children }: Props) {
     googleLogin,
     logout,
     register,
-    addCreatedStudyToUser,
   };
 
   return (

@@ -1,18 +1,18 @@
 import { EventApi } from "@fullcalendar/react";
 import React, { MouseEvent, useState } from "react";
-import { useStudy } from "../../context/StudyContext";
+import { IStudy } from "../../services/StudyService";
 import { FocusedModal } from "../FocusedModal";
 
 interface IAddSEventModalProps {
   setShowAddSEventModal(showModal: boolean): void;
   eventClick: EventApi | undefined;
+  studyState: IStudy | undefined;
 }
 
 function AddSEventModal(props: IAddSEventModalProps) {
   const [showAddChild, setshowAddChild] = useState(1);
   const [childrenInputs, setChildrenInputs] = useState<Object[]>([]);
-  const { setShowAddSEventModal, eventClick } = props;
-  const studyCtx = useStudy();
+  const { setShowAddSEventModal, eventClick, studyState } = props;
 
   function submitJoinStudy(e: MouseEvent<HTMLInputElement>) {
     setShowAddSEventModal(false);
@@ -29,13 +29,18 @@ function AddSEventModal(props: IAddSEventModalProps) {
     <div>
       <FocusedModal setShowModal={setShowAddSEventModal}>
         <div className="flex justify-end -mb-4">
-          <div className="h-6 px-2 text-white bg-red-300 rounded cursor-pointer hover:bg-red-500" onClick={() => setShowAddSEventModal(false)}>exit</div>
+          <div
+            className="h-6 px-2 text-white bg-red-300 rounded cursor-pointer hover:bg-red-500"
+            onClick={() => setShowAddSEventModal(false)}
+          >
+            exit
+          </div>
         </div>
         <h1 className="flex justify-center mx-2 mb-1 text-xl">
           {" "}
           Join study:{" "}
           <div className="mx-2 text-xl font-bold">
-            {studyCtx?.studyState.studyName},{" "}
+            {studyState && studyState.studyName},{" "}
           </div>
           lead by:{" "}
           <div className="mx-2 text-xl font-bold">{eventClick?.title} </div>

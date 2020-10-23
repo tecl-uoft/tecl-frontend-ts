@@ -53,7 +53,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
       const calendarApi = selectInfo.view.calendar;
       if (!authCtx || !authCtx.authState.user) {
         alert("Must be logged in to make a change");
-      } else {
+      } else if (studyCtx?.studyState) {
         const eventTitle = `${authCtx?.authState.user?.firstName}`;
         const event = {
           title: eventTitle,
@@ -90,7 +90,10 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
               To: "opacity-0"
           --> */}
         <div className="fixed inset-0 transition-opacity">
-          <div className="absolute inset-0 bg-gray-500 opacity-75" onClick={() => props.setShowEventModal(false)}></div>
+          <div
+            className="absolute inset-0 bg-gray-500 opacity-75"
+            onClick={() => props.setShowEventModal(false)}
+          ></div>
         </div>
         {/* <!-- This element is to trick the browser into centering the modal contents. --> */}
         <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>

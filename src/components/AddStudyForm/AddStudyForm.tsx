@@ -1,12 +1,11 @@
 import React from "react";
-import { useStudy } from "../../context/StudyContext";
+import StudyService from "../../services/StudyService";
 
 interface IAddStudyFormProps {
-  addStudySubmitFunc(): void;
+  windowClose(): void;
 }
 
 function AddStudyForm(props: IAddStudyFormProps) {
-  const studyCtx = useStudy();
   function submitStudy() {
     const minDays = document.querySelector<HTMLInputElement>("#min-day")?.value;
     const minMonths = document.querySelector<HTMLInputElement>("#min-month")
@@ -22,12 +21,12 @@ function AddStudyForm(props: IAddStudyFormProps) {
     /* Since default input is set to 0, input is always defined */
     const minTotalDays =
       parseInt(minDays as string) +
-      parseInt(minMonths as string) +
-      parseInt(minYears as string);
+      parseInt(minMonths as string) * 30 +
+      parseInt(minYears as string) * 365;
     const maxTotalDays =
       parseInt(maxDays as string) +
-      parseInt(maxMonths as string) +
-      parseInt(maxYears as string);
+      parseInt(maxMonths as string) * 30 +
+      parseInt(maxYears as string) * 365;
 
     const studyName = document.querySelector<HTMLInputElement>("#study-name")
       ?.value;
@@ -37,23 +36,28 @@ function AddStudyForm(props: IAddStudyFormProps) {
       ?.value;
     const keyColor = document.querySelector<HTMLInputElement>("#key-color")
       ?.value;
+    const description = document.querySelector<HTMLInputElement>(
+      "#study-description"
+    )?.value;
 
     /* Check if inputs have valid values and send request to create the study  */
-    if (studyName && startDate && endDate && keyColor && studyCtx) {
-      studyCtx.createStudy({
+    if (studyName && startDate && endDate && keyColor && description) {
+      StudyService.create({
         studyName,
         startDate,
         endDate,
         keyColor,
         minAgeDays: minTotalDays,
         maxAgeDays: maxTotalDays,
+        description,
       });
     }
+    props.windowClose();
   }
 
   return (
     <div>
-      <h1 className="mb-4 text-3xl"> Add Study </h1>
+      <h1 className="mb-4 text-3xl"> Create New Study </h1>
       <form className="max-w-lg">
         <div className="flex flex-wrap mb-2 -mx-3">
           <div className="w-full px-3">
@@ -63,10 +67,24 @@ function AddStudyForm(props: IAddStudyFormProps) {
             </label>
             <input
               id="study-name"
-              className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
+              className="block w-2/3 p-2 mx-auto mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
               type="text"
               placeholder="Give a name to your study..."
             />
+          </div>
+        </div>
+        <div className="flex flex-wrap mb-2 -mx-3">
+          <div className="w-full px-3">
+            <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase">
+              {" "}
+              Study Description
+            </label>
+            <textarea
+              id="study-description"
+              minLength={3}
+              rows={3}
+              className="w-full p-2 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none resize-y focus:outline-none focus:bg-white focus:border-gray-500"
+            ></textarea>
           </div>
         </div>
         <h2 className="block mb-2 text-xl font-bold text-gray-700">

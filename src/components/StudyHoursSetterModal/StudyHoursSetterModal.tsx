@@ -6,7 +6,7 @@ import FullCalendar, {
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useStudy } from "../../context/StudyContext";
 import { CalendarRemoveModal } from "../CalendarRemoveModal";
 import { CalendarEventModal } from "../CalendarEventModal";
@@ -46,28 +46,33 @@ function StudyHoursSetterModal(props: IStudyHoursSetterModalProps) {
         <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
         &#8203;
         <div
-          className="inline-block w-10/12 p-6 my-8 align-middle align-bottom transition-all transform bg-white rounded-lg "
+          className="inline-block w-10/12 p-4 pt-2 my-4 align-top align-middle transition-all transform bg-white rounded-lg "
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-headline"
         >
-          <div className="pb-6">
-            {console.log(studyCtx?.studyState)}
-            {studyCtx && (
-              <FullCalendar
-                headerToolbar={{
-                  left: "prev,next today",
-                  center: "title",
-                  right: "dayGridMonth,timeGridWeek",
-                }}
-                /* initialEvents={[]} */
-                initialEvents={studyCtx?.studyState.scheduleEvents}
-                selectable
-                plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                initialView="timeGridWeek"
-                select={handleDateSelect}
-                eventClick={handleEventClick}
-              />
+          <div className="pb-2">
+            {console.log(studyCtx?.studyState?.scheduleEvents)}
+            {studyCtx?.studyState && (
+              <>
+                <h2 className="text-3xl font-bold underline">
+                  Set {studyCtx?.studyState && studyCtx.studyState.studyName}{" "}
+                  Study Availability
+                </h2>
+                <FullCalendar
+                  headerToolbar={{
+                    left: "prev,next today",
+                    center: "title",
+                    right: "dayGridMonth,timeGridWeek",
+                  }}
+                  initialEvents={studyCtx.studyState.scheduleEvents}
+                  selectable
+                  plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                  initialView="timeGridWeek"
+                  select={handleDateSelect}
+                  eventClick={handleEventClick}
+                />
+              </>
             )}
             {showDeleteModal && (
               <CalendarRemoveModal

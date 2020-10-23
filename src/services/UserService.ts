@@ -19,8 +19,6 @@ export interface UserState {
   userRoles: UserRoles;
   lastName: string;
   role: string;
-  scheduleEvents: any[];
-  studies: any[];
   verified: boolean;
 }
 
