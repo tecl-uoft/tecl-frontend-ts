@@ -48,16 +48,16 @@ function Scheduling() {
           : null}
       </nav>
       <div className="flex flex-col mb-3">
-        <h3 className="mx-auto text-4xl font-bold underline">
+        <h3 className="pl-12 mx-auto text-4xl font-bold underline md:-mb-6 md:mt-4">
           {currentStudy && `${currentStudy.studyName}`} Schedule
         </h3>
         <div className="flex justify-between">
           <h3 className="flex flex-col text-xl">
-            <div className="underline ">Study Information: </div>
-            <div className="mb-6 text-md">{currentStudy?.description}</div>
+            <div className="underline ">Study Information </div>
+            <div className="w-1/2 text-md">{currentStudy?.description}</div>
           </h3>
-          <h3 className="flex flex-col pb-2 text-xl">
-            <div className="underline ">Age Range</div>
+          <h3 className="flex flex-col text-xl">
+            <div className="mx-auto underline">Age Range</div>
             <div className="">
               {" "}
               {currentStudy &&
