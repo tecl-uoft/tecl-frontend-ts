@@ -89,9 +89,27 @@ async function updateParticipantInfo(
   }
 }
 
-async function listBooked(studyName: string) {
+export interface IBookedScheduleEvent {
+  title: string;
+  start: string;
+  end: string;
+  id: string;
+  color: string;
+  participantInfo: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    child: {
+      firstName: string;
+      lastName: string;
+      dob: string;
+    };
+  };
+}
+
+async function listBooked(studyName: string): Promise<IBookedScheduleEvent[]> {
   try {
-    const res = await fetch(`/api/v1/schedule-events?${studyName}`, {
+    const res = await fetch(`/api/v1/schedule-events?studyName=${studyName}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -100,7 +118,9 @@ async function listBooked(studyName: string) {
     if (!res.ok) {
       throw Error("Expected HTTP status 204, got: " + res.status);
     }
-    return res.json();
+    const resJson = await res.json()
+    console.log(resJson)
+    return resJson.scheduleEvents;
   } catch (err) {
     throw err;
   }

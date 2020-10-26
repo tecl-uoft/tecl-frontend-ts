@@ -52,7 +52,6 @@ function StudyHoursSetterModal(props: IStudyHoursSetterModalProps) {
           aria-labelledby="modal-headline"
         >
           <div className="pb-2">
-            {console.log(studyCtx?.studyState?.scheduleEvents)}
             {studyCtx?.studyState && (
               <>
                 <h2 className="text-3xl font-bold underline">

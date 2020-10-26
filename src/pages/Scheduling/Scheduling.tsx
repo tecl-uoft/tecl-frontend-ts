@@ -51,29 +51,28 @@ function Scheduling() {
         <h3 className="pl-12 mx-auto text-4xl font-bold underline md:-mb-6 md:mt-4">
           {currentStudy && `${currentStudy.studyName}`} Schedule
         </h3>
-        <div className="flex justify-between">
-          <h3 className="flex flex-col text-xl">
+        <div className="flex justify-between w-full">
+          <h3 className="w-1/3 h-32 text-xl">
             <div className="underline ">Study Information </div>
-            <div className="w-1/2 text-md">{currentStudy?.description}</div>
+            <div>{currentStudy?.description}</div>
           </h3>
           <h3 className="flex flex-col text-xl">
-            <div className="mx-auto underline">Age Range</div>
+            <div className="underline max-w-1/3">Age Range</div>
             <div className="">
               {" "}
               {currentStudy &&
                 `${
                   currentStudy.minAgeDays % 30 === 0
-                    ? (currentStudy.minAgeDays / 30 )
+                    ? currentStudy.minAgeDays / 30
                     : Math.floor(currentStudy.minAgeDays / 30)
                 } months to `}
               {currentStudy &&
                 `${
                   currentStudy.maxAgeDays % 30 === 0
-                    ? (currentStudy.maxAgeDays / 30 )
-                    : Math.floor(currentStudy.maxAgeDays/ 30)
+                    ? currentStudy.maxAgeDays / 30
+                    : Math.floor(currentStudy.maxAgeDays / 30)
                 } months`}
-
-             {/*  {currentStudy?.minAgeDays &&
+              {/*  {currentStudy?.minAgeDays &&
                 currentStudy?.maxAgeDays &&
                 ` to ${currentStudy?.maxAgeDays} days`}{" "} */}
             </div>
