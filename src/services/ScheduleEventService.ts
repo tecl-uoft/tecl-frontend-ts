@@ -17,11 +17,14 @@ export interface ICreateScheduleEventProps {
   title: string;
   start: string;
   end: string;
+  meetingLink: string;
+  meetingPassword: string;
 }
+
 /* Function to create a schedule event linked with a particular study */
 async function create(
   studyName: string,
-  scheduleEvent: IScheduleEvent
+  scheduleEvent: ICreateScheduleEventProps
 ): Promise<void> {
   try {
     const res = await fetch(`/api/v1/schedule-event`, {

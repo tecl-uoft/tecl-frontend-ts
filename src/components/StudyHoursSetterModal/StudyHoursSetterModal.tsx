@@ -69,6 +69,7 @@ function StudyHoursSetterModal(props: IStudyHoursSetterModalProps) {
                   plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                   initialView="timeGridWeek"
                   select={handleDateSelect}
+                  allDaySlot={false}
                   eventClick={handleEventClick}
                 />
               </>

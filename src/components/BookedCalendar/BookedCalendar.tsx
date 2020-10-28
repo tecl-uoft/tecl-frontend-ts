@@ -39,6 +39,7 @@ function BookedCalendar(props: IBookedCalendarProps) {
                 right: "dayGridMonth,timeGridWeek",
               }}
               events={scheduledEvents}
+              allDaySlot={false}
               selectable
               plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
               initialView="timeGridWeek"

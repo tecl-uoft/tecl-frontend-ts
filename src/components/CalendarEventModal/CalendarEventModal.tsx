@@ -1,5 +1,5 @@
 import { DateSelectArg } from "@fullcalendar/react";
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useStudy } from "../../context/StudyContext";
 import { ICreateScheduleEventProps } from "../../services/ScheduleEventService";
@@ -15,6 +15,8 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
   const studyCtx = useStudy();
   const authCtx = useAuth();
   const { selectInfo } = props;
+  const [meetingLink, setMeetingLink] = useState("");
+  const [meetingPassword, setMeetingPassword] = useState("");
 
   const onAdd = () => {
     const selectInfo = props.selectInfo;
@@ -39,6 +41,8 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
           start: selectInfo.startStr,
           end: selectInfo.endStr,
           title: eventTitle,
+          meetingLink,
+          meetingPassword
         };
         studyCtx.createScheduleEvent(availability);
       }
@@ -99,9 +103,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                 </svg>
               </div>
               <div className="w-full text-2xl text-center sm:ml-4 sm:text-left">
-                <h3
-                  className="mx-auto mt-1 font-medium text-center text-gray-900 px-auto"
-                >
+                <h3 className="mx-auto mt-1 font-medium text-center text-gray-900 px-auto">
                   Add Time Availability
                 </h3>
                 <h4 className="pt-2 mx-auto text-lg text-center">
@@ -115,7 +117,37 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
               </div>
             </div>
 
-            <EventForm />
+            <form className="p-2 text-sm">
+              <div className="flex flex-wrap -mx-3">
+                <div className="w-full px-3 mb-6 md:mb-0">
+                  <label className="block mb-1 font-bold tracking-wide text-gray-700">
+                    Video Meeting Link *
+                  </label>
+                  <input
+                    className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border rounded appearance-none focus:outline-none focus:bg-white"
+                    type="text"
+                    value={meetingLink}
+                    onChange={(e) => setMeetingLink(e.currentTarget.value)}
+                    placeholder="ex. https://boom.us/j/12345678910"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-wrap -mx-3">
+                <div className="w-full px-3 mb-6 md:mb-0">
+                  <label className="block mb-1 font-bold tracking-wide text-gray-700">
+                    Video Meeting Passcode
+                  </label>
+                  <input
+                    className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border rounded appearance-none focus:outline-none focus:bg-white"
+                    type="text"
+                    value={meetingPassword}
+                    onChange={(e) => setMeetingPassword(e.currentTarget.value)}
+                    placeholder="leave blank if no password"
+                  />
+                </div>
+              </div>
+              <div className="block text-gray-700 texl-xs">* = required</div>
+            </form>
           </div>
           <div className="flex justify-center px-4 pb-4 space-x-4">
             <span className="flex w-24 mt-3 rounded-md shadow-sm sm:mt-0 sm:w-auto">
@@ -142,38 +174,6 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
         </div>
       </div>
     </div>
-  );
-}
-
-function EventForm() {
-  return (
-    <form className="p-2 text-sm">
-      <div className="flex flex-wrap -mx-3">
-        <div className="w-full px-3 mb-6 md:mb-0">
-          <label className="block mb-1 font-bold tracking-wide text-gray-700">
-            Video Meeting Link *
-          </label>
-          <input
-            className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border rounded appearance-none focus:outline-none focus:bg-white"
-            type="text"
-            placeholder="ex. https://boom.us/j/12345678910"
-          />
-        </div>
-      </div>
-      <div className="flex flex-wrap -mx-3">
-        <div className="w-full px-3 mb-6 md:mb-0">
-          <label className="block mb-1 font-bold tracking-wide text-gray-700">
-            Video Meeting Passcode
-          </label>
-          <input
-            className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border rounded appearance-none focus:outline-none focus:bg-white"
-            type="text"
-            placeholder="leave blank if no password"
-          />
-        </div>
-      </div>
-      <div className="block text-gray-700 texl-xs">* = required</div>
-    </form>
   );
 }
 

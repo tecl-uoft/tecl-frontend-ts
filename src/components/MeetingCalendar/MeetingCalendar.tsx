@@ -43,6 +43,7 @@ function MeetingCalendar(props: IMeetingCalendarProps) {
                 allDay: true,
               },
             ]}
+            allDaySlot={false}
             nowIndicator={true}
             selectable
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
