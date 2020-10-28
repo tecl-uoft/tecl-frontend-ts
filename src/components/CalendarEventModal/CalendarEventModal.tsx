@@ -117,14 +117,14 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
               </div>
             </div>
 
-            <form className="p-2 text-sm">
+            <form className="p-2 space-y-4 text-sm">
               <div className="flex flex-wrap -mx-3">
                 <div className="w-full px-3 mb-6 md:mb-0">
                   <label className="block mb-1 font-bold tracking-wide text-gray-700">
                     Video Meeting Link *
                   </label>
                   <input
-                    className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border rounded appearance-none focus:outline-none focus:bg-white"
+                    className="block w-full px-4 py-2 text-gray-700 bg-gray-200 border rounded focus:outline-none focus:bg-white"
                     type="text"
                     value={meetingLink}
                     onChange={(e) => setMeetingLink(e.currentTarget.value)}
@@ -138,7 +138,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                     Video Meeting Passcode
                   </label>
                   <input
-                    className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border rounded appearance-none focus:outline-none focus:bg-white"
+                    className="block w-full px-4 py-2 mb-3 text-gray-700 bg-gray-200 border rounded focus:outline-none focus:bg-white"
                     type="text"
                     value={meetingPassword}
                     onChange={(e) => setMeetingPassword(e.currentTarget.value)}
