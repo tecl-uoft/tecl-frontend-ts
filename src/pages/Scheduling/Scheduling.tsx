@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { MeetingCalendar } from "../../components/MeetingCalendar";
 import StudyService, { IStudy } from "../../services/StudyService";
+import { DateTime } from "luxon";
 
 function Scheduling() {
   const [allStudyList, setAllStudyList] = useState<IStudy[] | undefined>(
@@ -22,21 +23,20 @@ function Scheduling() {
   }, []);
 
   return (
-    <div className="container flex flex-col px-8 pt-4 mx-auto">
-      <nav className="mx-auto mt-2 space-x-2">
+    <div className="container flex flex-col px-4 pt-4 mx-auto">
+      <nav className="pl-12 mx-auto mt-2 space-x-2">
         {allStudyList && currentStudy
           ? allStudyList.map((study: any, idx: number) => {
               return (
                 <button
                   onClick={() => {
                     setCurrentStudy(study);
-                    /* studyCtx?.setStudyState(study); */
                   }}
                   style={{ backgroundColor: study.keyColor }}
-                  className={`text-md font-semibold rounded p-1 px-2 text-white
+                  className={`text-md font-semibold rounded-lg py-1 px-2 text-white border-4 focus:outline-none
                 ${
                   currentStudy.studyName === study.studyName
-                    ? "border-gray-800 border-4"
+                    ? "border-gray-800"
                     : "border-white"
                 }`}
                   key={idx}
@@ -48,17 +48,17 @@ function Scheduling() {
           : null}
       </nav>
       <div className="flex flex-col mb-3">
-        <h3 className="pl-12 mx-auto text-4xl font-bold underline md:-mb-6 md:mt-4">
+        <h3 className="pl-12 mx-auto text-4xl font-bold underline md:-mb-6 ">
           {currentStudy && `${currentStudy.studyName}`} Schedule
         </h3>
         <div className="flex justify-between w-full">
-          <h3 className="w-1/3 h-32 text-xl">
+          <h3 className="h-32 text-xl">
             <div className="underline ">Study Information </div>
-            <div>{currentStudy?.description}</div>
+            <div className="w-6/12 text-lg">{currentStudy?.description}</div>
           </h3>
           <h3 className="flex flex-col text-xl">
             <div className="underline max-w-1/3">Age Range</div>
-            <div className="">
+            <div className="w-64 pl-4 text-lg">
               {" "}
               {currentStudy &&
                 `${
@@ -72,10 +72,11 @@ function Scheduling() {
                     ? currentStudy.maxAgeDays / 30
                     : Math.floor(currentStudy.maxAgeDays / 30)
                 } months`}
-              {/*  {currentStudy?.minAgeDays &&
-                currentStudy?.maxAgeDays &&
-                ` to ${currentStudy?.maxAgeDays} days`}{" "} */}
             </div>
+            <div className="mt-1 underline">
+              Current Time Zone
+            </div>
+            <div className="block w-full pl-4 text-lg">{DateTime.local().toFormat("ZZZZZ (ZZZZ)")}</div>
           </h3>
         </div>
       </div>

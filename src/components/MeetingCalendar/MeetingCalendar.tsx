@@ -23,6 +23,7 @@ function MeetingCalendar(props: IMeetingCalendarProps) {
 
   return (
     <div className="pb-6">
+      {console.log(studyState)}
       {studyState && (
         <div key={studyState.studyName}>
           <FullCalendar
@@ -42,6 +43,7 @@ function MeetingCalendar(props: IMeetingCalendarProps) {
                 allDay: true,
               },
             ]}
+            nowIndicator={true}
             selectable
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             initialView="timeGridWeek"

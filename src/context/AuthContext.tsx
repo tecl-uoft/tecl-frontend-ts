@@ -30,6 +30,7 @@ export function AuthProvider({ children }: Props) {
           isAuthenticated: true,
           user: loggedInUser,
         };
+        console.log("onlogin", loggedInUser);
         setAuthState(loggedInAuthState);
       })
       .catch((err) => {
