@@ -1,5 +1,4 @@
 import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import React from "react";
@@ -31,17 +30,17 @@ function BookedCalendar(props: IBookedCalendarProps) {
           aria-labelledby="modal-headline"
         >
           <div className="pb-2">
-            <h2 className="text-3xl font-bold underline">Study Bookings</h2>
+            <h2 className="mr-8 text-3xl font-bold underline">Study Bookings</h2>
             <FullCalendar
               headerToolbar={{
-                left: "prev,next today",
+                left: "today",
                 center: "title",
-                right: "dayGridMonth,timeGridWeek",
+                right: "prev next",
               }}
               events={scheduledEvents}
               allDaySlot={false}
               selectable
-              plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+              plugins={[timeGridPlugin, interactionPlugin]}
               initialView="timeGridWeek"
             />
           </div>

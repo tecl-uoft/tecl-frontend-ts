@@ -3,7 +3,6 @@ import FullCalendar, {
   EventApi,
   EventClickArg,
 } from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import React, { useState } from "react";
@@ -60,13 +59,13 @@ function StudyHoursSetterModal(props: IStudyHoursSetterModalProps) {
                 </h2>
                 <FullCalendar
                   headerToolbar={{
-                    left: "prev,next today",
+                    left: "today",
                     center: "title",
-                    right: "dayGridMonth,timeGridWeek",
+                    right: "prev next",
                   }}
                   initialEvents={studyCtx.studyState.scheduleEvents}
                   selectable
-                  plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                  plugins={[timeGridPlugin, interactionPlugin]}
                   initialView="timeGridWeek"
                   select={handleDateSelect}
                   allDaySlot={false}
