@@ -1,7 +1,9 @@
 import { DateSelectArg } from "@fullcalendar/react";
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useStudy } from "../../context/StudyContext";
+import { ICreateScheduleEventProps } from "../../services/ScheduleEventService";
+import { DateTime } from "luxon";
 
 interface ICalendarEventModalProps {
   selectInfo: DateSelectArg | undefined;
@@ -12,65 +14,37 @@ interface ICalendarEventModalProps {
 function CalendarEventModal(props: ICalendarEventModalProps) {
   const studyCtx = useStudy();
   const authCtx = useAuth();
-
-  const startDate = new Date(props.selectInfo?.startStr as string);
-  const endDate = new Date(props.selectInfo?.endStr as string);
-  const MONTHS = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
-  function formatDate(date: Date) {
-    return `${
-      date.getHours() < 10
-        ? date.getHours() === 0
-          ? 12
-          : "0" + date.getHours()
-        : date.getHours() % 12
-    }:${
-      date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()
-    }  ${date.getHours() >= 12 ? "p.m." : "a.m."}, ${
-      MONTHS[date.getMonth()]
-    } ${date.getDate()}, ${date.getFullYear()} `;
-  }
+  const { selectInfo } = props;
+  const [meetingLink, setMeetingLink] = useState("");
+  const [meetingPassword, setMeetingPassword] = useState("");
 
   const onAdd = () => {
     const selectInfo = props.selectInfo;
-    const firstName = document.querySelector<HTMLInputElement>("#firstName")
-      ?.value;
-    if (selectInfo && firstName && studyCtx) {
+
+    if (selectInfo && studyCtx) {
       const calendarApi = selectInfo.view.calendar;
       if (!authCtx || !authCtx.authState.user) {
-        /* calendarApi.addEvent({
-          title: firstName,
-          start: selectInfo.startStr,
-          end: selectInfo.endStr,
-          allDay: selectInfo.allDay,
-          color: studyCtx.studyState.keyColor,
-        }); */
-        alert("Must be logged in to make a change")
-      } else {
-        const eventTitle = `Coordinator: ${authCtx?.authState.user?.firstName}`
-        const event = { 
+        alert("Must be logged in to make a change");
+      } else if (studyCtx?.studyState) {
+        const eventTitle = `${authCtx?.authState.user?.firstName}`;
+        const event = {
           title: eventTitle,
           start: selectInfo.startStr,
           end: selectInfo.endStr,
           allDay: selectInfo.allDay,
           color: studyCtx.studyState.keyColor,
         };
+        /* Add study state locally to calendar */
         calendarApi.addEvent(event);
-        const availability = { start: selectInfo.start, end: selectInfo.end, title: eventTitle}
-        studyCtx.addStudyAvailability(availability);
+        /* Send request to add state to database */
+        const availability: ICreateScheduleEventProps = {
+          start: selectInfo.startStr,
+          end: selectInfo.endStr,
+          title: eventTitle,
+          meetingLink,
+          meetingPassword
+        };
+        studyCtx.createScheduleEvent(availability);
       }
 
       calendarApi.unselect();
@@ -91,8 +65,11 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
               From: "opacity-100"
               To: "opacity-0"
           --> */}
-        <div className="fixed inset-0 transition-opacity">
-          <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+        <div className="fixed inset-0 transition-opacity cursor-pointer">
+          <div
+            className="absolute inset-0 bg-gray-500 opacity-75"
+            onClick={() => props.setShowEventModal(false)}
+          ></div>
         </div>
         {/* <!-- This element is to trick the browser into centering the modal contents. --> */}
         <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
@@ -103,9 +80,9 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
           aria-modal="true"
           aria-labelledby="modal-headline"
         >
-          <div className="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
+          <div className="px-4 pt-4 bg-white">
             <div className="sm:flex sm:items-start">
-              <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 mx-auto bg-green-100 rounded-full sm:mx-0 sm:h-10 sm:w-10">
+              <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 mx-auto bg-green-100 border-2 border-green-600 rounded-full sm:mx-0 sm:h-10 sm:w-10">
                 {/* <!-- Heroicon name: exclamation --> */}
                 <svg
                   fill="none"
@@ -125,99 +102,78 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                   ></path>
                 </svg>
               </div>
-              <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                <h3
-                  className="text-lg font-medium leading-6 text-gray-900"
-                  id="modal-headline"
-                >
-                  Event Date: <br />
-                  {formatDate(startDate)} to <br />
-                  {formatDate(endDate)}
+              <div className="w-full text-2xl text-center sm:ml-4 sm:text-left">
+                <h3 className="mx-auto mt-1 font-medium text-center text-gray-900 px-auto">
+                  Add Time Availability
                 </h3>
+                <h4 className="pt-2 mx-auto text-lg text-center">
+                  {selectInfo && (
+                    <>
+                      {DateTime.fromISO(selectInfo.startStr).toFormat("ff")} to{" "}
+                      {DateTime.fromISO(selectInfo.endStr).toFormat("t ZZZZ")}
+                    </>
+                  )}
+                </h4>
               </div>
             </div>
-            <EventForm />
+
+            <form className="p-2 space-y-4 text-sm">
+              <div className="flex flex-wrap -mx-3">
+                <div className="w-full px-3 mb-6 md:mb-0">
+                  <label className="block mb-1 font-bold tracking-wide text-gray-700">
+                    Video Meeting Link *
+                  </label>
+                  <input
+                    className="block w-full px-4 py-2 text-gray-700 bg-gray-200 border rounded focus:outline-none focus:bg-white"
+                    type="text"
+                    value={meetingLink}
+                    onChange={(e) => setMeetingLink(e.currentTarget.value)}
+                    placeholder="ex. https://boom.us/j/12345678910"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-wrap -mx-3">
+                <div className="w-full px-3 mb-6 md:mb-0">
+                  <label className="block mb-1 font-bold tracking-wide text-gray-700">
+                    Video Meeting Passcode
+                  </label>
+                  <input
+                    className="block w-full px-4 py-2 mb-3 text-gray-700 bg-gray-200 border rounded focus:outline-none focus:bg-white"
+                    type="text"
+                    value={meetingPassword}
+                    onChange={(e) => setMeetingPassword(e.currentTarget.value)}
+                    placeholder="leave blank if no password"
+                  />
+                </div>
+              </div>
+              <div className="block text-gray-700 texl-xs">* = required</div>
+            </form>
           </div>
-          <div className="px-4 pb-4 bg-gray-50 sm:px-6 sm:flex sm:flex-row-reverse">
+          <div className="flex justify-center px-4 pb-4 space-x-4">
+            <span className="flex w-24 mt-3 rounded-md shadow-sm sm:mt-0 sm:w-auto">
+              <button
+                onClick={() => props.setShowEventModal(false)}
+                type="button"
+                className="inline-flex justify-center w-24 px-4 py-2 text-base font-medium leading-6 text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-300 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue sm:text-sm sm:leading-5"
+              >
+                Cancel
+              </button>
+            </span>
             <span className="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
               <button
                 onClick={() => {
                   onAdd();
                 }}
                 type="button"
-                className="inline-flex justify-center w-full px-4 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green sm:text-sm sm:leading-5"
+                className="inline-flex justify-center w-24 px-4 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green sm:text-sm sm:leading-5"
               >
                 Add
-              </button>
-            </span>
-            <span className="flex w-full mt-3 rounded-md shadow-sm sm:mt-0 sm:w-auto">
-              <button
-                onClick={() => props.setShowEventModal(false)}
-                type="button"
-                className="inline-flex justify-center w-full px-4 py-2 text-base font-medium leading-6 text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue sm:text-sm sm:leading-5"
-              >
-                Cancel
               </button>
             </span>
           </div>
         </div>
       </div>
     </div>
-  );
-}
-
-function EventForm() {
-  return (
-    <form className="px-8 pt-4">
-      <div className="flex flex-wrap -mx-3">
-        <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-          <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700">
-            First Name *
-          </label>
-          <input
-            className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border rounded appearance-none focus:outline-none focus:bg-white"
-            type="text"
-            id="firstName"
-            placeholder="Jane"
-          />
-        </div>
-        <div className="w-full px-3 md:w-1/2">
-          <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700">
-            Last Name
-          </label>
-          <input
-            className="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-            type="text"
-            id="lastName"
-            placeholder="Doe"
-          />
-        </div>
-      </div>
-      <div className="flex flex-wrap my-2 -mx-3">
-        <div className="w-full px-3">
-          <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700">
-            Email *
-          </label>
-          <input
-            className="block w-full px-2 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-            id="email"
-            type="email"
-            placeholder="test@test.ca"
-          />
-        </div>
-      </div>
-      <div className="flex flex-wrap -mx-3">
-        <div className="w-full px-3 mb-6 md:mb-0">
-          <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700">
-            Additional Notes
-          </label>
-          <input
-            className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border rounded appearance-none focus:outline-none focus:bg-white"
-            type="text"
-          />
-        </div>
-      </div>
-    </form>
   );
 }
 

@@ -1,44 +1,75 @@
+import { IScheduleEvent } from "./ScheduleEventService";
+
 export default {
   create,
-  read,
   list,
+  read,
   update,
-  createAvailability,
 };
 
-async function create(study: any): Promise<void> {
-  const response = await fetch(`/api/v1/study`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ study }),
-  });
+export interface IStudy {
+  studyName: string;
+  leadResearchers: string[];
+  researchAssitants: string[];
+  scheduleEvents: IScheduleEvent[];
+  startDate: Date;
+  endDate: Date;
+  keyColor: string;
+  minAgeDays: number;
+  maxAgeDays: number;
+  description: string;
+}
 
-  if (response.ok) {
-    const studyPostRes = await response.json();
-    return studyPostRes;
-  } else {
-    alert(`Create schedule event failed`);
+export interface ICreateStudyProps {
+  studyName: string;
+  startDate: string;
+  endDate: string;
+  keyColor: string;
+  minAgeDays: number;
+  maxAgeDays: number;
+  description: string;
+}
+
+/* Create a study that is linked with the logged in user. User must be authenticated. */
+async function create(study: ICreateStudyProps): Promise<IStudy> {
+  try {
+    const response = await fetch(`/api/v1/study`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ study }),
+    });
+    if (response.status !== 201) {
+      throw Error(
+        "Status indicates study has not been update. Got status: " +
+          response.status
+      );
+    }
+    /* Return the response typecasted as Study */
+    const resJson: any = response.json();
+    console.log(resJson);
+    return resJson.study as IStudy;
+  } catch (err) {
+    throw err;
   }
 }
 
-async function createAvailability(
-  studyName: string,
-  availability: { start: Date; end: Date, title: string }
-): Promise<void> {
-  const response = await fetch(`/api/v1/study/availability`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ study: { studyName, availability } }),
-  });
-
-  if (response.ok) {
-    return;
-  } else {
-    alert(`Create schedule event failed`);
+/* Get a list of studies either for all users or for the current authenticated user. */
+async function list(forUser: boolean): Promise<IStudy[]> {
+  try {
+    const response = await fetch(
+      `/api/v1/studies/${forUser ? "?ownedByUser=true" : ""}`,
+      { method: "GET" }
+    );
+    if (response.ok) {
+      const studyGetRes: any = await response.json();
+      return studyGetRes.study as IStudy[];
+    } else {
+      throw new Error("Failed to fetch Study service list");
+    }
+  } catch (err) {
+    throw err;
   }
 }
 
@@ -58,35 +89,17 @@ async function update(studyToUpdate: any): Promise<void> {
   }
 }
 
-async function list(): Promise<any> {
-  const response = await fetch(`/api/v1/studies`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  if (response.ok) {
+async function read(studyName: string): Promise<IStudy> {
+  try {
+    const response = await fetch(`/api/v1/study?studyName=${studyName}`, {
+      method: "GET",
+    });
+    if (!response.ok) {
+      throw new Error("Study service read failed");
+    }
     const studyGetRes = await response.json();
-    return studyGetRes;
-  } else {
-    alert(`Getting study failed`);
-  }
-}
-
-async function read(studyName: string): Promise<any> {
-  const response = await fetch(`/api/v1/study`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ study: { studyName } }),
-  });
-
-  if (response.ok) {
-    const studyGetRes = await response.json();
-    return studyGetRes;
-  } else {
-    alert(`Getting study failed`);
+    return studyGetRes.study;
+  } catch (err) {
+    throw err;
   }
 }

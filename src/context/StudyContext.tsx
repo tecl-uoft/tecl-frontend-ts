@@ -1,75 +1,103 @@
 import React, { createContext, useContext, useState } from "react";
-import StudyService from "../services/StudyService";
+import ScheduleEventService, {
+  ICreateScheduleEventProps,
+} from "../services/ScheduleEventService";
+import StudyService, { IStudy } from "../services/StudyService";
+
 import { Props } from "./commonTypes";
+import { v4 as uuidv4 } from "uuid";
+import _ from "lodash";
 
 interface IStudyContext {
-  createStudy(study: any): void;
-  listStudy(): any[];
-  studyState: any;
-  setStudyState(studyState: any): void;
-  addStudyAvailability:(availability: { start: Date; end: Date, title: string }) => void;
-  updateAvailableTimeSlots(timeslot: any): void;
+  /* Create a study to set up a scheduling system for */
+  createScheduleEvent(
+    createScheduleEventProps: ICreateScheduleEventProps
+  ): void;
+  removeScheduleEvent(calId: string): void;
+  studyState: IStudy | undefined;
+  findAndSetStudy(studyName: string): void;
 }
 
 export const StudyContext = createContext<IStudyContext | undefined>(undefined);
 
 export function StudyProvider({ children }: Props) {
-  const [studyState, setStudyState] = useState<any>(undefined);
+  /* To set individual study states */
+  const [studyState, setStudyState] = useState<IStudy | undefined>(undefined);
 
-  const createStudy = (study: any) => {
-    StudyService.create(study)
-      .then((studyRes) => {
-        setStudyState(studyRes);
+  /* Find and set a study based on it's name */
+  function findAndSetStudy(studyName: string): void {
+    StudyService.read(studyName)
+      .then((study) => {
+        setStudyState(study);
       })
       .catch((err) => {
-        alert(`Error in study context, Code ${err.code}: ${err.message}`);
+        alert(`${err}`);
       });
-  };
+    return;
+  }
 
-  const listStudy = () => {
-    StudyService.list()
-      .then((studyRes) => {
-        setStudyState(studyRes.study[0]);
-        console.log("study service", studyRes.study);
-        return studyRes.study;
-      })
-      .catch((err) => {
-        alert(`Error in study context, Code ${err.code}: ${err.message}`);
-      });
-    return [];
-  };
+  /* Remove schedule event from the current study */
+  function removeScheduleEvent(calId: string): void {
+    if (studyState) {
+      ScheduleEventService.remove(calId)
+        .then(() => {
+          const unremovedScheduleEvents = _.filter(
+            studyState.scheduleEvents,
+            (se) => {
+              return se.id !== calId;
+            }
+          );
+          setStudyState({
+            ...studyState,
+            scheduleEvents: unremovedScheduleEvents,
+          });
+        })
+        .catch((err) => alert(err));
+    }
+  }
 
-  const updateAvailableTimeSlots = (timeslot: { from: Date; to: Date }) => {
-    const newAvailableTimeSlots = studyState.availableTimeSlots;
-    studyState.availableTimeSlots.push(timeslot);
-    StudyService.update({
-      studyName: studyState.studyName,
-      availableTimeSlots: newAvailableTimeSlots,
-    });
-  };
-
-  const addStudyAvailability = (
-    availability: { start: Date; end: Date, title: string }
-  ) => {
-    StudyService.createAvailability(studyState.studyName, availability)
-      .then(() => {
-        const newTimeSlots = studyState.availableTimeSlots.concat([{...availability, color: studyState.keyColor}]);
-        setStudyState({...studyState, availableTimeSlots: newTimeSlots})
-        console.log(studyState.availableTimeSlots)
-        return;
-      })
-      .catch((err) => {
-        alert(`Error in study context, Code ${err.code}: ${err.message}`);
-      });
-  };
+  /* Add a schedule event for the current study state */
+  function createScheduleEvent(
+    createScheduleEventProps: ICreateScheduleEventProps
+  ): void {
+    if (studyState) {
+      const {
+        title,
+        start,
+        end,
+        meetingLink,
+        meetingPassword,
+      } = createScheduleEventProps;
+      /*  Convert the input into a proper format for a schedule event */
+      const scheduleEvent = {
+        title,
+        start,
+        end,
+        color: studyState.keyColor,
+        id: uuidv4(),
+        meetingLink,
+        meetingPassword,
+      };
+      ScheduleEventService.create(studyState.studyName, scheduleEvent)
+        .then(() => {
+          /* Add Created events to existing set of events in study */
+          setStudyState({
+            ...studyState,
+            scheduleEvents: [...studyState.scheduleEvents, scheduleEvent],
+          });
+        })
+        .catch((err) => {
+          alert(`Error in Study context, Received: ${err.message}`);
+        });
+      return;
+    }
+  }
 
   const defaultContextValue = {
-    createStudy,
+    createScheduleEvent,
+    removeScheduleEvent,
+    findAndSetStudy,
     studyState,
-    listStudy,
-    setStudyState,
-    addStudyAvailability,
-    updateAvailableTimeSlots,
   };
 
   return (

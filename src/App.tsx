@@ -16,6 +16,7 @@ import { Signup } from "./pages/Signup";
 import { AuthProvider } from "./context/AuthContext";
 import { Dashboard } from "./pages/Dashboard";
 import { StudyProvider } from "./context/StudyContext";
+import { EventCancelation } from "./pages/EventCancelation";
 
 const TeamsStudyGame = lazy(() => import("./pages/TeamsStudyGame"));
 const EyeTrackingGame = lazy(() => import("./pages/EyeTrackingGame"));
@@ -34,6 +35,11 @@ function App() {
                 <Route exact path="/" component={Home} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
+                <Route
+                  exact
+                  path="/scheduling/cancel-event"
+                  component={EventCancelation}
+                />
                 <Route exact path="/scheduling" component={Scheduling} />
                 <Route exact path="/dashboard" component={Dashboard} />
                 <Route
@@ -51,6 +57,7 @@ function App() {
                   path="/study/frogger/information"
                   component={FroggerStudyEntry}
                 />
+
                 <Route
                   exact
                   path="/study/frogger/game"

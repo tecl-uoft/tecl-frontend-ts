@@ -19,8 +19,6 @@ export interface UserState {
   userRoles: UserRoles;
   lastName: string;
   role: string;
-  scheduleEvents: any[];
-  studies: any[];
   verified: boolean;
 }
 
@@ -70,6 +68,17 @@ async function login(user: TeclUserLoginInput): Promise<UserState> {
   }
 }
 
+async function googleLogin() {
+  try {
+    const response = await fetch(`/api/v1/user/google-login`, {
+      method: "GET",
+    });
+    return response;
+  } catch (err) {
+    throw err;
+  }
+}
+
 async function logout() {
   await fetch(`/api/v1/users/logout`);
 }
@@ -89,6 +98,7 @@ async function fetchAuthUser() {
 export default {
   fetchAuthUser,
   login,
+  googleLogin,
   logout,
   signup,
 };

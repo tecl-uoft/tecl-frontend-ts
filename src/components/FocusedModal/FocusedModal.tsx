@@ -7,8 +7,8 @@ interface IFocusedModalProps {
 
 function FocusedModal(props: IFocusedModalProps) {
   return (
-    <div className="fixed z-10 inset-0 overflow-y-auto">
-      <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+    <div className="fixed inset-0 z-10 overflow-y-auto">
+      <div className="flex items-end justify-center min-h-screen px-2 pt-4 pb-20 text-center sm:block sm:p-0">
         <div
           className="fixed inset-0 transition-opacity cursor-pointer"
           onClick={() => props.setShowModal(false)}
@@ -19,7 +19,7 @@ function FocusedModal(props: IFocusedModalProps) {
         <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
         &#8203;
         <div
-          className="inline-block p-6 align-top bg-white rounded-lg transform transition-all my-12"
+          className="inline-block p-6 my-6 align-top transition-all transform bg-white rounded-lg"
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-headline"
