@@ -1,8 +1,9 @@
-import FullCalendar from "@fullcalendar/react";
+import FullCalendar, { EventClickArg } from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import React from "react";
+import React, { useState } from "react";
 import { IBookedScheduleEvent } from "../../services/ScheduleEventService";
+import { EventInfoModal } from "../EventInfoModal";
 
 interface IBookedCalendarProps {
   exitFunc(): void;
@@ -10,9 +11,17 @@ interface IBookedCalendarProps {
 }
 function BookedCalendar(props: IBookedCalendarProps) {
   const { exitFunc, scheduledEvents } = props;
+  const [showEventDetails, setShowEventDetails] = useState(false);
+  const [eventId, setEventId] = useState<string>("")
+
+  function infoClickEvent(arg: EventClickArg) {
+    setEventId(arg.event.id)
+    setShowEventDetails(true);
+  }
 
   return (
     <div className="fixed inset-0 z-10 overflow-y-auto">
+      {showEventDetails && <EventInfoModal eventId={eventId} setShowModal={setShowEventDetails} />}
       <div className="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
         <div
           className="fixed inset-0 transition-opacity cursor-pointer"
@@ -38,8 +47,9 @@ function BookedCalendar(props: IBookedCalendarProps) {
                 right: "prev next",
               }}
               events={scheduledEvents}
-              allDaySlot={false}
               selectable
+              allDaySlot={false}
+              eventClick={infoClickEvent}
               plugins={[timeGridPlugin, interactionPlugin]}
               initialView="timeGridWeek"
             />
