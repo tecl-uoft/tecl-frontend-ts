@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { MeetingCalendar } from "../../components/MeetingCalendar";
 import StudyService, { IStudy } from "../../services/StudyService";
 import { DateTime } from "luxon";
+import { AskBirthModal } from "../../components/AskBirthModal";
 
 function Scheduling() {
   const [allStudyList, setAllStudyList] = useState<IStudy[] | undefined>(
@@ -10,23 +11,71 @@ function Scheduling() {
   const [currentStudy, setCurrentStudy] = useState<IStudy | undefined>(
     undefined
   );
+  const [showAskBirth, setShowAskBirth] = useState(false);
+  const [givenAge, setGivenAge] = useState<number | undefined>(undefined);
+  const [showNoMessage, setShowNoMessage] = useState(false);
+
+  useEffect(() => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    if (urlParams.get("askAge") === "true") {
+      setShowAskBirth(true);
+    }
+  }, []);
 
   useEffect(() => {
     StudyService.list(false)
       .then((studyList) => {
         setAllStudyList(studyList);
-        setCurrentStudy(studyList[0]);
+        setCurrentStudy(undefined);
       })
       .catch((err) => {
         alert(err);
       });
   }, []);
 
+  useEffect(() => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    let showBool = true;
+    if (urlParams.get("askAge") === "true" && !givenAge) {
+      showBool = false;
+    }
+    if (!urlParams.get("askAge")) {
+      showBool = false;
+    }
+
+    /* Check if there is a study that works with the age range */
+    allStudyList?.forEach((study: IStudy, idx: number) => {
+      if (
+        givenAge &&
+        givenAge >= study.minAgeDays &&
+        givenAge <= study.maxAgeDays
+      ) {
+        showBool = false;
+      }
+    });
+    setShowNoMessage(showBool);
+  }, [givenAge, allStudyList]);
+
   return (
     <div className="container flex flex-col px-4 pt-4 mx-auto">
+      {showAskBirth && (
+        <AskBirthModal
+          setShowModal={setShowAskBirth}
+          setGivenAge={setGivenAge}
+        />
+      )}
       <nav className="pl-12 mx-auto mt-2 space-x-2">
-        {allStudyList && currentStudy
-          ? allStudyList.map((study: any, idx: number) => {
+        {allStudyList
+          ? allStudyList.map((study: IStudy, idx: number) => {
+              if (
+                givenAge &&
+                (givenAge < study.minAgeDays || givenAge > study.maxAgeDays)
+              ) {
+                return null;
+              }
+
               return (
                 <button
                   onClick={() => {
@@ -35,7 +84,7 @@ function Scheduling() {
                   style={{ backgroundColor: study.keyColor }}
                   className={`text-md font-semibold rounded-lg py-1 px-2 text-white border-4 focus:outline-none
                 ${
-                  currentStudy.studyName === study.studyName
+                  currentStudy && currentStudy.studyName === study.studyName
                     ? "border-gray-800"
                     : "border-white"
                 }`}
@@ -47,46 +96,73 @@ function Scheduling() {
             })
           : null}
       </nav>
-      <div className="flex flex-col mb-3">
-        <h3 className="pl-12 mx-auto text-4xl font-bold underline md:-mb-6 ">
-          {currentStudy && `${currentStudy.studyName}`} Schedule
+      {currentStudy && (
+        <>
+          <div className="flex flex-col mb-3">
+            <h3 className="pl-12 mx-auto text-4xl font-bold underline ">
+              {`${currentStudy.studyName}`} Schedule
+            </h3>
+            <div className="flex justify-between w-full">
+              <div className="w-64 h-32 text-xl"></div>
+              <h3 className="h-32 text-xl">
+                <div className="w-full px-4 text-lg">
+                  {currentStudy.description}
+                </div>
+              </h3>
+              <h3 className="flex flex-col text-xl">
+                <div className="underline max-w-1/3">Required Age Range</div>
+                <div className="w-64 pl-4 text-lg">
+                  {" "}
+                  {
+                    <>
+                      {" "}
+                      From: {getAgeFormat(currentStudy.minAgeDays)} <br />
+                      To: {"  "}
+                      {getAgeFormat(currentStudy.maxAgeDays)}{" "}
+                    </>
+                  }
+                </div>
+                <div className="mt-1 underline">Current Time Zone</div>
+                <div className="block w-full pl-4 text-lg">
+                  {DateTime.local().toFormat("ZZZZZ (ZZZZ)")}
+                </div>
+              </h3>
+            </div>
+          </div>
+          <MeetingCalendar studyState={currentStudy} />
+        </>
+      )}
+      {showNoMessage && (
+        <h3 className="pl-12 mx-auto text-4xl font-bold text-center ">
+          There are no studies availabe for you right now. <br /> Get back to us
+          later!
         </h3>
-        <div className="flex justify-between w-full">
-          <h3 className="h-32 text-xl">
-            <div className="underline ">Study Information </div>
-            <div className="w-6/12 text-lg">{currentStudy?.description}</div>
-          </h3>
-          <h3 className="flex flex-col text-xl">
-            <div className="underline max-w-1/3">Age Range</div>
-            <div className="w-64 pl-4 text-lg">
-              {" "}
-              {currentStudy &&
-                `${
-                  currentStudy.minAgeDays % 30 === 0
-                    ? currentStudy.minAgeDays / 30
-                    : Math.floor(currentStudy.minAgeDays / 30)
-                } months to `}
-              {currentStudy &&
-                `${
-                  currentStudy.maxAgeDays % 30 === 0
-                    ? currentStudy.maxAgeDays / 30
-                    : Math.floor(currentStudy.maxAgeDays / 30)
-                } months`}
-            </div>
-            <div className="mt-1 underline">
-              Current Time Zone
-            </div>
-            <div className="block w-full pl-4 text-lg">{DateTime.local().toFormat("ZZZZZ (ZZZZ)")}</div>
-          </h3>
-        </div>
-      </div>
-      <MeetingCalendar studyState={currentStudy} />
+      )}
     </div>
   );
 }
-/* 
-function instructions() {
-  
+
+function getAgeFormat(ageDays: number) {
+  let totalDays = ageDays;
+  let ageString = "";
+
+  if (ageDays / 365 >= 1) {
+    const ageYears = Math.floor(ageDays / 365);
+    ageString += ageYears;
+    ageString += ageYears === 1 ? " year " : " years ";
+    totalDays -= ageYears * 365;
+  }
+  if (totalDays / 30 >= 1) {
+    const ageMonths = Math.floor(totalDays / 30);
+    ageString += ageMonths;
+    ageString += ageMonths === 1 ? " month " : " months ";
+    totalDays -= ageMonths * 30;
+  }
+  if (totalDays >= 1) {
+    ageString += totalDays;
+    ageString += totalDays === 1 ? " day" : " days";
+  }
+  return ageString;
 }
- */
+
 export default Scheduling;
