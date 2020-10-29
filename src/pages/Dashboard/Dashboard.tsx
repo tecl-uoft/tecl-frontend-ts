@@ -122,50 +122,15 @@ function AppointmentPanel(props: IAppointmentPanelProps) {
     }
   }, [study.studyName]);
 
-  function findAge(dobDate: string): string {
-    const currTime = DateTime.local();
-    const dobTime = DateTime.fromISO(dobDate);
-    const diffTimeYears = Math.floor(currTime.diff(dobTime, "years").years);
-    const diffTimeMonths = Math.floor(
-      currTime.diff(dobTime, "months").months % 12
-    );
-    const diffTimeDays = Math.floor(
-      currTime.diff(dobTime, "days").days % 12
-    );
-
-    let dobStr = "";
-    if (diffTimeYears > 1) {
-      dobStr += `${diffTimeYears} years`;
-    } else if (diffTimeYears && diffTimeYears === 1) {
-      dobStr += `${diffTimeYears} year`;
-    }
-    if (diffTimeYears && diffTimeYears) {
-      dobStr += " ";
-    }
-
-    if (diffTimeMonths > 1) {
-      dobStr += `${diffTimeMonths} months`;
-    } else if (diffTimeMonths === 1) {
-      dobStr += `${diffTimeMonths} month`;
-    }
-
-    if (!diffTimeYears && !diffTimeMonths) {
-      if (diffTimeDays > 1) {
-        dobStr += `${diffTimeDays} days`;
-      } else if (diffTimeDays === 1) {
-        dobStr += `${diffTimeDays} day`;
-      }
-    }
-
-    return dobStr;
-  }
-
   const [showBookedCalendar, setShowBookedCalendar] = useState(false);
 
   return (
     <div className="w-full py-2 md:p-4">
       {showBookedCalendar && (
-        <BookedCalendar scheduledEvents={bookedList.scheduledEvents} exitFunc={() => setShowBookedCalendar(false)} />
+        <BookedCalendar
+          scheduledEvents={bookedList.scheduledEvents}
+          exitFunc={() => setShowBookedCalendar(false)}
+        />
       )}
       <div className="flex justify-between">
         <h4 className="my-auto text-xl">Upcoming Appointments</h4>
@@ -225,6 +190,42 @@ function AppointmentPanel(props: IAppointmentPanelProps) {
       </div>
     </div>
   );
+}
+
+export function findAge(dobDate: string): string {
+  const currTime = DateTime.local();
+  const dobTime = DateTime.fromISO(dobDate);
+  const diffTimeYears = Math.floor(currTime.diff(dobTime, "years").years);
+  const diffTimeMonths = Math.floor(
+    currTime.diff(dobTime, "months").months % 12
+  );
+  const diffTimeDays = Math.floor(currTime.diff(dobTime, "days").days % 12);
+
+  let dobStr = "";
+  if (diffTimeYears > 1) {
+    dobStr += `${diffTimeYears} years`;
+  } else if (diffTimeYears && diffTimeYears === 1) {
+    dobStr += `${diffTimeYears} year`;
+  }
+  if (diffTimeYears && diffTimeYears) {
+    dobStr += " ";
+  }
+
+  if (diffTimeMonths > 1) {
+    dobStr += `${diffTimeMonths} months`;
+  } else if (diffTimeMonths === 1) {
+    dobStr += `${diffTimeMonths} month`;
+  }
+
+  if (!diffTimeYears && !diffTimeMonths) {
+    if (diffTimeDays > 1) {
+      dobStr += `${diffTimeDays} days`;
+    } else if (diffTimeDays === 1) {
+      dobStr += `${diffTimeDays} day`;
+    }
+  }
+
+  return dobStr;
 }
 
 export default Dashboard;

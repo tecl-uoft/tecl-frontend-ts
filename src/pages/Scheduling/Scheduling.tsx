@@ -138,6 +138,39 @@ function Scheduling() {
           later!
         </h3>
       )}
+      {!showNoMessage && !currentStudy && (
+        <>
+          <h1 className="mx-auto mt-4 text-4xl font-bold text-gray-800 underline">
+            {" "}
+            Instructions{" "}
+          </h1>
+          <ol className="flex flex-col my-4 space-y-4 text-2xl">
+            <li>
+              <strong>Step 1.</strong> Click on one the colored buttons at the
+              top, depending on the study you want to pick.
+            </li>
+            <li>
+              <strong>Step 2.</strong> Read the age requirements and study
+              description before signing up for the study.{" "}
+            </li>
+            <li>
+              <strong>Step 3.</strong> Scroll or leaf through the interactive
+              calendar and find available spots for the study. The time
+              intervals should have the same color as the button selected in
+              step 1.
+            </li>
+            <li>
+              <strong>Step 4. </strong>Click on the time interval that best
+              suits you needs and fill out the information asked within the
+              form!
+            </li>
+            <li>
+              <strong>Step 5. </strong> Wait for an email with the link to your
+              online meetup!
+            </li>
+          </ol>
+        </>
+      )}
     </div>
   );
 }

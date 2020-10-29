@@ -3,6 +3,8 @@ export default {
   remove,
   updateParticipantInfo,
   listBooked,
+  read,
+  openRemove,
 };
 
 export interface IScheduleEvent {
@@ -19,6 +21,39 @@ export interface ICreateScheduleEventProps {
   end: string;
   meetingLink: string;
   meetingPassword: string;
+}
+
+export interface ICompleteScheduleEvent {
+  title: string;
+  start: string;
+  end: string;
+  color: string;
+  meetingLink: string;
+  meetingPassword: string;
+  participantInfo: {
+    email: string;
+    child: { firstName: string; lastName: string; dob: string };
+    firstName: string;
+    lastName: string;
+  };
+}
+
+async function read(eventId: string): Promise<ICompleteScheduleEvent> {
+  try {
+    const res = await fetch(`/api/v1/schedule-event?eventId=${eventId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (!res.ok) {
+      throw new Error("Response failed");
+    }
+    const resJson = await res.json();
+    return resJson.scheduleEvent;
+  } catch (err) {
+    throw err;
+  }
 }
 
 /* Function to create a schedule event linked with a particular study */
@@ -51,6 +86,23 @@ async function remove(calId: string): Promise<void> {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ scheduleEvent: { calId } }),
+    });
+    if (!res.ok || res.status !== 202) {
+      throw Error("Expected HTTP error status 202, got:" + res.status);
+    }
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function openRemove(calId: string, privateHash: string): Promise<void> {
+  try {
+    const res = await fetch(`/api/v1/schedule-event/open`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ scheduleEvent: { calId, privateHash } }),
     });
     if (!res.ok || res.status !== 202) {
       throw Error("Expected HTTP error status 202, got:" + res.status);
@@ -121,8 +173,8 @@ async function listBooked(studyName: string): Promise<IBookedScheduleEvent[]> {
     if (!res.ok) {
       throw Error("Expected HTTP status 204, got: " + res.status);
     }
-    const resJson = await res.json()
-    console.log(resJson)
+    const resJson = await res.json();
+    console.log(resJson);
     return resJson.scheduleEvents;
   } catch (err) {
     throw err;
