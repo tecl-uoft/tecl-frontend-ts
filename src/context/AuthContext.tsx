@@ -8,7 +8,7 @@ import UserService, {
 import { Props } from "./commonTypes";
 
 interface IAuthContext {
-  login(teclUserLoginInput: TeclUserLoginInput): void;
+  login(teclUserLoginInput: TeclUserLoginInput): Promise<void>;
   googleLogin(): void;
   logout(): void;
   register(user: TeclUserCreateInput): void;
@@ -23,7 +23,8 @@ export function AuthProvider({ children }: Props) {
   };
   const [authState, setAuthState] = useState(defaultAuthState);
 
-  const login = (teclUserLoginInput: TeclUserLoginInput): void => {
+  /* Function to login the user, returns true iff login is successful */
+  async function login(teclUserLoginInput: TeclUserLoginInput): Promise<void> {
     UserService.login(teclUserLoginInput)
       .then((loggedInUser) => {
         const loggedInAuthState = {
@@ -31,14 +32,11 @@ export function AuthProvider({ children }: Props) {
           user: loggedInUser,
         };
         setAuthState(loggedInAuthState);
-
-        return loggedInUser;
       })
       .catch((err) => {
-        alert(`${err}`);
+        alert(err);
       });
-    return;
-  };
+  }
 
   const googleLogin = () => {
     UserService.googleLogin()

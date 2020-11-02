@@ -52,7 +52,7 @@ export interface TeclUserLoginInput {
 /**
  * Logs in a verified tecl user with any role
  */
-async function login(user: TeclUserLoginInput): Promise<UserState> {
+async function login(user: TeclUserLoginInput): Promise<UserState | undefined> {
   try {
     const response = await fetch(`/api/v1/users/login`, {
       method: "POST",
