@@ -10,7 +10,7 @@ import { Props } from "./commonTypes";
 interface IAuthContext {
   login(teclUserLoginInput: TeclUserLoginInput): Promise<void>;
   googleLogin(): void;
-  logout(): void;
+  logout(): Promise<void>;
   register(user: TeclUserCreateInput): void;
   authState: UserAuthState;
 }
@@ -46,7 +46,7 @@ export function AuthProvider({ children }: Props) {
       });
   };
 
-  const logout = () => {
+  async function logout(): Promise<void> {
     UserService.logout()
       .then(() => {
         setAuthState(defaultAuthState);
@@ -54,7 +54,7 @@ export function AuthProvider({ children }: Props) {
       .catch((err) => {
         alert("Could not log out, recived error: " + err);
       });
-  };
+  }
 
   useEffect(() => {
     UserService.fetchAuthUser()

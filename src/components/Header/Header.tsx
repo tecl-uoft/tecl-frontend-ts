@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 function Header() {
@@ -27,7 +27,7 @@ function Header() {
       setSelected("Schedule");
     } else if (location.pathname.endsWith("/dashboard")) {
       setSelected("Dashboard");
-    }  else {
+    } else {
       setSelected("");
     }
   }, [location.pathname, hidden]);
@@ -46,7 +46,6 @@ function Header() {
         <NavPanel
           selected={selected}
           isLoggedIn={auth?.authState.isAuthenticated}
-          logout={auth?.logout}
         />
       </div>
     </header>
@@ -56,9 +55,7 @@ function Header() {
 function MobileNavPanel() {
   return (
     <nav className="block lg:hidden">
-      <button
-        className="flex items-center px-3 py-2 text-gray-500 border border-gray-600 rounded appearance-none hover:text-gray-800 hover:border-teal-500 focus:outline-none"
-      >
+      <button className="flex items-center px-3 py-2 text-gray-500 border border-gray-600 rounded appearance-none hover:text-gray-800 hover:border-teal-500 focus:outline-none">
         <svg
           className="w-3 h-3 fill-current"
           viewBox="0 0 20 20"
@@ -77,7 +74,6 @@ type NavOptions = "Home" | "Login" | "Schedule" | "Dashboard" | "";
 interface INavPanel {
   selected: NavOptions;
   isLoggedIn: boolean | undefined;
-  logout: undefined | (() => void)
 }
 
 interface IPanelOptions {
@@ -86,8 +82,9 @@ interface IPanelOptions {
 }
 
 function NavPanel(props: INavPanel) {
-  const { selected, isLoggedIn, logout } = props;
+  const { selected, isLoggedIn } = props;
   const auth = useAuth();
+  const history = useHistory();
 
   const panelOptions: IPanelOptions[] = [
     {
@@ -103,13 +100,22 @@ function NavPanel(props: INavPanel) {
       text: "Login",
     },
   ];
-  
+
   if (auth?.authState.isAuthenticated) {
     panelOptions.push({
       link: "/dashboard",
-      text: "Dashboard"
-    })
+      text: "Dashboard",
+    });
   }
+
+  /* exit to home after logging out */
+  const logoutHandler = () => {
+    if (auth?.authState.isAuthenticated) {
+      auth.logout().then(() => {
+        history.push("/");
+      });
+    }
+  };
 
   return (
     <nav className="hidden lg:block">
@@ -121,7 +127,7 @@ function NavPanel(props: INavPanel) {
                 option.text === selected ? " text-orange-500" : ""
               }`}
               key={idx}
-              onClick={ () => logout ? logout() : null }
+              onClick={logoutHandler}
             >
               <li>Logout</li>
             </button>

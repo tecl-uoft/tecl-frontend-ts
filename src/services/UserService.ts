@@ -80,7 +80,9 @@ async function googleLogin() {
 }
 
 async function logout() {
-  await fetch(`/api/v1/users/logout`);
+  await fetch(`/api/v1/user/logout`, {
+    method: "POST"
+  });
 }
 
 async function fetchAuthUser() {
