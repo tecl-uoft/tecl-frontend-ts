@@ -61,8 +61,8 @@ async function login(user: TeclUserLoginInput): Promise<UserState> {
       },
       body: JSON.stringify({ user }),
     });
-    const loggedInUser = await response.json();
-    return loggedInUser;
+    const resJson = await response.json();
+    return resJson.user as UserState;
   } catch (err) {
     throw err;
   }
@@ -91,6 +91,7 @@ async function fetchAuthUser() {
     return null;
   } else {
     const user = await res.json();
+    console.log("fetching auth urer", user);
     return user;
   }
 }

@@ -23,20 +23,22 @@ export function AuthProvider({ children }: Props) {
   };
   const [authState, setAuthState] = useState(defaultAuthState);
 
-  function login(teclUserLoginInput: TeclUserLoginInput) {
+  const login = (teclUserLoginInput: TeclUserLoginInput): void => {
     UserService.login(teclUserLoginInput)
       .then((loggedInUser) => {
         const loggedInAuthState = {
           isAuthenticated: true,
           user: loggedInUser,
         };
-        console.log("onlogin", loggedInUser);
         setAuthState(loggedInAuthState);
+
+        return loggedInUser;
       })
       .catch((err) => {
         alert(`${err}`);
       });
-  }
+    return;
+  };
 
   const googleLogin = () => {
     UserService.googleLogin()
@@ -46,7 +48,7 @@ export function AuthProvider({ children }: Props) {
       });
   };
 
-  function logout() {
+  const logout = () => {
     UserService.logout()
       .then(() => {
         setAuthState(defaultAuthState);
@@ -54,7 +56,7 @@ export function AuthProvider({ children }: Props) {
       .catch((err) => {
         alert("Could not log out, recived error: " + err);
       });
-  }
+  };
 
   useEffect(() => {
     UserService.fetchAuthUser()

@@ -23,7 +23,6 @@ function Dashboard() {
   useEffect(() => {
     StudyService.list(true)
       .then((studyList) => {
-        console.log(studyList, "dash");
         setUserStudyList(studyList);
       })
       .catch((err) => {
@@ -34,8 +33,8 @@ function Dashboard() {
   return (
     <div className="container flex flex-col px-8 pt-4 mx-auto">
       <h1 className="mx-auto text-3xl font-bold">
-        {authCtx?.authState &&
-          authCtx.authState.user?.firstName &&
+        {authCtx?.authState.user &&
+          authCtx.authState.user.firstName &&
           authCtx.authState.isAuthenticated &&
           `Hello ${authCtx.authState.user.firstName}!`}
       </h1>
@@ -115,7 +114,6 @@ function AppointmentPanel(props: IAppointmentPanelProps) {
     if (study.studyName) {
       ScheduleEventService.listBooked(study.studyName)
         .then((scheduledEvents) => {
-          console.log(scheduledEvents);
           setBookedList({ isLoaded: true, scheduledEvents });
         })
         .catch((err) => alert(err));
