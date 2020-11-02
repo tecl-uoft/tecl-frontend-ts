@@ -174,7 +174,6 @@ async function listBooked(studyName: string): Promise<IBookedScheduleEvent[]> {
       throw Error("Expected HTTP status 204, got: " + res.status);
     }
     const resJson = await res.json();
-    console.log(resJson);
     return resJson.scheduleEvents;
   } catch (err) {
     throw err;

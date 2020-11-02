@@ -48,7 +48,6 @@ async function create(study: ICreateStudyProps): Promise<IStudy> {
     }
     /* Return the response typecasted as Study */
     const resJson: any = response.json();
-    console.log(resJson);
     return resJson.study as IStudy;
   } catch (err) {
     throw err;

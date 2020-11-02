@@ -90,9 +90,8 @@ async function fetchAuthUser() {
   if (!res.ok) {
     return null;
   } else {
-    const user = await res.json();
-    console.log("fetching auth urer", user);
-    return user;
+    const resJson = await res.json();
+    return resJson.user;
   }
 }
 
