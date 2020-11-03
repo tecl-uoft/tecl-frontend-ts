@@ -8,9 +8,9 @@ import UserService, {
 import { Props } from "./commonTypes";
 
 interface IAuthContext {
-  login(teclUserLoginInput: TeclUserLoginInput): void;
+  login(teclUserLoginInput: TeclUserLoginInput): Promise<void>;
   googleLogin(): void;
-  logout(): void;
+  logout(): Promise<void>;
   register(user: TeclUserCreateInput): void;
   authState: UserAuthState;
 }
@@ -23,18 +23,18 @@ export function AuthProvider({ children }: Props) {
   };
   const [authState, setAuthState] = useState(defaultAuthState);
 
-  function login(teclUserLoginInput: TeclUserLoginInput) {
+  /* Function to login the user, returns true iff login is successful */
+  async function login(teclUserLoginInput: TeclUserLoginInput): Promise<void> {
     UserService.login(teclUserLoginInput)
       .then((loggedInUser) => {
         const loggedInAuthState = {
           isAuthenticated: true,
           user: loggedInUser,
         };
-        console.log("onlogin", loggedInUser);
         setAuthState(loggedInAuthState);
       })
       .catch((err) => {
-        alert(`${err}`);
+        alert(err);
       });
   }
 
@@ -46,7 +46,7 @@ export function AuthProvider({ children }: Props) {
       });
   };
 
-  function logout() {
+  async function logout(): Promise<void> {
     UserService.logout()
       .then(() => {
         setAuthState(defaultAuthState);

@@ -52,7 +52,7 @@ export interface TeclUserLoginInput {
 /**
  * Logs in a verified tecl user with any role
  */
-async function login(user: TeclUserLoginInput): Promise<UserState> {
+async function login(user: TeclUserLoginInput): Promise<UserState | undefined> {
   try {
     const response = await fetch(`/api/v1/users/login`, {
       method: "POST",
@@ -61,8 +61,8 @@ async function login(user: TeclUserLoginInput): Promise<UserState> {
       },
       body: JSON.stringify({ user }),
     });
-    const loggedInUser = await response.json();
-    return loggedInUser;
+    const resJson = await response.json();
+    return resJson.user as UserState;
   } catch (err) {
     throw err;
   }
@@ -80,7 +80,9 @@ async function googleLogin() {
 }
 
 async function logout() {
-  await fetch(`/api/v1/users/logout`);
+  await fetch(`/api/v1/user/logout`, {
+    method: "POST"
+  });
 }
 
 async function fetchAuthUser() {
@@ -90,8 +92,8 @@ async function fetchAuthUser() {
   if (!res.ok) {
     return null;
   } else {
-    const user = await res.json();
-    return user;
+    const resJson = await res.json();
+    return resJson.user;
   }
 }
 

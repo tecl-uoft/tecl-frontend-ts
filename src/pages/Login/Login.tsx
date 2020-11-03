@@ -1,76 +1,73 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 function Login() {
   const history = useHistory();
   const auth = useAuth();
+  const [emailInput, setEmailInput] = useState<string>("");
+  const [passwordInput, setPasswordInput] = useState<string>("");
+
   const handleLogin = async () => {
-    const email = document.querySelector<HTMLInputElement>("#email")?.value;
-    const password = document.querySelector<HTMLInputElement>("#password")
-      ?.value;
-    if (!email || !password) {
-      alert("You have not entered your username or password");
-    } else {
-      const user = {
-        email,
-        password,
-      };
-      try {
-        const acceptedUser = auth?.login(user);
-        console.log(acceptedUser)
+    const user = {
+      email: emailInput,
+      password: passwordInput,
+    };
+    if (auth) {
+      auth.login(user).then(() => {
         history.push("/");
-      } catch (err) {
-        console.log(err)
-      }
-      
+      });
     }
   };
   return (
-    <div className="mx-auto pt-16 w-full max-w-md px-4">
-      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <div className="w-full max-w-md px-4 pt-16 mx-auto">
+      <form className="px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md">
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
+          <label className="block mb-2 text-sm font-bold text-gray-700">
             Email
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
             id="email"
+            value={emailInput}
+            onChange={(e) => setEmailInput(e.currentTarget.value)}
             type="email"
-            placeholder="Email"
+            placeholder="jane.doe@teclmail.com"
           />
         </div>
         <div className="mb-6">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
+          <label className="block mb-2 text-sm font-bold text-gray-700">
             Password
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            className="w-full px-3 py-2 mb-3 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
             id="password"
             type="password"
+            value={passwordInput}
+            onChange={(e) => setPasswordInput(e.currentTarget.value)}
             placeholder="****************"
           />
         </div>
         <div className="flex items-center justify-between">
           <button
-            className="bg-gray-800 hover:text-orange-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="px-4 py-2 font-bold text-white bg-gray-800 rounded hover:text-orange-500 focus:outline-none focus:shadow-outline"
             type="button"
             onClick={handleLogin}
           >
             Sign In
           </button>
-          <button className="inline-block cursor-pointer align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
+          <button className="inline-block text-sm font-bold text-blue-500 align-baseline cursor-pointer hover:text-blue-800">
             <Link to="/forgot-password">Forgot Password?</Link>
           </button>
         </div>
       </form>
 
-      <label className="block text-gray-700 text-sm font-bold mb-2">
+      <label className="block mb-2 text-sm font-bold text-gray-700">
         Don't have an account?
       </label>
       <Link to="/signup">
         <button
-          className="w-full bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="w-full px-4 py-2 font-bold text-white bg-orange-500 rounded hover:bg-orange-700 focus:outline-none focus:shadow-outline"
           type="button"
         >
           Signup
