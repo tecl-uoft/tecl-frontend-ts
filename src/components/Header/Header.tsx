@@ -91,20 +91,29 @@ function NavPanel(props: INavPanel) {
       link: "/",
       text: "Home",
     },
-    {
+    /* {
       link: "/scheduling",
       text: "Schedule",
     },
     {
       link: "/login",
       text: "Login",
-    },
+    }, */
   ];
 
   if (auth?.authState.isAuthenticated) {
     panelOptions.push({
       link: "/dashboard",
       text: "Dashboard",
+    });
+    /* Added as hidden feature */
+    panelOptions.push({
+      link: "/scheduling",
+      text: "Schedule",
+    });
+    panelOptions.push({
+      link: "/login",
+      text: "Login",
     });
   }
 
