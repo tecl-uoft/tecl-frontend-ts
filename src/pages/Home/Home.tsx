@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import "./home.css";
 import StudyDesc from "../../components/StudyDesc";
 import studyInfo from "./studyInfo.json";
@@ -16,8 +15,8 @@ function Home() {
 function FeatureBlock() {
   const currentStudies = studyInfo.currentStudies;
   return (
-    <section className="container mx-auto pb-24 px-10 pt-6">
-      <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
+    <section className="container px-10 pt-6 pb-24 mx-auto">
+      <h2 className="mb-6 text-3xl font-bold text-center text-gray-800">
         Current Online Studies
       </h2>
       <div className="flex flex-col sm:flex-row">
@@ -42,20 +41,20 @@ function FeatureBlock() {
 function HeroBlock() {
   return (
     <div id="hero-block" className="py-16">
-      <div className="container mx-auto px-6 text-gray-800">
-        <h2 className="text-3xl font-bold mb-2">
+      <div className="container px-6 mx-auto text-gray-800">
+        <h2 className="mb-2 text-3xl font-bold">
           Join us for our online studies!
         </h2>
-        <h3 className="text-xl mb-4">
+        <h3 className="mb-4 text-xl">
           Help our team investigate social, cognitive, and moral development in
           infants and young children.
         </h3>
        
-        <Link to="/signup">
-          <button className="bg-orange-500 focus:outline-none hover:bg-orange-700 font-bold text-white rounded py-3 px-6 shadow-lg tracking-wider">
+        {/* <Link to="/signup">
+          <button className="px-6 py-3 font-bold tracking-wider text-white bg-orange-500 rounded shadow-lg focus:outline-none hover:bg-orange-700">
             Sign Up
           </button>
-        </Link>
+        </Link> */}
       </div>
     </div>
   );
