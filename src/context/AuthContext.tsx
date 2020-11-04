@@ -11,7 +11,7 @@ interface IAuthContext {
   login(teclUserLoginInput: TeclUserLoginInput): Promise<void>;
   googleLogin(): void;
   logout(): Promise<void>;
-  register(user: TeclUserCreateInput): void;
+  register(user: TeclUserCreateInput): Promise<void>;
   authState: UserAuthState;
 }
 export const AuthContext = createContext<IAuthContext | undefined>(undefined);
@@ -22,6 +22,19 @@ export function AuthProvider({ children }: Props) {
     user: undefined,
   };
   const [authState, setAuthState] = useState(defaultAuthState);
+
+  async function register(user: TeclUserCreateInput): Promise<void> {
+    UserService.signup(user)
+      .then((res) => {
+        if (!res) {
+          return Promise.reject("Signup failed");
+        }
+        alert("Signup Successful!");
+      })
+      .catch(() => {
+        alert("Unfortunately, your signup has failed. Please try again.");
+      });
+  }
 
   /* Function to login the user, returns true iff login is successful */
   async function login(teclUserLoginInput: TeclUserLoginInput): Promise<void> {
@@ -67,10 +80,6 @@ export function AuthProvider({ children }: Props) {
         alert(`Could not check session, recived err: ${err}`);
       });
   }, []);
-
-  const register = (user: TeclUserCreateInput) => {
-    UserService.signup(user);
-  };
 
   const contextValue = {
     authState,
