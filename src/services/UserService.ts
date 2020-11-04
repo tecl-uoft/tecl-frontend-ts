@@ -25,22 +25,19 @@ export interface UserState {
 /**
  * Create an unverified tecl user with a participant role
  */
-async function signup(
-  user: TeclUserCreateInput
-): Promise<UserAuthState | undefined> {
-  const response = await fetch(`/api/v1/users/signup`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ user }),
-  });
+async function signup(user: TeclUserCreateInput): Promise<boolean> {
+  try {
+    const res = await fetch(`/api/v1/user/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ user }),
+    });
 
-  if (response.ok) {
-    const user = await response.json();
-    return user;
-  } else {
-    alert(`sign up at ${response}`);
+    return res.ok;
+  } catch (err) {
+    return err;
   }
 }
 
@@ -81,7 +78,7 @@ async function googleLogin() {
 
 async function logout() {
   await fetch(`/api/v1/user/logout`, {
-    method: "POST"
+    method: "POST",
   });
 }
 

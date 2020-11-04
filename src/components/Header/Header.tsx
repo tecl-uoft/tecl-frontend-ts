@@ -100,13 +100,7 @@ function NavPanel(props: INavPanel) {
       text: "Login",
     }, */
   ];
-
-  if (auth?.authState.isAuthenticated) {
-    panelOptions.push({
-      link: "/dashboard",
-      text: "Dashboard",
-    });
-    /* Added as hidden feature */
+  if (process.env.NODE_ENV === "development") {
     panelOptions.push({
       link: "/scheduling",
       text: "Schedule",
@@ -115,6 +109,24 @@ function NavPanel(props: INavPanel) {
       link: "/login",
       text: "Login",
     });
+  }
+
+  if (auth?.authState.isAuthenticated) {
+    panelOptions.push({
+      link: "/dashboard",
+      text: "Dashboard",
+    });
+    /* Added as hidden feature */
+    if (process.env.NODE_ENV !== "development") {
+      panelOptions.push({
+        link: "/scheduling",
+        text: "Schedule",
+      });
+      panelOptions.push({
+        link: "/login",
+        text: "Login",
+      });
+    }
   }
 
   /* exit to home after logging out */
