@@ -73,6 +73,13 @@ function Login() {
           Signup
         </button>
       </Link>
+
+      <label className="block mb-2 text-sm font-bold text-gray-700">
+        Please read our privacy policy{" "}
+        <Link className="text-blue-600 underline" to="/privacy-policy">
+          here
+        </Link>
+      </label>
     </div>
   );
 }
