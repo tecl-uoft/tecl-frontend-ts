@@ -1,5 +1,6 @@
 import React from "react";
 import StudyService from "../../services/StudyService";
+import { HeadExitButton } from "../HeadExitButton";
 
 interface IAddStudyFormProps {
   windowClose(): void;
@@ -56,20 +57,36 @@ function AddStudyForm(props: IAddStudyFormProps) {
   }
 
   return (
-    <div>
+    <div className="">
+      <div className="flex justify-end -mb-10">
+        <HeadExitButton onClick={props.windowClose} />
+      </div>
       <h1 className="mb-4 text-3xl"> Create New Study </h1>
       <form className="max-w-lg">
-        <div className="flex flex-wrap mb-2 -mx-3">
-          <div className="w-full px-3">
+        <div className="flex mb-2 -mx-3">
+          <div className="flex w-5/6">
+            <div className="w-full px-1 mb-6 md:mb-0">
+              <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase">
+                {" "}
+                Study Name
+              </label>
+              <input
+                id="study-name"
+                className="block w-full p-2 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
+                type="text"
+                placeholder="Give a name to your study..."
+              />
+            </div>
+          </div>
+          <div className="w-1/6 h-full px-1 mb-6 md:mb-0">
             <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase">
-              {" "}
-              Study Name
+              Color
             </label>
             <input
-              id="study-name"
-              className="block w-2/3 p-2 mx-auto mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-              type="text"
-              placeholder="Give a name to your study..."
+              id="key-color"
+              className="block w-full h-10 px-2 py-1 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded-lg appearance-none cursor-pointer select-none focus:outline-none focus:bg-white"
+              type="color"
+              defaultValue="#ed8936"
             />
           </div>
         </div>
@@ -85,6 +102,20 @@ function AddStudyForm(props: IAddStudyFormProps) {
               rows={3}
               className="w-full p-2 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none resize-y focus:outline-none focus:bg-white focus:border-gray-500"
             ></textarea>
+          </div>
+        </div>
+        <div className="flex flex-wrap mb-2 -mx-3">
+          <div className="w-full px-3">
+            <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase">
+              {" "}
+              Consent Form Link
+            </label>
+            <input
+              id="study-name"
+              className="block w-full p-2 mx-auto mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
+              type="text"
+              placeholder="https://teclonline.ca/some_consent_form_to_go_to"
+            />
           </div>
         </div>
         <h2 className="block mb-2 text-xl font-bold text-gray-700">
@@ -129,20 +160,8 @@ function AddStudyForm(props: IAddStudyFormProps) {
             ></input>
           </div>
         </div>
-        <div className="flex flex-wrap mb-2 -mx-3">
-          <div className="w-full px-3 mb-6 md:mb-0">
-            <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase">
-              Key Color
-            </label>
-            <input
-              id="key-color"
-              className="block w-full mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:outline-none focus:bg-white"
-              type="color"
-              defaultValue="#ed8936"
-            />
-          </div>
-        </div>
-        <div className="w-32 px-3 mx-auto">
+
+        <div className="w-32 px-3 mx-auto ">
           <input
             className="px-4 py-2 font-bold text-white bg-gray-800 rounded cursor-pointer hover:text-orange-500"
             type="button"
