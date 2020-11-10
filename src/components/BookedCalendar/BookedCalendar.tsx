@@ -4,6 +4,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import React, { useState } from "react";
 import { IBookedScheduleEvent } from "../../services/ScheduleEventService";
 import { EventInfoModal } from "../EventInfoModal";
+import { HeadExitButton } from "../HeadExitButton";
 
 interface IBookedCalendarProps {
   exitFunc(): void;
@@ -12,16 +13,18 @@ interface IBookedCalendarProps {
 function BookedCalendar(props: IBookedCalendarProps) {
   const { exitFunc, scheduledEvents } = props;
   const [showEventDetails, setShowEventDetails] = useState(false);
-  const [eventId, setEventId] = useState<string>("")
+  const [eventId, setEventId] = useState<string>("");
 
   function infoClickEvent(arg: EventClickArg) {
-    setEventId(arg.event.id)
+    setEventId(arg.event.id);
     setShowEventDetails(true);
   }
 
   return (
     <div className="fixed inset-0 z-10 overflow-y-auto">
-      {showEventDetails && <EventInfoModal eventId={eventId} setShowModal={setShowEventDetails} />}
+      {showEventDetails && (
+        <EventInfoModal eventId={eventId} setShowModal={setShowEventDetails} />
+      )}
       <div className="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
         <div
           className="fixed inset-0 transition-opacity cursor-pointer"
@@ -39,14 +42,29 @@ function BookedCalendar(props: IBookedCalendarProps) {
           aria-labelledby="modal-headline"
         >
           <div className="pb-2">
-            <h2 className="mr-8 text-3xl font-bold underline">Study Bookings</h2>
+            <div className="flex justify-end -mb-8">
+              <HeadExitButton onClick={() => setShowEventDetails(false)} />
+            </div>
+            <h2 className="mr-8 text-3xl font-bold underline">
+              Study Bookings
+            </h2>
             <FullCalendar
               headerToolbar={{
                 left: "today",
                 center: "title",
                 right: "prev next",
               }}
-              events={scheduledEvents}
+              events={[
+                ...scheduledEvents,
+                {
+                  groupId: "testGroupId",
+                  start: Date.now(),
+                  end: Date.now(),
+                  display: "inverse-background",
+                  color: "#cbd5e0",
+                  allDay: true,
+                },
+              ]}
               selectable
               allDaySlot={false}
               eventClick={infoClickEvent}
