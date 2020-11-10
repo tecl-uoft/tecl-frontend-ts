@@ -106,11 +106,14 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                 <h3 className="mx-auto mt-1 font-medium text-center text-gray-900 px-auto">
                   Add Time Availability
                 </h3>
-                <h4 className="pt-2 mx-auto text-lg text-center">
+                <h4 className="py-2 mx-auto text-center">
                   {selectInfo && (
                     <>
-                      {DateTime.fromISO(selectInfo.startStr).toFormat("ff")} to{" "}
-                      {DateTime.fromISO(selectInfo.endStr).toFormat("t ZZZZ")}
+                      <p className="my-1 text-2xl">
+                      {DateTime.fromISO(selectInfo.startStr).toFormat("DDDD")} </p>
+                      <p className="text-xl">{DateTime.fromISO(selectInfo.startStr).toFormat("t ZZZZ")}
+                      {" "}to{" "}
+                      {DateTime.fromISO(selectInfo.endStr).toFormat("t ZZZZ")}</p>
                     </>
                   )}
                 </h4>
