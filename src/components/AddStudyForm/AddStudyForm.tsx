@@ -58,9 +58,9 @@ function AddStudyForm(props: IAddStudyFormProps) {
 
   return (
     <div className="">
-      {/* <div className="flex justify-end -mb-10">
+      <div className="flex justify-end -mb-10">
         <HeadExitButton onClick={props.windowClose} />
-      </div> */}
+      </div>
       <h1 className="mb-4 text-3xl"> Create New Study </h1>
       <form className="max-w-lg">
         <div className="flex mb-2 -mx-3">
@@ -139,23 +139,35 @@ function AddStudyForm(props: IAddStudyFormProps) {
           Select Study Time Frame
         </h2>
         <div className="flex flex-wrap mb-2 -mx-3">
-          <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+          <div className="w-full px-1 md:w-1/3">
+            <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase">
+              Default Interval
+            </label>
+            <div className="flex align-bottom">
+              <input
+                className="block w-2/3 px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:outline-none focus:bg-white focus:border-gray-500"
+                type="number"
+                defaultValue="30"
+              />{" "} <p className="mx-2 mt-5 text-xl">min.</p>
+            </div>
+          </div>
+          <div className="w-full px-1 mb-6 md:w-1/3 md:mb-0">
             <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase">
               Start Date
             </label>
             <input
               id="start-date"
-              className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:outline-none focus:bg-white"
+              className="block w-full px-2 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:outline-none focus:bg-white"
               type="date"
             />
           </div>
-          <div className="w-full px-3 md:w-1/2">
+          <div className="w-full px-1 md:w-1/3">
             <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase">
               End Date
             </label>
             <input
               id="end-date"
-              className="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:outline-none focus:bg-white focus:border-gray-500"
+              className="block w-full px-2 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:outline-none focus:bg-white focus:border-gray-500"
               type="date"
             ></input>
           </div>
