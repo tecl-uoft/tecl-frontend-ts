@@ -58,9 +58,9 @@ function AddStudyForm(props: IAddStudyFormProps) {
 
   return (
     <div className="">
-      <div className="flex justify-end -mb-10">
+      {/* <div className="flex justify-end -mb-10">
         <HeadExitButton onClick={props.windowClose} />
-      </div>
+      </div> */}
       <h1 className="mb-4 text-3xl"> Create New Study </h1>
       <form className="max-w-lg">
         <div className="flex mb-2 -mx-3">

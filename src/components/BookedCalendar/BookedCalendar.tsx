@@ -43,7 +43,7 @@ function BookedCalendar(props: IBookedCalendarProps) {
         >
           <div className="pb-2">
             <div className="flex justify-end -mb-8">
-              <HeadExitButton onClick={() => setShowEventDetails(false)} />
+              <HeadExitButton onClick={() => exitFunc()} />
             </div>
             <h2 className="mr-8 text-3xl font-bold underline">
               Study Bookings
