@@ -16,8 +16,8 @@ type Bar = {
 };
 
 type Action =
-  | { type: "showVideo" }
-  | { type: "setupTraining"; progress: 0 | 1 | 2; version: "A" | "B" };
+  | { type: "showVideo"; url?: string }
+  | { type: "setupTraining"; progress: 0 | 1 | 2 | 3; version: "A" | "B" };
 
 const initialState: State = {
   leftBar: { color: "orange", isHidden: true },
@@ -28,13 +28,20 @@ const initialState: State = {
 function reducer(state: State, action: Action): State {
   switch (action.type) {
     case "showVideo":
-      return {
-        leftBar: { ...state.leftBar, isHidden: true },
-        rightBar: { ...state.rightBar, isHidden: true },
-        video: { ...state.video, isHidden: false },
-      };
+      if (action.url) {
+        return {
+          ...state,
+          video: { url: action.url, isHidden: false },
+        };
+      } else {
+        return {
+          ...state,
+          video: { ...state.video, isHidden: false },
+        };
+      }
+
     case "setupTraining":
-      if (action.progress === 1 || action.progress === 2 ) {
+      if (action.progress === 1 || action.progress === 2) {
         let url = "";
         /* Alternate the video displayed based on the setup */
         if (
@@ -56,6 +63,21 @@ function reducer(state: State, action: Action): State {
           },
           video: {
             url,
+            isHidden: true,
+          },
+        };
+      } else if (action.progress === 3) {
+        return {
+          leftBar: {
+            color: action.version === "A" ? "orange" : "green",
+            isHidden: false,
+          },
+          rightBar: {
+            color: action.version === "A" ? "green" : "orange",
+            isHidden: false,
+          },
+          video: {
+            url: "",
             isHidden: true,
           },
         };

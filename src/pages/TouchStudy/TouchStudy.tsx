@@ -1,15 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useElementsReducer } from "./ElementReducer";
 import "./touchStudy.css";
+import { VideoLinks } from "./videoLinks.json";
 
 function TouchStudy() {
   const touchStudyRef = useRef<HTMLDivElement>(null);
   const [touchArr, setTouchArr] = useState<any | undefined>(undefined);
   const [currentVersion, setCurrentVersion] = useState<"A" | "B">("A");
+  const [currentProgress, setCurrentProgress] = useState<0 | 1 | 2 | 3>(0);
   const { elementState, elementDispatch } = useElementsReducer();
 
   useEffect(() => {
     setCurrentVersion("B");
+    setCurrentProgress(1);
     elementDispatch({
       type: "setupTraining",
       progress: 1,
@@ -31,9 +34,19 @@ function TouchStudy() {
     >
       <div
         onTouchEnd={(e) => {
-          elementDispatch({
-            type: "showVideo",
-          });
+          if (currentProgress === 3) {
+            elementDispatch({
+              type: "showVideo",
+              url:
+                currentVersion === "A"
+                  ? VideoLinks.HayleeRewardLeft
+                  : VideoLinks.HayleePunishRight,
+            });
+          } else {
+            elementDispatch({
+              type: "showVideo",
+            });
+          }
         }}
         id="left-screen"
         className={`flex w-full h-full bg-${elementState.leftBar.color}-600 ${
@@ -53,11 +66,23 @@ function TouchStudy() {
       >
         <video
           onEnded={(e) => {
-            elementDispatch({
-              type: "setupTraining",
-              progress: 2,
-              version: currentVersion,
-            });
+            if (currentProgress === 1 || currentProgress === 0) {
+              elementDispatch({
+                type: "setupTraining",
+                progress: 2,
+                version: currentVersion,
+              });
+            }
+            setCurrentProgress(2);
+            if (currentProgress === 2) {
+              elementDispatch({
+                type: "setupTraining",
+                progress: 3,
+                version: currentVersion,
+              });
+              setCurrentProgress(3);
+              console.log(currentProgress);
+            }
           }}
           key={elementState.video.url}
           controls
@@ -69,9 +94,19 @@ function TouchStudy() {
       </div>
       <div
         onTouchEnd={(e) => {
-          elementDispatch({
-            type: "showVideo",
-          });
+          if (currentProgress === 3) {
+            elementDispatch({
+              type: "showVideo",
+              url:
+                currentVersion === "A"
+                  ? VideoLinks.HayleePunishRight
+                  : VideoLinks.HayleeRewardLeft,
+            });
+          } else {
+            elementDispatch({
+              type: "showVideo",
+            });
+          }
         }}
         id="right-screen"
         className={`flex w-full h-full bg-${elementState.rightBar.color}-600 ${
