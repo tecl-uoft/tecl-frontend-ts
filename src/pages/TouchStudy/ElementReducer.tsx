@@ -34,7 +34,7 @@ function reducer(state: State, action: Action): State {
         video: { ...state.video, isHidden: false },
       };
     case "setupTraining":
-      if (action.progress >= 1) {
+      if (action.progress === 1 || action.progress === 2 ) {
         let url = "";
         /* Alternate the video displayed based on the setup */
         if (

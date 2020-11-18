@@ -9,13 +9,13 @@ function TouchStudy() {
   const { elementState, elementDispatch } = useElementsReducer();
 
   useEffect(() => {
+    setCurrentVersion("B");
     elementDispatch({
       type: "setupTraining",
       progress: 1,
       version: currentVersion,
     });
-    setCurrentVersion("A")
-  }, [elementDispatch, elementState.video.url]);
+  }, [elementDispatch, currentVersion]);
 
   useEffect(() => {
     console.log(elementState);
