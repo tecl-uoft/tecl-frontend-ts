@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import {VideoLinks} from "./videoLinks.json";
 
 function TouchStudy() {
   const touchStudyRef = useRef<HTMLDivElement>(null);
@@ -7,7 +8,7 @@ function TouchStudy() {
 
   useEffect(() => {
     setVideoURL(
-      "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/touchexp/TouchF2_4UnfairSnacksA_Current.mov"
+      VideoLinks.AlexPunishLeft
     );
   }, []);
 
