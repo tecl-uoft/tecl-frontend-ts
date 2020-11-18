@@ -17,7 +17,8 @@ type Bar = {
 
 type Action =
   | { type: "showVideo"; url?: string }
-  | { type: "setupTraining"; progress: 0 | 1 | 2 | 3; version: "A" | "B" };
+  | { type: "setupTraining"; progress: 0 | 1 | 2 | 3; version: "A" | "B" }
+  | { type: "setupExpOne"; progress: 0 | 1 | 2 | 3 };
 
 const initialState: State = {
   leftBar: { color: "orange", isHidden: true },
@@ -87,6 +88,8 @@ function reducer(state: State, action: Action): State {
           video: { url: VideoLinks.UnfairToysA, isHidden: false },
         };
       }
+    case "setupExpOne":
+      return {...state}
   }
 }
 

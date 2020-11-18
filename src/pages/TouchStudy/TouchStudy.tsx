@@ -9,20 +9,25 @@ function TouchStudy() {
   const [currentVersion, setCurrentVersion] = useState<"A" | "B">("A");
   const [currentProgress, setCurrentProgress] = useState<0 | 1 | 2 | 3>(0);
   const { elementState, elementDispatch } = useElementsReducer();
+  const [finalTouches, setFinalTouches] = useState(0);
 
   useEffect(() => {
-    setCurrentVersion("B");
-    setCurrentProgress(1);
-    elementDispatch({
-      type: "setupTraining",
-      progress: 1,
-      version: currentVersion,
-    });
+    if (finalTouches === 0) {
+      setCurrentVersion("B");
+      setCurrentProgress(1);
+      elementDispatch({
+        type: "setupTraining",
+        progress: 1,
+        version: currentVersion,
+      });
+    }
   }, [elementDispatch, currentVersion]);
 
   useEffect(() => {
-    console.log(elementState);
-  }, [elementState]);
+    if (finalTouches === 2) {
+      console.log("aaaax");
+    }
+  }, [finalTouches]);
 
   return (
     <div
@@ -39,9 +44,10 @@ function TouchStudy() {
               type: "showVideo",
               url:
                 currentVersion === "A"
-                  ? VideoLinks.HayleeRewardLeft
-                  : VideoLinks.HayleePunishRight,
+                  ? VideoLinks.HayleePunishRight
+                  : VideoLinks.HayleeRewardLeft,
             });
+            setFinalTouches(finalTouches + 1);
           } else {
             elementDispatch({
               type: "showVideo",
@@ -67,13 +73,15 @@ function TouchStudy() {
         <video
           onEnded={(e) => {
             if (currentProgress === 1 || currentProgress === 0) {
+              console.log(currentVersion);
               elementDispatch({
                 type: "setupTraining",
                 progress: 2,
                 version: currentVersion,
               });
+              setCurrentProgress(2);
             }
-            setCurrentProgress(2);
+
             if (currentProgress === 2) {
               elementDispatch({
                 type: "setupTraining",
@@ -82,6 +90,25 @@ function TouchStudy() {
               });
               setCurrentProgress(3);
               console.log(currentProgress);
+            }
+
+            if (finalTouches === 2 && currentProgress === 3) {
+              elementDispatch({
+                type: "setupTraining",
+                progress: 1,
+                version: "A",
+              });
+              setCurrentProgress(1);
+              setCurrentVersion("A");
+            }
+
+            if (finalTouches === 4 && currentProgress === 3) {
+              /* setCurrentProgress(1)
+              elementDispatch({
+                type: "setupExp",
+                progress: 1,
+                version: currentVersion === "A" ? "B" : "A",
+              }); */
             }
           }}
           key={elementState.video.url}
@@ -99,9 +126,10 @@ function TouchStudy() {
               type: "showVideo",
               url:
                 currentVersion === "A"
-                  ? VideoLinks.HayleePunishRight
-                  : VideoLinks.HayleeRewardLeft,
+                  ? VideoLinks.HayleeRewardLeft
+                  : VideoLinks.HayleePunishRight,
             });
+            setFinalTouches(finalTouches + 1);
           } else {
             elementDispatch({
               type: "showVideo",
