@@ -1,15 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
-import {VideoLinks} from "./videoLinks.json";
+import { useElementsReducer } from "./ElementReducer";
+import { VideoLinks } from "./videoLinks.json";
 
 function TouchStudy() {
   const touchStudyRef = useRef<HTMLDivElement>(null);
   const [videoURL, setVideoURL] = useState<string>("");
   const [touchArr, setTouchArr] = useState<any | undefined>(undefined);
+  const [hiddenElements, setHiddenElements] = useState<{
+    right: boolean;
+    left: boolean;
+    video: boolean;
+  }>({ right: true, left: true, video: true });
+  const [taskOrder, setTaskOrder] = useState({});
+  const [elementState, ElementDispatch] = useElementsReducer();
 
   useEffect(() => {
-    setVideoURL(
-      VideoLinks.AlexPunishLeft
-    );
+    setVideoURL(VideoLinks.AlexPunishLeft);
   }, []);
 
   return (
@@ -18,22 +24,28 @@ function TouchStudy() {
       onTouchStart={handleTouchStart(touchArr, setTouchArr)}
       onTouchEnd={handleTouchStart(touchArr, setTouchArr)}
       id="touch-study"
-      className="flex w-screen h-screen bg-gray-100"
+      className="flex w-screen h-screen bg-gray-200"
     >
       <div
         onTouchEnd={(e) => {}}
         id="left-screen"
-        className="flex flex-col w-3/12 h-full bg-orange-600"
+        className={`flex flex-col w-3/12 h-full bg-orange-600 ${
+          hiddenElements.left ? "hidden" : ""
+        }`}
       >
         <div
           id="left-btn"
           className="justify-center w-16 h-16 m-auto bg-orange-800 md:w-32 md:h-32 outline"
         />
       </div>
-      <div id="middle-screen" className="flex w-6/12 h-full bg-gray-200">
+      <div
+        id="middle-screen"
+        className={`flex w-6/12 h-full mx-auto bg-gray-200 ${
+          hiddenElements.video ? "hidden" : ""
+        }`}
+      >
         <video
           key={videoURL}
-       /*    autoPlay */
           id="video"
           className="my-auto"
           width="100%"
@@ -48,7 +60,9 @@ function TouchStudy() {
           );
         }}
         id="right-screen"
-        className="flex w-3/12 h-full bg-green-600 "
+        className={`flex w-3/12 h-full bg-green-600 ${
+          hiddenElements.right ? "hidden" : ""
+        }`}
       >
         <div
           id="right-btn"
