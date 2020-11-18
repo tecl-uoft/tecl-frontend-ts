@@ -17,7 +17,7 @@ type Bar = {
 
 type Action =
   | { type: "showVideo" }
-  | { type: "setupTraining"; progress: 1 | 2; version: "A" | "B" };
+  | { type: "setupTraining"; progress: 0 | 1 | 2; version: "A" | "B" };
 
 const initialState: State = {
   leftBar: { color: "orange", isHidden: true },
@@ -28,29 +28,47 @@ const initialState: State = {
 function reducer(state: State, action: Action): State {
   switch (action.type) {
     case "showVideo":
-      return { ...state, video: { ...state.video, isHidden: false } };
-    case "setupTraining":
       return {
-        leftBar: {
-          color: action.version === "A" ? "orange" : "green",
-          isHidden: action.progress === 1 ? true : false,
-        },
-        rightBar: {
-          color: action.version === "A" ? "green" : "orange",
-          isHidden: action.progress === 1 ? false : true,
-        },
-        video: {
-          url:
-            action.progress === 1
-              ? VideoLinks.HayleeRewardLeft
-              : VideoLinks.HayleeRewardLeft,
-          isHidden: false,
-        },
+        leftBar: { ...state.leftBar, isHidden: true },
+        rightBar: { ...state.rightBar, isHidden: true },
+        video: { ...state.video, isHidden: false },
       };
+    case "setupTraining":
+      if (action.progress >= 1) {
+        let url = "";
+        /* Alternate the video displayed based on the setup */
+        if (
+          (action.progress === 1 && action.version === "A") ||
+          (action.progress === 2 && action.version === "B")
+        ) {
+          url = VideoLinks.HayleeRewardLeft;
+        } else {
+          url = VideoLinks.HayleePunishRight;
+        }
+        return {
+          leftBar: {
+            color: action.version === "A" ? "orange" : "green",
+            isHidden: action.progress === 1 ? true : false,
+          },
+          rightBar: {
+            color: action.version === "A" ? "green" : "orange",
+            isHidden: action.progress === 1 ? false : true,
+          },
+          video: {
+            url,
+            isHidden: true,
+          },
+        };
+      } else {
+        return {
+          ...state,
+          video: { url: VideoLinks.UnfairToysA, isHidden: false },
+        };
+      }
   }
 }
 
 export function useElementsReducer() {
   const [elementState, elementDispatch] = useReducer(reducer, initialState);
-  return {elementState, elementDispatch};
+  return { elementState, elementDispatch };
 }

@@ -1,17 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useElementsReducer } from "./ElementReducer";
-import { VideoLinks } from "./videoLinks.json";
 import "./touchStudy.css";
 
 function TouchStudy() {
   const touchStudyRef = useRef<HTMLDivElement>(null);
   const [touchArr, setTouchArr] = useState<any | undefined>(undefined);
-  const [taskOrder, setTaskOrder] = useState({});
+  const [currentVersion, setCurrentVersion] = useState<"A" | "B">("A");
   const { elementState, elementDispatch } = useElementsReducer();
 
   useEffect(() => {
-    elementDispatch({ type: "setupTraining", progress: 1, version: "B" });
-  }, [elementDispatch]);
+    elementDispatch({
+      type: "setupTraining",
+      progress: 1,
+      version: currentVersion,
+    });
+    setCurrentVersion("A")
+  }, [elementDispatch, elementState.video.url]);
+
+  useEffect(() => {
+    console.log(elementState);
+  }, [elementState]);
 
   return (
     <div
@@ -22,11 +30,15 @@ function TouchStudy() {
       className="w-screen h-screen bg-gray-200"
     >
       <div
-        onTouchEnd={(e) => {}}
+        onTouchEnd={(e) => {
+          elementDispatch({
+            type: "showVideo",
+          });
+        }}
         id="left-screen"
-        className={`flex w-full h-full bg-${
-          elementState.leftBar.color
-        }-600 ${elementState.leftBar.isHidden ? "hidden" : ""}`}
+        className={`flex w-full h-full bg-${elementState.leftBar.color}-600 ${
+          elementState.leftBar.isHidden ? "hidden" : ""
+        }`}
       >
         <div
           id="left-btn"
@@ -39,16 +51,28 @@ function TouchStudy() {
           elementState.video.isHidden ? "hidden" : ""
         }`}
       >
-        <video src={elementState.video.url} id="video" className="my-auto">
+        <video
+          onEnded={(e) => {
+            elementDispatch({
+              type: "setupTraining",
+              progress: 2,
+              version: currentVersion,
+            });
+          }}
+          key={elementState.video.url}
+          controls
+          id="video"
+          className="my-auto"
+        >
           <source type="video/mp4" src={elementState.video.url} />
         </video>
       </div>
       <div
-        /* onTouchStart={(e) => {
-          setVideoURL(
-            "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/touchexp/Reward_Haylee_Left_FF.mov"
-          );
-        }} */
+        onTouchEnd={(e) => {
+          elementDispatch({
+            type: "showVideo",
+          });
+        }}
         id="right-screen"
         className={`flex w-full h-full bg-${elementState.rightBar.color}-600 ${
           elementState.rightBar.isHidden ? "hidden" : ""
