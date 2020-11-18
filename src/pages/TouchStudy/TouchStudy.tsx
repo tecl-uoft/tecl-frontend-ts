@@ -1,22 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useElementsReducer } from "./ElementReducer";
 import { VideoLinks } from "./videoLinks.json";
+import "./touchStudy.css";
 
 function TouchStudy() {
   const touchStudyRef = useRef<HTMLDivElement>(null);
   const [videoURL, setVideoURL] = useState<string>("");
   const [touchArr, setTouchArr] = useState<any | undefined>(undefined);
-  const [hiddenElements, setHiddenElements] = useState<{
+  /* const [hiddenElements, setHiddenElements] = useState<{
     right: boolean;
     left: boolean;
     video: boolean;
-  }>({ right: true, left: true, video: true });
+  }>({ right: true, left: true, video: true }); */
   const [taskOrder, setTaskOrder] = useState({});
-  const [elementState, ElementDispatch] = useElementsReducer();
+  const { elementState, elementDispatch } = useElementsReducer();
 
   useEffect(() => {
-    setVideoURL(VideoLinks.AlexPunishLeft);
-  }, []);
+    elementDispatch({ type: "setupTraining", progress: 1, version: "B" });
+  }, [elementDispatch]);
 
   return (
     <div
@@ -24,49 +25,44 @@ function TouchStudy() {
       onTouchStart={handleTouchStart(touchArr, setTouchArr)}
       onTouchEnd={handleTouchStart(touchArr, setTouchArr)}
       id="touch-study"
-      className="flex w-screen h-screen bg-gray-200"
+      className="w-screen h-screen bg-gray-200"
     >
       <div
         onTouchEnd={(e) => {}}
         id="left-screen"
-        className={`flex flex-col w-3/12 h-full bg-orange-600 ${
-          hiddenElements.left ? "hidden" : ""
-        }`}
+        className={`flex flex-col w-full h-full bg-${
+          elementState.leftBar.color
+        }-600 ${elementState.leftBar.isHidden ? "hidden" : ""}`}
       >
         <div
           id="left-btn"
-          className="justify-center w-16 h-16 m-auto bg-orange-800 md:w-32 md:h-32 outline"
+          className={`justify-center w-16 h-16 m-auto bg-${elementState.leftBar.color}-800 md:w-32 md:h-32 outline`}
         />
       </div>
       <div
         id="middle-screen"
-        className={`flex w-6/12 h-full mx-auto bg-gray-200 ${
-          hiddenElements.video ? "hidden" : ""
+        className={`flex w-full h-full mx-auto bg-gray-200 ${
+          elementState.video.isHidden ? "hidden" : ""
         }`}
       >
-        <video
-          key={videoURL}
-          id="video"
-          className="my-auto"
-          width="100%"
-        >
-          <source type="video/mp4" src={videoURL} />
+        <video src={elementState.video.url} id="video" className="my-auto" width="100%">
+          <source type="video/mp4" src={elementState.video.url} />
         </video>
       </div>
       <div
-        onTouchStart={(e) => {
+        /* onTouchStart={(e) => {
           setVideoURL(
             "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/touchexp/Reward_Haylee_Left_FF.mov"
           );
-        }}
+        }} */
         id="right-screen"
-        className={`flex w-3/12 h-full bg-green-600 ${
-          hiddenElements.right ? "hidden" : ""
+        className={`flex w-full h-full bg-${elementState.rightBar.color}-600 ${
+          elementState.rightBar.isHidden ? "hidden" : ""
         }`}
       >
         <div
           id="right-btn"
-          className="justify-center w-16 h-16 m-auto bg-green-800 rounded-full md:w-32 md:h-32 outline"
+          className={`justify-center w-16 h-16 m-auto bg-${elementState.rightBar.color}-800 rounded-full md:w-32 md:h-32 outline`}
         />
       </div>
     </div>

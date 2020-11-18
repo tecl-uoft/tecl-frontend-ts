@@ -51,6 +51,6 @@ function reducer(state: State, action: Action): State {
 }
 
 export function useElementsReducer() {
-  const [elementState, ElementDispatch] = useReducer(reducer, initialState);
-  return [elementState, ElementDispatch];
+  const [elementState, elementDispatch] = useReducer(reducer, initialState);
+  return {elementState, elementDispatch};
 }
