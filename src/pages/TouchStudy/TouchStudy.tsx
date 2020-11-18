@@ -5,13 +5,7 @@ import "./touchStudy.css";
 
 function TouchStudy() {
   const touchStudyRef = useRef<HTMLDivElement>(null);
-  const [videoURL, setVideoURL] = useState<string>("");
   const [touchArr, setTouchArr] = useState<any | undefined>(undefined);
-  /* const [hiddenElements, setHiddenElements] = useState<{
-    right: boolean;
-    left: boolean;
-    video: boolean;
-  }>({ right: true, left: true, video: true }); */
   const [taskOrder, setTaskOrder] = useState({});
   const { elementState, elementDispatch } = useElementsReducer();
 
@@ -30,7 +24,7 @@ function TouchStudy() {
       <div
         onTouchEnd={(e) => {}}
         id="left-screen"
-        className={`flex flex-col w-full h-full bg-${
+        className={`flex w-full h-full bg-${
           elementState.leftBar.color
         }-600 ${elementState.leftBar.isHidden ? "hidden" : ""}`}
       >
@@ -41,11 +35,11 @@ function TouchStudy() {
       </div>
       <div
         id="middle-screen"
-        className={`flex w-full h-full mx-auto bg-gray-200 ${
+        className={`flex flex-col w-full h-full ${
           elementState.video.isHidden ? "hidden" : ""
         }`}
       >
-        <video src={elementState.video.url} id="video" className="my-auto" width="100%">
+        <video src={elementState.video.url} id="video" className="my-auto">
           <source type="video/mp4" src={elementState.video.url} />
         </video>
       </div>

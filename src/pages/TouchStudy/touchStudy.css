@@ -1,16 +1,17 @@
 #touch-study {
     display: grid;
     grid-template-columns: [first] 25% [line2] 50% [line3] 25% [last];
+    grid-template-rows: 100%;
+}
+
+#left-screen {
+    grid-column: first / line2;
 }
 
 #middle-screen {
     grid-column: line2 / line3;
 }
 
-#left-screen {
-    grid-column: line3 / last;
-}
-
 #right-screen {
-    grid-column: first / line2;
+    grid-column: line3 / last;
 }

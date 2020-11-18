@@ -44,7 +44,7 @@ function reducer(state: State, action: Action): State {
             action.progress === 1
               ? VideoLinks.HayleeRewardLeft
               : VideoLinks.HayleeRewardLeft,
-          isHidden: true,
+          isHidden: false,
         },
       };
   }
