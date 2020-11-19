@@ -89,7 +89,39 @@ function reducer(state: State, action: Action): State {
         };
       }
     case "setupExpOne":
-      return {...state}
+      if (action.progress === 0) {
+        return {
+          leftBar: {
+            color: "green",
+            isHidden: true,
+          },
+          rightBar: {
+            color: "orange",
+            isHidden: true,
+          },
+          video: {
+            url: VideoLinks.UnfairSnacksA,
+            isHidden: false,
+          },
+        };
+      } else if (action.progress === 1) {
+        return {
+          leftBar: {
+            color: "green",
+            isHidden: false,
+          },
+          rightBar: {
+            color: "orange",
+            isHidden: false,
+          },
+          video: {
+            url: VideoLinks.AlexPunishLeft,
+            isHidden: false,
+          },
+        };
+      } else {
+        return { ...state };
+      }
   }
 }
 
