@@ -1,0 +1,20 @@
+{
+  "VideoLinks": {
+    "UnfairSnacksA": "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/touchexp/TouchF2_4UnfairSnacksA_Current.mov",
+    "UnfairSnacksB": "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/touchexp/TouchF2_4UnfairSnacksB_Current.mov",
+    "UnfairToysA": "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/touchexp/TouchF2_6UnfairToysA_Current.mov",
+    "UnfairToysB": "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/touchexp/TouchF2_6UnfairToysB_Current.mov",
+    "AlexPunishLeft": "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/touchexp/Punish_Alex_Left_FF.mov",
+    "AlexPunishRight": "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/touchexp/Punish_Alex_Right_FF.mov",
+    "HayleePunishLeft": "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/touchexp/Punish_Haylee_Left_FF.mov",
+    "HayleePunishRight": "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/touchexp/Punish_Haylee_Left_FF.mov",
+    "RachelPunishLeft": "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/touchexp/Punish_Rachel_Left_FF.mov",
+    "RachelPunishRight": "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/touchexp/Punish_Rachel_Right_FF.mov",
+    "AlexRewardLeft": "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/touchexp/Reward_Alex_Left_FF.mov",
+    "AlexRewardRight": "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/touchexp/Reward_Alex_Right_FF.mov",
+    "HayleeRewardLeft": "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/touchexp/Reward_Haylee_Left_FF.mov",
+    "HayleeRewardRight": "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/touchexp/Reward_Haylee_Right_FF.mov",
+    "RachelRewardLeft": "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/touchexp/Reward_Rachel_Left_FF.mov",
+    "RachelRewardRight": "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/touchexp/Reward_Rachel_Right_FF.mov"
+  }
+}

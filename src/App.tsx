@@ -17,6 +17,8 @@ import { AuthProvider } from "./context/AuthContext";
 import { Dashboard } from "./pages/Dashboard";
 import { StudyProvider } from "./context/StudyContext";
 import { EventCancelation } from "./pages/EventCancelation";
+import { TouchStudy } from "./pages/TouchStudy";
+import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 
 const TeamsStudyGame = lazy(() => import("./pages/TeamsStudyGame"));
 const EyeTrackingGame = lazy(() => import("./pages/EyeTrackingGame"));
@@ -47,11 +49,13 @@ function App() {
                   path="/study/fairness/information"
                   component={TeamsStudyEntry}
                 />
+                <Route exact path="/study/touch/game" component={TouchStudy} />
                 <Route
                   exact
                   path="/study/fairness/game"
                   component={TeamsStudyGame}
                 />
+                <Route exact path="/privacy-policy" component={PrivacyPolicy} />
                 <Route
                   exact
                   path="/study/frogger/information"

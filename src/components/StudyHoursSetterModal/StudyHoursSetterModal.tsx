@@ -9,6 +9,7 @@ import React, { useState } from "react";
 import { useStudy } from "../../context/StudyContext";
 import { CalendarRemoveModal } from "../CalendarRemoveModal";
 import { CalendarEventModal } from "../CalendarEventModal";
+import { HeadExitButton } from "../HeadExitButton";
 
 interface IStudyHoursSetterModalProps {
   setShowModal(showModal: boolean): void;
@@ -53,6 +54,10 @@ function StudyHoursSetterModal(props: IStudyHoursSetterModalProps) {
           <div className="pb-2">
             {studyCtx?.studyState && (
               <>
+                <div className="flex justify-end -mb-6">
+                  <HeadExitButton onClick={() => props.setShowModal(false)} />
+                </div>
+
                 <h2 className="text-3xl font-bold underline">
                   Set {studyCtx?.studyState && studyCtx.studyState.studyName}{" "}
                   Study Availability
@@ -63,8 +68,9 @@ function StudyHoursSetterModal(props: IStudyHoursSetterModalProps) {
                     center: "title",
                     right: "prev next",
                   }}
-                  initialEvents={studyCtx.studyState.scheduleEvents}
+                  initialEvents={[...studyCtx.studyState.scheduleEvents]}
                   selectable
+                  nowIndicator={true}
                   plugins={[timeGridPlugin, interactionPlugin]}
                   initialView="timeGridWeek"
                   select={handleDateSelect}

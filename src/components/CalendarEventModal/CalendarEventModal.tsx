@@ -42,7 +42,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
           end: selectInfo.endStr,
           title: eventTitle,
           meetingLink,
-          meetingPassword
+          meetingPassword,
         };
         studyCtx.createScheduleEvent(availability);
       }
@@ -106,11 +106,19 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                 <h3 className="mx-auto mt-1 font-medium text-center text-gray-900 px-auto">
                   Add Time Availability
                 </h3>
-                <h4 className="pt-2 mx-auto text-lg text-center">
+                <h4 className="py-2 mx-auto text-center">
                   {selectInfo && (
                     <>
-                      {DateTime.fromISO(selectInfo.startStr).toFormat("ff")} to{" "}
-                      {DateTime.fromISO(selectInfo.endStr).toFormat("t ZZZZ")}
+                      <p className="my-1 text-2xl">
+                        {DateTime.fromISO(selectInfo.startStr).toFormat("DDDD")}{" "}
+                      </p>
+                      <p className="text-xl">
+                        {DateTime.fromISO(selectInfo.startStr).toFormat(
+                          "t ZZZZ"
+                        )}{" "}
+                        to{" "}
+                        {DateTime.fromISO(selectInfo.endStr).toFormat("t ZZZZ")}
+                      </p>
                     </>
                   )}
                 </h4>
@@ -118,38 +126,56 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
             </div>
 
             <form className="p-2 space-y-4 text-sm">
-              <div className="flex flex-wrap -mx-3">
-                <div className="w-full px-3 mb-6 md:mb-0">
-                  <label className="block mb-1 font-bold tracking-wide text-gray-700">
-                    Video Meeting Link *
+              <div className="flex -mx-3">
+                <div className="flex w-full px-3 mb-2 md:mb-0">
+                  <label className="w-5/6 mb-1 text-lg font-bold tracking-wide text-gray-700">
+                    Is this availability recurring? *
                   </label>
                   <input
-                    className="block w-full px-4 py-2 text-gray-700 bg-gray-200 border rounded focus:outline-none focus:bg-white"
-                    type="text"
+                    className="w-1/6 h-4 px-4 py-2 my-2 text-gray-700 bg-gray-200 border rounded cursor-pointer focus:outline-none focus:bg-white"
+                    type="checkbox"
                     value={meetingLink}
                     onChange={(e) => setMeetingLink(e.currentTarget.value)}
-                    placeholder="ex. https://boom.us/j/12345678910"
                   />
                 </div>
               </div>
-              <div className="flex flex-wrap -mx-3">
-                <div className="w-full px-3 mb-6 md:mb-0">
-                  <label className="block mb-1 font-bold tracking-wide text-gray-700">
-                    Video Meeting Passcode
-                  </label>
-                  <input
-                    className="block w-full px-4 py-2 mb-3 text-gray-700 bg-gray-200 border rounded focus:outline-none focus:bg-white"
-                    type="text"
-                    value={meetingPassword}
-                    onChange={(e) => setMeetingPassword(e.currentTarget.value)}
-                    placeholder="leave blank if no password"
-                  />
+              {studyCtx?.studyState && (
+                <div className="flex -mx-3 -mt-4">
+                  <div className="w-full px-3 mb-6 md:mb-0">
+                    <label className="block mb-1 font-bold tracking-wide text-gray-700">
+                      If yes above, until when?
+                    </label>
+                    <input
+                      className="block w-full px-4 py-2 mb-3 text-gray-700 bg-gray-200 border rounded cursor-text focus:outline-none focus:bg-white"
+                      type="date"
+                      min={DateTime.local().toFormat("yyyy-MM-dd")}
+                      max={DateTime.fromJSDate(
+                        studyCtx.studyState.endDate
+                      ).toFormat("yyyy-MM-dd")}
+                      value={meetingPassword}
+                      onChange={(e) =>
+                        setMeetingPassword(e.currentTarget.value)
+                      }
+                    />
+                  </div>
+                  <div className="w-full px-1 md:w-1/3">
+                    <label className="block mb-1 font-bold tracking-wide text-gray-700">
+                      Interval
+                    </label>
+                    <div className="flex align-bottom">
+                      <input
+                        className="block w-full px-1 py-2 mb-3 text-gray-700 bg-gray-200 border rounded cursor-text focus:outline-none focus:bg-white"
+                        type="number"
+                        defaultValue="30"
+                      />{" "}
+                      <p className="mx-2 mt-3 text-xl">min.</p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="block text-gray-700 texl-xs">* = required</div>
+              )}
             </form>
           </div>
-          <div className="flex justify-center px-4 pb-4 space-x-4">
+          <div className="flex justify-end px-4 py-4 space-x-4">
             <span className="flex w-24 mt-3 rounded-md shadow-sm sm:mt-0 sm:w-auto">
               <button
                 onClick={() => props.setShowEventModal(false)}

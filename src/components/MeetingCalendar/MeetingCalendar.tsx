@@ -23,7 +23,6 @@ function MeetingCalendar(props: IMeetingCalendarProps) {
 
   return (
     <div className="pb-6">
-      {console.log(studyState)}
       {studyState && (
         <div key={studyState.studyName}>
           <FullCalendar
