@@ -65,9 +65,11 @@ export function StudyProvider({ children }: Props) {
         title,
         start,
         end,
-        meetingLink,
-        meetingPassword,
+        /* isRecurring,
+        endRecurringDate,
+        recurringInterval */
       } = createScheduleEventProps;
+      
       /*  Convert the input into a proper format for a schedule event */
       const scheduleEvent = {
         title,
@@ -75,10 +77,8 @@ export function StudyProvider({ children }: Props) {
         end,
         color: studyState.keyColor,
         id: uuidv4(),
-        meetingLink,
-        meetingPassword,
       };
-      ScheduleEventService.create(studyState.studyName, scheduleEvent)
+      ScheduleEventService.create(studyState.studyName, createScheduleEventProps)
         .then(() => {
           /* Add Created events to existing set of events in study */
           setStudyState({

@@ -1,5 +1,5 @@
 import { DateSelectArg } from "@fullcalendar/react";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useStudy } from "../../context/StudyContext";
 import { ICreateScheduleEventProps } from "../../services/ScheduleEventService";
@@ -15,8 +15,13 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
   const studyCtx = useStudy();
   const authCtx = useAuth();
   const { selectInfo } = props;
-  const [meetingLink, setMeetingLink] = useState("");
-  const [meetingPassword, setMeetingPassword] = useState("");
+  const [isRecurring, setIsRecurring] = useState(false);
+  const [endRecurringDate, setEndRecurringDate] = useState("");
+  const [interval, setInterval] = useState(0);
+
+  useEffect(() => {
+    setInterval(30);
+  }, [])
 
   const onAdd = () => {
     const selectInfo = props.selectInfo;
@@ -41,8 +46,9 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
           start: selectInfo.startStr,
           end: selectInfo.endStr,
           title: eventTitle,
-          meetingLink,
-          meetingPassword,
+          isRecurring,
+          endRecurringDate,
+          recurringInterval: interval
         };
         studyCtx.createScheduleEvent(availability);
       }
@@ -134,16 +140,16 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                   <input
                     className="w-1/6 h-4 px-4 py-2 my-2 text-gray-700 bg-gray-200 border rounded cursor-pointer focus:outline-none focus:bg-white"
                     type="checkbox"
-                    value={meetingLink}
-                    onChange={(e) => setMeetingLink(e.currentTarget.value)}
+                    checked={isRecurring}
+                    onChange={() =>  setIsRecurring(!isRecurring)}
                   />
                 </div>
               </div>
-              {studyCtx?.studyState && (
+              {studyCtx?.studyState && isRecurring && (
                 <div className="flex -mx-3 -mt-4">
                   <div className="w-full px-3 mb-6 md:mb-0">
                     <label className="block mb-1 font-bold tracking-wide text-gray-700">
-                      If yes above, until when?
+                      Until when?
                     </label>
                     <input
                       className="block w-full px-4 py-2 mb-3 text-gray-700 bg-gray-200 border rounded cursor-text focus:outline-none focus:bg-white"
@@ -152,9 +158,9 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                       max={DateTime.fromJSDate(
                         studyCtx.studyState.endDate
                       ).toFormat("yyyy-MM-dd")}
-                      value={meetingPassword}
+                      value={endRecurringDate}
                       onChange={(e) =>
-                        setMeetingPassword(e.currentTarget.value)
+                        setEndRecurringDate(e.currentTarget.value)
                       }
                     />
                   </div>
@@ -164,9 +170,10 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                     </label>
                     <div className="flex align-bottom">
                       <input
+                        value={interval}
+                        onChange={(e) => setInterval(parseInt(e.currentTarget.value))}
                         className="block w-full px-1 py-2 mb-3 text-gray-700 bg-gray-200 border rounded cursor-text focus:outline-none focus:bg-white"
                         type="number"
-                        defaultValue="30"
                       />{" "}
                       <p className="mx-2 mt-3 text-xl">min.</p>
                     </div>

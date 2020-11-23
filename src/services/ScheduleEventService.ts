@@ -19,8 +19,9 @@ export interface ICreateScheduleEventProps {
   title: string;
   start: string;
   end: string;
-  meetingLink: string;
-  meetingPassword: string;
+  isRecurring: boolean;
+  endRecurringDate: string;
+  recurringInterval: number;
 }
 
 export interface ICompleteScheduleEvent {
