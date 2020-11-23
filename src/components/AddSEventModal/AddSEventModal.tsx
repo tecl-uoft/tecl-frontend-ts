@@ -1,4 +1,5 @@
 import { EventApi } from "@fullcalendar/react";
+import { DateTime } from "luxon";
 import React, { MouseEvent, useState } from "react";
 import ScheduleEventService from "../../services/ScheduleEventService";
 import { IStudy } from "../../services/StudyService";
@@ -71,9 +72,10 @@ function AddSEventModal(props: IAddSEventModalProps) {
           <h2 className="block mb-2 text-xl text-gray-700">
             {" "}
             Date:{" "}
-            {eventClick?.start?.toLocaleString() +
+            {eventClick?.start && eventClick?.end && 
+            DateTime.fromJSDate(eventClick.start).toFormat("ff") +
               " - " +
-              eventClick?.end?.toLocaleTimeString()}
+              DateTime.fromJSDate(eventClick.end).toFormat("t")}
           </h2>
 
           <h2 className="block mb-2 text-lg font-bold text-gray-700">
