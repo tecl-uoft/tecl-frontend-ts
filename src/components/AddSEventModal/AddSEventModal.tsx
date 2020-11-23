@@ -75,7 +75,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
             {eventClick?.start && eventClick?.end && 
             DateTime.fromJSDate(eventClick.start).toFormat("ff") +
               " - " +
-              DateTime.fromJSDate(eventClick.end).toFormat("t")}
+              DateTime.fromJSDate(eventClick.end).toFormat("t ZZZZ")}
           </h2>
 
           <h2 className="block mb-2 text-lg font-bold text-gray-700">
