@@ -15,7 +15,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
   const studyCtx = useStudy();
   const authCtx = useAuth();
   const { selectInfo } = props;
-  const [isRecurring, setIsRecurring] = useState(false);
+/*   const [isRecurring, setIsRecurring] = useState(false); */
   const [endRecurringDate, setEndRecurringDate] = useState("");
   const [interval, setInterval] = useState(0);
 
@@ -53,7 +53,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
           start: selectInfo.startStr,
           end: selectInfo.endStr,
           title: eventTitle,
-          isRecurring,
+          isRecurring: true,
           endRecurringDate,
           recurringInterval: interval
         };
