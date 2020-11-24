@@ -21,7 +21,14 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
 
   useEffect(() => {
     setInterval(30);
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    if (props.selectInfo?.start) {
+      setEndRecurringDate(DateTime.fromJSDate(props.selectInfo.start).toFormat("yyyy-MM-dd"))
+    }
+  }, [props.selectInfo])
+
 
   const onAdd = () => {
     const selectInfo = props.selectInfo;
@@ -120,7 +127,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                       </p>
                       <p className="text-xl">
                         {DateTime.fromISO(selectInfo.startStr).toFormat(
-                          "t ZZZZ"
+                          "t"
                         )}{" "}
                         to{" "}
                         {DateTime.fromISO(selectInfo.endStr).toFormat("t ZZZZ")}
@@ -135,7 +142,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
               <div className="flex -mx-3">
                 <div className="flex w-full px-3 mb-2 md:mb-0">
                   <label className="w-5/6 mb-1 text-lg font-bold tracking-wide text-gray-700">
-                    Is this availability recurring? *
+                    Is this availability recurring weekly?
                   </label>
                   <input
                     className="w-1/6 h-4 px-4 py-2 my-2 text-gray-700 bg-gray-200 border rounded cursor-pointer focus:outline-none focus:bg-white"
@@ -145,16 +152,16 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                   />
                 </div>
               </div>
-              {studyCtx?.studyState && isRecurring && (
+              {studyCtx?.studyState && (
                 <div className="flex -mx-3 -mt-4">
                   <div className="w-full px-3 mb-6 md:mb-0">
                     <label className="block mb-1 font-bold tracking-wide text-gray-700">
-                      Until when?
+                      If yes, until when?
                     </label>
                     <input
                       className="block w-full px-4 py-2 mb-3 text-gray-700 bg-gray-200 border rounded cursor-text focus:outline-none focus:bg-white"
                       type="date"
-                      min={DateTime.local().toFormat("yyyy-MM-dd")}
+                      min={props.selectInfo?.start && DateTime.fromJSDate(props.selectInfo.start).toFormat("yyyy-MM-dd")}
                       max={DateTime.fromJSDate(
                         studyCtx.studyState.endDate
                       ).toFormat("yyyy-MM-dd")}
