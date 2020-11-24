@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import StudyService from "../../services/StudyService";
 import { HeadExitButton } from "../HeadExitButton";
 
@@ -7,6 +7,8 @@ interface IAddStudyFormProps {
 }
 
 function AddStudyForm(props: IAddStudyFormProps) {
+    const [defaultInterval, setDefaultInterval] = useState("30");
+
   function submitStudy() {
     const minDays = document.querySelector<HTMLInputElement>("#min-day")?.value;
     const minMonths = document.querySelector<HTMLInputElement>("#min-month")
@@ -40,9 +42,10 @@ function AddStudyForm(props: IAddStudyFormProps) {
     const description = document.querySelector<HTMLInputElement>(
       "#study-description"
     )?.value;
+    const defaultIntervalInt = parseInt(defaultInterval)
 
     /* Check if inputs have valid values and send request to create the study  */
-    if (studyName && startDate && endDate && keyColor && description) {
+    if (studyName && startDate && endDate && keyColor && description && defaultIntervalInt) {
       StudyService.create({
         studyName,
         startDate,
@@ -51,6 +54,7 @@ function AddStudyForm(props: IAddStudyFormProps) {
         minAgeDays: minTotalDays,
         maxAgeDays: maxTotalDays,
         description,
+        defaultTimeInterval: defaultIntervalInt
       });
     }
     props.windowClose();
@@ -104,7 +108,7 @@ function AddStudyForm(props: IAddStudyFormProps) {
             ></textarea>
           </div>
         </div>
-        <div className="flex flex-wrap mb-2 -mx-3">
+        {/* <div className="flex flex-wrap mb-2 -mx-3">
           <div className="w-full px-3">
             <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase">
               {" "}
@@ -117,7 +121,7 @@ function AddStudyForm(props: IAddStudyFormProps) {
               placeholder="https://teclonline.ca/some_consent_form_to_go_to"
             />
           </div>
-        </div>
+        </div> */}
         <h2 className="block mb-2 text-xl font-bold text-gray-700">
           Age Range
         </h2>
@@ -141,13 +145,15 @@ function AddStudyForm(props: IAddStudyFormProps) {
         <div className="flex flex-wrap mb-2 -mx-3">
           <div className="w-full px-1 md:w-1/3">
             <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase">
-              Default Interval
+              Time Interval
             </label>
             <div className="flex align-bottom">
               <input
                 className="block w-2/3 px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:outline-none focus:bg-white focus:border-gray-500"
                 type="number"
                 defaultValue="30"
+                value={defaultInterval}
+                onChange={(e) => setDefaultInterval(e.currentTarget.value)}
               />{" "} <p className="mx-2 mt-5 text-xl">min.</p>
             </div>
           </div>

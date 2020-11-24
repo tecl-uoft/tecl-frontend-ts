@@ -19,4 +19,4 @@ function useTouchStudyEl() {
   const [state, dispatch] = useReducer(reducer, initialState);
 }
  */
-export default StudyHook;
+/* export default StudyHook; */
