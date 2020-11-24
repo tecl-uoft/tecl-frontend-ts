@@ -70,6 +70,7 @@ function StudyHoursSetterModal(props: IStudyHoursSetterModalProps) {
                   }}
                   initialEvents={[...studyCtx.studyState.scheduleEvents]}
                   selectable
+                  slotDuration={"00:" + studyCtx.studyState.defaultTimeInterval + ":00"}
                   nowIndicator={true}
                   plugins={[timeGridPlugin, interactionPlugin]}
                   initialView="timeGridWeek"
