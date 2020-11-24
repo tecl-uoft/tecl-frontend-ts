@@ -41,22 +41,6 @@ function EventInfoModal(props: IEventInfoModal) {
               ${DateTime.fromISO(scheduleEvent.start).toFormat("ff")} to 
               ${DateTime.fromISO(scheduleEvent.end).toFormat("t ZZZZ")}`}
             </h1>
-            <h1 className="flex mx-2 mb-2 text-xl ">
-              Link:{" "}
-              <a
-                className="mx-2 text-blue-700 underline"
-                href={scheduleEvent.meetingLink}
-              >
-                {" "}
-                {" " + scheduleEvent.meetingLink + " "}
-              </a>
-            </h1>
-            <h1 className="flex mx-2 mb-2 text-xl ">
-              Passcode:{" "}
-              {scheduleEvent.meetingPassword
-                ? ` ${scheduleEvent.meetingPassword}`
-                : " (No password)"}
-            </h1>
             <form className="max-w-lg">
               <h3 className="flex justify-between block px-4 py-1 my-2 text-lg font-bold text-gray-700 bg-orange-300 rounded">
                 <div className="mx-auto my-auto">Parent Information</div>
