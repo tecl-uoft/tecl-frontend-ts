@@ -47,7 +47,7 @@ export function AuthProvider({ children }: Props) {
         setAuthState(loggedInAuthState);
       })
       .catch((err) => {
-        alert(err);
+        alert("Incorrect login. Please try again.");
       });
   }
 

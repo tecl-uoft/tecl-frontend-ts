@@ -8,8 +8,7 @@ function Login() {
   const [emailInput, setEmailInput] = useState<string>("");
   const [passwordInput, setPasswordInput] = useState<string>("");
 
-  const handleLogin = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const handleLogin = () => {
     const user = {
       email: emailInput,
       password: passwordInput,
@@ -21,7 +20,12 @@ function Login() {
     }
   };
   return (
-    <div className="w-full max-w-md px-4 pt-16 mx-auto">
+    <div
+      onKeyDown={(e) => {
+        if (e.key === "Enter") handleLogin();
+      }}
+      className="w-full max-w-md px-4 pt-16 mx-auto"
+    >
       <form className="px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md">
         <div className="mb-4">
           <label className="block mb-2 text-sm font-bold text-gray-700">
@@ -53,7 +57,10 @@ function Login() {
           <button
             className="px-4 py-2 font-bold text-white bg-gray-800 rounded hover:text-orange-500 focus:outline-none focus:shadow-outline"
             type="button"
-            onClick={handleLogin}
+            onClick={(e) => {
+              e.preventDefault();
+              handleLogin();
+            }}
           >
             Sign In
           </button>
