@@ -8,9 +8,9 @@ interface IFroggerInstructionsProps {
 function FroggerInstructions(props: IFroggerInstructionsProps) {
   const { nextState } = props;
   return (
-    <div className="container px-2 pt-4 mx-auto mt-4 mb-16">
+    <div className="container px-2 mx-auto mb-12">
       <StudyTitleText text={"Watch the instructional video below."} />
-      <h4 className="mt-4 mb-4 text-2xl text-center text-gray-800">
+      <h4 className="mb-4 text-2xl text-center text-gray-800">
         Make sure to learn the objective of the game.
       </h4>
       <video className="px-32 focus:outline-none" controls>
