@@ -15,6 +15,7 @@ function TouchStudy() {
   const [finalTouches, setFinalTouches] = useState(
     process.env.NODE_ENV === "development" ? 0 : 0
   );
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
     if (finalTouches === 0) {
@@ -79,6 +80,9 @@ function TouchStudy() {
               });
             }
           }
+          if (videoRef.current) {
+            videoRef.current.play();
+          }
         }}
         id="left-screen"
         className={`flex w-full h-full bg-${elementState.leftBar.color}-600 ${
@@ -92,11 +96,10 @@ function TouchStudy() {
       </div>
       <div
         id="middle-screen"
-        className={`flex flex-col w-full h-full ${
-          elementState.video.isHidden ? "hidden" : ""
-        }`}
+        className={`flex flex-col w-full h-full `}
       >
         <video
+          ref={videoRef}
           onEnded={(e) => {
             if (currentType === "setupTraining") {
               if (currentProgress === 1 || currentProgress === 0) {
@@ -166,7 +169,6 @@ function TouchStudy() {
             }
           }}
           key={elementState.video.url}
-          controls
           id="video"
           className="my-auto"
         >
@@ -202,6 +204,9 @@ function TouchStudy() {
                 type: "showVideo",
               });
             }
+          }
+          if (videoRef.current) {
+            videoRef.current.play();
           }
         }}
         id="right-screen"
