@@ -124,6 +124,7 @@ interface IUpdateScheduleEventProps {
       lastName: string;
       dob: string;
     };
+    addToSharedDB: boolean;
   };
 }
 async function updateParticipantInfo(

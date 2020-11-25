@@ -36,6 +36,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
             lastName: childLastNameField,
             dob: childDob,
           },
+          addToSharedDB: canAddInfo
         },
       })
         .then(() => {
