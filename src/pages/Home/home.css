@@ -1,9 +1,30 @@
-#hero-block {
+/* #hero-block {
     background: rgb(237, 242, 247);
     background: linear-gradient(
       45deg,
       rgba(237, 242, 247, 1) 53%,
       rgba(232, 183, 141, 1) 100%
     );
+} */
+
+#hero-block {
+	background: linear-gradient(
+      45deg,
+      rgba(237, 242, 247, 1) 53%,
+      rgba(232, 183, 141, 1) 100%
+    );
+	background-size: 200% 200%;
+	animation: gradient 15s ease infinite;
 }
-  
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
