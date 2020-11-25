@@ -18,6 +18,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
   const [childFirstNameField, setChildFirstNameField] = useState("");
   const [childLastNameField, setChildLastNameField] = useState("");
   const [childDob, setChildDob] = useState("");
+  const [canAddInfo, setCanAddInfo] = useState(false);
 
   const { setShowAddSEventModal, eventClick, studyState } = props;
 
@@ -72,10 +73,11 @@ function AddSEventModal(props: IAddSEventModalProps) {
           <h2 className="block mb-2 text-xl text-gray-700">
             {" "}
             Date:{" "}
-            {eventClick?.start && eventClick?.end && 
-            DateTime.fromJSDate(eventClick.start).toFormat("ff") +
-              " - " +
-              DateTime.fromJSDate(eventClick.end).toFormat("t ZZZZ")}
+            {eventClick?.start &&
+              eventClick?.end &&
+              DateTime.fromJSDate(eventClick.start).toFormat("ff") +
+                " - " +
+                DateTime.fromJSDate(eventClick.end).toFormat("t ZZZZ")}
           </h2>
 
           <h2 className="block mb-2 text-lg font-bold text-gray-700">
@@ -161,6 +163,26 @@ function AddSEventModal(props: IAddSEventModalProps) {
                   type="date"
                 ></input>
               </div>
+            </div>
+          </div>
+          <div>
+            <h3 className="flex justify-between block px-4 text-lg font-bold text-gray-700 ">
+              <div className="mx-auto my-auto">
+                Want to join similar studies?
+              </div>
+            </h3>
+            <div
+              className="flex justify-between w-full mb-6 cursor-pointer"
+              onClick={() => setCanAddInfo(!canAddInfo)}
+            >
+              <label className="block text-gray-700 cursor-pointer select-none text-md">
+                Add my information to the Child Study Center database.
+              </label>
+              <input
+                checked={canAddInfo}
+                className="w-4 h-4 mt-1 cursor-pointer"
+                type="checkbox"
+              ></input>
             </div>
           </div>
 
