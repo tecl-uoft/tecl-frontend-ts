@@ -14,11 +14,11 @@ function FroggerPractice(props: IFroggerPracticeProps) {
   );
 
   return (
-    <div className="container mx-auto px-2 pt-4 mb-16">
+    <div className="container px-2 pt-4 mx-auto mb-16">
       <StudyTitleText
         text={"Before starting, let's get familiar with the game..."}
       />
-      <h4 className="text-2xl text-center text-gray-800 mb-2 mt-6">
+      <h4 className="mt-6 mb-2 text-2xl text-center text-gray-800">
         Use the{" "}
         <img
           src="/assets/arrow_keys.png"
@@ -27,11 +27,13 @@ function FroggerPractice(props: IFroggerPracticeProps) {
         />{" "}
         keys to move around.
       </h4>
-      <Unity unityContent={unityContent} />
+      <div className="px-32">
+        <Unity unityContent={unityContent} />
+      </div>
       <div className="flex justify-around mt-6">
         <button
           onClick={() => nextState()}
-          className="bg-orange-200 hover:bg-orange-400 font-bold w-full rounded-lg py-4 px-8 shadow-lg focus:outline-none uppercase tracking-wider"
+          className="w-full px-8 py-4 font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400 focus:outline-none"
         >
           Next
         </button>

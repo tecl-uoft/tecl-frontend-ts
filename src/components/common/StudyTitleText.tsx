@@ -6,7 +6,7 @@ interface IStudyTitleTextProps {
 
 function StudyTitleText(props: IStudyTitleTextProps) {
   return (
-    <h3 className="text-3xl font-bold text-center text-gray-800 my-8">
+    <h3 className="my-4 text-3xl font-bold text-center text-gray-800">
       {props.text}
     </h3>
   );

@@ -52,9 +52,9 @@ function FroggerGame(props: IFroggerGameProps) {
   });
 
   return (
-    <div className="container mt-6 mx-auto px-2 pt-4 mb-16">
+    <div className="container px-2 pt-4 mx-auto mt-6 mb-16">
       <StudyTitleText text={"Complete the objective as shown."} />
-      <h4 className="text-2xl text-center text-gray-800 mb-4 mt-4">
+      <h4 className="mt-4 mb-4 text-2xl text-center text-gray-800">
         You have:{" "}
         <b className="bold">
           {" "}
@@ -68,9 +68,11 @@ function FroggerGame(props: IFroggerGameProps) {
         <div>{`Loading ${Math.floor(loadingProgress * 100)} percent...`}</div>
       ) : null}
       {!timeOver ? (
+        <div className="px-32">
         <Unity unityContent={unityContent} />
+        </div>
       ) : (
-        <div className="text-6xl text-center text-gray-800 bg-gray-500 py-64 rounded-lg">
+        <div className="py-64 text-6xl text-center text-gray-800 bg-gray-500 rounded-lg">
           {" "}
           Time is up!{" "}
         </div>
@@ -79,7 +81,7 @@ function FroggerGame(props: IFroggerGameProps) {
         {timeOver ? (
           <button
             onClick={() => nextState()}
-            className="bg-orange-200 hover:bg-orange-400 font-bold w-full rounded-lg py-4 px-8 shadow-lg focus:outline-none uppercase tracking-wider"
+            className="w-full px-8 py-4 font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400 focus:outline-none"
           >
             Next
           </button>
