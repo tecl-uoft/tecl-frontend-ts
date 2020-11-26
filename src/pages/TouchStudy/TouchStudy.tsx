@@ -45,15 +45,18 @@ function TouchStudy() {
         }}
       >
         <video
-        onLoad={(e) => {
-          console.log(e)
-        }}
+          onLoad={(e) => {
+            console.log(e);
+          }}
           onEnded={(e) => {
             if (studyState) {
             }
           }}
           onTouchEnd={(e) => {
-            if (studyState.currentDispatch.type === "distribution") {
+            if (
+              studyState.currentDispatch.type === "distribution" ||
+              studyState.currentDispatch.type === "test"
+            ) {
               e.currentTarget.play();
             }
           }}
