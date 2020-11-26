@@ -1,9 +1,10 @@
-import React, { useReducer, useRef } from "react";
+import React, { useReducer, useRef, useState } from "react";
 import { reducer, initialState } from "./StudyReducer";
 import "./touchStudy.css";
 
 function TouchStudy() {
   const [studyState, dispatchStudy] = useReducer(reducer, initialState);
+  const [touchArr, setTouchArr] = useState<any | undefined>(undefined);
 
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -15,7 +16,12 @@ function TouchStudy() {
   };
 
   return (
-    <div id="touch-study" className="w-screen h-screen bg-gray-200">
+    <div
+      onTouchStart={handleTouchStart(touchArr, setTouchArr)}
+      onTouchEnd={handleTouchStart(touchArr, setTouchArr)}
+      id="touch-study"
+      className="w-screen h-screen bg-gray-200"
+    >
       <div
         onTouchEnd={onBarClick}
         id="left-screen"
@@ -92,6 +98,29 @@ function TouchStudy() {
       </div>
     </div>
   );
+}
+
+function handleTouchStart(touchArr: any, setTouchArr: (touchArr: any) => void) {
+  return (e: React.TouchEvent<HTMLDivElement>) => {
+    const targetEl = e.target;
+    let touchType = "start";
+    if (e.touches.length === 0) {
+      touchType = "end";
+    }
+    const touchInfo = {
+      target: (targetEl as HTMLDivElement).id,
+      timestamp: e.timeStamp,
+      numTouch: e.touches.length,
+      touchType: touchType,
+    };
+    if (!touchArr) {
+      setTouchArr([touchInfo]);
+    } else {
+      setTouchArr([...touchArr, touchInfo]);
+    }
+
+    console.log(touchInfo, touchArr);
+  };
 }
 
 export default TouchStudy;
