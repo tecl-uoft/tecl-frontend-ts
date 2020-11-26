@@ -63,7 +63,7 @@ function TouchStudy() {
           ref={videoRef}
           key={studyState?.video.url}
           id="video"
-          className="my-auto"
+          className="px-2 my-auto"
         >
           <source type="video/mp4" src={studyState?.video.url} />
         </video>

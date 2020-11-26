@@ -103,14 +103,14 @@ function reducer(state: State, action: Action): State {
         return {
           leftBar: { ...initialState.leftBar, isHidden: false },
           rightBar: { ...initialState.rightBar, isHidden: false },
-          video: { url: VideoLinks.UnfairSnacksA, isHidden: false },
+          video: { url: VideoLinks.UnfairSnacksB, isHidden: false },
           nextDispatch: { type: "test", trial: 3 },
           currentDispatch: action,
         };
       } else if (action.trial === 3) {
         return {
           ...initialState,
-          video: { url: VideoLinks.UnfairSnacksA, isHidden: false },
+          video: { url: VideoLinks.UnfairToysA, isHidden: false },
           nextDispatch: { type: "test", trial: 4 },
           currentDispatch: action,
         };
@@ -118,7 +118,7 @@ function reducer(state: State, action: Action): State {
         return {
           leftBar: { ...initialState.leftBar, isHidden: false },
           rightBar: { ...initialState.rightBar, isHidden: false },
-          video: { url: VideoLinks.UnfairSnacksA, isHidden: false },
+          video: { url: VideoLinks.UnfairToysB, isHidden: false },
           nextDispatch: { type: "test", trial: 5 },
           currentDispatch: action,
         };
