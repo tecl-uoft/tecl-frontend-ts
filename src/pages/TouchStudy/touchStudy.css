@@ -8,9 +8,9 @@
     grid-column: first / line2;
 }
 
-#middle-screen {
+/* #middle-screen {
     grid-column: line2 / line3;
-}
+} */
 
 #right-screen {
     grid-column: line3 / last;

@@ -1,63 +1,151 @@
-import { useReducer } from "react";
 import { VideoLinks } from "./videoLinks.json";
 
-export type State = {
-  leftBar: Bar;
-  rightBar: Bar;
-  video: {
-    isHidden: boolean;
-    url: string;
-  };
+export type Action = {
+  type: "training" | "distribution" | "test";
+  trial: number;
 };
 
 type Bar = {
   barType: "A" | "B";
   isHidden: boolean;
 };
-
-export type Action = { type: "training" | "distribution" | "test"; trial: number };
+export type State = {
+  currentDispatch: Action;
+  leftBar: Bar;
+  rightBar: Bar;
+  video: {
+    isHidden: boolean;
+    url: string;
+  };
+  nextDispatch: Action;
+};
 
 const initialState: State = {
   leftBar: { barType: "A", isHidden: true },
   rightBar: { barType: "B", isHidden: true },
   video: { url: VideoLinks.AlexPunishRight, isHidden: false },
+  currentDispatch: { type: "training", trial: 1 },
+  nextDispatch: { type: "training", trial: 1 },
 };
 
 function reducer(state: State, action: Action): State {
-  const studyState = initialState;
   switch (action.type) {
     case "training":
       if (action.trial === 1) {
-        studyState.leftBar.isHidden = false;
-        studyState.rightBar.isHidden = true;
-        studyState.video.url = VideoLinks.AlexRewardRight;
+        return {
+          ...initialState,
+          leftBar: { ...initialState.leftBar, isHidden: false },
+          video: { ...initialState.video, url: VideoLinks.AlexPunishRight },
+          nextDispatch: { type: "training", trial: 2 },
+          currentDispatch: action,
+        };
       } else if (action.trial === 2) {
-        studyState.leftBar.isHidden = true;
-        studyState.rightBar.isHidden = false;
-        studyState.video.url = VideoLinks.AlexPunishLeft;
+        return {
+          ...initialState,
+          rightBar: { ...initialState.rightBar, isHidden: false },
+          video: { ...initialState.video, url: VideoLinks.AlexPunishLeft },
+          nextDispatch: { type: "training", trial: 3 },
+          currentDispatch: action,
+        };
       } else if (action.trial === 3) {
-        studyState.leftBar.isHidden = false;
-        studyState.rightBar.isHidden = false;
+        return {
+          ...initialState,
+          leftBar: { ...initialState.leftBar, isHidden: false },
+          rightBar: { ...initialState.rightBar, isHidden: false },
+          video: { ...initialState.video, url: VideoLinks.AlexPunishRight },
+          nextDispatch: { type: "distribution", trial: 1 },
+          currentDispatch: action,
+        };
       }
-      return studyState;
+      break;
     case "distribution":
       if (action.trial === 1) {
-        studyState.video.url = VideoLinks.UnfairSnacksA;
+        return {
+          ...initialState,
+          leftBar: { ...initialState.leftBar, isHidden: true },
+          rightBar: { ...initialState.rightBar, isHidden: true },
+          video: { url: VideoLinks.UnfairSnacksA, isHidden: false },
+          nextDispatch: { type: "distribution", trial: 2 },
+          currentDispatch: action,
+        };
       } else if (action.trial === 2) {
-        studyState.video.url = VideoLinks.UnfairSnacksB;
+        return {
+          ...initialState,
+          video: { url: VideoLinks.UnfairSnacksB, isHidden: false },
+          nextDispatch: { type: "distribution", trial: 3 },
+          currentDispatch: action,
+        };
       } else if (action.trial === 3) {
-        studyState.video.url = VideoLinks.UnfairToysA;
+        return {
+          ...initialState,
+          video: { url: VideoLinks.UnfairToysA, isHidden: false },
+          nextDispatch: { type: "distribution", trial: 4 },
+          currentDispatch: action,
+        };
       } else if (action.trial === 4) {
-        studyState.video.url = VideoLinks.UnfairToysB;
+        return {
+          ...initialState,
+          video: { url: VideoLinks.UnfairToysB, isHidden: false },
+          nextDispatch: { type: "test", trial: 1 },
+          currentDispatch: action,
+        };
       }
-      return studyState;
+      break;
     case "test":
-      return studyState;
+      if (action.trial === 1) {
+        return {
+          ...initialState,
+          video: { url: VideoLinks.UnfairSnacksA, isHidden: false },
+          nextDispatch: { type: "test", trial: 2 },
+          currentDispatch: action,
+        };
+      } else if (action.trial === 2) {
+        return {
+          leftBar: { ...initialState.leftBar, isHidden: false },
+          rightBar: { ...initialState.rightBar, isHidden: false },
+          video: { url: VideoLinks.UnfairSnacksA, isHidden: false },
+          nextDispatch: { type: "test", trial: 3 },
+          currentDispatch: action,
+        };
+      } else if (action.trial === 3) {
+        return {
+          ...initialState,
+          video: { url: VideoLinks.UnfairSnacksA, isHidden: false },
+          nextDispatch: { type: "test", trial: 4 },
+          currentDispatch: action,
+        };
+      } else if (action.trial === 4) {
+        return {
+          leftBar: { ...initialState.leftBar, isHidden: false },
+          rightBar: { ...initialState.rightBar, isHidden: false },
+          video: { url: VideoLinks.UnfairSnacksA, isHidden: false },
+          nextDispatch: { type: "test", trial: 5 },
+          currentDispatch: action,
+        };
+      } else if (action.trial === 5) {
+        return {
+          ...initialState,
+          video: { url: VideoLinks.UnfairSnacksA, isHidden: false },
+          nextDispatch: { type: "test", trial: 6 },
+          currentDispatch: action,
+        };
+      } else if (action.trial === 6) {
+        return {
+          leftBar: { ...initialState.leftBar, isHidden: false },
+          rightBar: { ...initialState.rightBar, isHidden: false },
+          video: { url: VideoLinks.UnfairSnacksA, isHidden: false },
+          nextDispatch: { type: "test", trial: 7 },
+          currentDispatch: action,
+        };
+      }
+      break;
     default:
-      return studyState;
+      return {
+        ...state,
+        video: { url: VideoLinks.UnfairSnacksA, isHidden: false },
+      };
   }
+  return initialState;
 }
 
-export function useStudyReducer() {
-  return useReducer(reducer, initialState);
-}
+export { reducer, initialState };
