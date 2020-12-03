@@ -105,7 +105,7 @@ function reducer(state: State, action: Action): State {
           };
         }
         
-      } else if (action.trial === distributionOrder.length) {
+      } else if (action.trial === distributionOrder.length * 2) {
         return {
           ...initialState,
           video: { url: distributionOrder[action.trial - 1], isHidden: false },
@@ -134,7 +134,7 @@ function reducer(state: State, action: Action): State {
             currentDispatch: action,
           };
         } else {
-          /* Second in set is allow participant to choose */
+          /* Second in set is allowing participant to choose */
           return {
             leftBar: { ...initialState.leftBar, isHidden: false },
             rightBar: { ...initialState.rightBar, isHidden: false },

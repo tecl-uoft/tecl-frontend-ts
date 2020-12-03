@@ -52,11 +52,9 @@ function TouchStudy() {
         }}
       >
         <video
-          onLoad={(e) => {
-            console.log(e);
-          }}
           onEnded={(e) => {
-            if (studyState) {
+            if (studyState.currentDispatch.type === "distribution") {
+              dispatchStudy(studyState.nextDispatch)
             }
           }}
           onTouchEnd={(e) => {
@@ -68,6 +66,7 @@ function TouchStudy() {
             }
           }}
           ref={videoRef}
+          autoPlay={studyState.currentDispatch.type === "distribution" ? true : false}
           key={studyState.video.url}
           id="video"
           className="px-2 my-auto"
@@ -130,7 +129,7 @@ function handleTouchStart(
       touchType: touchType,
       touchPosition,
       currentVideo:
-        studyState.video.url.length > 66 ? studyState.video.url.substr(66) : "",
+        studyState.video.url ? studyState.video.url.substr(66) : "",
     };
     if (!touchArr) {
       setTouchArr([touchInfo]);
