@@ -88,14 +88,24 @@ function reducer(state: State, action: Action): State {
         VideoLinks.UnfairSnacksB,
         VideoLinks.UnfairToysB,
       ];
-      if (action.trial <= distributionOrder.length - 1) {
-        return {
-          ...initialState,
-          video: { url: distributionOrder[action.trial - 1], isHidden: false },
-          nextDispatch: { type: "distribution", trial: action.trial + 1 },
-          currentDispatch: action,
-        };
-      } else if (action.trial === 4) {
+      if (action.trial <= (distributionOrder.length * 2) - 1) {
+        if (action.trial % 2 === 1) {
+          return {
+            ...initialState,
+            video: { url: VideoLinks.BabyShaker, isHidden: false },
+            nextDispatch: { type: "distribution", trial: action.trial + 1 },
+            currentDispatch: action,
+          };
+        } else {
+          return {
+            ...initialState,
+            video: { url: distributionOrder[action.trial - 1], isHidden: false },
+            nextDispatch: { type: "distribution", trial: action.trial + 1 },
+            currentDispatch: action,
+          };
+        }
+        
+      } else if (action.trial === distributionOrder.length) {
         return {
           ...initialState,
           video: { url: distributionOrder[action.trial - 1], isHidden: false },

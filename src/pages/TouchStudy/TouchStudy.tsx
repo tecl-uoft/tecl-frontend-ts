@@ -19,7 +19,7 @@ function TouchStudy() {
 
   return (
     <div
-      onTouchStart={handleTouchStart(studyState ,touchArr, setTouchArr)}
+      onTouchStart={handleTouchStart(studyState, touchArr, setTouchArr)}
       id="touch-study"
       className="w-screen h-screen bg-gray-200"
     >
@@ -102,7 +102,11 @@ function TouchStudy() {
   );
 }
 
-function handleTouchStart(studyState: State,  touchArr: any, setTouchArr: (touchArr: any) => void) {
+function handleTouchStart(
+  studyState: State,
+  touchArr: any,
+  setTouchArr: (touchArr: any) => void
+) {
   return (e: React.TouchEvent<HTMLDivElement>) => {
     const targetEl = e.target;
     let touchType = "start";
@@ -125,7 +129,8 @@ function handleTouchStart(studyState: State,  touchArr: any, setTouchArr: (touch
       numTouches: e.touches.length,
       touchType: touchType,
       touchPosition,
-      currentVideo: studyState.video.url.substr(66)
+      currentVideo:
+        studyState.video.url.length > 66 ? studyState.video.url.substr(66) : "",
     };
     if (!touchArr) {
       setTouchArr([touchInfo]);
