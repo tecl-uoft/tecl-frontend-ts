@@ -73,7 +73,6 @@ function TouchStudy() {
           className="px-2 my-auto"
         >
           <source type="video/mp4" src={studyState.video.url} />
-          {/*  <source type="video/mp4" src={studyState?.video.url} /> */}
         </video>
         <button
           id="next-button"
