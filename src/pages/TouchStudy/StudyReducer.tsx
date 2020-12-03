@@ -124,7 +124,7 @@ function reducer(state: State, action: Action): State {
 
       if (action.trial <= videoOrder.length * 2) {
         /* For all trials in 2 sets, i.e 1 and 2, 3 and 4... */
-        const videoURL = videoOrder[Math.floor(action.trial / 2)];
+        const videoURL = videoOrder[Math.floor( (action.trial + 1) / 2)];
         if (action.trial % 2 === 1) {
           /* First in set is showing the face of participant */
           return {
@@ -133,6 +133,7 @@ function reducer(state: State, action: Action): State {
             nextDispatch: { type: "test", trial: action.trial + 1 },
             currentDispatch: action,
           };
+         
         } else {
           /* Second in set is allowing participant to choose */
           return {

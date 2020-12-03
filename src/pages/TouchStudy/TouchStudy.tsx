@@ -52,21 +52,31 @@ function TouchStudy() {
         }}
       >
         <video
-          onEnded={(e) => {
-            if (studyState.currentDispatch.type === "distribution") {
-              dispatchStudy(studyState.nextDispatch)
+          onLoadedMetadata={() => {
+            if (studyState.currentDispatch.type === "test") {
+              /* Show bars after 3 seconds */
+              setTimeout(() => {
+                dispatchStudy(studyState.nextDispatch);
+              }, 3000);
             }
           }}
-          onTouchEnd={(e) => {
+          onEnded={(e) => {
+            if (studyState.currentDispatch.type === "distribution") {
+              dispatchStudy(studyState.nextDispatch);
+            }
+          }}
+          /* onTouchEnd={(e) => {
             if (
               studyState.currentDispatch.type === "distribution" ||
               studyState.currentDispatch.type === "test"
             ) {
               e.currentTarget.play();
             }
-          }}
+          }} */
           ref={videoRef}
-          autoPlay={studyState.currentDispatch.type === "distribution" ? true : false}
+          autoPlay={
+            studyState.currentDispatch.type === "distribution" ? true : false
+          }
           key={studyState.video.url}
           id="video"
           className="px-2 my-auto"
@@ -128,8 +138,7 @@ function handleTouchStart(
       numTouches: e.touches.length,
       touchType: touchType,
       touchPosition,
-      currentVideo:
-        studyState.video.url ? studyState.video.url.substr(66) : "",
+      currentVideo: studyState.video.url ? studyState.video.url.substr(66) : "",
     };
     if (!touchArr) {
       setTouchArr([touchInfo]);
