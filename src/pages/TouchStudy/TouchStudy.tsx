@@ -1,5 +1,5 @@
 import React, { useReducer, useRef, useState } from "react";
-import { reducer, initialState } from "./StudyReducer";
+import { reducer, initialState, State } from "./StudyReducer";
 import "./touchStudy.css";
 
 function TouchStudy() {
@@ -8,22 +8,23 @@ function TouchStudy() {
 
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  const onBarClick = () => {
-    const videoEl = videoRef.current;
-    if (videoEl) {
-      videoEl.play();
-    }
-  };
+  function onBarClick() {
+    return () => {
+      const videoEl = videoRef.current;
+      if (videoEl) {
+        videoEl.play();
+      }
+    };
+  }
 
   return (
     <div
-      onTouchStart={handleTouchStart(touchArr, setTouchArr)}
-      onTouchEnd={handleTouchStart(touchArr, setTouchArr)}
+      onTouchStart={handleTouchStart(studyState ,touchArr, setTouchArr)}
       id="touch-study"
       className="w-screen h-screen bg-gray-200"
     >
       <div
-        onTouchEnd={onBarClick}
+        onTouchEnd={onBarClick()}
         id="left-screen"
         className={`flex w-full h-full bg-${
           studyState?.leftBar.barType === "A" ? "orange" : "green"
@@ -67,13 +68,15 @@ function TouchStudy() {
             }
           }}
           ref={videoRef}
-          key={studyState?.video.url}
+          key={studyState.video.url}
           id="video"
           className="px-2 my-auto"
         >
-          <source type="video/mp4" src={studyState?.video.url} />
+          <source type="video/mp4" src={studyState.video.url} />
+          {/*  <source type="video/mp4" src={studyState?.video.url} /> */}
         </video>
         <button
+          id="next-button"
           className="bg-gray-400"
           onClick={() => {
             dispatchStudy(studyState.nextDispatch);
@@ -83,7 +86,7 @@ function TouchStudy() {
         </button>
       </div>
       <div
-        onTouchEnd={onBarClick}
+        onTouchEnd={onBarClick()}
         id="right-screen"
         className={`flex w-full h-full bg-${
           studyState.rightBar.barType === "A" ? "orange" : "green"
@@ -100,18 +103,30 @@ function TouchStudy() {
   );
 }
 
-function handleTouchStart(touchArr: any, setTouchArr: (touchArr: any) => void) {
+function handleTouchStart(studyState: State,  touchArr: any, setTouchArr: (touchArr: any) => void) {
   return (e: React.TouchEvent<HTMLDivElement>) => {
     const targetEl = e.target;
     let touchType = "start";
     if (e.touches.length === 0) {
       touchType = "end";
     }
+    const touchPosition = Array.from(
+      { length: e.targetTouches.length },
+      (_, idx) => {
+        return {
+          x: e.targetTouches.item(idx).clientX,
+          y: e.targetTouches.item(idx).clientY,
+        };
+      }
+    );
+
     const touchInfo = {
       target: (targetEl as HTMLDivElement).id,
-      timestamp: e.timeStamp,
-      numTouch: e.touches.length,
+      timestamp: Math.round(e.timeStamp) / 1000,
+      numTouches: e.touches.length,
       touchType: touchType,
+      touchPosition,
+      currentVideo: studyState.video.url.substr(66)
     };
     if (!touchArr) {
       setTouchArr([touchInfo]);
@@ -119,7 +134,7 @@ function handleTouchStart(touchArr: any, setTouchArr: (touchArr: any) => void) {
       setTouchArr([...touchArr, touchInfo]);
     }
 
-    console.log(touchInfo, touchArr);
+    console.log(touchArr);
   };
 }
 
