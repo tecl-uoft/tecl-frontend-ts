@@ -15,20 +15,23 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
   const studyCtx = useStudy();
   const authCtx = useAuth();
   const { selectInfo } = props;
-/*   const [isRecurring, setIsRecurring] = useState(false); */
+  /*   const [isRecurring, setIsRecurring] = useState(false); */
   const [endRecurringDate, setEndRecurringDate] = useState("");
   const [interval, setInterval] = useState(0);
 
   useEffect(() => {
-    setInterval(30);
-  }, []);
+    if (studyCtx?.studyState) {
+      setInterval(studyCtx.studyState.defaultTimeInterval);
+    }
+  }, [studyCtx]);
 
   useEffect(() => {
     if (props.selectInfo?.start) {
-      setEndRecurringDate(DateTime.fromJSDate(props.selectInfo.start).toFormat("yyyy-MM-dd"))
+      setEndRecurringDate(
+        DateTime.fromJSDate(props.selectInfo.start).toFormat("yyyy-MM-dd")
+      );
     }
-  }, [props.selectInfo])
-
+  }, [props.selectInfo]);
 
   const onAdd = () => {
     const selectInfo = props.selectInfo;
@@ -55,7 +58,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
           title: eventTitle,
           isRecurring: true,
           endRecurringDate,
-          recurringInterval: interval
+          recurringInterval: interval,
         };
         studyCtx.createScheduleEvent(availability);
       }
@@ -126,10 +129,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                         {DateTime.fromISO(selectInfo.startStr).toFormat("DDDD")}{" "}
                       </p>
                       <p className="text-xl">
-                        {DateTime.fromISO(selectInfo.startStr).toFormat(
-                          "t"
-                        )}{" "}
-                        to{" "}
+                        {DateTime.fromISO(selectInfo.startStr).toFormat("t")} to{" "}
                         {DateTime.fromISO(selectInfo.endStr).toFormat("t ZZZZ")}
                       </p>
                     </>
@@ -161,7 +161,6 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                     <input
                       className="block w-full px-4 py-2 mb-3 text-gray-700 bg-gray-200 border rounded cursor-text focus:outline-none focus:bg-white"
                       type="date"
-                      min={props.selectInfo?.start && DateTime.fromJSDate(props.selectInfo.start).toFormat("yyyy-MM-dd")}
                       max={DateTime.fromJSDate(
                         studyCtx.studyState.endDate
                       ).toFormat("yyyy-MM-dd")}
@@ -178,7 +177,9 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                     <div className="flex align-bottom">
                       <input
                         value={interval}
-                        onChange={(e) => setInterval(parseInt(e.currentTarget.value))}
+                        onChange={(e) =>
+                          setInterval(parseInt(e.currentTarget.value))
+                        }
                         className="block w-full px-1 py-2 mb-3 text-gray-700 bg-gray-200 border rounded cursor-text focus:outline-none focus:bg-white"
                         type="number"
                       />{" "}
