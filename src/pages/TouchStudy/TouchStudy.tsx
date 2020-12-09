@@ -137,6 +137,10 @@ function handleTouchStart(
       timestamp: Math.round(e.timeStamp) / 1000,
       numTouches: e.touches.length,
       touchType: touchType,
+      trialType: {
+        trialNum: studyState.currentDispatch.trial,
+        trialType: studyState.currentDispatch.type,
+      },
       touchPosition,
       currentVideo: studyState.video.url ? studyState.video.url.substr(66) : "",
     };
