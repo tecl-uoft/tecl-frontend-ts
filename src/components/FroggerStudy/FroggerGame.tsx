@@ -44,12 +44,16 @@ function FroggerGame(props: IFroggerGameProps) {
 
   const { nextState } = props;
   const unityContent = new UnityContent(
-    "/scripts/frogger_real/Frogger_RealGame_v5.json",
-    "/scripts/frogger_real/UnityLoader.js"
+    "/scripts/frogger_real_1/Frogger_AdultGame_v1.json",
+    "/scripts/frogger_real_1/UnityLoader.js"
   );
   unityContent.on("progress", (progression: number) => {
     setLoadingProgress(progression);
   });
+
+  unityContent.on("GameOver", () => {
+    console.log("game ovverr")
+  })
 
   return (
     <div className="container px-2 pt-4 mx-auto mt-6 mb-16">
