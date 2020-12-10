@@ -15,6 +15,18 @@ function TouchStudy() {
     }
   }, [studyState.video.url]);
 
+  useEffect(() => {
+    if (studyState.currentDispatch.type === "finish") {
+      fetch("/api/v1/touch-study", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ touchStudy: { trialInformation: studyState } }),
+      });
+    }
+  }, [studyState.currentDispatch.type, studyState]);
+
   /* Set video src based on what bar was clicked */
   const videoSrcPromise = (bar: Bar) => {
     return new Promise<void>((res, rej) => {
@@ -72,7 +84,7 @@ function TouchStudy() {
               /* Show bars after 3 seconds */
               setTimeout(() => {
                 dispatchStudy(studyState.nextDispatch);
-              }, 3000);
+              }, 1000);
             }
           }}
           onEnded={(e) => {
@@ -94,9 +106,7 @@ function TouchStudy() {
           id="next-button"
           className={
             "bg-gray-300 rounded-lg text-md " +
-            `${
-              studyState.currentDispatch.type !== "training" ? "hidden" : ""
-            }`
+            `${studyState.currentDispatch.type !== "training" ? "" : ""}`
           }
           onClick={() => {
             dispatchStudy(studyState.nextDispatch);
@@ -161,8 +171,6 @@ function handleTouchStart(
     } else {
       setTouchArr([...touchArr, touchInfo]);
     }
-
-    console.log(touchArr);
   };
 }
 

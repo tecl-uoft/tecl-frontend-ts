@@ -1,7 +1,7 @@
 import { VideoLinks } from "./videoLinks.json";
 
 export type Action = {
-  type: "training" | "distribution" | "test";
+  type: "training" | "distribution" | "test" | "finish";
   trial: number;
 };
 
@@ -158,6 +158,11 @@ function reducer(state: State, action: Action): State {
             currentDispatch: action,
           };
         }
+      } else if (action.trial === (videoOrder.length * 2 )+ 1) {
+        return {
+          ...initialState,
+          currentDispatch: { type: "finish", trial: 0 },
+        };
       }
       break;
     default:
