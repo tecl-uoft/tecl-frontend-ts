@@ -30,14 +30,18 @@ const initialState: State = {
   nextDispatch: { type: "training", trial: 1 },
 };
 
+const rearrangeChoiceArr = (arr: any[]) => {
+  const shuffledArr = shuffleArray([0, 1]);
+  return [arr[shuffledArr[0]], arr[shuffledArr[1]]];
+};
+
 function reducer(state: State, action: Action): State {
   switch (action.type) {
     case "training":
-      const trainingVideoOrder = [
+      const trainingVideoOrder = rearrangeChoiceArr([
         VideoLinks.AlexPunishRight,
         VideoLinks.AlexRewardRight,
-      ];
-
+      ]);
       if (action.trial === 1) {
         return {
           ...initialState,
@@ -82,12 +86,12 @@ function reducer(state: State, action: Action): State {
       }
       break;
     case "distribution":
-      const distributionOrder = [
+      const distributionOrder = shuffleArray([
         VideoLinks.UnfairSnacksA,
         VideoLinks.UnfairToysA,
         VideoLinks.UnfairSnacksB,
         VideoLinks.UnfairToysB,
-      ];
+      ]);
       if (action.trial <= distributionOrder.length * 2 - 1) {
         if (action.trial % 2 === 1) {
           return {
@@ -124,8 +128,7 @@ function reducer(state: State, action: Action): State {
         [VideoLinks.AlexPunishLeft, VideoLinks.AlexRewardLeft],
         [VideoLinks.HayleePunishLeft, VideoLinks.HayleeRewardLeft],
         [VideoLinks.RachelPunishLeft, VideoLinks.RachelRewardLeft],
-      ];
-
+      ].map((subArr) => rearrangeChoiceArr(subArr));
       if (action.trial <= videoOrder.length * 2) {
         /* For all trials in 2 sets, i.e 1 and 2, 3 and 4... */
         const videoURL = videoOrder[Math.floor((action.trial + 1) / 2) - 1];
@@ -163,6 +166,19 @@ function reducer(state: State, action: Action): State {
       };
   }
   return initialState;
+}
+
+/* Randomize array in-place using Durstenfeld shuffle algorithm, 
+    returns new array */
+function shuffleArray<T>(originalArray: T[]) {
+  const array = [...originalArray];
+  for (var i = array.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+  return array;
 }
 
 export { reducer, initialState };
