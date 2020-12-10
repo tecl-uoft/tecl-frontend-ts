@@ -5,7 +5,7 @@ export type Action = {
   trial: number;
 };
 
-type Bar = {
+export type Bar = {
   barType: "A" | "B";
   isHidden: boolean;
   videoOnClick: string;
@@ -35,7 +35,7 @@ function reducer(state: State, action: Action): State {
     case "training":
       const trainingVideoOrder = [
         VideoLinks.AlexPunishRight,
-        VideoLinks.AlexPunishLeft,
+        VideoLinks.AlexRewardRight,
       ];
 
       if (action.trial === 1) {
@@ -88,7 +88,7 @@ function reducer(state: State, action: Action): State {
         VideoLinks.UnfairSnacksB,
         VideoLinks.UnfairToysB,
       ];
-      if (action.trial <= (distributionOrder.length * 2) - 1) {
+      if (action.trial <= distributionOrder.length * 2 - 1) {
         if (action.trial % 2 === 1) {
           return {
             ...initialState,
@@ -99,16 +99,21 @@ function reducer(state: State, action: Action): State {
         } else {
           return {
             ...initialState,
-            video: { url: distributionOrder[ (action.trial / 2) - 1], isHidden: false },
+            video: {
+              url: distributionOrder[action.trial / 2 - 1],
+              isHidden: false,
+            },
             nextDispatch: { type: "distribution", trial: action.trial + 1 },
             currentDispatch: action,
           };
         }
-        
       } else if (action.trial === distributionOrder.length * 2) {
         return {
           ...initialState,
-          video: { url: distributionOrder[(action.trial / 2) - 1], isHidden: false },
+          video: {
+            url: distributionOrder[action.trial / 2 - 1],
+            isHidden: false,
+          },
           nextDispatch: { type: "test", trial: 1 },
           currentDispatch: action,
         };
@@ -116,30 +121,36 @@ function reducer(state: State, action: Action): State {
       break;
     case "test":
       const videoOrder = [
-        VideoLinks.AlexPunishLeft,
-        VideoLinks.AlexRewardLeft,
-        VideoLinks.HayleePunishLeft,
-        VideoLinks.RachelPunishLeft,
+        [VideoLinks.AlexPunishLeft, VideoLinks.AlexRewardLeft],
+        [VideoLinks.HayleePunishLeft, VideoLinks.HayleeRewardLeft],
+        [VideoLinks.RachelPunishLeft, VideoLinks.RachelRewardLeft],
       ];
 
       if (action.trial <= videoOrder.length * 2) {
         /* For all trials in 2 sets, i.e 1 and 2, 3 and 4... */
-        const videoURL = videoOrder[Math.floor( (action.trial + 1) / 2)];
+        const videoURL = videoOrder[Math.floor((action.trial + 1) / 2) - 1];
         if (action.trial % 2 === 1) {
           /* First in set is showing the face of participant */
           return {
             ...initialState,
-            video: { url: videoURL, isHidden: false },
+            video: { url: videoURL[0], isHidden: false },
             nextDispatch: { type: "test", trial: action.trial + 1 },
             currentDispatch: action,
           };
-         
         } else {
           /* Second in set is allowing participant to choose */
           return {
-            leftBar: { ...initialState.leftBar, isHidden: false },
-            rightBar: { ...initialState.rightBar, isHidden: false },
-            video: { url: videoURL, isHidden: false },
+            leftBar: {
+              ...initialState.leftBar,
+              isHidden: false,
+              videoOnClick: videoURL[0],
+            },
+            rightBar: {
+              ...initialState.rightBar,
+              isHidden: false,
+              videoOnClick: videoURL[1],
+            },
+            video: { url: videoURL[0], isHidden: false },
             nextDispatch: { type: "test", trial: action.trial + 1 },
             currentDispatch: action,
           };
@@ -148,8 +159,7 @@ function reducer(state: State, action: Action): State {
       break;
     default:
       return {
-        ...state,
-        video: { url: VideoLinks.UnfairSnacksA, isHidden: false },
+        ...initialState,
       };
   }
   return initialState;

@@ -1,21 +1,36 @@
-import React, { useReducer, useRef, useState } from "react";
-import { reducer, initialState, State } from "./StudyReducer";
+import React, { useEffect, useReducer, useRef, useState } from "react";
+import { reducer, initialState, State, Bar } from "./StudyReducer";
 import "./touchStudy.css";
 
 function TouchStudy() {
   const [studyState, dispatchStudy] = useReducer(reducer, initialState);
   const [touchArr, setTouchArr] = useState<any | undefined>(undefined);
+  const [currentVideoSrc, setCurrentVideoSrc] = useState("");
 
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  function onBarClick() {
-    return () => {
+  useEffect(() => {
+    if (studyState.video.url) {
+      setCurrentVideoSrc(studyState.video.url);
+    }
+  }, [studyState.video.url]);
+
+  /* Set video src based on what bar was clicked */
+  const videoSrcPromise = (bar: Bar) => {
+    return new Promise<void>((res, rej) => {
+      setCurrentVideoSrc(bar.videoOnClick);
+      res();
+    });
+  };
+
+  const onBarClick = (bar: Bar) => () => {
+    videoSrcPromise(bar).then(() => {
       const videoEl = videoRef.current;
       if (videoEl) {
         videoEl.play();
       }
-    };
-  }
+    });
+  };
 
   return (
     <div
@@ -24,7 +39,7 @@ function TouchStudy() {
       className="w-screen h-screen bg-gray-200"
     >
       <div
-        onTouchEnd={onBarClick()}
+        onTouchEnd={onBarClick(studyState.leftBar)}
         id="left-screen"
         className={`flex w-full h-full bg-${
           studyState?.leftBar.barType === "A" ? "orange" : "green"
@@ -65,23 +80,15 @@ function TouchStudy() {
               dispatchStudy(studyState.nextDispatch);
             }
           }}
-          /* onTouchEnd={(e) => {
-            if (
-              studyState.currentDispatch.type === "distribution" ||
-              studyState.currentDispatch.type === "test"
-            ) {
-              e.currentTarget.play();
-            }
-          }} */
           ref={videoRef}
           autoPlay={
             studyState.currentDispatch.type === "distribution" ? true : false
           }
-          key={studyState.video.url}
+          key={currentVideoSrc}
           id="video"
           className="px-2 my-auto"
         >
-          <source type="video/mp4" src={studyState.video.url} />
+          <source type="video/mp4" src={currentVideoSrc} />
         </video>
         <button
           id="next-button"
@@ -94,7 +101,7 @@ function TouchStudy() {
         </button>
       </div>
       <div
-        onTouchEnd={onBarClick()}
+        onTouchEnd={onBarClick(studyState.rightBar)}
         id="right-screen"
         className={`flex w-full h-full bg-${
           studyState.rightBar.barType === "A" ? "orange" : "green"
