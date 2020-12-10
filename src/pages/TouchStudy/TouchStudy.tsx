@@ -92,7 +92,12 @@ function TouchStudy() {
         </video>
         <button
           id="next-button"
-          className="bg-gray-400"
+          className={
+            "bg-gray-300 rounded-lg text-md " +
+            `${
+              studyState.currentDispatch.type !== "training" ? "hidden" : ""
+            }`
+          }
           onClick={() => {
             dispatchStudy(studyState.nextDispatch);
           }}
