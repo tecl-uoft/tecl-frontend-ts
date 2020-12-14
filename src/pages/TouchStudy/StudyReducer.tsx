@@ -126,7 +126,7 @@ function reducer(state: State, action: Action): State {
     case "test":
       const videoOrder = [
         [VideoLinks.AlexPunishLeft, VideoLinks.AlexRewardLeft],
-        [VideoLinks.HayleePunishLeft, VideoLinks.HayleeRewardLeft],
+        [VideoLinks.RachelPunishRight, VideoLinks.RachelRewardRight],
         [VideoLinks.RachelPunishLeft, VideoLinks.RachelRewardLeft],
       ].map((subArr) => rearrangeChoiceArr(subArr));
       if (action.trial <= videoOrder.length * 2) {

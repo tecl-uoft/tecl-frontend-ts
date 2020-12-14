@@ -84,7 +84,7 @@ function TouchStudy() {
               /* Show bars after 3 seconds */
               setTimeout(() => {
                 dispatchStudy(studyState.nextDispatch);
-              }, 1000);
+              }, 3000);
             }
           }}
           onEnded={(e) => {
@@ -153,7 +153,7 @@ function handleTouchStart(
         };
       }
     );
-
+    console.log(touchArr)
     const touchInfo = {
       target: (targetEl as HTMLDivElement).id,
       timestamp: Math.round(e.timeStamp) / 1000,
