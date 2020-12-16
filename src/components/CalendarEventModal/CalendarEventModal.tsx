@@ -1,9 +1,16 @@
 import { DateSelectArg } from "@fullcalendar/react";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useStudy } from "../../context/StudyContext";
 import { ICreateScheduleEventProps } from "../../services/ScheduleEventService";
 import { DateTime } from "luxon";
+import Label from "../common/Label";
 
 interface ICalendarEventModalProps {
   selectInfo: DateSelectArg | undefined;
@@ -18,6 +25,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
   /*   const [isRecurring, setIsRecurring] = useState(false); */
   const [endRecurringDate, setEndRecurringDate] = useState("");
   const [interval, setInterval] = useState(0);
+  const [time, setTime] = useState({ startTime: "", endTime: "" });
 
   useEffect(() => {
     if (studyCtx?.studyState) {
@@ -31,7 +39,19 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
         DateTime.fromJSDate(props.selectInfo.start).toFormat("yyyy-MM-dd")
       );
     }
+    if (props.selectInfo) {
+      const startTime = DateTime.fromISO(props.selectInfo.startStr).toFormat(
+        "T"
+      );
+      const endTime = DateTime.fromISO(props.selectInfo.endStr).toFormat("T");
+      setTime({ startTime, endTime });
+    }
   }, [props.selectInfo]);
+
+  const onStartTimeChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setTime({ ...time, startTime: e.currentTarget.value });
+  const onEndTimeChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setTime({ ...time, endTime: e.currentTarget.value });
 
   const onAdd = () => {
     const selectInfo = props.selectInfo;
@@ -42,10 +62,20 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
         alert("Must be logged in to make a change");
       } else if (studyCtx?.studyState) {
         const eventTitle = `${authCtx?.authState.user?.firstName}`;
+        const startTime = new Date(selectInfo.startStr).setHours(
+          parseInt(time.startTime.slice(0, 2)),
+          parseInt(time.startTime.slice(3, 5))
+        );
+
+        const endTime = new Date(selectInfo.endStr).setHours(
+          parseInt(time.endTime.slice(0, 2)),
+          parseInt(time.endTime.slice(3, 5))
+        );
+        console.log(startTime, endTime);
         const event = {
           title: eventTitle,
-          start: selectInfo.startStr,
-          end: selectInfo.endStr,
+          start: startTime,
+          end: endTime,
           allDay: selectInfo.allDay,
           color: studyCtx.studyState.keyColor,
         };
@@ -53,8 +83,8 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
         calendarApi.addEvent(event);
         /* Send request to add state to database */
         const availability: ICreateScheduleEventProps = {
-          start: selectInfo.startStr,
-          end: selectInfo.endStr,
+          start: new Date(startTime).toISOString(),
+          end: new Date(endTime).toISOString(),
           title: eventTitle,
           isRecurring: true,
           endRecurringDate,
@@ -122,15 +152,11 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                 <h3 className="mx-auto mt-1 font-medium text-center text-gray-900 px-auto">
                   Add Time Availability
                 </h3>
-                <h4 className="py-2 mx-auto text-center">
+                <h4 className="mx-auto text-center ">
                   {selectInfo && (
                     <>
                       <p className="my-1 text-2xl">
                         {DateTime.fromISO(selectInfo.startStr).toFormat("DDDD")}{" "}
-                      </p>
-                      <p className="text-xl">
-                        {DateTime.fromISO(selectInfo.startStr).toFormat("t")} to{" "}
-                        {DateTime.fromISO(selectInfo.endStr).toFormat("t ZZZZ")}
                       </p>
                     </>
                   )}
@@ -138,28 +164,57 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
               </div>
             </div>
 
-            <form className="p-2 space-y-4 text-sm">
-              <div className="flex -mx-3">
-                <div className="flex w-full px-3 mb-2 md:mb-0">
-                  <label className="w-5/6 mb-1 text-lg font-bold tracking-wide text-gray-700">
-                    Update availability settings below.
+            <form className="px-2 pb-4 space-y-4 text-sm text-center">
+              <div className="flex -mx-3 ">
+                <div className="flex flex-col w-full px-3 mb-2 md:mb-0">
+                  <label className="w-full mb-6 text-lg font-bold tracking-wide text-gray-700">
+                    Update information as needed.
                   </label>
-                  {/* <input
-                    className="w-1/6 h-4 px-4 py-2 my-2 text-gray-700 bg-gray-200 border rounded cursor-pointer focus:outline-none focus:bg-white"
-                    type="checkbox"
-                    checked={isRecurring}
-                    onChange={() =>  setIsRecurring(!isRecurring)}
-                  /> */}
+                  {selectInfo && (
+                    <div className="flex items-end justify-center w-full">
+                      <div className="w-1/3">
+                        <Label text={"start time"} />
+                        <input
+                          value={time.startTime}
+                          onChange={onStartTimeChange}
+                          type="time"
+                          className="block w-full p-2 text-gray-700 bg-gray-200 border rounded cursor-text focus:outline-none focus:bg-white"
+                        />
+                      </div>
+                      <p className="mx-4 text-lg">to</p>{" "}
+                      <div className="w-1/3">
+                        <Label text={"End time"} />
+                        <input
+                          value={time.endTime}
+                          onChange={onEndTimeChange}
+                          type="time"
+                          className="block w-full p-2 text-gray-700 bg-gray-200 border rounded cursor-text focus:outline-none focus:bg-white"
+                        />{" "}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
               {studyCtx?.studyState && (
-                <div className="flex -mx-3 -mt-4">
-                  <div className="w-full px-3 mb-6 md:mb-0">
-                    <label className="block mb-1 font-bold tracking-wide text-gray-700">
-                      This spot will be available until the week of...
-                    </label>
+                <div className="flex items-end justify-center">
+                  <div className="px-1 mx-6 md:w-1/3 ">
+                    <Label text={"Appointment Length"} />
+                    <div className="flex items-end justify-center align-bottom">
+                      <input
+                        value={interval}
+                        onChange={(e) =>
+                          setInterval(parseInt(e.currentTarget.value))
+                        }
+                        className="block w-16 p-2 text-gray-700 bg-gray-200 border rounded cursor-text focus:outline-none focus:bg-white"
+                        type="number"
+                      />{" "}
+                      <p className="mx-2 text-xl">min.</p>
+                    </div>
+                  </div>
+                  <div className="px-3 mb-6 md:mb-0">
+                    <Label text={"Interval End"} />
                     <input
-                      className="block w-full px-4 py-2 mb-3 text-gray-700 bg-gray-200 border rounded cursor-text focus:outline-none focus:bg-white"
+                      className="block w-full p-2 text-gray-700 bg-gray-200 border rounded cursor-text focus:outline-none focus:bg-white"
                       type="date"
                       max={DateTime.fromJSDate(
                         studyCtx.studyState.endDate
@@ -169,22 +224,6 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                         setEndRecurringDate(e.currentTarget.value)
                       }
                     />
-                  </div>
-                  <div className="w-full px-1 md:w-1/3">
-                    <label className="block mb-1 font-bold tracking-wide text-gray-700">
-                      Interval
-                    </label>
-                    <div className="flex align-bottom">
-                      <input
-                        value={interval}
-                        onChange={(e) =>
-                          setInterval(parseInt(e.currentTarget.value))
-                        }
-                        className="block w-full px-1 py-2 mb-3 text-gray-700 bg-gray-200 border rounded cursor-text focus:outline-none focus:bg-white"
-                        type="number"
-                      />{" "}
-                      <p className="mx-2 mt-3 text-xl">min.</p>
-                    </div>
                   </div>
                 </div>
               )}
