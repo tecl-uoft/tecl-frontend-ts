@@ -20,6 +20,17 @@ function Dashboard() {
     undefined
   );
 
+  const onAddStudy = () => {
+    setShowAddStudyModal(true);
+  };
+
+  const onModifyAvailability = (study: IStudy) => () => {
+    if (studyCtx) {
+      studyCtx.findAndSetStudy(study.studyName);
+      setShowModal(true);
+    }
+  };
+
   useEffect(() => {
     StudyService.list(true)
       .then((studyList) => {
@@ -42,7 +53,7 @@ function Dashboard() {
         <h2 className="text-3xl font-semibold">Current Studies</h2>
         <div>
           <button
-            onClick={() => setShowAddStudyModal(true)}
+            onClick={onAddStudy}
             className="p-2 py-2 ml-4 text-white bg-gray-800 rounded hover:text-orange-500 focus:outline-none focus:shadow-outline"
           >
             + Add Study
@@ -71,10 +82,7 @@ function Dashboard() {
 
                 {studyCtx && (
                   <button
-                    onClick={() => {
-                      studyCtx.findAndSetStudy(study.studyName);
-                      setShowModal(true);
-                    }}
+                    onClick={onModifyAvailability(study)}
                     className="h-10 px-2 ml-4 text-white bg-orange-500 rounded hover:bg-orange-800 focus:outline-none focus:shadow-outline"
                   >
                     Modify Availability
