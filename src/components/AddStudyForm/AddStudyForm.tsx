@@ -12,7 +12,7 @@ function AddStudyForm(props: IAddStudyFormProps) {
   const onDefaultIntervalChange = (e: ChangeEvent<HTMLInputElement>) =>
     setDefaultInterval(parseInt(e.currentTarget.value));
 
-  const submitStudy = () => {
+  const submitStudy = async () => {
     const minDays = document.querySelector<HTMLInputElement>("#min-day")?.value;
     const minMonths = document.querySelector<HTMLInputElement>("#min-month")
       ?.value;

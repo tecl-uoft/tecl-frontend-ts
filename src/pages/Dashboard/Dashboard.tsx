@@ -19,6 +19,7 @@ function Dashboard() {
   const [userStudyList, setUserStudyList] = useState<IStudy[] | undefined>(
     undefined
   );
+  const [updateList, setUpdateList] = useState(true);
 
   const onAddStudy = () => {
     setShowAddStudyModal(true);
@@ -32,14 +33,17 @@ function Dashboard() {
   };
 
   useEffect(() => {
-    StudyService.list(true)
-      .then((studyList) => {
-        setUserStudyList(studyList);
-      })
-      .catch((err) => {
-        alert(err);
-      });
-  }, []);
+    if (updateList) {
+      StudyService.list(true)
+        .then((studyList) => {
+          setUserStudyList(studyList);
+        })
+        .catch((err) => {
+          alert(err);
+        });
+      setUpdateList(false)
+    }
+  }, [updateList]);
 
   return (
     <div className="container flex flex-col px-8 pt-4 mx-auto">
@@ -99,6 +103,7 @@ function Dashboard() {
         <FocusedModal setShowModal={setShowAddStudyModal}>
           <AddStudyForm
             windowClose={() => {
+              setUpdateList(true);
               setShowAddStudyModal(false);
             }}
           />
