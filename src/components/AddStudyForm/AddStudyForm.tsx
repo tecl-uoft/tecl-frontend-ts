@@ -75,7 +75,7 @@ function AddStudyForm(props: IAddStudyFormProps) {
       <div className="flex justify-end -mb-10">
         <HeadExitButton onClick={props.windowClose} />
       </div>
-      <h1 className="mb-4 text-3xl"> Create New Study </h1>
+      <h1 className="mb-4 text-3xl"> New Study Form </h1>
       <form className="max-w-lg">
         <div className="flex w-full">
           <div className="w-full px-1 mb-6 md:mb-0">
@@ -185,11 +185,11 @@ function AddStudyForm(props: IAddStudyFormProps) {
           </div>
         </div>
 
-        <div className="w-32 px-3 mx-auto ">
+        <div className="px-3 mx-auto ">
           <input
-            className="px-4 py-2 font-bold text-white bg-gray-800 rounded cursor-pointer hover:text-orange-500"
+            className="w-64 px-4 py-2 font-bold text-white bg-gray-800 rounded cursor-pointer hover:text-orange-500"
             type="button"
-            value="Submit"
+            value="Create New Study"
             onClick={submitStudy}
           />
         </div>
@@ -204,7 +204,7 @@ function AgeBoxes(props: { yearId: string; monthId: string; dayId: string }) {
   return (
     <div className="flex mx-4 space-x-2">
       <div>
-        <div className="text-xs">Year(s)</div>
+        <div className="text-xs">Years</div>
         <input
           id={yearId}
           className="block w-full px-2 py-1 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:outline-none focus:bg-white"
@@ -214,7 +214,7 @@ function AgeBoxes(props: { yearId: string; monthId: string; dayId: string }) {
         />
       </div>
       <div>
-        <div className="text-xs">Month(s)</div>
+        <div className="text-xs">Months</div>
         <input
           id={monthId}
           className="block w-full px-2 py-1 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:outline-none focus:bg-white"
@@ -224,7 +224,7 @@ function AgeBoxes(props: { yearId: string; monthId: string; dayId: string }) {
         />
       </div>
       <div>
-        <div className="text-xs">Day(s)</div>
+        <div className="text-xs">Days</div>
         <input
           id={dayId}
           className="block w-full px-2 py-1 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:outline-none focus:bg-white"
