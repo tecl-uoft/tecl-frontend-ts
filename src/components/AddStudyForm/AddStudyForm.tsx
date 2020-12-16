@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import StudyService from "../../services/StudyService";
 import { HeadExitButton } from "../HeadExitButton";
 
@@ -7,9 +7,12 @@ interface IAddStudyFormProps {
 }
 
 function AddStudyForm(props: IAddStudyFormProps) {
-    const [defaultInterval, setDefaultInterval] = useState("30");
+  const [defaultInterval, setDefaultInterval] = useState(30);
 
-  function submitStudy() {
+  const onDefaultIntervalChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setDefaultInterval(parseInt(e.currentTarget.value));
+
+  const submitStudy = () => {
     const minDays = document.querySelector<HTMLInputElement>("#min-day")?.value;
     const minMonths = document.querySelector<HTMLInputElement>("#min-month")
       ?.value;
@@ -20,10 +23,10 @@ function AddStudyForm(props: IAddStudyFormProps) {
       ?.value;
     const maxYears = document.querySelector<HTMLInputElement>("#max-year")
       ?.value;
+
     /*  Conver min and max ages into total days the represent */
     /* Since default input is set to 0, input is always defined */
-    const minTotalDays =
-      parseInt(minDays as string) +
+    const minTotalDays = parseInt(minDays as string) +
       parseInt(minMonths as string) * 30 +
       parseInt(minYears as string) * 365;
     const maxTotalDays =
@@ -42,10 +45,17 @@ function AddStudyForm(props: IAddStudyFormProps) {
     const description = document.querySelector<HTMLInputElement>(
       "#study-description"
     )?.value;
-    const defaultIntervalInt = parseInt(defaultInterval)
+    const defaultIntervalInt = defaultInterval;
 
     /* Check if inputs have valid values and send request to create the study  */
-    if (studyName && startDate && endDate && keyColor && description && defaultIntervalInt) {
+    if (
+      studyName &&
+      startDate &&
+      endDate &&
+      keyColor &&
+      description &&
+      defaultIntervalInt
+    ) {
       StudyService.create({
         studyName,
         startDate,
@@ -54,11 +64,11 @@ function AddStudyForm(props: IAddStudyFormProps) {
         minAgeDays: minTotalDays,
         maxAgeDays: maxTotalDays,
         description,
-        defaultTimeInterval: defaultIntervalInt
+        defaultTimeInterval: defaultIntervalInt,
       });
     }
     props.windowClose();
-  }
+  };
 
   return (
     <div className="">
@@ -67,30 +77,17 @@ function AddStudyForm(props: IAddStudyFormProps) {
       </div>
       <h1 className="mb-4 text-3xl"> Create New Study </h1>
       <form className="max-w-lg">
-        <div className="flex mb-2 -mx-3">
-          <div className="flex w-5/6">
-            <div className="w-full px-1 mb-6 md:mb-0">
-              <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase">
-                {" "}
-                Study Name
-              </label>
-              <input
-                id="study-name"
-                className="block w-full p-2 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                type="text"
-                placeholder="Give a name to your study..."
-              />
-            </div>
-          </div>
-          <div className="w-1/6 h-full px-1 mb-6 md:mb-0">
+        <div className="flex w-full">
+          <div className="w-full px-1 mb-6 md:mb-0">
             <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase">
-              Color
+              {" "}
+              Study Name
             </label>
             <input
-              id="key-color"
-              className="block w-full h-10 px-2 py-1 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded-lg appearance-none cursor-pointer select-none focus:outline-none focus:bg-white"
-              type="color"
-              defaultValue="#ed8936"
+              id="study-name"
+              className="block w-full p-2 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
+              type="text"
+              placeholder="ex. TECL Funtime"
             />
           </div>
         </div>
@@ -104,24 +101,33 @@ function AddStudyForm(props: IAddStudyFormProps) {
               id="study-description"
               minLength={3}
               rows={3}
+              placeholder="ex. TECL Funtime teaches kids how to have fun!"
               className="w-full p-2 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none resize-y focus:outline-none focus:bg-white focus:border-gray-500"
             ></textarea>
           </div>
         </div>
-        {/* <div className="flex flex-wrap mb-2 -mx-3">
-          <div className="w-full px-3">
-            <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase">
-              {" "}
-              Consent Form Link
+        <div className="flex justify-around mb-2 -mx-3">
+          <div className="flex items-center">
+            <label className="block mr-4 text-xs font-bold tracking-wide text-gray-700 uppercase">
+              Appointment Goals:{" "}
             </label>
             <input
-              id="study-name"
-              className="block w-full p-2 mx-auto mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-              type="text"
-              placeholder="https://teclonline.ca/some_consent_form_to_go_to"
+              className="block w-16 p-2 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
+              type="number"
             />
           </div>
-        </div> */}
+          <div className="flex items-center">
+            <label className="block mr-4 text-xs font-bold tracking-wide text-gray-700 uppercase">
+              Study Key Color:
+            </label>
+            <input
+              id="key-color"
+              className="block w-16 h-10 p-1 leading-tight text-gray-700 bg-gray-200 rounded-lg cursor-pointer select-none focus:outline-none focus:bg-white"
+              type="color"
+              defaultValue="#ed8936"
+            />
+          </div>
+        </div>
         <h2 className="block mb-2 text-xl font-bold text-gray-700">
           Age Range
         </h2>
@@ -140,21 +146,21 @@ function AddStudyForm(props: IAddStudyFormProps) {
           </div>
         </div>
         <h2 className="block mb-2 text-xl font-bold text-gray-700">
-          Select Study Time Frame
+          Time Frame
         </h2>
         <div className="flex flex-wrap mb-2 -mx-3">
           <div className="w-full px-1 md:w-1/3">
             <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase">
-              Time Interval
+              Appointment Length
             </label>
-            <div className="flex align-bottom">
+            <div className="flex items-end justify-center">
               <input
-                className="block w-2/3 px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:outline-none focus:bg-white focus:border-gray-500"
+                className="block w-20 p-2 mb-2 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:outline-none focus:bg-white focus:border-gray-500"
                 type="number"
-                defaultValue="30"
                 value={defaultInterval}
-                onChange={(e) => setDefaultInterval(e.currentTarget.value)}
-              />{" "} <p className="mx-2 mt-5 text-xl">min.</p>
+                onChange={onDefaultIntervalChange}
+              />{" "}
+              <p className="mx-1 mb-1 text-lg">min.</p>
             </div>
           </div>
           <div className="w-full px-1 mb-6 md:w-1/3 md:mb-0">
@@ -163,7 +169,7 @@ function AddStudyForm(props: IAddStudyFormProps) {
             </label>
             <input
               id="start-date"
-              className="block w-full px-2 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:outline-none focus:bg-white"
+              className="block w-full p-2 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:outline-none focus:bg-white"
               type="date"
             />
           </div>
@@ -173,7 +179,7 @@ function AddStudyForm(props: IAddStudyFormProps) {
             </label>
             <input
               id="end-date"
-              className="block w-full px-2 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:outline-none focus:bg-white focus:border-gray-500"
+              className="block w-full p-2 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:outline-none focus:bg-white focus:border-gray-500"
               type="date"
             ></input>
           </div>
@@ -184,9 +190,7 @@ function AddStudyForm(props: IAddStudyFormProps) {
             className="px-4 py-2 font-bold text-white bg-gray-800 rounded cursor-pointer hover:text-orange-500"
             type="button"
             value="Submit"
-            onClick={() => {
-              submitStudy();
-            }}
+            onClick={submitStudy}
           />
         </div>
       </form>
@@ -200,6 +204,7 @@ function AgeBoxes(props: { yearId: string; monthId: string; dayId: string }) {
   return (
     <div className="flex mx-4 space-x-2">
       <div>
+        <div className="text-xs">Year(s)</div>
         <input
           id={yearId}
           className="block w-full px-2 py-1 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:outline-none focus:bg-white"
@@ -207,9 +212,9 @@ function AgeBoxes(props: { yearId: string; monthId: string; dayId: string }) {
           defaultValue="0"
           type="number"
         />
-        <div className="text-xs">Year(s)</div>
       </div>
       <div>
+        <div className="text-xs">Month(s)</div>
         <input
           id={monthId}
           className="block w-full px-2 py-1 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:outline-none focus:bg-white"
@@ -217,9 +222,9 @@ function AgeBoxes(props: { yearId: string; monthId: string; dayId: string }) {
           defaultValue="0"
           type="number"
         />
-        <div className="text-xs">Month(s)</div>
       </div>
       <div>
+        <div className="text-xs">Day(s)</div>
         <input
           id={dayId}
           className="block w-full px-2 py-1 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:outline-none focus:bg-white"
@@ -227,7 +232,6 @@ function AgeBoxes(props: { yearId: string; monthId: string; dayId: string }) {
           defaultValue="0"
           type="number"
         />
-        <div className="text-xs">Day(s)</div>
       </div>
     </div>
   );
