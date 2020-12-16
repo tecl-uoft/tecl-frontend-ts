@@ -3,6 +3,8 @@ import { DateTime } from "luxon";
 import React, { MouseEvent, useState } from "react";
 import ScheduleEventService from "../../services/ScheduleEventService";
 import { IStudy } from "../../services/StudyService";
+import Input from "../common/Input";
+import Label from "../common/Label";
 import { FocusedModal } from "../FocusedModal";
 
 interface IAddSEventModalProps {
@@ -18,6 +20,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
   const [childFirstNameField, setChildFirstNameField] = useState("");
   const [childLastNameField, setChildLastNameField] = useState("");
   const [childDob, setChildDob] = useState("");
+  const [phoneNum, setPhoneNum] = useState("");
   const [canAddInfo, setCanAddInfo] = useState(false);
 
   const { setShowAddSEventModal, eventClick, studyState } = props;
@@ -36,7 +39,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
             lastName: childLastNameField,
             dob: childDob,
           },
-          addToSharedDB: canAddInfo
+          addToSharedDB: canAddInfo,
         },
       })
         .then(() => {
@@ -87,82 +90,67 @@ function AddSEventModal(props: IAddSEventModalProps) {
 
           <div className="flex flex-wrap mb-2 -mx-3">
             <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-              <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase">
-                First Name
-              </label>
-              <input
-                onChange={(e) => setFirstNameField(e.target.value)}
+              <Label text={"First Name"} />
+              <Input
                 value={firstNameField}
-                id="event-first-name"
-                className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:outline-none focus:bg-white"
-                type="text"
+                valueSetter={setFirstNameField}
+                type={"text"}
+                placeholder={"Jane"}
               />
             </div>
             <div className="w-full px-3 md:w-1/2">
-              <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase">
-                Last Name
-              </label>
-              <input
-                onChange={(e) => setLastNameField(e.target.value)}
+              <Label text={"Last Name"} />
+              <Input
+                valueSetter={setLastNameField}
                 value={lastNameField}
-                id="event-last-name"
-                className="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:outline-none focus:bg-white focus:border-gray-500"
-                type="text"
-              ></input>
+                type={"text"}
+                placeholder={"Doe"}
+              />
             </div>
-            <div className="w-full px-3 mb-4">
-              <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase">
-                Email
-              </label>
-              <input
-                onChange={(e) => setEmailField(e.target.value)}
+            <div className="w-7/12 px-3">
+              <Label text={"Email"} />
+              <Input
+                valueSetter={setEmailField}
                 value={emailField}
-                id="event-email"
-                className="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:outline-none focus:bg-white focus:border-gray-500"
-                type="email"
-                placeholder="bob@joemail.com"
-              ></input>
+                type={"email"}
+                placeholder={"bob@joemail.com"}
+              />
+            </div>
+            <div className="w-5/12 px-3 mb-4">
+              <Label text={"Phone Number (Optional)"} />
+              <Input
+                valueSetter={setPhoneNum}
+                value={phoneNum}
+                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                type={"tel"}
+                placeholder={"647-111-1111"}
+              />
             </div>
           </div>
-
           <h3 className="flex justify-between block px-4 py-1 my-2 text-lg font-bold text-gray-700 bg-orange-300 rounded">
             <div className="mx-auto my-auto">Child Information</div>
           </h3>
-
-          <div className="mb-4">
+          <div className="mb-2">
             <div className="flex flex-wrap mb-2 -mx-3">
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-                <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase">
-                  First Name
-                </label>
-                <input
-                  onChange={(e) => setChildFirstNameField(e.target.value)}
+                <Label text={"First Name"} />
+                <Input
+                  valueSetter={setChildFirstNameField}
                   value={childFirstNameField}
-                  className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:outline-none focus:bg-white"
                   type="text"
                 />
               </div>
               <div className="w-full px-3 md:w-1/2">
-                <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase">
-                  Last Name
-                </label>
-                <input
-                  onChange={(e) => setChildLastNameField(e.target.value)}
+                <Label text={"Last Name"} />
+                <Input
+                  valueSetter={setChildLastNameField}
                   value={childLastNameField}
-                  className="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:outline-none focus:bg-white focus:border-gray-500"
                   type="text"
-                ></input>
+                />
               </div>
               <div className="w-full px-3">
-                <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase">
-                  Date of birth
-                </label>
-                <input
-                  onChange={(e) => setChildDob(e.target.value)}
-                  value={childDob}
-                  className="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:outline-none focus:bg-white focus:border-gray-500"
-                  type="date"
-                ></input>
+                <Label text={"Date of Birth"} />
+                <Input valueSetter={setChildDob} value={childDob} type="date" />
               </div>
             </div>
           </div>
@@ -177,13 +165,13 @@ function AddSEventModal(props: IAddSEventModalProps) {
               onClick={() => setCanAddInfo(!canAddInfo)}
             >
               <label className="block text-gray-700 cursor-pointer select-none text-md">
-                Add my information to the Child Study Center database.
+                Add this information to the Child Study Center database.
               </label>
               <input
                 checked={canAddInfo}
                 className="w-4 h-4 mt-1 cursor-pointer"
                 type="checkbox"
-              ></input>
+              />
             </div>
           </div>
 
