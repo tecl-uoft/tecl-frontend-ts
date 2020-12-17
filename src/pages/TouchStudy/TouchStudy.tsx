@@ -16,16 +16,16 @@ function TouchStudy() {
   }, [studyState.video.url]);
 
   useEffect(() => {
-    if (studyState.currentDispatch.type === "finish") {
+    if (touchArr && studyState.currentDispatch.type === "finish") {
       fetch("/api/v1/touch-study", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ touchStudy: { trialInformation: studyState } }),
+        body: JSON.stringify({ touchStudy: { trialInformation: touchArr } }),
       });
     }
-  }, [studyState.currentDispatch.type, studyState]);
+  }, [studyState.currentDispatch.type, touchArr]);
 
   /* Set video src based on what bar was clicked */
   const videoSrcPromise = (bar: Bar) => {
