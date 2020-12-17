@@ -9,7 +9,6 @@ interface IFroggerGameProps {
 }
 
 function FroggerGame(props: IFroggerGameProps) {
-  
   const timerStartTime = {
     minutes: 7,
     seconds: 0,
@@ -52,8 +51,10 @@ function FroggerGame(props: IFroggerGameProps) {
   });
 
   unityContent.on("GameOver", () => {
-    console.log("game ovverr")
-  })
+    setTimerSec(0);
+    setTimerMin(0);
+    setTimeOver(true);
+  });
 
   return (
     <div className="container px-2 pt-4 mx-auto mt-6 mb-16">
@@ -73,7 +74,7 @@ function FroggerGame(props: IFroggerGameProps) {
       ) : null}
       {!timeOver ? (
         <div className="px-32">
-        <Unity unityContent={unityContent} />
+          <Unity unityContent={unityContent} />
         </div>
       ) : (
         <div className="py-64 text-6xl text-center text-gray-800 bg-gray-500 rounded-lg">

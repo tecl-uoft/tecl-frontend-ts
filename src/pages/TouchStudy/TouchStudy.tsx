@@ -80,7 +80,10 @@ function TouchStudy() {
       >
         <video
           onLoadedMetadata={() => {
-            if (studyState.currentDispatch.type === "test") {
+            if (
+              studyState.currentDispatch.type === "test" &&
+              studyState.currentDispatch.trial % 2 === 1
+            ) {
               /* Show bars after 3 seconds */
               setTimeout(() => {
                 dispatchStudy(studyState.nextDispatch);
@@ -88,7 +91,10 @@ function TouchStudy() {
             }
           }}
           onEnded={(e) => {
-            if (studyState.currentDispatch.type === "distribution") {
+            if (
+              studyState.currentDispatch.type === "distribution" ||
+              studyState.currentDispatch.type === "test"
+            ) {
               dispatchStudy(studyState.nextDispatch);
             }
           }}
@@ -124,9 +130,11 @@ function TouchStudy() {
       >
         <div
           id="right-btn"
-          className={`justify-center w-16 h-16 m-auto bg-${
-            studyState.rightBar.barType === "A" ? "orange" : "green"
-          }-800 rounded-full md:w-32 md:h-32 outline`}
+          className={`justify-center w-16 h-16 m-auto ${
+            studyState.rightBar.barType === "A"
+              ? "bg-orange-800"
+              : "bg-green-800"
+          } rounded-full md:w-32 md:h-32 outline`}
         />
       </div>
     </div>
@@ -153,9 +161,17 @@ function handleTouchStart(
         };
       }
     );
-    console.log(touchArr)
+    const target = (targetEl as HTMLDivElement).id;
+    let barType = "";
+    if (target === "right-screen" || target === "right-btn") {
+      barType = studyState?.rightBar.barType === "A" ? "Punish" : "Reward";
+    } else if (target === "left-screen" || target === "left-btn") {
+      barType = studyState?.leftBar.barType === "A" ? "Punish" : "Reward";
+    }
+    console.log(touchArr);
+
     const touchInfo = {
-      target: (targetEl as HTMLDivElement).id,
+      target,
       timestamp: Math.round(e.timeStamp) / 1000,
       numTouches: e.touches.length,
       touchType: touchType,
@@ -163,6 +179,7 @@ function handleTouchStart(
         trialNum: studyState.currentDispatch.trial,
         trialType: studyState.currentDispatch.type,
       },
+      barType,
       touchPosition,
       currentVideo: studyState.video.url ? studyState.video.url.substr(66) : "",
     };

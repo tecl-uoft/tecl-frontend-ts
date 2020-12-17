@@ -22,17 +22,19 @@ export type State = {
   nextDispatch: Action;
 };
 
+const shuffledArr = shuffleArray([0, 1]);
+const rearrangeChoiceArr = (arr: any[]) => {
+  return [arr[shuffledArr[0]], arr[shuffledArr[1]]];
+};
+
+const allBarTypes = rearrangeChoiceArr(["A", "B"]);
+
 const initialState: State = {
-  leftBar: { barType: "A", isHidden: true, videoOnClick: "" },
-  rightBar: { barType: "B", isHidden: true, videoOnClick: "" },
+  leftBar: { barType: allBarTypes[0], isHidden: true, videoOnClick: "" },
+  rightBar: { barType: allBarTypes[1], isHidden: true, videoOnClick: "" },
   video: { url: "", isHidden: false },
   currentDispatch: { type: "training", trial: 1 },
   nextDispatch: { type: "training", trial: 1 },
-};
-
-const rearrangeChoiceArr = (arr: any[]) => {
-  const shuffledArr = shuffleArray([0, 1]);
-  return [arr[shuffledArr[0]], arr[shuffledArr[1]]];
 };
 
 function reducer(state: State, action: Action): State {
