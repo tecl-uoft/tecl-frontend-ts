@@ -168,7 +168,7 @@ function handleTouchStart(
     } else if (target === "left-screen" || target === "left-btn") {
       barType = studyState?.leftBar.barType === "A" ? "Punish" : "Reward";
     }
-    console.log(touchArr);
+    /* console.log(touchArr); */
 
     const touchInfo = {
       target,
