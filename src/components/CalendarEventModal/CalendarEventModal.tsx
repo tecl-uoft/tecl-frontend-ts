@@ -178,6 +178,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                           value={time.startTime}
                           onChange={onStartTimeChange}
                           type="time"
+                          step={300}
                           className="block w-full p-2 text-gray-700 bg-gray-200 border rounded cursor-text focus:outline-none focus:bg-white"
                         />
                       </div>
@@ -188,6 +189,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                           value={time.endTime}
                           onChange={onEndTimeChange}
                           type="time"
+                          step={300}
                           className="block w-full p-2 text-gray-700 bg-gray-200 border rounded cursor-text focus:outline-none focus:bg-white"
                         />{" "}
                       </div>

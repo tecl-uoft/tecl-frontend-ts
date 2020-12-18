@@ -53,15 +53,17 @@ function TouchStudy() {
       <div
         onTouchEnd={onBarClick(studyState.leftBar)}
         id="left-screen"
-        className={`flex w-full h-full bg-${
-          studyState?.leftBar.barType === "A" ? "orange" : "green"
-        }-600 ${studyState.leftBar.isHidden && "hidden"}`}
+        className={`flex w-full h-full ${
+          studyState?.leftBar.barType === "A" ? "bg-orange-600" : "bg-green-600"
+        } ${studyState.leftBar.isHidden && "hidden"}`}
       >
         <div
           id="left-btn"
-          className={`justify-center w-16 h-16 m-auto bg-${
-            studyState.leftBar.barType === "A" ? "orange" : "green"
-          }-800 md:w-32 md:h-32 outline`}
+          className={`justify-center w-16 h-16 m-auto ${
+            studyState.leftBar.barType === "A"
+              ? "bg-orange-800"
+              : "bg-green-800"
+          } md:w-32 md:h-32 outline`}
         />
       </div>
       <div
@@ -124,9 +126,9 @@ function TouchStudy() {
       <div
         onTouchEnd={onBarClick(studyState.rightBar)}
         id="right-screen"
-        className={`flex w-full h-full bg-${
-          studyState.rightBar.barType === "A" ? "orange" : "green"
-        }-600 ${studyState.rightBar.isHidden && "hidden"}`}
+        className={`flex w-full h-full ${
+          studyState.rightBar.barType === "A" ? "bg-orange-600" : "bg-green-600"
+        } ${studyState.rightBar.isHidden && "hidden"}`}
       >
         <div
           id="right-btn"

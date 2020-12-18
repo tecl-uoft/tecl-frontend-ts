@@ -6,12 +6,15 @@
 
 #left-screen {
     grid-column: first / line2;
+    height: 100%;
 }
 
-/* #middle-screen {
+#middle-screen {
     grid-column: line2 / line3;
-} */
+    height: 100%;
+}
 
 #right-screen {
     grid-column: line3 / last;
+    height: 100%;
 }
