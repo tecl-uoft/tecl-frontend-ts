@@ -197,9 +197,9 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
               </div>
               {studyCtx?.studyState && (
                 <div className="flex items-end justify-center">
-                  <div className="px-1 mx-6 md:w-1/3 ">
+                  <div className="px-1 mx-6 mb-6 md:w-1/3 md:mb-0">
                     <Label text={"Appointment Length"} />
-                    <div className="flex items-end justify-center align-bottom">
+                    <div className="flex items-end justify-center w-full align-bottom">
                       <input
                         value={interval}
                         onChange={(e) =>
@@ -212,7 +212,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                     </div>
                   </div>
                   <div className="px-3 mb-6 md:mb-0">
-                    <Label text={"Interval End"} />
+                    <Label text={"Parents Can Book Until…"} />
                     <input
                       className="block w-full p-2 text-gray-700 bg-gray-200 border rounded cursor-text focus:outline-none focus:bg-white"
                       type="date"
