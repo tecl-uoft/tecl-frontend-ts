@@ -71,6 +71,7 @@ function Dashboard() {
                 value={participantAddText}
                 valueSetter={setParticipantAddText}
               />
+              <StatisticsPanel study={study} />
             </div>
           );
         })}
@@ -101,6 +102,15 @@ function StudyTitlePanel({ study }: { study: IStudy }) {
       >
         Key Color
       </div>
+    </div>
+  );
+}
+
+function StatisticsPanel({ study }: { study: IStudy }) {
+  return (
+    <div className="flex flex-col mt-2">
+      <h4 className="my-auto text-xl">Statistics:</h4>
+      <p className="">Appointment Goal: 12 Appointments</p>
     </div>
   );
 }
