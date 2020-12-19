@@ -65,35 +65,12 @@ function Dashboard() {
         userStudyList.map((study, idx) => {
           return (
             <div key={idx}>
-              <div className="flex space-x-4">
-                <h3 className="py-1 text-2xl font-semibold rounded ">
-                  {study.studyName} Study
-                </h3>
-                <div
-                  className="p-2 my-1 text-white rounded"
-                  style={{ backgroundColor: study.keyColor }}
-                >
-                  Study Color
-                </div>
-              </div>
-
-              <div className="mt-2">
-                <h4 className="my-auto text-xl">Current Coordinators:</h4>
-                <div className="flex w-1/3 my-2 space-x-2">
-                  {" "}
-                  <Input
-                    value={participantAddText}
-                    valueSetter={setParticipantAddText}
-                    type="email"
-                    placeholder="janedoe@testmail.com"
-                  />{" "}
-                  <button className="px-4 mb-2 text-white bg-orange-600 rounded hover:bg-orange-800 focus:outline-none focus:shadow-outline">
-                    <p className="">Add</p>
-                  </button>
-                </div>
-              </div>
-
+              <StudyTitlePanel study={study} />
               <AppointmentPanel study={study} />
+              <CoordinatorsPanel
+                value={participantAddText}
+                valueSetter={setParticipantAddText}
+              />
             </div>
           );
         })}
@@ -112,12 +89,49 @@ function Dashboard() {
   );
 }
 
-interface IAppointmentPanelProps {
-  study: IStudy;
+function StudyTitlePanel({ study }: { study: IStudy }) {
+  return (
+    <div className="flex space-x-4">
+      <h3 className="py-1 text-2xl font-semibold rounded ">
+        {study.studyName} Study
+      </h3>
+      <div
+        className="p-2 my-1 text-white rounded select-none"
+        style={{ backgroundColor: study.keyColor }}
+      >
+        Study Color
+      </div>
+    </div>
+  );
 }
 
-function AppointmentPanel(props: IAppointmentPanelProps) {
-  const { study } = props;
+function CoordinatorsPanel({
+  value,
+  valueSetter,
+}: {
+  value: string;
+  valueSetter: React.Dispatch<React.SetStateAction<string>>;
+}) {
+  return (
+    <div className="mt-2">
+      <h4 className="my-auto text-xl">Current Coordinators:</h4>
+      <div className="flex w-1/3 my-2 space-x-2">
+        {" "}
+        <Input
+          value={value}
+          valueSetter={valueSetter}
+          type="email"
+          placeholder="janedoe@testmail.com"
+        />{" "}
+        <button className="px-4 mb-2 text-white bg-orange-600 rounded hover:bg-orange-800 focus:outline-none focus:shadow-outline">
+          <p className="">Add</p>
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function AppointmentPanel({ study }: { study: IStudy }) {
   const [bookedList, setBookedList] = useState({
     isLoaded: false,
     scheduledEvents: [] as IBookedScheduleEvent[],
