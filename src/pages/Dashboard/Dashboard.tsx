@@ -10,26 +10,20 @@ import ScheduleEventService, {
 import StudyService, { IStudy } from "../../services/StudyService";
 import { BookedCalendar } from "../../components/BookedCalendar";
 import { DateTime } from "luxon";
+import Input from "../../components/common/Input";
 
 function Dashboard() {
   const authCtx = useAuth();
-  const studyCtx = useStudy();
-  const [showModal, setShowModal] = useState(false);
+
   const [showAddStudyModal, setShowAddStudyModal] = useState(false);
   const [userStudyList, setUserStudyList] = useState<IStudy[] | undefined>(
     undefined
   );
   const [updateList, setUpdateList] = useState(true);
+  const [participantAddText, setParticipantAddText] = useState("");
 
   const onAddStudy = () => {
     setShowAddStudyModal(true);
-  };
-
-  const onModifyAvailability = (study: IStudy) => () => {
-    if (studyCtx) {
-      studyCtx.findAndSetStudy(study.studyName);
-      setShowModal(true);
-    }
   };
 
   useEffect(() => {
@@ -41,7 +35,7 @@ function Dashboard() {
         .catch((err) => {
           alert(err);
         });
-      setUpdateList(false)
+      setUpdateList(false);
     }
   }, [updateList]);
 
@@ -71,34 +65,39 @@ function Dashboard() {
         userStudyList.map((study, idx) => {
           return (
             <div key={idx}>
-              <h3 className="py-1 mt-4 text-2xl font-semibold rounded">
-                <div>{study.studyName} Study</div>
-              </h3>
-
-              <div className="flex mt-2">
+              <div className="flex space-x-4">
+                <h3 className="py-1 text-2xl font-semibold rounded ">
+                  {study.studyName} Study
+                </h3>
                 <div
-                  className="block p-2 text-white rounded"
+                  className="p-2 my-1 text-white rounded"
                   style={{ backgroundColor: study.keyColor }}
                 >
-                  {" "}
-                  Key Color{" "}
+                  Study Color
                 </div>
-
-                {studyCtx && (
-                  <button
-                    onClick={onModifyAvailability(study)}
-                    className="h-10 px-2 ml-4 text-white bg-orange-500 rounded hover:bg-orange-800 focus:outline-none focus:shadow-outline"
-                  >
-                    Modify Availability
-                  </button>
-                )}
               </div>
+
+              <div className="mt-2">
+                <h4 className="my-auto text-xl">Current Coordinators:</h4>
+                <div className="flex w-1/3 my-2 space-x-2">
+                  {" "}
+                  <Input
+                    value={participantAddText}
+                    valueSetter={setParticipantAddText}
+                    type="email"
+                    placeholder="janedoe@testmail.com"
+                  />{" "}
+                  <button className="px-4 mb-2 text-white bg-orange-600 rounded hover:bg-orange-800 focus:outline-none focus:shadow-outline">
+                    <p className="">Add</p>
+                  </button>
+                </div>
+              </div>
+
               <AppointmentPanel study={study} />
             </div>
           );
         })}
 
-      {showModal && <StudyHoursSetterModal setShowModal={setShowModal} />}
       {showAddStudyModal && (
         <FocusedModal setShowModal={setShowAddStudyModal}>
           <AddStudyForm
@@ -132,11 +131,20 @@ function AppointmentPanel(props: IAppointmentPanelProps) {
         .catch((err) => alert(err));
     }
   }, [study.studyName]);
+  const studyCtx = useStudy();
 
   const [showBookedCalendar, setShowBookedCalendar] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
+  const onModifyAvailability = (study: IStudy) => () => {
+    if (studyCtx) {
+      studyCtx.findAndSetStudy(study.studyName);
+      setShowModal(true);
+    }
+  };
 
   return (
-    <div className="w-full py-2 md:p-4">
+    <div className="w-full">
       {showBookedCalendar && (
         <BookedCalendar
           scheduledEvents={bookedList.scheduledEvents}
@@ -144,14 +152,26 @@ function AppointmentPanel(props: IAppointmentPanelProps) {
         />
       )}
       <div className="flex justify-between">
-        <h4 className="my-auto text-xl">Upcoming Appointments</h4>
-        <button
-          onClick={() => setShowBookedCalendar(true)}
-          className="px-4 py-2 text-white bg-orange-500 rounded hover:bg-orange-800 focus:outline-none focus:shadow-outline"
-        >
-          All Booked Appointments
-        </button>
+        <h4 className="my-auto text-xl">Upcoming Appointments:</h4>
+        <div className="flex space-x-2">
+          {studyCtx && (
+            <button
+              onClick={onModifyAvailability(study)}
+              className="px-2 ml-4 text-white bg-orange-500 rounded hover:bg-orange-800 focus:outline-none focus:shadow-outline"
+            >
+              Modify Availability
+            </button>
+          )}
+
+          <button
+            onClick={() => setShowBookedCalendar(true)}
+            className="p-2 text-white bg-orange-500 rounded hover:bg-orange-800 focus:outline-none focus:shadow-outline"
+          >
+            All Booked
+          </button>
+        </div>
       </div>
+      {showModal && <StudyHoursSetterModal setShowModal={setShowModal} />}
       <div className="h-64 mx-2 my-4 overflow-auto bg-gray-200 rounded-lg">
         <table className="min-w-full bg-white">
           <thead className="font-semibold text-white bg-gray-700 text-md">
