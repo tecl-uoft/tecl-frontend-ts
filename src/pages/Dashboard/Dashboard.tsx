@@ -54,7 +54,7 @@ function Dashboard() {
             onClick={onAddStudy}
             className="p-2 py-2 ml-4 text-white bg-gray-800 rounded hover:text-orange-500 focus:outline-none focus:shadow-outline"
           >
-            + Add Study
+            Create Study
           </button>
           <button className="p-2 ml-4 text-white bg-orange-800 rounded hover:text-orange-300 focus:outline-none focus:shadow-outline">
             Sync Google Calendar
@@ -64,7 +64,7 @@ function Dashboard() {
       {userStudyList &&
         userStudyList.map((study, idx) => {
           return (
-            <div key={idx}>
+            <div className="mb-2" key={idx}>
               <StudyTitlePanel study={study} />
               <AppointmentPanel study={study} />
               <CoordinatorsPanel
@@ -99,7 +99,7 @@ function StudyTitlePanel({ study }: { study: IStudy }) {
         className="p-2 my-1 text-white rounded select-none"
         style={{ backgroundColor: study.keyColor }}
       >
-        Study Color
+        Key Color
       </div>
     </div>
   );
@@ -171,7 +171,7 @@ function AppointmentPanel({ study }: { study: IStudy }) {
           {studyCtx && (
             <button
               onClick={onModifyAvailability(study)}
-              className="px-2 ml-4 text-white bg-orange-500 rounded hover:bg-orange-800 focus:outline-none focus:shadow-outline"
+              className="px-2 text-white bg-orange-500 rounded hover:bg-orange-800 focus:outline-none focus:shadow-outline"
             >
               Modify Availability
             </button>
@@ -186,7 +186,7 @@ function AppointmentPanel({ study }: { study: IStudy }) {
         </div>
       </div>
       {showModal && <StudyHoursSetterModal setShowModal={setShowModal} />}
-      <div className="h-64 mx-2 my-4 overflow-auto bg-gray-200 rounded-lg">
+      <div className="h-64 m-2 overflow-auto bg-gray-200 rounded-lg">
         <table className="min-w-full bg-white">
           <thead className="font-semibold text-white bg-gray-700 text-md">
             <tr>
