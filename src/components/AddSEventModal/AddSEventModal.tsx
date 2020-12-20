@@ -26,7 +26,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
 
   const { setShowAddSEventModal, eventClick, studyState } = props;
 
-  function submitJoinStudy(e: MouseEvent<HTMLInputElement>) {
+  const submitJoinStudy = (e: MouseEvent<HTMLInputElement>) => {
     /* Set event as background when it is booked */
     if (eventClick) {
       ScheduleEventService.updateParticipantInfo({
@@ -51,7 +51,10 @@ function AddSEventModal(props: IAddSEventModalProps) {
         .catch((err) => alert(err));
     }
     setShowAddSEventModal(false);
-  }
+  };
+
+  const onCheckAddInfo = () => setCanAddInfo(!canAddInfo);
+  const onCheckAnotherChildRd = () => setAnotherChildRd(!anotherChildRd);
 
   return (
     <div>
@@ -163,25 +166,27 @@ function AddSEventModal(props: IAddSEventModalProps) {
             </h3>
             <div
               className="flex justify-between w-full cursor-pointer"
-              onClick={() => setCanAddInfo(!canAddInfo)}
+              onClick={onCheckAddInfo}
             >
               <label className="block text-gray-700 cursor-pointer select-none text-md">
                 Add this information to the Child Study Center (CSC) database.
               </label>
               <input
                 checked={canAddInfo}
+                onChange={onCheckAddInfo}
                 className="w-4 h-4 mt-1 cursor-pointer"
                 type="checkbox"
               />
             </div>
             <div
               className="flex justify-between w-full mb-6 cursor-pointer"
-              onClick={() => setAnotherChildRd(!anotherChildRd)}
+              onClick={onCheckAnotherChildRd}
             >
               <label className="block text-gray-700 cursor-pointer select-none text-md">
                 Redirect me so I can add another child to the CSC database.
               </label>
               <input
+                onChange={onCheckAnotherChildRd}
                 checked={anotherChildRd}
                 className="w-4 h-4 mt-1 cursor-pointer"
                 type="checkbox"
