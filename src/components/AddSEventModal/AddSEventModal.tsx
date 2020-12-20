@@ -22,6 +22,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
   const [childDob, setChildDob] = useState("");
   const [phoneNum, setPhoneNum] = useState("");
   const [canAddInfo, setCanAddInfo] = useState(false);
+  const [anotherChildRd, setAnotherChildRd] = useState(false);
 
   const { setShowAddSEventModal, eventClick, studyState } = props;
 
@@ -161,14 +162,27 @@ function AddSEventModal(props: IAddSEventModalProps) {
               </div>
             </h3>
             <div
-              className="flex justify-between w-full mb-6 cursor-pointer"
+              className="flex justify-between w-full cursor-pointer"
               onClick={() => setCanAddInfo(!canAddInfo)}
             >
               <label className="block text-gray-700 cursor-pointer select-none text-md">
-                Add this information to the Child Study Center database.
+                Add this information to the Child Study Center (CSC) database.
               </label>
               <input
                 checked={canAddInfo}
+                className="w-4 h-4 mt-1 cursor-pointer"
+                type="checkbox"
+              />
+            </div>
+            <div
+              className="flex justify-between w-full mb-6 cursor-pointer"
+              onClick={() => setAnotherChildRd(!anotherChildRd)}
+            >
+              <label className="block text-gray-700 cursor-pointer select-none text-md">
+                Redirect me so I can add another child to the CSC database.
+              </label>
+              <input
+                checked={anotherChildRd}
                 className="w-4 h-4 mt-1 cursor-pointer"
                 type="checkbox"
               />
