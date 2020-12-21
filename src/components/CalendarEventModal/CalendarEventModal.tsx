@@ -22,10 +22,14 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
   const studyCtx = useStudy();
   const authCtx = useAuth();
   const { selectInfo } = props;
-  /*   const [isRecurring, setIsRecurring] = useState(false); */
   const [endRecurringDate, setEndRecurringDate] = useState("");
   const [interval, setInterval] = useState(0);
   const [time, setTime] = useState({ startTime: "", endTime: "" });
+  const [addParticipant, setAddParticipant] = useState(false);
+
+  const onCheckAddParticipant = () => {
+    setAddParticipant(!addParticipant);
+  };
 
   useEffect(() => {
     if (studyCtx?.studyState) {
@@ -149,9 +153,6 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                 </svg>
               </div>
               <div className="w-full text-2xl text-center sm:ml-4 sm:text-left">
-                <h3 className="mx-auto mt-1 font-medium text-center text-gray-900 px-auto">
-                  Add Time Availability
-                </h3>
                 <h4 className="mx-auto text-center ">
                   {selectInfo && (
                     <>
@@ -167,8 +168,8 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
             <form className="px-2 pb-4 space-y-4 text-sm text-center">
               <div className="flex -mx-3 ">
                 <div className="flex flex-col w-full px-3 mb-2 md:mb-0">
-                  <label className="w-full mb-6 text-lg font-bold tracking-wide text-gray-700">
-                    Update information as needed.
+                  <label className="w-full mb-4 text-lg font-bold tracking-wide text-gray-700">
+                    Update time availability as needed.
                   </label>
                   {selectInfo && (
                     <div className="flex items-end justify-center w-full">
@@ -229,9 +230,23 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                   </div>
                 </div>
               )}
+              <div
+                className="flex justify-between px-8 mt-2 cursor-pointer"
+                onClick={onCheckAddParticipant}
+              >
+                <label className="block text-gray-700 cursor-pointer select-none text-md bold">
+                  Assign a participant to this availability.
+                </label>
+                <input
+                  checked={addParticipant}
+                  onChange={onCheckAddParticipant}
+                  className="w-4 h-4 mt-1 cursor-pointer"
+                  type="checkbox"
+                />
+              </div>
             </form>
           </div>
-          <div className="flex justify-end px-4 py-4 space-x-4">
+          <div className="flex justify-center px-4 py-4 space-x-4">
             <span className="flex w-24 mt-3 rounded-md shadow-sm sm:mt-0 sm:w-auto">
               <button
                 onClick={() => props.setShowEventModal(false)}

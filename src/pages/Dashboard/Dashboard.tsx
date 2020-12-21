@@ -211,33 +211,35 @@ function AppointmentPanel({ study }: { study: IStudy }) {
             {bookedList.isLoaded &&
               bookedList.scheduledEvents.map((event, idx) => {
                 return (
-                  <tr
-                    key={idx}
-                    className={`hover:shadow-md hover:text-red-800 cursor-pointer ${
-                      idx % 2 === 0 && "bg-orange-200"
-                    }`}
-                  >
-                    <td className="px-4 py-2 text-left">
-                      {event.participantInfo.child.firstName +
-                        " " +
-                        event.participantInfo.child.lastName}
-                    </td>
-                    <td className="px-4 py-2 text-left">
-                      {event.participantInfo.firstName +
-                        " " +
-                        event.participantInfo.lastName}
-                    </td>
+                  new Date(event.start) >= new Date() && (
+                    <tr
+                      key={idx}
+                      className={`hover:shadow-md hover:text-red-800 cursor-pointer ${
+                        idx % 2 === 0 && "bg-orange-200"
+                      }`}
+                    >
+                      <td className="px-4 py-2 text-left">
+                        {event.participantInfo.child.firstName +
+                          " " +
+                          event.participantInfo.child.lastName}
+                      </td>
+                      <td className="px-4 py-2 text-left">
+                        {event.participantInfo.firstName +
+                          " " +
+                          event.participantInfo.lastName}
+                      </td>
 
-                    <td className="px-4 py-2 text-left">
-                      {DateTime.fromISO(event.end).toFormat("fff")}
-                    </td>
-                    <td className="px-4 py-2 text-left">
-                      {event.participantInfo.email}
-                    </td>
-                    <td className="px-4 py-2 text-left">
-                      {findAge(event.participantInfo.child.dob)}
-                    </td>
-                  </tr>
+                      <td className="px-4 py-2 text-left">
+                        {DateTime.fromISO(event.end).toFormat("fff")}
+                      </td>
+                      <td className="px-4 py-2 text-left">
+                        {event.participantInfo.email}
+                      </td>
+                      <td className="px-4 py-2 text-left">
+                        {findAge(event.participantInfo.child.dob)}
+                      </td>
+                    </tr>
+                  )
                 );
               })}
           </tbody>
