@@ -6,15 +6,18 @@
 
 #left-screen {
     grid-column: first / line2;
-    height: 100%;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
 }
 
 #middle-screen {
     grid-column: line2 / line3;
-    height: 100%;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
 }
 
 #right-screen {
     grid-column: line3 / last;
-    height: 100%;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
 }

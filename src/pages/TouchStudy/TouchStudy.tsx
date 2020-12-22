@@ -48,12 +48,12 @@ function TouchStudy() {
     <div
       onTouchStart={handleTouchStart(studyState, touchArr, setTouchArr)}
       id="touch-study"
-      className="w-screen h-screen bg-gray-200"
+      className="bg-gray-200"
     >
       <div
         onTouchEnd={onBarClick(studyState.leftBar)}
         id="left-screen"
-        className={`flex w-full h-full ${
+        className={`flex ${
           studyState?.leftBar.barType === "A" ? "bg-orange-600" : "bg-green-600"
         } ${studyState.leftBar.isHidden && "hidden"}`}
       >
@@ -104,6 +104,11 @@ function TouchStudy() {
           autoPlay={
             studyState.currentDispatch.type === "distribution" ? true : false
           }
+          onTouchStart={(e) => {
+            if (studyState.currentDispatch.type === "distribution") {
+              e.currentTarget.play();
+            }
+          }}
           key={currentVideoSrc}
           id="video"
           className="px-2 my-auto"
@@ -126,7 +131,7 @@ function TouchStudy() {
       <div
         onTouchEnd={onBarClick(studyState.rightBar)}
         id="right-screen"
-        className={`flex w-full h-full ${
+        className={`flex ${
           studyState.rightBar.barType === "A" ? "bg-orange-600" : "bg-green-600"
         } ${studyState.rightBar.isHidden && "hidden"}`}
       >
