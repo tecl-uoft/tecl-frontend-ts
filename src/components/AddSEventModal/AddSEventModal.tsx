@@ -8,7 +8,7 @@ import Label from "../common/Label";
 import { FocusedModal } from "../FocusedModal";
 
 interface IAddSEventModalProps {
-  setShowAddSEventModal(showModal: boolean): void;
+  setShowAddSEventModal: React.Dispatch<React.SetStateAction<boolean>>;
   eventClick: EventApi | undefined;
   studyState: IStudy | undefined;
 }
