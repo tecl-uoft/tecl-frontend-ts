@@ -16,6 +16,10 @@ interface IStudyContext {
   removeScheduleEvent(calId: string): void;
   studyState: IStudy | undefined;
   findAndSetStudy(studyName: string): void;
+  addCoordinators(study: {
+    studyName: string;
+    leadResearchers: string[];
+  }): void;
 }
 
 export const StudyContext = createContext<IStudyContext | undefined>(undefined);
@@ -34,6 +38,21 @@ export function StudyProvider({ children }: Props) {
         alert(`${err}`);
       });
     return;
+  }
+
+  function addCoordinators(study: {
+    studyName: string;
+    leadResearchers: string[];
+  }) {
+    StudyService.update(study)
+      .then(() => {
+        if (!studyState) throw new Error("error in study state");
+        setStudyState({
+          ...studyState,
+          leadResearchers: [...studyState.leadResearchers],
+        });
+      })
+      .catch((err) => alert(err.message));
   }
 
   /* Remove schedule event from the current study */
@@ -61,15 +80,8 @@ export function StudyProvider({ children }: Props) {
     createScheduleEventProps: ICreateScheduleEventProps
   ): void {
     if (studyState) {
-      const {
-        title,
-        start,
-        end,
-        /* isRecurring,
-        endRecurringDate,
-        recurringInterval */
-      } = createScheduleEventProps;
-      
+      const { title, start, end } = createScheduleEventProps;
+
       /*  Convert the input into a proper format for a schedule event */
       const scheduleEvent = {
         title,
@@ -78,7 +90,10 @@ export function StudyProvider({ children }: Props) {
         color: studyState.keyColor,
         id: uuidv4(),
       };
-      ScheduleEventService.create(studyState.studyName, createScheduleEventProps)
+      ScheduleEventService.create(
+        studyState.studyName,
+        createScheduleEventProps
+      )
         .then(() => {
           /* Add Created events to existing set of events in study */
           setStudyState({
@@ -97,6 +112,7 @@ export function StudyProvider({ children }: Props) {
     createScheduleEvent,
     removeScheduleEvent,
     findAndSetStudy,
+    addCoordinators,
     studyState,
   };
 

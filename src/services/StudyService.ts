@@ -87,7 +87,7 @@ async function update(studyToUpdate: any): Promise<void> {
   if (response.ok) {
     return;
   } else {
-    alert(`Create schedule event failed`);
+    throw new Error(`Create schedule event failed`);
   }
 }
 
