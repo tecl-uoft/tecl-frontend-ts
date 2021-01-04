@@ -9,7 +9,7 @@ export default {
 
 export interface IStudy {
   studyName: string;
-  leadResearchers: string[];
+  leadResearchers: {email: string}[];
   researchAssitants: string[];
   scheduleEvents: IScheduleEvent[];
   startDate: Date;

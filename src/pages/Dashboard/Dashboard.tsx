@@ -56,9 +56,9 @@ function Dashboard() {
           >
             Create Study
           </button>
-          <button className="p-2 ml-4 text-white bg-orange-800 rounded hover:text-orange-300 focus:outline-none focus:shadow-outline">
+          {/* <button className="p-2 ml-4 text-white bg-orange-800 rounded hover:text-orange-300 focus:outline-none focus:shadow-outline">
             Sync Google Calendar
-          </button>
+          </button> */}
         </div>
       </div>
       {userStudyList &&
@@ -71,6 +71,11 @@ function Dashboard() {
                 value={participantAddText}
                 valueSetter={setParticipantAddText}
               />
+              <ul className="mb-4 text-lg">
+                {study.leadResearchers.map((researcher, idx) => {
+                  return <li className="flex" key={idx}>{(idx + 1) + ".  " + researcher.email}</li>;
+                })}
+              </ul>
               <StatisticsPanel study={study} />
             </div>
           );
@@ -86,7 +91,6 @@ function Dashboard() {
           />
         </FocusedModal>
       )}
-      
     </div>
   );
 }
