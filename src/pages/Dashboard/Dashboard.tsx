@@ -20,7 +20,6 @@ function Dashboard() {
     undefined
   );
   const [updateList, setUpdateList] = useState(true);
-  const [participantAddText, setParticipantAddText] = useState("");
 
   const onAddStudy = () => {
     setShowAddStudyModal(true);
@@ -67,10 +66,7 @@ function Dashboard() {
             <div className="mb-2" key={idx}>
               <StudyTitlePanel study={study} />
               <AppointmentPanel study={study} />
-              <CoordinatorsPanel
-                value={participantAddText}
-                valueSetter={setParticipantAddText}
-              />
+              <CoordinatorsPanel studyName={study.studyName} />
               <ul className="mb-4 text-lg">
                 {study.leadResearchers.map((researcher, idx) => {
                   return (
@@ -126,25 +122,32 @@ function StatisticsPanel({ study }: { study: IStudy }) {
   );
 }
 
-function CoordinatorsPanel({
-  value,
-  valueSetter,
-}: {
-  value: string;
-  valueSetter: React.Dispatch<React.SetStateAction<string>>;
-}) {
+function CoordinatorsPanel({ studyName }: { studyName: string }) {
+  const [participantAddText, setParticipantAddText] = useState("");
+  const studyCtx = useStudy();
+  const addCurrentCoordinator = () => {
+    studyCtx?.addCoordinators({
+      studyName,
+      leadResearchers: [participantAddText],
+    });
+    /* window.location.reload(); */
+  };
+
   return (
     <div className="mt-2">
       <h4 className="my-auto text-xl">Current Coordinators:</h4>
       <div className="flex w-1/3 mt-2 space-x-2">
         {" "}
         <Input
-          value={value}
-          valueSetter={valueSetter}
+          value={participantAddText}
+          valueSetter={setParticipantAddText}
           type="email"
           placeholder="janedoe@testmail.com"
         />{" "}
-        <button className="px-4 mb-2 text-white bg-orange-600 rounded hover:bg-orange-800 focus:outline-none focus:shadow-outline">
+        <button
+          onClick={addCurrentCoordinator}
+          className="px-4 mb-2 text-white bg-orange-600 rounded hover:bg-orange-800 focus:outline-none focus:shadow-outline"
+        >
           <p className="">Add</p>
         </button>
       </div>

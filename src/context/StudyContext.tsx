@@ -46,11 +46,11 @@ export function StudyProvider({ children }: Props) {
   }) {
     StudyService.update(study)
       .then(() => {
-        if (!studyState) throw new Error("error in study state");
+        /* if (!studyState) throw new Error("Error in study state");
         setStudyState({
           ...studyState,
           leadResearchers: [...studyState.leadResearchers],
-        });
+        }); */
       })
       .catch((err) => alert(err.message));
   }
