@@ -8,6 +8,7 @@ interface IAddStudyFormProps {
 
 function AddStudyForm(props: IAddStudyFormProps) {
   const [defaultInterval, setDefaultInterval] = useState(30);
+  const [apptGoals, setApptGoals] = useState(0);
 
   const onDefaultIntervalChange = (e: ChangeEvent<HTMLInputElement>) =>
     setDefaultInterval(parseInt(e.currentTarget.value));
@@ -26,7 +27,8 @@ function AddStudyForm(props: IAddStudyFormProps) {
 
     /*  Conver min and max ages into total days the represent */
     /* Since default input is set to 0, input is always defined */
-    const minTotalDays = parseInt(minDays as string) +
+    const minTotalDays =
+      parseInt(minDays as string) +
       parseInt(minMonths as string) * 30 +
       parseInt(minYears as string) * 365;
     const maxTotalDays =
@@ -65,6 +67,7 @@ function AddStudyForm(props: IAddStudyFormProps) {
         maxAgeDays: maxTotalDays,
         description,
         defaultTimeInterval: defaultIntervalInt,
+        apptGoals,
       });
     }
     props.windowClose();
@@ -114,6 +117,8 @@ function AddStudyForm(props: IAddStudyFormProps) {
             <input
               className="block w-16 p-2 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
               type="number"
+              value={apptGoals}
+              onChange={(e) => setApptGoals(parseInt(e.currentTarget.value))}
             />
           </div>
           <div className="flex items-center">

@@ -30,6 +30,7 @@ export interface ICreateStudyProps {
   maxAgeDays: number;
   description: string;
   defaultTimeInterval: number;
+  apptGoals: number;
 }
 
 /* Create a study that is linked with the logged in user. User must be authenticated. */

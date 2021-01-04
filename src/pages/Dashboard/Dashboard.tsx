@@ -136,7 +136,7 @@ function CoordinatorsPanel({
   return (
     <div className="mt-2">
       <h4 className="my-auto text-xl">Current Coordinators:</h4>
-      <div className="flex w-1/3 my-2 space-x-2">
+      <div className="flex w-1/3 mt-2 space-x-2">
         {" "}
         <Input
           value={value}
