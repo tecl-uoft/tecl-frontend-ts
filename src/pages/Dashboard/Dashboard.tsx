@@ -73,7 +73,13 @@ function Dashboard() {
               />
               <ul className="mb-4 text-lg">
                 {study.leadResearchers.map((researcher, idx) => {
-                  return <li className="flex" key={idx}>{(idx + 1) + ".  " + researcher.email}</li>;
+                  return (
+                    <li className="flex" key={idx}>{`${idx + 1}. ${
+                      researcher.email
+                    } (${researcher.firstName} ${
+                      researcher.lastName ? researcher.lastName : ""
+                    }) `}</li>
+                  );
                 })}
               </ul>
               <StatisticsPanel study={study} />
