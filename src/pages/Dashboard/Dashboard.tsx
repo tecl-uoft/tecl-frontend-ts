@@ -39,7 +39,7 @@ function Dashboard() {
   }, [updateList]);
 
   return (
-    <div className="container flex flex-col px-8 pt-4 mx-auto">
+    <div className="container flex flex-col px-8 py-4 mx-auto">
       <h1 className="mx-auto text-3xl font-bold">
         {authCtx?.authState.user &&
           authCtx.authState.user.firstName &&
