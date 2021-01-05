@@ -194,7 +194,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
               className="flex justify-between w-full mb-6 cursor-pointer"
               onClick={onCheckAnotherChildRd}
             >
-              <label className="block text-gray-700 cursor-pointer select-none text-md">
+              <label className="block font-bold text-gray-700 cursor-pointer select-none text-md">
                 Add additional children to the CSC database.
               </label>
               <input
