@@ -75,7 +75,6 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
           parseInt(time.endTime.slice(0, 2)),
           parseInt(time.endTime.slice(3, 5))
         );
-        console.log(startTime, endTime);
         const event = {
           title: eventTitle,
           start: startTime,
@@ -95,6 +94,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
           recurringInterval: interval,
         };
         studyCtx.createScheduleEvent(availability);
+        window.location.pathname = "scheduling" 
       }
 
       calendarApi.unselect();
@@ -238,7 +238,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                   onClick={onCheckAddParticipant}
                 >
                   <label className="block text-gray-700 cursor-pointer select-none text-md bold">
-                    Assign a participant to this availability.
+                    Redirect me to assign a participant to this availability.
                   </label>
                   <input
                     checked={addParticipant}
