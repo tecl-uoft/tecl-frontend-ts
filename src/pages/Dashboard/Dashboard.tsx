@@ -130,7 +130,7 @@ function CoordinatorsPanel({ studyName }: { studyName: string }) {
       studyName,
       leadResearchers: [participantAddText],
     });
-    /* window.location.reload(); */
+    window.location.reload();
   };
 
   return (
