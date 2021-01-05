@@ -186,7 +186,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
               onClick={onCheckAddInfo}
             >
               <label className="block text-gray-700 cursor-pointer select-none text-md">
-                Add this information to the Child Study Center (CSC) database.
+                Add this information to the Child Study Center* (CSC) database.
               </label>
               <input
                 checked={canAddInfo}
@@ -196,7 +196,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
               />
             </div>
             <div
-              className="flex justify-between w-full mb-6 cursor-pointer"
+              className="flex justify-between w-full cursor-pointer"
               onClick={onCheckAnotherChildRd}
             >
               <label className="block font-bold text-gray-700 cursor-pointer select-none text-md">
@@ -209,9 +209,15 @@ function AddSEventModal(props: IAddSEventModalProps) {
                 onClick={onAddAttionalChildren}
               />
             </div>
+            <label className="flex text-xs font-bold text-gray-700 select-none">
+              * The Child Study Center at the University of Toronto St. George
+              campus is a group of research labs devoted to studying various
+              aspects of developmental psychology. Collectively, we study the
+              cognitive, moral, linguistic, and social development of children.
+            </label>
           </div>
 
-          <div className="w-32 px-3 mx-auto mt-2">
+          <div className="w-32 px-3 mx-auto mt-6">
             <input
               className="px-4 py-2 font-bold text-white bg-gray-800 rounded cursor-pointer hover:text-orange-500"
               type="button"
