@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction } from "react";
 
 function Input(props: {
   value: string;
-  valueSetter: Dispatch<SetStateAction<string>>;
+  valueSetter: Dispatch<SetStateAction<string>> | ((value: string) => void);
   type: "number" | "text" | "email" | "date" | "tel";
   placeholder?: string;
   pattern?: string;

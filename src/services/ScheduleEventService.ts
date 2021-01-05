@@ -126,6 +126,7 @@ interface IUpdateScheduleEventProps {
     };
     addToSharedDB: boolean;
   };
+  additionalCSCChildren: { firstName: string; lastName: string; dob: string }[];
 }
 async function updateParticipantInfo(
   scheduleEvent: IUpdateScheduleEventProps

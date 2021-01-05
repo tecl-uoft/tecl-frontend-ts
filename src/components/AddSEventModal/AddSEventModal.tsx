@@ -3,6 +3,7 @@ import { DateTime } from "luxon";
 import React, { MouseEvent, useState } from "react";
 import ScheduleEventService from "../../services/ScheduleEventService";
 import { IStudy } from "../../services/StudyService";
+import { AddExtraChildModal } from "../AddExtraChildModal";
 import Input from "../common/Input";
 import Label from "../common/Label";
 import { FocusedModal } from "../FocusedModal";
@@ -11,6 +12,11 @@ interface IAddSEventModalProps {
   setShowAddSEventModal: React.Dispatch<React.SetStateAction<boolean>>;
   eventClick: EventApi | undefined;
   studyState: IStudy | undefined;
+}
+export interface IRegisterChild {
+  firstName: string;
+  lastName: string;
+  dob: string;
 }
 
 function AddSEventModal(props: IAddSEventModalProps) {
@@ -23,6 +29,10 @@ function AddSEventModal(props: IAddSEventModalProps) {
   const [phoneNum, setPhoneNum] = useState("");
   const [canAddInfo, setCanAddInfo] = useState(false);
   const [anotherChildRd, setAnotherChildRd] = useState(false);
+  const [showExtraChildModal, setExtraChildShowModal] = useState(false);
+  const [registerChildern, setRegisterChildern] = useState<IRegisterChild[]>([
+    { firstName: "", lastName: "", dob: "" },
+  ]);
 
   const { setShowAddSEventModal, eventClick, studyState } = props;
 
@@ -42,19 +52,21 @@ function AddSEventModal(props: IAddSEventModalProps) {
           },
           addToSharedDB: canAddInfo,
         },
+        additionalCSCChildren: registerChildern
       })
         .then(() => {
           eventClick.setProp("title", "BOOKED");
           eventClick.setProp("display", "background");
           eventClick.setProp("textColor", "#000000");
-        }).then(() => setShowAddSEventModal(false))
+        })
+        .then(() => setShowAddSEventModal(false))
         .catch((err) => alert(err));
     }
-    
   };
 
   const onCheckAddInfo = () => setCanAddInfo(!canAddInfo);
   const onCheckAnotherChildRd = () => setAnotherChildRd(!anotherChildRd);
+  const onAddAttionalChildren = () => setExtraChildShowModal(true);
 
   return (
     <div>
@@ -165,7 +177,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
               </div>
             </h3>
             <div
-              className="flex justify-between w-full cursor-pointer"
+              className="flex justify-between w-full mb-2 cursor-pointer"
               onClick={onCheckAddInfo}
             >
               <label className="block text-gray-700 cursor-pointer select-none text-md">
@@ -183,13 +195,13 @@ function AddSEventModal(props: IAddSEventModalProps) {
               onClick={onCheckAnotherChildRd}
             >
               <label className="block text-gray-700 cursor-pointer select-none text-md">
-                Redirect me so I can add another child to the CSC database.
+                Add additional children to the CSC database.
               </label>
               <input
-                onChange={onCheckAnotherChildRd}
-                checked={anotherChildRd}
-                className="w-4 h-4 mt-1 cursor-pointer"
-                type="checkbox"
+                className="px-2 py-1 text-sm font-bold text-white bg-orange-600 rounded cursor-pointer hover:bg-orange-700"
+                type="button"
+                value="Click Here"
+                onClick={onAddAttionalChildren}
               />
             </div>
           </div>
@@ -203,6 +215,13 @@ function AddSEventModal(props: IAddSEventModalProps) {
             />
           </div>
         </form>
+        {showExtraChildModal && (
+          <AddExtraChildModal
+            registerChildern={registerChildern}
+            setRegisterChildern={setRegisterChildern}
+            setShowModal={setExtraChildShowModal}
+          />
+        )}
       </FocusedModal>
     </div>
   );
