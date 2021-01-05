@@ -19,6 +19,7 @@ export interface IStudy {
   maxAgeDays: number;
   description: string;
   defaultTimeInterval: number;
+  apptGoals: number;
 }
 
 export interface ICreateStudyProps {

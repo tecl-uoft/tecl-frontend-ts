@@ -117,7 +117,7 @@ function StatisticsPanel({ study }: { study: IStudy }) {
   return (
     <div className="flex flex-col mt-2">
       <h4 className="my-auto text-xl">Statistics:</h4>
-      <p className="">Appointment Goal: 12 Appointments</p>
+      <p className="">Appointment Goals: {study.apptGoals} Appointments</p>
     </div>
   );
 }
