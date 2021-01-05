@@ -39,6 +39,11 @@ function AddSEventModal(props: IAddSEventModalProps) {
   const submitJoinStudy = (e: MouseEvent<HTMLInputElement>) => {
     /* Set event as background when it is booked */
     if (eventClick) {
+      const additionalCSCChildren =
+        registerChildern[0].firstName && registerChildern[0].dob
+          ? registerChildern
+          : [];
+
       ScheduleEventService.updateParticipantInfo({
         participantInfo: {
           calId: eventClick.id,
@@ -52,7 +57,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
           },
           addToSharedDB: canAddInfo,
         },
-        additionalCSCChildren: registerChildern
+        additionalCSCChildren,
       })
         .then(() => {
           eventClick.setProp("title", "BOOKED");
