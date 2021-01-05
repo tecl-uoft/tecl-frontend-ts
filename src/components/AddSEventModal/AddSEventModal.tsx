@@ -173,6 +173,20 @@ function AddSEventModal(props: IAddSEventModalProps) {
                 <Label text={"Date of Birth"} />
                 <Input valueSetter={setChildDob} value={childDob} type="date" />
               </div>
+              <div
+                className="flex justify-between w-full cursor-pointer"
+                onClick={onCheckAnotherChildRd}
+              >
+                <label className="block font-bold text-gray-700 cursor-pointer select-none text-md">
+                  Add additional siblings to the CSC database.
+                </label>
+                <input
+                  className="px-2 py-1 text-sm font-bold text-white bg-orange-600 rounded cursor-pointer hover:bg-orange-700"
+                  type="button"
+                  value="Click Here"
+                  onClick={onAddAttionalChildren}
+                />
+              </div>
             </div>
           </div>
           <div>
@@ -195,25 +209,11 @@ function AddSEventModal(props: IAddSEventModalProps) {
                 type="checkbox"
               />
             </div>
-            <div
-              className="flex justify-between w-full cursor-pointer"
-              onClick={onCheckAnotherChildRd}
-            >
-              <label className="block font-bold text-gray-700 cursor-pointer select-none text-md">
-                Add additional children to the CSC database.
-              </label>
-              <input
-                className="px-2 py-1 text-sm font-bold text-white bg-orange-600 rounded cursor-pointer hover:bg-orange-700"
-                type="button"
-                value="Click Here"
-                onClick={onAddAttionalChildren}
-              />
-            </div>
+
             <label className="flex text-xs font-bold text-gray-700 select-none">
               * The Child Study Center at the University of Toronto St. George
               campus is a group of research labs devoted to studying various
-              aspects of developmental psychology. Collectively, we study the
-              cognitive, moral, linguistic, and social development of children.
+              aspects of developmental psychology.
             </label>
           </div>
 

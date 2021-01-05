@@ -7,7 +7,7 @@ interface IAddStudyFormProps {
 }
 
 function AddStudyForm(props: IAddStudyFormProps) {
-  const [defaultInterval, setDefaultInterval] = useState(30);
+  const [defaultInterval, setDefaultInterval] = useState(60);
   const [apptGoals, setApptGoals] = useState(0);
 
   const onDefaultIntervalChange = (e: ChangeEvent<HTMLInputElement>) =>
