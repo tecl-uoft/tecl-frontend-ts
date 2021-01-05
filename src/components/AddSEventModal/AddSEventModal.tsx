@@ -47,10 +47,10 @@ function AddSEventModal(props: IAddSEventModalProps) {
           eventClick.setProp("title", "BOOKED");
           eventClick.setProp("display", "background");
           eventClick.setProp("textColor", "#000000");
-        })
+        }).then(() => setShowAddSEventModal(false))
         .catch((err) => alert(err));
     }
-    setShowAddSEventModal(false);
+    
   };
 
   const onCheckAddInfo = () => setCanAddInfo(!canAddInfo);
