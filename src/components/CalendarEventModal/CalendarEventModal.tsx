@@ -94,7 +94,9 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
           recurringInterval: interval,
         };
         studyCtx.createScheduleEvent(availability);
-        window.location.pathname = "scheduling" 
+        if (addParticipant) {
+          window.location.pathname = "scheduling";
+        }
       }
 
       calendarApi.unselect();
