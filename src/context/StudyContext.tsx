@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from "react";
 import ScheduleEventService, {
-  ICreateScheduleEventProps,
+  ICreateScheduleEventProps, IScheduleEvent,
 } from "../services/ScheduleEventService";
 import StudyService, { IStudy } from "../services/StudyService";
 
@@ -83,7 +83,7 @@ export function StudyProvider({ children }: Props) {
       const { title, start, end } = createScheduleEventProps;
 
       /*  Convert the input into a proper format for a schedule event */
-      const scheduleEvent = {
+      const scheduleEvent: IScheduleEvent = {
         title,
         start,
         end,
