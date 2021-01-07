@@ -94,15 +94,10 @@ function EventInfoModal(props: IEventInfoModal) {
               </div>
               <div className="w-full px-1 mb-4 md:w-1/2 md:mb-0">
                 <label className="block text-xs font-bold tracking-wide text-gray-700 uppercase">
-                  Child DOB
+                  Child Age
                 </label>
                 <div className="w-full p-1 mb-2 text-gray-700 bg-gray-200 rounded text-md">
-                  {DateTime.fromISO(
-                    scheduleEvent.participantInfo.child.dob
-                  ).toFormat("DD") +
-                    " (" +
-                    findAge(scheduleEvent.participantInfo.child.dob) +
-                    " old)"}
+                  {findAge(scheduleEvent.participantInfo.child.dob)}
                 </div>
               </div>
             </div>
