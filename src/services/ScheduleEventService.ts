@@ -37,6 +37,8 @@ export interface ICompleteScheduleEvent {
     firstName: string;
     lastName: string;
   };
+  createdBy:  { firstName: string; lastName: string; email: string };
+  dateBooked?: string;
 }
 
 async function read(eventId: string): Promise<ICompleteScheduleEvent> {
