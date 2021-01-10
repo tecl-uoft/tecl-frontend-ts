@@ -62,7 +62,7 @@ function EventInfoModal(props: IEventInfoModal) {
               <div className="w-full p-1 mb-2 text-gray-700 bg-gray-200 rounded text-md">
                 {" "}
                 {scheduleEvent.dateBooked
-                  ? DateTime.fromISO(scheduleEvent.dateBooked).toFormat("ddd")
+                  ? DateTime.fromISO(scheduleEvent.dateBooked).toFormat("DDDD")
                   : "Invalid"}{" "}
               </div>
             </div>

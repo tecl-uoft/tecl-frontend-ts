@@ -1,6 +1,8 @@
 import { EventApi } from "@fullcalendar/react";
-import React from "react";
+import { DateTime } from "luxon";
+import React, { useEffect, useState } from "react";
 import { useStudy } from "../../context/StudyContext";
+import ScheduleEventService from "../../services/ScheduleEventService";
 
 interface ICalendarRemoveModalProps {
   onCancel(): void;
@@ -10,19 +12,33 @@ interface ICalendarRemoveModalProps {
 function CalendarRemoveModal(props: ICalendarRemoveModalProps) {
   const { onCancel, eventClick } = props;
   const studyCtx = useStudy();
+  const [bookedDate, setBookedDate] = useState("");
 
-  function onClickDelete() {
+  useEffect(() => {
+    if (eventClick) {
+      ScheduleEventService.read(eventClick.id)
+        .then((event) => {
+          console.log(event);
+          setBookedDate(event.dateBooked ? event.dateBooked : "");
+        })
+        .catch(() => {
+          alert("Could not find event");
+        });
+    }
+  }, [eventClick]);
+
+  const onClickDelete = () => {
     /* eventClick?.setProp("display", "background"); */
     const calId = eventClick?.id;
-    console.log(eventClick)
+    console.log(eventClick);
     if (calId) {
       studyCtx?.removeScheduleEvent(calId);
       eventClick?.remove();
-      console.log("removed", calId)
+      console.log("removed", calId);
     }
 
     onCancel();
-  }
+  };
 
   return (
     <div className="fixed inset-0 z-10 overflow-y-auto">
@@ -85,6 +101,14 @@ function CalendarRemoveModal(props: ICalendarRemoveModalProps) {
                   Delete Event?
                 </h3>
                 <div className="mt-2">
+                  {bookedDate ? (
+                    <div className="leading-5 text-gray-800 text-md">
+                      <span className="font-bold">
+                        Warning! This appointment is already booked for:{" "}
+                      </span>
+                      <br /> {DateTime.fromISO(bookedDate).toFormat("DDD")}. <br />
+                    </div>
+                  ) : null}
                   <p className="text-sm leading-5 text-gray-500">
                     Are you sure you want to delete this event? All of your data
                     will be permanently removed. This action cannot be undone.
@@ -97,9 +121,7 @@ function CalendarRemoveModal(props: ICalendarRemoveModalProps) {
             <span className="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
               <button
                 type="button"
-                onClick={() => {
-                  onClickDelete();
-                }}
+                onClick={onClickDelete}
                 className="inline-flex justify-center w-full px-4 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red sm:text-sm sm:leading-5"
               >
                 Delete

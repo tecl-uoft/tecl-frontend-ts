@@ -37,13 +37,13 @@ function AddSEventModal(props: IAddSEventModalProps) {
   const { setShowAddSEventModal, eventClick, studyState } = props;
 
   const submitJoinStudy = (e: MouseEvent<HTMLInputElement>) => {
-    const childAgeInDays = DateTime.fromISO(childDob).diffNow("days").days * -1;
+    const childAgeInDays = Math.floor( DateTime.fromISO(childDob).diffNow("days").days) * -1;
     /* Set event as background when it is booked */
     if (
       eventClick &&
       studyState &&
-      studyState.minAgeDays > childAgeInDays &&
-      studyState.maxAgeDays < childAgeInDays
+      studyState.minAgeDays <= childAgeInDays &&
+      studyState.maxAgeDays >= childAgeInDays
     ) {
       const additionalCSCChildren =
         registerChildern[0].firstName && registerChildern[0].dob
@@ -73,6 +73,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
         .then(() => setShowAddSEventModal(false))
         .catch((err) => alert(err));
     } else {
+      console.log(childAgeInDays, studyState?.minAgeDays, studyState?.maxAgeDays)
       alert(
         "Unfortunately, due to your child's age, they cannot be part of this study."
       );
