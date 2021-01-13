@@ -67,16 +67,20 @@ function Scheduling() {
         />
       )}
       <nav className="pl-12 mx-auto mt-2 space-x-2">
-        <button
-          onClick={() => {
-            setCurrentStudy(undefined);
-          }}
-          className={`text-md font-semibold rounded-lg py-1 px-2 text-white bg-orange-500 border-4 focus:outline-none ${
-            currentStudy === undefined ? "border-gray-800" : "border-white"
-          }`}
-        >
-          Instructions
-        </button>
+        {!showNoMessage && (
+          <button
+            onClick={() => {
+              setCurrentStudy(undefined);
+            }}
+            className={`text-md font-semibold rounded-lg py-1 px-2 text-white bg-orange-500 border-4 focus:outline-none ${
+              currentStudy === undefined && !showNoMessage
+                ? "border-gray-800"
+                : "border-white"
+            }`}
+          >
+            Instructions
+          </button>
+        )}
         {allStudyList
           ? allStudyList.map((study: IStudy, idx: number) => {
               if (
@@ -88,7 +92,7 @@ function Scheduling() {
 
               return (
                 <>
-                  { (idx+1) % 4 === 0 ? <br /> : null}
+                  {(idx + 1) % 4 === 0 ? <br /> : null}
                   <button
                     onClick={() => {
                       setCurrentStudy(study);
