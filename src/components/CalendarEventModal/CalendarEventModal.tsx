@@ -26,6 +26,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
   const [interval, setInterval] = useState(0);
   const [time, setTime] = useState({ startTime: "", endTime: "" });
   const [addParticipant, setAddParticipant] = useState(false);
+  const [bookingDeadline, setBookingDeadline] = useState("");
 
   const onCheckAddParticipant = () => {
     setAddParticipant(!addParticipant);
@@ -43,6 +44,12 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
         DateTime.fromJSDate(props.selectInfo.start).toFormat("yyyy-MM-dd")
       );
     }
+    if (props.selectInfo?.endStr) {
+      setBookingDeadline(
+        DateTime.fromJSDate(props.selectInfo.end).toFormat("yyyy-MM-dd")
+      );
+    }
+
     if (props.selectInfo) {
       const startTime = DateTime.fromISO(props.selectInfo.startStr).toFormat(
         "T"
@@ -92,6 +99,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
           isRecurring: true,
           endRecurringDate,
           recurringInterval: interval,
+          bookingDeadline
         };
         studyCtx.createScheduleEvent(availability);
         if (addParticipant) {
@@ -221,7 +229,6 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                     </div>
                     <div className="px-3 mb-6 md:mb-0">
                       <Label text={"Add every week until..."} />
-                      {/* <Label text={"Parents Can Book Until…"} /> */}
                       <input
                         className="block w-full p-2 text-gray-700 bg-gray-200 border rounded cursor-text focus:outline-none focus:bg-white"
                         type="date"
@@ -236,6 +243,23 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                     </div>
                   </div>
                 )}
+                {props.selectInfo && (
+                  <div className="px-3 mb-6 md:mb-0">
+                    <Label text={"Parents Can Book Until…"} />
+                    <input
+                      className="block w-1/2 p-2 mx-auto text-gray-700 bg-gray-200 border rounded cursor-text focus:outline-none focus:bg-white"
+                      type="date"
+                      value={bookingDeadline}
+                      max={DateTime.fromJSDate(props.selectInfo.end).toFormat(
+                        "yyyy-MM-dd"
+                      )}
+                      onChange={(e) =>
+                        setBookingDeadline(e.currentTarget.value)
+                      }
+                    />
+                  </div>
+                )}
+
                 <div
                   className="flex justify-between px-8 mt-2 cursor-pointer"
                   onClick={onCheckAddParticipant}

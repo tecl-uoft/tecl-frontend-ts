@@ -22,6 +22,7 @@ export interface ICreateScheduleEventProps {
   isRecurring: boolean;
   endRecurringDate: string;
   recurringInterval: number;
+  bookingDeadline: string;
 }
 
 export interface ICompleteScheduleEvent {
@@ -37,7 +38,7 @@ export interface ICompleteScheduleEvent {
     firstName: string;
     lastName: string;
   };
-  createdBy:  { firstName: string; lastName: string; email: string };
+  createdBy: { firstName: string; lastName: string; email: string };
   dateBooked?: string;
 }
 
