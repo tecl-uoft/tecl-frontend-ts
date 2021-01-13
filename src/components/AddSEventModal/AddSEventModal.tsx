@@ -147,7 +147,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
               />
             </div>
             <div className="w-5/12 px-3 mb-2">
-              <Label text={"Phone Number (Optional)"} />
+              <Label text={"Phone (Optional)"} />
               <Input
                 valueSetter={setPhoneNum}
                 value={phoneNum}
@@ -216,7 +216,9 @@ function AddSEventModal(props: IAddSEventModalProps) {
           </div>
 
           <label className="flex text-xs font-bold text-left text-gray-700 select-none ">
-            * The Child Study Center (CSC) at the University of Toronto St.
+            *Sharing data will allow you to receive information about upcoming
+            experiments available to you and your children! <br />
+            *The Child Study Center (CSC) at the University of Toronto St.
             George campus is a group of research labs devoted to studying
             various aspects of developmental psychology.
           </label>
