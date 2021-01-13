@@ -174,7 +174,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                 <div className="flex -mx-3 ">
                   <div className="flex flex-col w-full px-3 mb-2 md:mb-0">
                     <label className="w-full mb-4 text-lg font-bold tracking-wide text-gray-700">
-                      Update time availability as needed.
+                      Add time availability as needed.
                     </label>
                     {selectInfo && (
                       <div className="flex items-end justify-center w-full">
@@ -220,7 +220,8 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                       </div>
                     </div>
                     <div className="px-3 mb-6 md:mb-0">
-                      <Label text={"Parents Can Book Until…"} />
+                      <Label text={"Add every week until..."} />
+                      {/* <Label text={"Parents Can Book Until…"} /> */}
                       <input
                         className="block w-full p-2 text-gray-700 bg-gray-200 border rounded cursor-text focus:outline-none focus:bg-white"
                         type="date"
