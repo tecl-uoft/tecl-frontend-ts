@@ -185,16 +185,18 @@ function AddSEventModal(props: IAddSEventModalProps) {
               </div>
 
               <div
-                className="flex justify-between w-full px-3 mb-1 cursor-pointer"
+                className="flex justify-between w-full px-3 mb-2 cursor-pointer"
                 onClick={onCheckAddInfo}
               >
-                <label className="block text-gray-700 cursor-pointer select-none text-md">
-                  Add this information to the CSC* Database.
+                <label className="block text-sm text-left text-gray-700 cursor-pointer select-none">
+                  I would like to be added to the Child Study Center (CSC)
+                  Database <br /> so I can hear about more fun online studies for my
+                  child!
                 </label>
                 <input
                   checked={canAddInfo}
                   onChange={onCheckAddInfo}
-                  className="w-4 h-4 mt-1 cursor-pointer"
+                  className="w-4 h-4 mt-2 cursor-pointer"
                   type="checkbox"
                 />
               </div>
@@ -202,13 +204,13 @@ function AddSEventModal(props: IAddSEventModalProps) {
                 className="flex justify-between w-full px-3"
                 onClick={onCheckAnotherChildRd}
               >
-                <label className="block text-gray-700 select-none text-md">
-                  Add additional siblings to the CSC* Database.
+                <label className="block text-sm text-gray-700 select-none">
+                  I would like to add siblings to the CSC Database.
                 </label>
                 <input
                   className="px-2 py-1 text-sm font-bold text-white bg-orange-600 rounded cursor-pointer hover:bg-orange-700"
                   type="button"
-                  value="Click Here"
+                  value="Add another child"
                   onClick={onAddAttionalChildren}
                 />
               </div>
@@ -216,8 +218,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
           </div>
 
           <label className="flex text-xs font-bold text-left text-gray-700 select-none ">
-            *Sharing data will allow you to receive information about upcoming
-            experiments available to you and your children! The Child Study Center (CSC) at the University of Toronto St.
+            *The Child Study Center (CSC) at the University of Toronto St.
             George campus is a group of research labs devoted to studying
             various aspects of developmental psychology.
           </label>
