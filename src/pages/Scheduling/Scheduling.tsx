@@ -126,7 +126,7 @@ function Scheduling() {
                   {currentStudy.description}
                 </div>
               </h3>
-              <h3 className="flex flex-col text-xl">
+              <h3 className="flex flex-col text-lg">
                 <div className="underline max-w-1/3">Required Age Range</div>
                 <div className="w-64 pl-4 text-lg">
                   {" "}
