@@ -67,6 +67,16 @@ function Scheduling() {
         />
       )}
       <nav className="pl-12 mx-auto mt-2 space-x-2">
+        <button
+          onClick={() => {
+            setCurrentStudy(undefined);
+          }}
+          className={`text-md font-semibold rounded-lg py-1 px-2 text-white bg-orange-500 border-4 focus:outline-none ${
+            currentStudy === undefined ? "border-gray-800" : "border-white"
+          }`}
+        >
+          Instructions
+        </button>
         {allStudyList
           ? allStudyList.map((study: IStudy, idx: number) => {
               if (
@@ -77,21 +87,24 @@ function Scheduling() {
               }
 
               return (
-                <button
-                  onClick={() => {
-                    setCurrentStudy(study);
-                  }}
-                  style={{ backgroundColor: study.keyColor }}
-                  className={`text-md font-semibold rounded-lg py-1 px-2 text-white border-4 focus:outline-none
+                <>
+                  {idx > 5 ? <br /> : null}
+                  <button
+                    onClick={() => {
+                      setCurrentStudy(study);
+                    }}
+                    style={{ backgroundColor: study.keyColor }}
+                    className={`text-md font-semibold rounded-lg py-1 px-2 text-white border-4 focus:outline-none
                 ${
                   currentStudy && currentStudy.studyName === study.studyName
                     ? "border-gray-800"
                     : "border-white"
                 }`}
-                  key={idx}
-                >
-                  {study.studyName}
-                </button>
+                    key={idx}
+                  >
+                    {study.studyName}
+                  </button>
+                </>
               );
             })
           : null}
@@ -138,39 +151,7 @@ function Scheduling() {
           later!
         </h3>
       )}
-      {!showNoMessage && !currentStudy && (
-        <>
-          <h1 className="mx-auto mt-4 text-4xl font-bold text-gray-800 underline">
-            {" "}
-            Instructions{" "}
-          </h1>
-          <ol className="flex flex-col my-4 space-y-4 text-2xl">
-            <li>
-              <strong>Step 1.</strong> Click on one the colored buttons at the
-              top, depending on the study you want to pick.
-            </li>
-            <li>
-              <strong>Step 2.</strong> Read the age requirements and study
-              description before signing up for the study.{" "}
-            </li>
-            <li>
-              <strong>Step 3.</strong> Scroll or leaf through the interactive
-              calendar and find available spots for the study. The time
-              intervals should have the same color as the button selected in
-              step 1.
-            </li>
-            <li>
-              <strong>Step 4. </strong>Click on the time interval that best
-              suits you needs and fill out the information asked within the
-              form!
-            </li>
-            <li>
-              <strong>Step 5. </strong> Wait for an email with the link to your
-              online meetup!
-            </li>
-          </ol>
-        </>
-      )}
+      {!showNoMessage && !currentStudy && <Instructions />}
     </div>
   );
 }
@@ -196,6 +177,40 @@ function getAgeFormat(ageDays: number) {
     ageString += totalDays === 1 ? " day" : " days";
   }
   return ageString;
+}
+
+function Instructions() {
+  return (
+    <>
+      <h1 className="ml-4 text-4xl font-bold text-center text-gray-800 underline">
+        {" "}
+        Instructions{" "}
+      </h1>
+      <ol className="flex flex-col my-4 space-y-4 text-2xl">
+        <li>
+          <strong>Step 1.</strong> Click on one the colored buttons at the top,
+          depending on the study you want to pick.
+        </li>
+        <li>
+          <strong>Step 2.</strong> Read the age requirements and study
+          description before signing up for the study.{" "}
+        </li>
+        <li>
+          <strong>Step 3.</strong> Scroll or leaf through the interactive
+          calendar and find available spots for the study. The time intervals
+          should have the same color as the button selected in step 1.
+        </li>
+        <li>
+          <strong>Step 4. </strong>Click on the time interval that best suits
+          you needs and fill out the information asked within the form!
+        </li>
+        <li>
+          <strong>Step 5. </strong> Wait for an email with the link to your
+          online meetup!
+        </li>
+      </ol>
+    </>
+  );
 }
 
 export default Scheduling;
