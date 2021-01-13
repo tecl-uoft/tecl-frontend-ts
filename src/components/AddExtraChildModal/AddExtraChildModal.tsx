@@ -47,15 +47,16 @@ function AddExtraChildModal({
   const onFinish = () => {
     setShowModal(false);
   };
+  const onExit = () => setShowModal(false)
 
   return (
     <FocusedModal setShowModal={setShowModal}>
       <div className="flex justify-end">
         <div
-          className="h-6 px-2 text-white bg-red-300 rounded cursor-pointer hover:bg-red-500"
-          onClick={() => setShowModal(false)}
+          className="h-8 px-4 py-1 -mt-2 -mr-2 text-white bg-red-300 rounded cursor-pointer hover:bg-red-500"
+          onClick={onExit}
         >
-          exit
+          Exit
         </div>
       </div>
       <form className="max-w-lg">
