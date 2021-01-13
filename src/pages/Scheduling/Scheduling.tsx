@@ -88,7 +88,7 @@ function Scheduling() {
 
               return (
                 <>
-                  {idx > 5 ? <br /> : null}
+                  { (idx+1) % 4 === 0 ? <br /> : null}
                   <button
                     onClick={() => {
                       setCurrentStudy(study);
@@ -102,7 +102,7 @@ function Scheduling() {
                 }`}
                     key={idx}
                   >
-                    {study.studyName}
+                    {study.studyName + " Study"}
                   </button>
                 </>
               );
