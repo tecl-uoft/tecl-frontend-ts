@@ -217,8 +217,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
 
           <label className="flex text-xs font-bold text-left text-gray-700 select-none ">
             *Sharing data will allow you to receive information about upcoming
-            experiments available to you and your children! <br />
-            *The Child Study Center (CSC) at the University of Toronto St.
+            experiments available to you and your children! The Child Study Center (CSC) at the University of Toronto St.
             George campus is a group of research labs devoted to studying
             various aspects of developmental psychology.
           </label>
