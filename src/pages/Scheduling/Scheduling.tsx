@@ -150,9 +150,18 @@ function Scheduling() {
         </>
       )}
       {showNoMessage && (
-        <h3 className="pl-12 mx-auto text-4xl font-bold text-center ">
-          There are no studies availabe for you right now. <br /> Get back to us
-          later!
+        <h3 className="w-3/4 mx-auto mt-32 text-2xl font-bold text-center ">
+          There are no studies availabe for you right now. <br /> Sign up to
+          hear when new and fun online studies come out for your child at{" "}
+          <a
+            className="text-blue-600 no-underline hover:underline"
+            href="https://www.tecl.ca/sign-up"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            tecl.ca/sign-up
+          </a>{" "}
+          or get back to us later!
         </h3>
       )}
       {!showNoMessage && !currentStudy && <Instructions />}
@@ -190,7 +199,7 @@ function Instructions() {
         {" "}
         Instructions{" "}
       </h1>
-      <ol className="flex flex-col my-4 space-y-4 text-2xl">
+      <ol className="flex flex-col my-4 space-y-2 text-xl">
         <li>
           <strong>Step 1.</strong> Click on one the colored buttons at the top,
           depending on the study you want to pick.
@@ -211,6 +220,21 @@ function Instructions() {
         <li>
           <strong>Step 5. </strong> Wait for an email with the link to your
           online meetup!
+        </li>
+        <li>
+          <strong className="text-2xl">
+            Sign up to hear when new and fun online studies come out for your
+            child at{" "}
+            <a
+              className="text-blue-600 no-underline hover:underline"
+              href="https://www.tecl.ca/sign-up"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              tecl.ca/sign-up
+            </a>
+            !
+          </strong>
         </li>
       </ol>
     </>
