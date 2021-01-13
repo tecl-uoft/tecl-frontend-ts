@@ -37,7 +37,8 @@ function AddSEventModal(props: IAddSEventModalProps) {
   const { setShowAddSEventModal, eventClick, studyState } = props;
 
   const submitJoinStudy = (e: MouseEvent<HTMLInputElement>) => {
-    const childAgeInDays = Math.floor( DateTime.fromISO(childDob).diffNow("days").days) * -1;
+    const childAgeInDays =
+      Math.floor(DateTime.fromISO(childDob).diffNow("days").days) * -1;
     /* Set event as background when it is booked */
     if (
       eventClick &&
@@ -73,7 +74,11 @@ function AddSEventModal(props: IAddSEventModalProps) {
         .then(() => setShowAddSEventModal(false))
         .catch((err) => alert(err));
     } else {
-      console.log(childAgeInDays, studyState?.minAgeDays, studyState?.maxAgeDays)
+      console.log(
+        childAgeInDays,
+        studyState?.minAgeDays,
+        studyState?.maxAgeDays
+      );
       alert(
         "Unfortunately, due to your child's age, they cannot be part of this study."
       );
@@ -83,18 +88,11 @@ function AddSEventModal(props: IAddSEventModalProps) {
   const onCheckAddInfo = () => setCanAddInfo(!canAddInfo);
   const onCheckAnotherChildRd = () => setAnotherChildRd(!anotherChildRd);
   const onAddAttionalChildren = () => setExtraChildShowModal(true);
+  const onFormCancel = () => setShowAddSEventModal(false);
 
   return (
     <div>
       <FocusedModal setShowModal={setShowAddSEventModal}>
-        <div className="flex justify-end -mb-4">
-          <div
-            className="h-6 px-2 text-white bg-red-300 rounded cursor-pointer hover:bg-red-500"
-            onClick={() => setShowAddSEventModal(false)}
-          >
-            exit
-          </div>
-        </div>
         <h1 className="flex justify-center mx-2 mb-1 text-xl">
           {" "}
           Join study:{" "}
@@ -120,7 +118,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
             Parent Information
           </h2>
 
-          <div className="flex flex-wrap mb-2 -mx-3">
+          <div className="flex flex-wrap mb-1 -mx-3">
             <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
               <Label text={"First Name"} />
               <Input
@@ -148,7 +146,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
                 placeholder={"bob@joemail.com"}
               />
             </div>
-            <div className="w-5/12 px-3 mb-4">
+            <div className="w-5/12 px-3 mb-2">
               <Label text={"Phone Number (Optional)"} />
               <Input
                 valueSetter={setPhoneNum}
@@ -159,7 +157,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
               />
             </div>
           </div>
-          <h3 className="flex justify-between block px-4 py-1 my-2 text-lg font-bold text-gray-700 bg-orange-300 rounded">
+          <h3 className="flex justify-between block px-4 py-1 mb-2 text-lg font-bold text-gray-700 bg-orange-300 rounded">
             <div className="mx-auto my-auto">Child Information</div>
           </h3>
           <div className="mb-2">
@@ -180,16 +178,32 @@ function AddSEventModal(props: IAddSEventModalProps) {
                   type="text"
                 />
               </div>
+
               <div className="w-full px-3">
                 <Label text={"Date of Birth"} />
                 <Input valueSetter={setChildDob} value={childDob} type="date" />
               </div>
+
               <div
-                className="flex justify-between w-full cursor-pointer"
+                className="flex justify-between w-full px-3 mb-1 cursor-pointer"
+                onClick={onCheckAddInfo}
+              >
+                <label className="block text-gray-700 cursor-pointer select-none text-md">
+                  Add this information to the CSC* Database.
+                </label>
+                <input
+                  checked={canAddInfo}
+                  onChange={onCheckAddInfo}
+                  className="w-4 h-4 mt-1 cursor-pointer"
+                  type="checkbox"
+                />
+              </div>
+              <div
+                className="flex justify-between w-full px-3"
                 onClick={onCheckAnotherChildRd}
               >
-                <label className="block font-bold text-gray-700 cursor-pointer select-none text-md">
-                  Add additional siblings to the CSC database.
+                <label className="block text-gray-700 select-none text-md">
+                  Add additional siblings to the CSC* Database.
                 </label>
                 <input
                   className="px-2 py-1 text-sm font-bold text-white bg-orange-600 rounded cursor-pointer hover:bg-orange-700"
@@ -200,41 +214,29 @@ function AddSEventModal(props: IAddSEventModalProps) {
               </div>
             </div>
           </div>
-          <div>
-            <h3 className="flex justify-between block px-4 text-lg font-bold text-gray-700 ">
-              <div className="mx-auto my-auto">
-                Want to join similar studies?
-              </div>
-            </h3>
-            <div
-              className="flex justify-between w-full mb-2 cursor-pointer"
-              onClick={onCheckAddInfo}
-            >
-              <label className="block text-gray-700 cursor-pointer select-none text-md">
-                Add this information to the Child Study Center* (CSC) database.
-              </label>
+
+          <label className="flex text-xs font-bold text-left text-gray-700 select-none ">
+            * The Child Study Center (CSC) at the University of Toronto St.
+            George campus is a group of research labs devoted to studying
+            various aspects of developmental psychology.
+          </label>
+          <div className="flex justify-center mx-2 mt-2 space-x-4">
+            <div className="w-32 px-3">
               <input
-                checked={canAddInfo}
-                onChange={onCheckAddInfo}
-                className="w-4 h-4 mt-1 cursor-pointer"
-                type="checkbox"
+                className="px-4 py-2 font-bold text-gray-800 bg-white border-2 border-gray-800 border-opacity-75 rounded cursor-pointer hover:border-orange-500 hover:text-orange-500"
+                type="button"
+                value="Cancel"
+                onClick={onFormCancel}
               />
             </div>
-
-            <label className="flex text-xs font-bold text-gray-700 select-none">
-              * The Child Study Center at the University of Toronto St. George
-              campus is a group of research labs devoted to studying various
-              aspects of developmental psychology.
-            </label>
-          </div>
-
-          <div className="w-32 px-3 mx-auto mt-6">
-            <input
-              className="px-4 py-2 font-bold text-white bg-gray-800 rounded cursor-pointer hover:text-orange-500"
-              type="button"
-              value="Submit"
-              onClick={submitJoinStudy}
-            />
+            <div className="w-32 px-3">
+              <input
+                className="px-4 py-2 font-bold text-white bg-gray-800 rounded cursor-pointer hover:text-orange-500"
+                type="button"
+                value="Submit"
+                onClick={submitJoinStudy}
+              />
+            </div>
           </div>
         </form>
         {showExtraChildModal && (
