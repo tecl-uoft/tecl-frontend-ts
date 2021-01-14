@@ -72,13 +72,15 @@ function Scheduling() {
             onClick={() => {
               setCurrentStudy(undefined);
             }}
-            className={`text-md font-semibold rounded-lg py-1 px-2 text-white bg-orange-500 border-4 focus:outline-none ${
+            className={`text-md font-semibold rounded-lg text-white bg-orange-500 border-4 focus:outline-none ${
               currentStudy === undefined && !showNoMessage
                 ? "border-gray-800"
                 : "border-white"
             }`}
           >
-            Instructions
+            <div className="w-full px-2 py-1 border-2 border-white rounded-lg">
+              Instructions
+            </div>
           </button>
         )}
         {allStudyList
@@ -93,12 +95,13 @@ function Scheduling() {
               return (
                 <>
                   {(idx + 1) % 4 === 0 ? <br /> : null}
+
                   <button
                     onClick={() => {
                       setCurrentStudy(study);
                     }}
                     style={{ backgroundColor: study.keyColor }}
-                    className={`text-md font-semibold rounded-lg py-1 px-2 text-white border-4 focus:outline-none
+                    className={`text-md font-semibold rounded-lg text-white border-4 focus:outline-none
                 ${
                   currentStudy && currentStudy.studyName === study.studyName
                     ? "border-gray-800"
@@ -106,7 +109,9 @@ function Scheduling() {
                 }`}
                     key={idx}
                   >
-                    {study.studyName + " Study"}
+                    <div className="w-full px-2 py-1 border-2 border-white rounded-lg">
+                      {study.studyName + " Study"}
+                    </div>
                   </button>
                 </>
               );
