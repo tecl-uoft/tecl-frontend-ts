@@ -74,11 +74,6 @@ function AddSEventModal(props: IAddSEventModalProps) {
         .then(() => setShowAddSEventModal(false))
         .catch((err) => alert(err));
     } else {
-      console.log(
-        childAgeInDays,
-        studyState?.minAgeDays,
-        studyState?.maxAgeDays
-      );
       alert(
         "Unfortunately, due to your child's age, they cannot be part of this study."
       );
@@ -190,8 +185,8 @@ function AddSEventModal(props: IAddSEventModalProps) {
               >
                 <label className="block text-sm text-left text-gray-700 cursor-pointer select-none">
                   I would like to be added to the Child Study Center (CSC)
-                  Database <br /> so I can hear about more fun online studies for my
-                  child!
+                  Database <br /> so I can hear about more fun online studies
+                  for my child!
                 </label>
                 <input
                   checked={canAddInfo}
