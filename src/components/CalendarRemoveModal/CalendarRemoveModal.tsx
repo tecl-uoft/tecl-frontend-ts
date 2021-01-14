@@ -34,7 +34,6 @@ function CalendarRemoveModal(props: ICalendarRemoveModalProps) {
     if (calId) {
       studyCtx?.removeScheduleEvent(calId);
       eventClick?.remove();
-      console.log("removed", calId);
     }
 
     onCancel();
@@ -94,12 +93,12 @@ function CalendarRemoveModal(props: ICalendarRemoveModalProps) {
                 </svg>
               </div>
               <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                <h3
+                {eventClick?.start && eventClick?.end ? <h3
                   className="text-lg font-medium leading-6 text-gray-900"
                   id="modal-headline"
                 >
-                  Delete Event?
-                </h3>
+                  Delete event at: <br /> { DateTime.fromJSDate(eventClick.start).toFormat("ff") + " - " +  DateTime.fromJSDate(eventClick.end).toFormat("t") }?
+                </h3> : null}
                 <div className="mt-2">
                   {bookedDate ? (
                     <div className="leading-5 text-gray-800 text-md">
