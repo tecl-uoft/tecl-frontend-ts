@@ -73,6 +73,7 @@ async function create(
       },
       body: JSON.stringify({ studyName, scheduleEvent }),
     });
+    console.log(res)
     if (!res.ok || res.status !== 201) {
       throw Error("Expected HTTP error status 201, got:" + res.status);
     }

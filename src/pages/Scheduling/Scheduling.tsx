@@ -93,7 +93,7 @@ function Scheduling() {
               }
 
               return (
-                <>
+                <React.Fragment key={idx}>
                   {(idx + 1) % 4 === 0 ? <br /> : null}
 
                   <button
@@ -107,13 +107,12 @@ function Scheduling() {
                     ? "border-gray-800"
                     : "border-white"
                 }`}
-                    key={idx}
                   >
                     <div className="w-full px-2 py-1 border-2 border-white rounded-lg">
                       {study.studyName + " Study"}
                     </div>
                   </button>
-                </>
+                </React.Fragment>
               );
             })
           : null}
