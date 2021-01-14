@@ -72,7 +72,7 @@ function Scheduling() {
             onClick={() => {
               setCurrentStudy(undefined);
             }}
-            className={`text-md font-semibold rounded-lg text-white bg-orange-500 border-4 focus:outline-none ${
+            className={`text-md font-semibold mb-1 rounded-lg text-white bg-orange-500 border-4 focus:outline-none ${
               currentStudy === undefined && !showNoMessage
                 ? "border-gray-800"
                 : "border-white"
