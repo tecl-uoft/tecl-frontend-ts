@@ -110,7 +110,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
           res(studyCtx.createScheduleEvent(availability))
         }).then(() => {
           if (addParticipant) {
-            /* setShowAddSEventModal(true); */
+            setShowAddSEventModal(false);
             window.location.pathname = "scheduling";
           }
         })
