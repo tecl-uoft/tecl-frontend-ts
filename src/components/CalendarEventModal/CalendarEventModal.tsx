@@ -1,4 +1,4 @@
-import { DateSelectArg } from "@fullcalendar/react";
+import { DateSelectArg, EventApi } from "@fullcalendar/react";
 import React, {
   ChangeEvent,
   Dispatch,
@@ -11,6 +11,7 @@ import { useStudy } from "../../context/StudyContext";
 import { ICreateScheduleEventProps } from "../../services/ScheduleEventService";
 import { DateTime } from "luxon";
 import Label from "../common/Label";
+import { AddSEventModal } from "../AddSEventModal";
 
 interface ICalendarEventModalProps {
   selectInfo: DateSelectArg | undefined;
@@ -27,6 +28,8 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
   const [time, setTime] = useState({ startTime: "", endTime: "" });
   const [addParticipant, setAddParticipant] = useState(false);
   const [bookingDeadline, setBookingDeadline] = useState("");
+  const [eventAPI, setEventAPI] = useState<null | EventApi>(null);
+  const [showAddSEventModal, setShowAddSEventModal] = useState(false);
 
   const onCheckAddParticipant = () => {
     setAddParticipant(!addParticipant);
@@ -90,7 +93,8 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
           color: studyCtx.studyState.keyColor,
         };
         /* Add study state locally to calendar */
-        calendarApi.addEvent(event);
+        const newEvent = calendarApi.addEvent(event);
+        setEventAPI(newEvent);
         /* Send request to add state to database */
         const availability: ICreateScheduleEventProps = {
           start: new Date(startTime).toISOString(),
@@ -99,16 +103,17 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
           isRecurring: true,
           endRecurringDate,
           recurringInterval: interval,
-          bookingDeadline
+          bookingDeadline,
         };
         studyCtx.createScheduleEvent(availability);
         if (addParticipant) {
-          window.location.pathname = "scheduling";
+          setShowAddSEventModal(true);
+          /* window.location.pathname = "scheduling"; */
         }
       }
 
-      calendarApi.unselect();
-      props.setShowEventModal(false);
+      /* calendarApi.unselect();
+      props.setShowEventModal(false); */
     }
   };
 
@@ -265,7 +270,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                   onClick={onCheckAddParticipant}
                 >
                   <label className="block text-gray-700 cursor-pointer select-none text-md bold">
-                    Redirect me to assign a participant to this availability.
+                    Assign a participant to this availability myself.
                   </label>
                   <input
                     checked={addParticipant}
@@ -299,6 +304,13 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
           </div>
         </div>
       </div>
+      {eventAPI && showAddSEventModal && (
+        <AddSEventModal
+          setShowAddSEventModal={props.setShowEventModal}
+          studyState={studyCtx?.studyState}
+          eventClick={eventAPI}
+        />
+      )}
     </>
   );
 }

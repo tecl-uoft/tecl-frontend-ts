@@ -102,7 +102,6 @@ export function StudyProvider({ children }: Props) {
           });
         })
         .catch((err) => {
-          console.log(err)
           alert(`Error in Study context, Received: ${err.message}`);
         });
       return;
