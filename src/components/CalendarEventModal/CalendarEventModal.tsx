@@ -94,6 +94,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
         };
         /* Add study state locally to calendar */
         const newEvent = calendarApi.addEvent(event);
+        console.log(newEvent?.setProp)
         setEventAPI(newEvent);
         /* Send request to add state to database */
         const availability: ICreateScheduleEventProps = {
@@ -105,11 +106,16 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
           recurringInterval: interval,
           bookingDeadline,
         };
-        studyCtx.createScheduleEvent(availability);
-        if (addParticipant) {
-          setShowAddSEventModal(true);
-          /* window.location.pathname = "scheduling"; */
-        }
+        new Promise((res, rej) => {
+          res(studyCtx.createScheduleEvent(availability))
+        }).then(() => {
+          if (addParticipant) {
+            /* setShowAddSEventModal(true); */
+            window.location.pathname = "scheduling";
+          }
+        })
+        
+        
       }
 
       /* calendarApi.unselect();
