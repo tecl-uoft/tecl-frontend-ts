@@ -113,9 +113,11 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
             setShowAddSEventModal(false);
             window.location.pathname = "scheduling";
           }
+        }).then(() => {
+          props.setShowEventModal(false);
         })
-        
-        
+
+
       }
 
       /* calendarApi.unselect();
