@@ -94,7 +94,6 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
         };
         /* Add study state locally to calendar */
         const newEvent = calendarApi.addEvent(event);
-        console.log(newEvent?.setProp)
         setEventAPI(newEvent);
         /* Send request to add state to database */
         const availability: ICreateScheduleEventProps = {
@@ -258,18 +257,22 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                 )}
                 {props.selectInfo && (
                   <div className="px-3 mb-6 md:mb-0">
-                    <Label text={"Parents Can Book Until…"} />
-                    <input
-                      className="block w-1/2 p-2 mx-auto text-gray-700 bg-gray-200 border rounded cursor-text focus:outline-none focus:bg-white"
-                      type="date"
+                    <Label text={"When is the booking deadline for parents?"} />
+                    <select
+                      className="block w-1/2 p-2 mx-auto text-gray-700 bg-gray-200 border rounded cursor-pointer focus:outline-none focus:bg-white"
                       value={bookingDeadline}
-                      max={DateTime.fromJSDate(props.selectInfo.end).toFormat(
-                        "yyyy-MM-dd"
-                      )}
                       onChange={(e) =>
                         setBookingDeadline(e.currentTarget.value)
                       }
-                    />
+                    >
+                      {
+                        [2, 3, 4, 5, 6, 7].map((days) => {
+                          return (
+                            <option key={days} value={DateTime.local().minus({ days }).toFormat("yyyy-MM-dd")}>{days} days before availability</option>
+                          )
+                        })
+                      }
+                    </select>
                   </div>
                 )}
 
