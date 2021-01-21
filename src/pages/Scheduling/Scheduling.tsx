@@ -66,17 +66,16 @@ function Scheduling() {
           setGivenAge={setGivenAge}
         />
       )}
-      <nav className="pl-12 mx-auto mt-2 space-x-2">
+      <nav className="md:pl-12 mx-auto mt-2 md:space-x-2">
         {!showNoMessage && (
           <button
             onClick={() => {
               setCurrentStudy(undefined);
             }}
-            className={`text-md font-semibold mb-1 rounded-lg text-white bg-orange-500 border-4 focus:outline-none ${
-              currentStudy === undefined && !showNoMessage
-                ? "border-gray-800"
-                : "border-white"
-            }`}
+            className={`text-md font-semibold mb-1 rounded-lg text-white bg-orange-500 border-4 focus:outline-none ${currentStudy === undefined && !showNoMessage
+              ? "border-gray-800"
+              : "border-white"
+              }`}
           >
             <div className="w-full px-2 py-1 border-2 border-white rounded-lg">
               Instructions
@@ -85,72 +84,73 @@ function Scheduling() {
         )}
         {allStudyList
           ? allStudyList.map((study: IStudy, idx: number) => {
-              if (
-                givenAge &&
-                (givenAge < study.minAgeDays || givenAge > study.maxAgeDays)
-              ) {
-                return null;
-              }
+            if (
+              givenAge &&
+              (givenAge < study.minAgeDays || givenAge > study.maxAgeDays)
+            ) {
+              return null;
+            }
 
-              return (
-                <React.Fragment key={idx}>
-                  {(idx + 1) % 4 === 0 ? <br /> : null}
+            return (
+              <React.Fragment key={idx}>
+                {(idx + 1) % 4 === 0 ? <br /> : null}
 
-                  <button
-                    onClick={() => {
-                      setCurrentStudy(study);
-                    }}
-                    style={{ backgroundColor: study.keyColor }}
-                    className={`text-md font-semibold rounded-lg text-white border-4 focus:outline-none
-                ${
-                  currentStudy && currentStudy.studyName === study.studyName
-                    ? "border-gray-800"
-                    : "border-white"
-                }`}
-                  >
-                    <div className="w-full px-2 py-1 border-2 border-white rounded-lg">
-                      {study.studyName + " Study"}
-                    </div>
-                  </button>
-                </React.Fragment>
-              );
-            })
+                <button
+                  onClick={() => {
+                    setCurrentStudy(study);
+                  }}
+                  style={{ backgroundColor: study.keyColor }}
+                  className={`text-md font-semibold rounded-lg text-white border-4 focus:outline-none
+                ${currentStudy && currentStudy.studyName === study.studyName
+                      ? "border-gray-800"
+                      : "border-white"
+                    }`}
+                >
+                  <div className="w-full px-2 py-1 border-2 border-white rounded-lg">
+                    {study.studyName + " Study"}
+                  </div>
+                </button>
+              </React.Fragment>
+            );
+          })
           : null}
       </nav>
       {currentStudy && (
         <>
-          <div className="flex flex-col mb-3">
-            <h3 className="pl-12 mx-auto text-4xl font-bold underline ">
+          <div className="flex flex-col md:mb-3">
+            <h3 className="md:pl-12 text-center text-4xl font-bold underline">
               {`${currentStudy.studyName}`} Schedule
             </h3>
-            <div className="flex justify-between w-full">
-              <div className="w-64 h-32 text-xl"></div>
-              <h3 className="h-32 text-xl">
-                <div className="w-full px-4 text-lg">
+            <div className="flex md:flex-row flex-col md:space-y-0 space-y-4 justify-between w-full pb-4 md:py-0">
+              <div className="w-64 md:h-32 text-xl"></div>
+              <h3 className="md:h-32 md:text-xl text-center">
+                <div className="w-full md:px-4 text-lg">
                   {currentStudy.description}
                 </div>
               </h3>
-              <h3 className="flex flex-col text-lg">
+              <h3 className="flex flex-col text-lg md:text-left text-center">
                 <div className="underline max-w-1/3">Required Age Range</div>
-                <div className="w-64 pl-4 text-lg">
+                <div className="w-64 mx-auto text-lg">
                   {" "}
                   {
-                    <>
+                    <div className="flex flex-col text-left md:ml-4">
                       {" "}
-                      From: {getAgeFormat(currentStudy.minAgeDays)} <br />
-                      To: {"  "}
-                      {getAgeFormat(currentStudy.maxAgeDays)}{" "}
-                    </>
+                      <div> <strong>From</strong>: {getAgeFormat(currentStudy.minAgeDays)} </div>
+                      <div> <strong>To</strong>: {"  "}
+                        {getAgeFormat(currentStudy.maxAgeDays)}{" "}</div>
+                    </div>
                   }
                 </div>
                 <div className="mt-1 underline">Current Time Zone</div>
-                <div className="block w-full pl-4 text-lg">
+                <div className="block w-full md:pl-4 text-lg">
                   {DateTime.local().toFormat("ZZZZZ (ZZZZ)")}
                 </div>
               </h3>
             </div>
           </div>
-          <MeetingCalendar studyState={currentStudy} />
+          <div className="-mx-3">
+            <MeetingCalendar studyState={currentStudy} />
+          </div>
         </>
       )}
       {showNoMessage && (
