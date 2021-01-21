@@ -70,11 +70,9 @@ function Dashboard() {
               <ul className="mb-4 text-lg">
                 {study.leadResearchers.map((researcher, idx) => {
                   return (
-                    <li className="flex" key={idx}>{`${idx + 1}. ${
-                      researcher.email
-                    } (${researcher.firstName} ${
-                      researcher.lastName ? researcher.lastName : ""
-                    }) `}</li>
+                    <li className="flex" key={idx}>{`${idx + 1}. ${researcher.email
+                      } (${researcher.firstName} ${researcher.lastName ? researcher.lastName : ""
+                      }) `}</li>
                   );
                 })}
               </ul>
@@ -133,10 +131,25 @@ function CoordinatorsPanel({ studyName }: { studyName: string }) {
     window.location.reload();
   };
 
+  const onCoordinatorEnter = (e: React.KeyboardEvent<HTMLDivElement>) => {
+
+    if (e.key === "Enter") {
+      if (participantAddText === "") {
+        alert("Empty box");
+        return;
+      }
+      // Cancel the default action, if needed
+      e.preventDefault();
+      // Trigger the button element with a click
+      addCurrentCoordinator();
+    }
+
+  }
+
   return (
     <div className="mt-2">
-      <h4 className="my-auto text-xl">Add additional RAs:</h4>
-      <div className="flex w-1/3 mt-2 space-x-2">
+      <h4 className="my-auto text-xl">Add Additional RAs:</h4>
+      <div className="flex w-1/3 mt-2 space-x-2" onKeyPress={onCoordinatorEnter}>
         {" "}
         <Input
           value={participantAddText}
@@ -228,9 +241,8 @@ function AppointmentPanel({ study }: { study: IStudy }) {
                   new Date(event.start) >= new Date() && (
                     <tr
                       key={idx}
-                      className={`hover:shadow-md hover:text-red-800 cursor-pointer ${
-                        idx % 2 === 0 && "bg-orange-200"
-                      }`}
+                      className={`hover:shadow-md hover:text-red-800 cursor-pointer ${idx % 2 === 0 && "bg-orange-200"
+                        }`}
                     >
                       <td className="px-4 py-2 text-left">
                         {event.participantInfo.child.firstName +
