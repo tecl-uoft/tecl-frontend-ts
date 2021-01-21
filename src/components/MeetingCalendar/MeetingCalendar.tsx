@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import "./meetingCalendar.css";
 import FullCalendar, { EventApi, EventClickArg } from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -6,6 +6,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { AddSEventModal } from "../AddSEventModal";
 import { IStudy } from "../../services/StudyService";
+import listPlugin from "@fullcalendar/list";
 
 interface IMeetingCalendarProps {
   studyState: IStudy | undefined;
@@ -15,21 +16,27 @@ function MeetingCalendar(props: IMeetingCalendarProps) {
   const [showAddSEventModal, setShowAddSEventModal] = useState(false);
   const [eventClick, setEventClick] = useState<undefined | EventApi>(undefined);
   const { studyState } = props;
+  const [defaultView, setDefaultView] = useState<"timeGridWeek" | "listWeek">("timeGridWeek")
 
   const handleEventClick = (clickInfo: EventClickArg) => {
     setShowAddSEventModal(true);
     setEventClick(clickInfo.event);
   };
+  useLayoutEffect(() => {
+    if (window.innerWidth < 768) {
+      setDefaultView("listWeek")
+    }
+  }, [])
 
   return (
     <div className="pb-6">
       {studyState && (
-        <div key={studyState.studyName}>
+        <div key={studyState.studyName + defaultView}>
           <FullCalendar
             headerToolbar={{
               left: "prev,next today",
               center: "title",
-              right: "dayGridMonth,timeGridWeek",
+              right: "dayGridMonth,timeGridWeek,listWeek",
             }}
             initialEvents={[
               ...studyState.scheduleEvents,
@@ -45,8 +52,8 @@ function MeetingCalendar(props: IMeetingCalendarProps) {
             allDaySlot={false}
             nowIndicator={true}
             selectable
-            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-            initialView="timeGridWeek"
+            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
+            initialView={defaultView}
             eventClick={handleEventClick}
           />
         </div>
