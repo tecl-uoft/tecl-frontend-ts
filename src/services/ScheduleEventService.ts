@@ -103,14 +103,14 @@ async function remove(calId: string): Promise<void> {
 async function openRemove(calId: string, privateHash: string): Promise<void> {
   try {
     const res = await fetch(`/api/v1/schedule-event/open`, {
-      method: "DELETE",
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ scheduleEvent: { calId, privateHash } }),
     });
-    if (!res.ok || res.status !== 202) {
-      throw Error("Expected HTTP error status 202, got:" + res.status);
+    if (!res.ok) {
+      throw Error("Expected HTTP error status 201, got:" + res.status);
     }
   } catch (err) {
     throw err;

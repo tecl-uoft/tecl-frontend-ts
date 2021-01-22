@@ -12,7 +12,7 @@ function EventCancelation() {
   >(undefined);
   const history = useHistory();
 
-  function remove() {
+  const remove = () => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const eventId = urlParams.get("eventId");
@@ -53,28 +53,7 @@ function EventCancelation() {
       {scheduleEvent && (
         <div className="mx-auto">
           <h1 className="flex justify-center m-2 text-2xl font-bold">
-            {`Information Review`}
-          </h1>
-          <h1 className="flex m-2 text-xl">
-            {`Date: 
-              ${DateTime.fromISO(scheduleEvent.start).toFormat("ff")} to 
-              ${DateTime.fromISO(scheduleEvent.end).toFormat("t ZZZZ")}`}
-          </h1>
-          <h1 className="flex mx-2 mb-2 text-xl ">
-            Link:{" "}
-            <a
-              className="mx-2 text-blue-700 underline"
-              href={scheduleEvent.meetingLink}
-            >
-              {" "}
-              {" " + scheduleEvent.meetingLink + " "}
-            </a>
-          </h1>
-          <h1 className="flex mx-2 mb-2 text-xl ">
-            Passcode:{" "}
-            {scheduleEvent.meetingPassword
-              ? ` ${scheduleEvent.meetingPassword}`
-              : " (No password)"}
+            Information Review
           </h1>
           <form className="w-full">
             <h3 className="flex justify-between block px-4 py-1 my-2 text-lg font-bold text-gray-700 bg-orange-300 rounded">
@@ -143,7 +122,7 @@ function EventCancelation() {
                     {" "}
                     {DateTime.fromISO(
                       scheduleEvent.participantInfo.child.dob
-                    ).toFormat("DD")}{" "}
+                    ).toFormat("DDD")}{" "}
                   </div>
                 </div>
                 <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
@@ -152,7 +131,7 @@ function EventCancelation() {
                   </label>
                   <div className="block w-full p-1 mb-1 text-xl text-gray-700 bg-gray-200 rounded">
                     {" "}
-                    {findAge(scheduleEvent.participantInfo.child.dob)}{" "}
+                    {findAge(scheduleEvent.participantInfo.child.dob) + " old"}{" "}
                   </div>
                 </div>
               </div>
@@ -171,7 +150,7 @@ function EventCancelation() {
               <span className="flex rounded-md shadow-sm sm:ml-3 sm:w-auto">
                 <button
                   type="button"
-                  onClick={() => {remove()}}
+                  onClick={remove}
                   className="inline-flex justify-center w-32 px-4 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red sm:text-sm sm:leading-5"
                 >
                   Remove Me
