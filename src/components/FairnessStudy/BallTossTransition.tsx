@@ -6,22 +6,32 @@ interface IBallTossTransitionProps {
 }
 
 function BallTossTransition(props: IBallTossTransitionProps) {
-  useEffect(() => {
-    window.setTimeout(() => {
-      props.nextFunc();
-    }, 3000);
-    // disabling no dep warning
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+//   useEffect(() => {
+//     window.setTimeout(() => {
+//       props.nextFunc();
+//     }, 10000);
+//     // disabling no dep warning
+//     // eslint-disable-next-line react-hooks/exhaustive-deps
+//   }, []);
   return (
-    <div className="container my-64 mx-auto px-2 pt-4">
+    <div><div className="container my-64 mx-auto px-2 pt-4">
       <p
         id="ball-toss-game-play-text"
         className="text-4xl font-bold text-center text-gray-800 mb-6"
       >
         {props.endText}
       </p>
-    </div>
+      </div>
+    <div className="flex justify-around">
+      <button
+        onClick={() => {
+          props.nextFunc();
+        }}
+        className="bg-orange-100 hover:text-orange-500 w-full font-bold rounded-lg py-4 px-8 shadow-lg uppercase tracking-wider"
+        >
+    	Next
+        </button>      
+    </div></div>
   );
 }
 

@@ -33,6 +33,19 @@ function FairnessStudy() {
 
   const [trialInfo, setTrialInfo] = useState(null as any);
   const [isLoaded, setIsLoaded] = useState(false);
+  
+  const [isKidMode, setIsKidMode] = useState(
+    process.env.NODE_ENV === "development" ? true : false
+  );
+
+  // sets game mode for kids only
+  useEffect(() => {
+    /* console.log(alienCharNames.trial1, alienCharNames) */
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get("game_type") === "kids") {
+      setIsKidMode(true);
+    }
+  }, []);  
 
   // to load in the startup api and set up all information and random information
   // for the experiments
@@ -79,7 +92,14 @@ function FairnessStudy() {
 
       // array that has 0-2 ordered randomly
       // represent Just, Unjust, Unknown trials
-      const randIdxArr = randomizedElements.trialSequence;
+	  const urlParams = new URLSearchParams(window.location.search);
+	  const inputTrialArr = urlParams.get("t");
+      const randIdxArr = 
+      (inputTrialArr === "0") ? [0, 1, 2] :
+      (inputTrialArr === "1") ? [1, 2, 0] :
+      (inputTrialArr === "2") ? [2, 0, 1] : 
+      randomizedElements.trialSequence;
+      console.log(randIdxArr)
 
       // trial where all but one alien is thrown to equally
       const trialEqual = {
@@ -136,8 +156,10 @@ function FairnessStudy() {
         }
         return trialNum;
       });
+      const inputPc = parseInt(urlParams.get("pc") || "")
+      console.log(inputPc)   
       let participantAlienType = "";
-      switch (randomizedElements.playerCharacter) {
+      switch (isKidMode ? inputPc : randomizedElements.playerCharacter) {
         case 0:
           participantAlienType = "excluding";
           break;
@@ -150,6 +172,7 @@ function FairnessStudy() {
         default:
           participantAlienType = "";
       }
+      console.log(participantAlienType)
 
       setTrialInfo({
         trialEqual,
@@ -177,7 +200,7 @@ function FairnessStudy() {
             1: (
               <BallTossTransition
                 endText={
-                  "Now, you're going to learn about some aliens that all live on the planet Bep."
+                  "First, you're going to learn about some aliens that all live on the planet Bep."
                 }
                 nextFunc={() => setTrialNum(2)}
               />
@@ -189,9 +212,9 @@ function FairnessStudy() {
                 alienC={trialInfo.trialEqual.alienC}
                 alienUser={trialInfo.trialEqual.alienUser}
                 alienCharNames={{
-                  A1: "David",
-                  A2: "Julia",
-                  B: "Maya",
+                  A1: "", //"David",
+                  A2: "", //"Julia",
+                  B: "", //"Maya",
                 }}
                 allThrowEvents={trialInfo.trialEqual.allThrowEvents}
                 setTrialFunc={() => setTrialNum(3)}
@@ -208,9 +231,9 @@ function FairnessStudy() {
                 alienC={trialInfo.trialOne.alienC}
                 alienUser={trialInfo.trialOne.alienUser}
                 alienCharNames={{
-                  A1: "Josh",
-                  A2: "Yegor",
-                  B: "Brian",
+                  A1: "", //"Josh",
+                  A2: "", //"Yegor",
+                  B: "", //"Brian",
                 }}
                 allThrowEvents={trialInfo.trialOne.allThrowEvents}
                 setTrialFunc={() => setTrialNum(4)}
@@ -228,9 +251,9 @@ function FairnessStudy() {
                 alienC={trialInfo.trialTwo.alienC}
                 alienUser={trialInfo.trialTwo.alienUser}
                 alienCharNames={{
-                  A1: "Celine",
-                  A2: "Tracey",
-                  B: "Sean",
+                  A1: "", //"Celine",
+                  A2: "", //"Tracey",
+                  B: "", //"Sean",
                 }}
                 allThrowEvents={trialInfo.trialTwo.allThrowEvents}
                 setTrialFunc={() => setTrialNum(5)}
@@ -248,9 +271,9 @@ function FairnessStudy() {
                 alienC={trialInfo.trialTwo.alienC}
                 alienUser={trialInfo.trialThree.alienUser}
                 alienCharNames={{
-                  A1: "Omar",
-                  A2: "Arpit",
-                  B: "Rebecca",
+                  A1: "", //"Omar",
+                  A2: "", //"Arpit",
+                  B: "", //"Rebecca",
                 }}
                 allThrowEvents={trialInfo.trialThree.allThrowEvents}
                 setTrialFunc={() => setTrialNum(6)}

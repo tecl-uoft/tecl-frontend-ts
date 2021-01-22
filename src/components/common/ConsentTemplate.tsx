@@ -9,6 +9,7 @@ interface IConsentTemplateProps {
   bodyComponent: React.ReactElement;
   consentFunc: Function;
   noConsentFunc: Function;
+  isKidMode?: boolean;
 }
 
 export enum ConsentChoices {

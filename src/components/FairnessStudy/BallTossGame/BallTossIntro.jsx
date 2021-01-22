@@ -10,7 +10,7 @@ function BallTossIntro(props) {
     <div>
       <h3 class="text-4xl font-bold text-center text-gray-800 mb-16">
         {isKidMode
-          ? "Here are the family names of the aliens we are watching!"
+          ? "Here are the names of the kinds of aliens we are watching!"
           : "Here are the names of their species and what they look like:"}
         {/* Now you're going to learn about some aliens that live on this planet. */}
       </h3>

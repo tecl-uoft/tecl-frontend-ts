@@ -40,7 +40,7 @@ function BallTossGame(props) {
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get("game_type") === "kids") {
       setIsKidMode(true);
-      require("./uniqueAliens.css")
+      // require("./uniqueAliens.css")
     }
   }, []);
 
@@ -106,15 +106,17 @@ function BallTossGame(props) {
               throwEvent={allThrowEvents.event1}
               leftAlien={alienA}
               isKidMode={isKidMode}
-              leftAlienFirstName={alienCharNames.A1}
+              //leftAlienFirstName={alienCharNames.A1}
               middleAlien={
                 allThrowEvents.event1 === "selfPlay" ? alienA : alienB
               }
+/* 
               middleAlienFirstName={
                 allThrowEvents.event1 === "selfPlay"
                   ? alienCharNames.A2
                   : alienCharNames.B
               }
+ */
               rightAlien={
                 {
                   selfPlay: alienB,
@@ -123,11 +125,13 @@ function BallTossGame(props) {
                   otherPlay: alienA,
                 }[allThrowEvents.event1]
               }
+/* 
               rightAlienFirstName={
                 allThrowEvents.event1 === "selfPlay"
                   ? alienCharNames.B
                   : alienCharNames.A2
               }
+ */
               nextFunc={() => setFrameCount(2)}
             />
           ),
@@ -140,15 +144,17 @@ function BallTossGame(props) {
               throwEvent={allThrowEvents.event2}
               alienTrialCharNames={alienCharNames}
               leftAlien={alienA}
-              leftAlienFirstName={alienCharNames.A1}
+              //leftAlienFirstName={alienCharNames.A1}
               middleAlien={
                 allThrowEvents.event2 === "selfPlay" ? alienA : alienB
               }
+/* 
               middleAlienFirstName={
                 allThrowEvents.event2 === "selfPlay"
                   ? alienCharNames.A2
                   : alienCharNames.B
               }
+ */
               rightAlien={
                 {
                   selfPlay: alienB,
@@ -157,11 +163,13 @@ function BallTossGame(props) {
                   otherPlay: alienA,
                 }[allThrowEvents.event2]
               }
+/* 
               rightAlienFirstName={
                 allThrowEvents.event2 === "selfPlay"
                   ? alienCharNames.B
                   : alienCharNames.A2
               }
+ */
               nextFunc={() => setFrameCount(3)}
             />
           ),
@@ -173,11 +181,11 @@ function BallTossGame(props) {
               isKidMode={isKidMode}
               throwEvent={allThrowEvents.event3}
               leftAlien={alienA}
-              leftAlienFirstName={alienCharNames.A1}
+              //leftAlienFirstName={alienCharNames.A1}
               middleAlien={alienB}
-              middleAlienFirstName={alienCharNames.B}
+              //middleAlienFirstName={alienCharNames.B}
               rightAlien={alienA}
-              rightAlienFirstName={alienCharNames.A2}
+              //rightAlienFirstName={alienCharNames.A2}
               nextFunc={() => setFrameCount(4)}
             />
           ),
