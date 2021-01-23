@@ -745,7 +745,7 @@ function BallTossPlay(props) {
         window.scrollTo(0, document.body.scrollHeight);
       },
       process.env.NODE_ENV === "development"
-        ? totalAnimationDuration
+        ? 1
         : totalAnimationDuration
     );
     // }, 1);

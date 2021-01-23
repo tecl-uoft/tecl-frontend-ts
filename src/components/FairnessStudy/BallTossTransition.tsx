@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 
 interface IBallTossTransitionProps {
   endText: string;
+  planet: string;
   nextFunc(): void;
 }
 
@@ -15,6 +16,9 @@ function BallTossTransition(props: IBallTossTransitionProps) {
 //   }, []);
   return (
     <div><div className="container my-64 mx-auto px-2 pt-4">
+      <div className="mb-0 flex justify-around">
+        <img id="planet" src={props.planet} style={{height: "300px"}} />
+      </div>
       <p
         id="ball-toss-game-play-text"
         className="text-4xl font-bold text-center text-gray-800 mb-6"

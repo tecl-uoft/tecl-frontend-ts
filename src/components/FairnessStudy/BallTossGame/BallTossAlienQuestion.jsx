@@ -9,10 +9,11 @@ function BallTossAlienQuestion(props) {
     set,
     setIngameQuestions,
     ingameQuestions,
+    isKidMode,
   } = props;
   const [likeA, setLikeA] = useState(0);
 
-  const scale = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const scale = isKidMode ? ["Not at all", "Not very much", "A little bit", "A lot"] : [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -22,12 +23,11 @@ function BallTossAlienQuestion(props) {
   return (
     <div>
       <p class="text-2xl font-bold text-center text-gray-800 mb-16">
-        This <span className="text-orange-500 inline"> {alienA.name} </span>{" "}
+        {isKidMode ? "Oh no!" : ""} This <span className="text-orange-500 inline"> {alienA.name} </span>{" "}
         says that the{" "}
         <span className="text-orange-500 inline"> {alienB.name} </span>
-        over there is selfish. <br /> On a scale of 1 to 9, how much do you
-        <span className="text-orange-500 inline"> you </span> trust this
-        <span className="text-orange-500 inline"> {alienB.name} </span> ?
+        over there is {isKidMode ? "mean" : "selfish"}. <br /> {isKidMode ? `Do you trust what this ${alienA.name} says?` : 
+        `On a scale of 1 to 9, how much do you trust this ${alienB.name}?`}
       </p>
       <div class="flex justify-around text-gray-800 text-2xl mb-16">
         <div class="">
@@ -56,9 +56,9 @@ function BallTossAlienQuestion(props) {
         })}
       </div>
       <div class="flex justify-between mb-6 px-4">
-        <p class="text-lg  text-center text-gray-800 ">Very Little</p>
-        <p class="text-lg  text-center text-gray-800 mr-8">Neutral</p>
-        <p class="text-lg  text-center text-gray-800">A Lot</p>
+        <p class="text-lg  text-center text-gray-800 ">{isKidMode ? "" : "Very little"}</p>
+        <p class="text-lg  text-center text-gray-800 mr-8">{isKidMode ? "" : "Neutral"}</p>
+        <p class="text-lg  text-center text-gray-800">{isKidMode ? "" : "A lot"}</p>
       </div>
 
       {likeA ? (

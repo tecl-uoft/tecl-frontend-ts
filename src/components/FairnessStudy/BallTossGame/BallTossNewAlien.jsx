@@ -9,9 +9,10 @@ function BallTossNewAlien(props) {
     set,
     setIngameQuestions,
     ingameQuestions,
+    isKidMode,
   } = props;
 
-  const scale = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const scale = isKidMode ? ["Not at all", "Not very much", "A little", "A lot"] : [1, 2, 3, 4, 5, 6, 7, 8, 9];
   const [likeA, setLikeA] = useState(0);
   const [likeB, setLikeB] = useState(0);
   const [scrollBot, setScrollBot] = useState(false);
@@ -33,7 +34,7 @@ function BallTossNewAlien(props) {
   return (
     <div>
       <p class="text-2xl font-bold text-center text-gray-800">
-        On a scale of 1 to 9, how much do you{" "}
+        {isKidMode ? "How much do you " : "On a scale of 1 to 9, how much do you "}
         <span className="text-orange-500 inline">{adj}</span> this {alienA.name}
         ?
       </p>
@@ -57,12 +58,12 @@ function BallTossNewAlien(props) {
         })}
       </div>
       <div class="flex justify-between mb-6 px-4">
-        <p class="text-lg  text-center text-gray-800 ">Very Little</p>
-        <p class="text-lg  text-center text-gray-800 mr-8">Neutral</p>
-        <p class="text-lg  text-center text-gray-800">A Lot</p>
+        <p class="text-lg  text-center text-gray-800 ">{isKidMode ? "" : "Very little"}</p>
+        <p class="text-lg  text-center text-gray-800 mr-8">{isKidMode ? "" : "Neutral"}</p>
+        <p class="text-lg  text-center text-gray-800">{isKidMode ? "" : "A lot"}</p>
       </div>
       <p class="text-2xl mt-16 font-bold text-center text-gray-800">
-        On a scale of 1 to 9, how much do you{" "}
+        {isKidMode ? "How much do you " : "On a scale of 1 to 9, how much do you "}
         <span className="text-orange-500 inline">{adj}</span> this {alienB.name}
         ?
       </p>
@@ -86,9 +87,9 @@ function BallTossNewAlien(props) {
         })}
       </div>
       <div class="flex justify-between mb-16 px-4">
-        <p class="text-lg  text-center text-gray-800 ">Very Little</p>
-        <p class="text-lg  text-center text-gray-800 mr-8">Neutral</p>
-        <p class="text-lg  text-center text-gray-800">A Lot</p>
+        <p class="text-lg  text-center text-gray-800 ">{isKidMode ? "" : "Very little"}</p>
+        <p class="text-lg  text-center text-gray-800 mr-8">{isKidMode ? "" : "Neutral"}</p>
+        <p class="text-lg  text-center text-gray-800">{isKidMode ? "" : "A lot"}</p>
       </div>
 
       {likeA && likeB ? (

@@ -5,6 +5,8 @@ import FairnessStudyConsent from "./FairnessStudyConsent";
 import FairnessStudyAttention from "./FairnessStudyAttention";
 import FairnessStudyFeedback from "./FairnessStudyFeedback";
 import FairnessStudyNoConsent from "./FairnessStudyNoConsent";
+import FairnessStudyMachine from "./FairnessStudyMachine";
+import FairnessStudyFinishedKids from "./FairnessStudyFinishedKids";
 
 import BallTossTransition from "./BallTossTransition";
 
@@ -21,12 +23,14 @@ enum FairnessStudyStates {
   AttentionQuestions = 6,
   FeedbackQuestions = 7,
   NoConsent = 8,
+  Machine = 9,
+  FinishedKids = 10
 }
 
 function FairnessStudy() {
   const [trialNum, setTrialNum] = useState(
     process.env.NODE_ENV === "development"
-      ? FairnessStudyStates.GameFour
+      ? FairnessStudyStates.AskConsent
       : FairnessStudyStates.AskConsent
   );
   const [randomizedElements, setRandomizedElements] = useState(null as any);
@@ -35,7 +39,7 @@ function FairnessStudy() {
   const [isLoaded, setIsLoaded] = useState(false);
   
   const [isKidMode, setIsKidMode] = useState(
-    process.env.NODE_ENV === "development" ? true : false
+    process.env.NODE_ENV === "development" ? false : false
   );
 
   // sets game mode for kids only
@@ -99,7 +103,9 @@ function FairnessStudy() {
       (inputTrialArr === "1") ? [1, 2, 0] :
       (inputTrialArr === "2") ? [2, 0, 1] : 
       randomizedElements.trialSequence;
-      console.log(randIdxArr)
+
+      const inputPc = parseInt(urlParams.get("pc") || "");   
+      const inputThrow = parseInt(urlParams.get("throw") || "");
 
       // trial where all but one alien is thrown to equally
       const trialEqual = {
@@ -107,7 +113,7 @@ function FairnessStudy() {
         alienB: trialEqualPlayerAlienChoices[1],
         alienC: trialEqualPlayerAlienChoices[2],
         alienUser:
-          trialEqualPlayerAlienChoices[randomizedElements.playerCharacter],
+          trialEqualPlayerAlienChoices[isNaN(inputPc) ? randomizedElements.playerCharacter : inputPc],
         allThrowEvents: {
           event1: "allPlay",
           event2: "allPlay",
@@ -121,7 +127,7 @@ function FairnessStudy() {
         alienB: trialOnePlayerAlienChoices[1],
         alienC: trialOnePlayerAlienChoices[2],
         alienUser:
-          trialOnePlayerAlienChoices[randomizedElements.playerCharacter],
+          trialOnePlayerAlienChoices[isNaN(inputPc) ? randomizedElements.playerCharacter : inputPc],
         allThrowEvents: trialEvents[randIdxArr[0]], // pick random unjust/just/unknown
       };
 
@@ -131,7 +137,7 @@ function FairnessStudy() {
         alienB: trialTwoPlayerAlienChoices[1],
         alienC: trialTwoPlayerAlienChoices[2],
         alienUser:
-          trialTwoPlayerAlienChoices[randomizedElements.playerCharacter],
+          trialTwoPlayerAlienChoices[isNaN(inputPc) ? randomizedElements.playerCharacter : inputPc],
         allThrowEvents: trialEvents[randIdxArr[1]], // pick random unjust/just/unknown
       };
 
@@ -141,7 +147,7 @@ function FairnessStudy() {
         alienB: trialThreePlayerAlienChoices[1],
         alienC: trialThreePlayerAlienChoices[2],
         alienUser:
-          trialThreePlayerAlienChoices[randomizedElements.playerCharacter],
+          trialThreePlayerAlienChoices[isNaN(inputPc) ? randomizedElements.playerCharacter : inputPc],
         allThrowEvents: trialEvents[randIdxArr[2]], // pick random unjust/just/unknown
       };
 
@@ -156,10 +162,9 @@ function FairnessStudy() {
         }
         return trialNum;
       });
-      const inputPc = parseInt(urlParams.get("pc") || "")
-      console.log(inputPc)   
+
       let participantAlienType = "";
-      switch (isKidMode ? inputPc : randomizedElements.playerCharacter) {
+      switch (isNaN(inputPc) ? randomizedElements.playerCharacter : inputPc) {
         case 0:
           participantAlienType = "excluding";
           break;
@@ -172,8 +177,11 @@ function FairnessStudy() {
         default:
           participantAlienType = "";
       }
-      console.log(participantAlienType)
-
+      
+      let getsToThrow = null;
+      getsToThrow = (isNaN(inputThrow) ? randomizedElements.getsToThrow : (inputThrow === 1))
+      console.log(getsToThrow)
+      
       setTrialInfo({
         trialEqual,
         trialOne,
@@ -182,6 +190,7 @@ function FairnessStudy() {
         finalQuestions: randomizedElements.finalQuestions,
         trialOrder,
         participantAlienType,
+        getsToThrow,
       });
       setIsLoaded(true);
     }
@@ -202,6 +211,7 @@ function FairnessStudy() {
                 endText={
                   "First, you're going to learn about some aliens that all live on the planet Bep."
                 }
+                planet={"/assets/fairness_img/bep.png"}
                 nextFunc={() => setTrialNum(2)}
               />
             ),
@@ -218,9 +228,11 @@ function FairnessStudy() {
                 }}
                 allThrowEvents={trialInfo.trialEqual.allThrowEvents}
                 setTrialFunc={() => setTrialNum(3)}
+                getsToThrow={trialInfo.getsToThrow}
                 endText={
                   "Now, you're going to learn about some other aliens that live on the planet Merm."
                 }
+                planet={"/assets/fairness_img/merm.png"}
               />
             ),
             // each ball toss game consists 3 different types of throwing events, just/unjust/unknown
@@ -238,10 +250,12 @@ function FairnessStudy() {
                 allThrowEvents={trialInfo.trialOne.allThrowEvents}
                 setTrialFunc={() => setTrialNum(4)}
                 trialOrder={trialInfo.trialOrder}
+                getsToThrow={trialInfo.getsToThrow}
                 participantAlienType={trialInfo.participantAlienType}
                 endText={
                   "Now, you're going to learn about some other aliens that live on the planet Wunx."
                 }
+                planet={"/assets/fairness_img/wunx.png"}
               />
             ),
             4: (
@@ -258,17 +272,19 @@ function FairnessStudy() {
                 allThrowEvents={trialInfo.trialTwo.allThrowEvents}
                 setTrialFunc={() => setTrialNum(5)}
                 trialOrder={trialInfo.trialOrder}
+                getsToThrow={trialInfo.getsToThrow}
                 participantAlienType={trialInfo.participantAlienType}
                 endText={
                   "Let's visit a fourth planet and learn about another set of aliens from the planet Freg."
                 }
+                planet={"/assets/fairness_img/freg.png"}
               />
             ),
             5: (
               <BallTossGame
                 alienA={trialInfo.trialThree.alienA}
                 alienB={trialInfo.trialThree.alienB}
-                alienC={trialInfo.trialTwo.alienC}
+                alienC={trialInfo.trialThree.alienC}
                 alienUser={trialInfo.trialThree.alienUser}
                 alienCharNames={{
                   A1: "", //"Omar",
@@ -278,15 +294,27 @@ function FairnessStudy() {
                 allThrowEvents={trialInfo.trialThree.allThrowEvents}
                 setTrialFunc={() => setTrialNum(6)}
                 trialOrder={trialInfo.trialOrder}
+                getsToThrow={trialInfo.getsToThrow}
                 participantAlienType={trialInfo.participantAlienType}
                 endText={
+                  isKidMode ? "Just a few more questions!" :
                   "Now, please answer some general questions about the game."
                 }
               />
             ),
-            6: <FairnessStudyAttention setTrialFunc={() => setTrialNum(7)} />,
+            6: <FairnessStudyAttention 
+            	  setTrialFunc={() => isKidMode ? setTrialNum(9) : setTrialNum(7)}
+            	  isKidMode={isKidMode} />,
             7: <FairnessStudyFeedback />,
             8: <FairnessStudyNoConsent />,
+            9: <FairnessStudyMachine
+            	  setTrialFunc={() => setTrialNum(10)}
+                  alienA={trialInfo.trialThree.alienA}
+                  alienB={trialInfo.trialThree.alienB}
+                  alienC={trialInfo.trialThree.alienC}
+                  alienUser={trialInfo.trialThree.alienUser}          	  
+            	   />,
+            10: <FairnessStudyFinishedKids />,
           }[trialNum]
         : null}
     </div>

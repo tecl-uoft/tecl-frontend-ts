@@ -4,18 +4,19 @@ import SingleFairnessQuestion from "./FairnessStudyQuestions/SingleFairnessQuest
 
 interface IFairnessStudyAttentionProps {
   setTrialFunc(): void;
+  isKidMode: boolean;
 }
 
 function FairnessStudyAttention(props: IFairnessStudyAttentionProps) {
   const [alienName, setAlienName] = useState("");
   const [ballColor, setBallColor] = useState("");
-  const [questionSol, setQuestionSol] = useState(0);
+  const [throwToOwn, setThrowToOwn] = useState(0);
   const playerTime = useContext(BallTossContext);
-  const { setTrialFunc } = props;
+  const { setTrialFunc, isKidMode } = props;
 
-  return (
+  return ( 
     <div className="container flex flex-col mx-auto my-32">
-      <div className="flex flex-col mb-16">
+      {isKidMode ? null : (<div className="flex flex-col mb-16">
         <h3 className="text-2xl text-center text-gray-800 ">
           Pick the color that closely matches the color of the ball that the
           aliens were throwing around.
@@ -53,10 +54,11 @@ function FairnessStudyAttention(props: IFairnessStudyAttentionProps) {
             Green
           </button>
         </div>
-      </div>
+      </div> )}
       <div>
         <h3 className="text-2xl text-center mb-6 text-gray-800">
-          Name one of the aliens that you saw playing the game.
+          {isKidMode ? `Do you remember what you used to become an alien?`
+          : `Name one of the aliens that you saw playing the game.`}
         </h3>
         <input
           type="text"
@@ -66,19 +68,20 @@ function FairnessStudyAttention(props: IFairnessStudyAttentionProps) {
         />
       </div>
       <SingleFairnessQuestion
-        questionSol={questionSol}
-        setQuestionSol={setQuestionSol}
+        questionSol={throwToOwn}
+        setQuestionSol={setThrowToOwn}
         key={1}
         setNum={3}
-        scale={[1, 2, 3, 4, 5, 6, 7, 8, 9]}
+        isKidMode={isKidMode}        
+        scale={isKidMode ? ["Not at all", "Not very much", "A little", "A lot"] : [1, 2, 3, 4, 5, 6, 7, 8, 9]}
         number={1}
         question={{
           text:
-            "How much do you think it's the rule that aliens throw to their own kind?",
+            "How much do you think it's the rule that aliens throw to their own kind",
         }}
       />
 
-      {ballColor && alienName && questionSol ? (
+      {(isKidMode || ballColor) && alienName && throwToOwn ? (
         <button
           onClick={() => {
             fetch("/api/v1/fairness-study/results", {
@@ -88,7 +91,7 @@ function FairnessStudyAttention(props: IFairnessStudyAttentionProps) {
               },
               body: JSON.stringify({
                 participantStartTime: playerTime,
-                throwJustification: questionSol,
+                throwJustification: throwToOwn,
                 ballColor: ballColor,
                 alienNamed: alienName,
               }),
@@ -97,7 +100,7 @@ function FairnessStudyAttention(props: IFairnessStudyAttentionProps) {
           }}
           className="bg-orange-100 hover:bg-orange-300 w-full mt-12 font-bold rounded-lg py-4 px-8 shadow-lg focus:outline-none uppercase tracking-wider"
         >
-          Submit
+          {isKidMode ? "Next" : "Submit"}
         </button>
       ) : (
         ""
