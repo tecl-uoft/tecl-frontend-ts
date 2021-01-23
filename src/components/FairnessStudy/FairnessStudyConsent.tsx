@@ -50,8 +50,8 @@ function ConsentFormBody(props: {isKidMode: boolean}) {
       (<div>Are you ready?</div>) : (<div>
         This research is being conducted by Dr. Wil Cunningham, a faculty member
         at the University of Toronto. Dr. Cunningham's lab studies social
-        attitudes and stereotyping. The study typically takes 6 minutes, and you
-        will be compensated £0.75 for your time.
+        attitudes and stereotyping. The study typically takes 8 minutes, and you
+        will be compensated £1.00 for your time.
         <br /> <br />
         If you agree to take part in the research, there will be a short
         demonstration, after which you will fill out a brief online questionnaire.

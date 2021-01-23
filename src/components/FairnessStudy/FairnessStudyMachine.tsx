@@ -72,7 +72,7 @@ function AlienDisplay(props: any) {
     <div
       onClick={() => { 
         setPickedAlien(Alien.name);
-        fetch("/api/v1/fairness-study/results", {
+        fetch("/api/v1/fairness-study/results-kids", {
           method: "POST",
             headers: {
               "Content-Type": "application/json",

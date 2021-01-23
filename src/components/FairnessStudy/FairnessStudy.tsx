@@ -301,6 +301,7 @@ function FairnessStudy() {
                   isKidMode ? "Just a few more questions!" :
                   "Now, please answer some general questions about the game."
                 }
+                responseReady={true}
               />
             ),
             6: <FairnessStudyAttention 

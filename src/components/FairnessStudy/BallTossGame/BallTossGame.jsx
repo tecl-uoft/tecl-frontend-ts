@@ -29,6 +29,7 @@ function BallTossGame(props) {
     participantAlienType,
     getsToThrow,
     planet,
+    responseReady,
   } = props;
 
   const [frameCount, setFrameCount] = useState(0);
@@ -37,29 +38,24 @@ function BallTossGame(props) {
     process.env.NODE_ENV === "development" ? false : false
   );
 
-  // sets game mode for kids only
-  useEffect(() => {
-    /* console.log(alienCharNames.trial1, alienCharNames) */
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get("game_type") === "kids") {
-      setIsKidMode(true);
-    }
-  }, []);
-
-  useEffect(() => {
+  const submitFinalResponse = () => {   
     // send q&a to server after finishing all set of ingame questions
-    if (ingameQuestions.length === 4 * 6) {
       const currDate = new Date();
       // get prolific information
       let search = window.location.search;
       let params = new URLSearchParams(search);
-      const prolificInfo = {
+      const prolificInfo = isKidMode ? ({
+        pid: params.get("id"),
+        studyId: params.get("study"),
+        sessionId: params.get("date_time")
+      })
+      : ({
         pid: params.get("PROLIFIC_PID"),
         sessionId: params.get("SESSION_ID"),
         studyId: params.get("STUDY_ID"),
-      };
+      });
 
-      fetch("/api/v1/fairness-study/results", {
+      fetch(isKidMode ? "/api/v1/fairness-study/results-kids" : "/api/v1/fairness-study/results", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -71,13 +67,25 @@ function BallTossGame(props) {
           studyQuestionsInGameResponse: ingameQuestions,
           trialOrder: trialOrder,
           participantAlienType: participantAlienType,
+          getsToThrow: getsToThrow,
         }),
       });
     }
 
-    // disabling no dep warning
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ingameQuestions, playerTime]);
+    const shouldSubmit = () => {
+      if(responseReady){
+        submitFinalResponse();
+      }
+      setTrialFunc();
+    }
+  // sets game mode for kids only
+  useEffect(() => {
+    /* console.log(alienCharNames.trial1, alienCharNames) */
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get("game_type") === "kids") {
+      setIsKidMode(true);
+    }
+  }, []);
 
   // reset as we change to a new frame
   useEffect(() => {
@@ -286,7 +294,7 @@ function BallTossGame(props) {
           		endText={endText} 
           		planet={planet} 
           		isKidMode={isKidMode} 
-          		nextFunc={setTrialFunc} />,
+          		nextFunc={shouldSubmit} />,
         }[frameCount]
       }
     </div>

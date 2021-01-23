@@ -84,7 +84,7 @@ function FairnessStudyAttention(props: IFairnessStudyAttentionProps) {
       {(isKidMode || ballColor) && alienName && throwToOwn ? (
         <button
           onClick={() => {
-            fetch("/api/v1/fairness-study/results", {
+            fetch(isKidMode ? "/api/v1/fairness-study/results-kids" : "/api/v1/fairness-study/results", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
