@@ -72,7 +72,17 @@ function AlienDisplay(props: any) {
     <div
       onClick={() => { 
         setPickedAlien(Alien.name);
+        fetch("/api/v1/fairness-study/results", {
+          method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              pickedAlien: pickedAlien,
+              }),
+            });        
         setTrialFunc();
+        
       }}
       className={`mt-0 mx-32 hover:text-orange-500 cursor-pointer`}
     >
