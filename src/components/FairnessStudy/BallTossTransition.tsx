@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 interface IBallTossTransitionProps {
   endText: string;
   planet: string;
+  isKidMode: boolean;
   nextFunc(): void;
 }
 
@@ -16,9 +17,9 @@ function BallTossTransition(props: IBallTossTransitionProps) {
 //   }, []);
   return (
     <div><div className="container my-64 mx-auto px-2 pt-4">
-      <div className="mb-0 flex justify-around">
+      {props.isKidMode ? ( <div className="mb-0 flex justify-around">
         <img id="planet" src={props.planet} style={{height: "300px"}} />
-      </div>
+      </div> ) : null }
       <p
         id="ball-toss-game-play-text"
         className="text-4xl font-bold text-center text-gray-800 mb-6"
