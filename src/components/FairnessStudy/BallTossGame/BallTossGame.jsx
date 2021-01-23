@@ -282,7 +282,11 @@ function BallTossGame(props) {
               ingameQuestions={ingameQuestions}
             />
           ),
-          12: <BallTossTransition endText={endText} planet={planet} nextFunc={setTrialFunc} />,
+          12: <BallTossTransition 
+          		endText={endText} 
+          		planet={planet} 
+          		isKidMode={isKidMode} 
+          		nextFunc={setTrialFunc} />,
         }[frameCount]
       }
     </div>

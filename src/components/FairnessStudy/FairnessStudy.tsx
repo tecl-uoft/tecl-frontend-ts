@@ -212,6 +212,7 @@ function FairnessStudy() {
                   "First, you're going to learn about some aliens that all live on the planet Bep."
                 }
                 planet={"/assets/fairness_img/bep.png"}
+                isKidMode={isKidMode}
                 nextFunc={() => setTrialNum(2)}
               />
             ),
