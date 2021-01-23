@@ -10,7 +10,7 @@ function FairnessStudyConsent(props: IFairnessStudyConsentProps) {
   const { setTrialFunc, setEndFunc } = props;
   
   const [isKidMode, setIsKidMode] = useState(
-    process.env.NODE_ENV === "development" ? true : false
+    process.env.NODE_ENV === "development" ? false : false
   );
   useEffect(() => {
     /* console.log(alienCharNames.trial1, alienCharNames) */
@@ -21,9 +21,9 @@ function FairnessStudyConsent(props: IFairnessStudyConsentProps) {
   }, []);  
 
   const studyName = "Teams";
-  const pi = "Dr. Wil Cunningham.";
-  const address = "University of Toronto, 100 St. George Street, M5S 2E5,";
-  const telephone = "(416) 978-6903.";
+  const pi = "Dr. Wil Cunningham";
+  const address = "University of Toronto, 100 St. George Street, M5S 2E5, Toronto, Canada";
+  const telephone = "(416) 978-6903";
   const email = "teamstudy@socialneuro.psych.utoronto.ca";
   const noConsentFunc = () => {
     window.scrollTo(0, 0);

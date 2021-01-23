@@ -7,6 +7,7 @@ interface ISingleFairnessQuestionProps {
   setNum: number;
   setQuestionSol(questionSol: any): void;
   questionSol: any;
+  isKidMode?: boolean;
 }
 
 enum QuestionType {
@@ -22,9 +23,9 @@ function SingleFairnessQuestion(props: ISingleFairnessQuestionProps) {
     question,
     number,
     scale,
-
     setQuestionSol,
     questionSol,
+    isKidMode,
   } = props;
   // const [playerQuestions, setPlayerQuestions] = useState([]);
   useEffect(() => {
@@ -70,9 +71,9 @@ function SingleFairnessQuestion(props: ISingleFairnessQuestionProps) {
       case QuestionType.TypeC:
         return (
           <div className="flex justify-between mb-6 mx-4">
-            <p className="text-lg  text-center text-gray-800 ">Never</p>
-            <p className="text-lg  text-center text-gray-800 ">Sometimes</p>
-            <p className="text-lg  text-center text-gray-800">Always</p>
+            <p className="text-lg  text-center text-gray-800 ">{isKidMode ? "" : "Never"}</p>
+            <p className="text-lg  text-center text-gray-800 ">{isKidMode ? "" : "Sometimes"}</p>
+            <p className="text-lg  text-center text-gray-800">{isKidMode ? "" : "Always"}</p>
           </div>
         );
     }
@@ -90,7 +91,7 @@ function SingleFairnessQuestion(props: ISingleFairnessQuestionProps) {
                 setRating(name as number);
               }}
               className={` bg-orange-100 hover:shadow-lg hover:bg-orange-200  font-bold rounded-lg focus:outline-none  tracking-wider
-              ${props.setNum === 2 ? "w-32 h-16" : "w-16 h-16 uppercase"}
+              ${props.setNum > 2 ? "w-32 h-16" : "w-16 h-16 uppercase"}
               ${rating === name ? "bg-orange-400 hover:bg-orange-400" : ""}`}
             >
               {name}

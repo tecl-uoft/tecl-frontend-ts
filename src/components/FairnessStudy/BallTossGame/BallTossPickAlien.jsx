@@ -6,6 +6,8 @@ function BallTossPickAlien(props) {
   const [alienAPicked, setAlienAPicked] = useState(0);
   const [alienBPicked, setAlienBPicked] = useState(0);
   const [pickResponse, setPickResponse] = useState("");
+  const [alienAReciprocity, setAlienAReciprocity] = useState(0);
+  const [alienBReciprocity, setAlienBReciprocity] = useState(0);
   const [scrollBot, setScrollBot] = useState(false);
 
   const {
@@ -19,11 +21,11 @@ function BallTossPickAlien(props) {
   } = props;
 
   useEffect(() => {
-    if (pickResponse && !scrollBot) {
+    if ((pickResponse || (alienAReciprocity && alienBReciprocity)) && !scrollBot) {
       setScrollBot(true);
       window.scrollTo(0, document.body.scrollHeight);
     }
-  }, [pickResponse, scrollBot]);
+  }, [pickResponse, alienAReciprocity, alienBReciprocity, scrollBot]);
 
   async function submitResponse() {
     if (rep === 0) {
@@ -35,6 +37,8 @@ function BallTossPickAlien(props) {
           answer: {
             pickCount: { 0: alienAPicked, 1: alienBPicked },
             reasoning: pickResponse,
+            alienAReciprocity: alienAReciprocity,
+            alienBReciprocity: alienBReciprocity
           },
         },
       ]);
@@ -54,15 +58,15 @@ function BallTossPickAlien(props) {
   return (
     <div>
       {rep ? (
-        <div>
+        <div> 
           <h3 class="text-3xl font-bold text-center text-gray-800 mb-8">
-            Pick an Alien
+            {isKidMode ? "It's your turn!" : "Pick an Alien" }
           </h3>
           <h3 class="text-2xl font-bold text-center text-gray-800 mb-16">
             {rep > 1
               ? "It's your turn again. Who will you throw the ball to?"
-              : "It's your turn. Who will you throw the ball to?"}
-            <br /> (Click One)
+              : isKidMode ? "Who will you throw the ball to?" : "It's your turn. Who will you throw the ball to?"}
+            <br /> {isKidMode ? "" : "(Click One)"}
           </h3>
           <div class="flex justify-around text-gray-800 text-2xl mb-16 mt-16">
             {rep % 2 ? (
@@ -102,64 +106,70 @@ function BallTossPickAlien(props) {
           {isKidMode ? (
             <h3 className="text-3xl font-bold text-center text-gray-800 mb-2">
               {" "}
-              <p>You picked {alienAPicked > 0 ? alienA.name : alienB.name} </p>{" "}
+              <p>You picked the {alienAPicked > 0 ? alienA.name : alienB.name}! </p>{" "}
             </h3>
           ) : (
             <h3 className="text-3xl font-bold text-center text-gray-800 mb-8">
               <p>
-                {`You picked the ${alienA.name} ${alienAPicked} time${
-                  alienAPicked > 1 ? "s" : ""
-                }`}
-                <br /> and
-                {` the ${alienB.name} ${alienBPicked} time${
-                  alienBPicked > 1 ? "s" : ""
-                }`}{" "}
-              </p>{" "}
+              </p>
             </h3>
           )}
 
-          {isKidMode ? (
+          {isKidMode ? 
+            (
+            <h3 class="text-2xl font-bold text-center text-gray-800 mb-16">
+              Why did you throw it to the {alienAPicked > 0 ? alienA.name : alienB.name}?
+            </h3>
+            )
+            : (
+            <>
+            <div className="flex justify-around text-gray-800 text-2xl mb-16 mt-16">
+              <div className="mx-32">
+                {<alienA.Front />}
+                <p class="alien-label font-bold flex">
+                  {alienA.name}
+                </p>
+              </div>
+            </div>   
             <SingleFairnessQuestion
-              questionSol={pickResponse}
-              setQuestionSol={setPickResponse}
+              questionSol={alienAReciprocity}
+              setQuestionSol={setAlienAReciprocity}
               key={1}
               setNum={3}
               scale={[1, 2, 3, 4, 5, 6, 7, 8, 9]}
               number={1}
               question={{
-                text: `How likely do you think it is that a ${
-                  alienAPicked > 0 ? alienA.name : alienB.name
-                } will throw back to you`,
+                text: `If you threw to a ${alienA.name}, how likely do you think it is that a ${alienA.name
+                } would throw back to you, on a scale of 1 to 9`,
               }}
             />
-          ) : (
-            <h3 class="text-2xl font-bold text-center text-gray-800 mb-16">
-              "Why did you throw it to them in this manner?"{" "}
-            </h3>
-          )}
+            <div className="flex justify-around text-gray-800 text-2xl mb-16 mt-16">
+              <div className="mx-32">
+                {<alienB.Front />}
+                <p class="alien-label font-bold flex">
+                  {alienB.name}
+                </p>
+              </div>
+            </div>                     
+            <SingleFairnessQuestion
+              questionSol={alienBReciprocity}
+              setQuestionSol={setAlienBReciprocity}
+              key={1}
+              setNum={3}
+              scale={[1, 2, 3, 4, 5, 6, 7, 8, 9]}
+              number={1}
+              question={{
+                text: `If you threw to a ${alienB.name}, how likely do you think it is that a ${alienB.name
+                } would throw back to you, on a scale of 1 to 9`,
+              }}
+            />
+            
+            </>
+            )}
 
-          <div className="flex justify-around text-gray-800 text-2xl mb-16 mt-16">
-            <div className="mx-32">
-              {<alienA.Front />}
-              <p class="alien-label font-bold flex">
-                {alienA.name} <br />
-                {isKidMode
-                  ? null
-                  : `(${alienAPicked} time${alienAPicked > 1 ? "s" : ""})`}
-              </p>
-            </div>
-            <div className="mx-32">
-              {<alienB.Front />}
-              <p class="alien-label font-bold flex">
-                {alienB.name} <br />
-                {isKidMode
-                  ? null
-                  : `(${alienBPicked} time${alienBPicked > 1 ? "s" : ""})`}
-              </p>
-            </div>
-          </div>
 
-          {isKidMode ? null : (
+
+          {isKidMode ? (
             <div class="flex flex-wrap  text-lg -mx-3 mb-2">
               <div class="px-3 w-full flex justify-center">
                 <textarea
@@ -169,11 +179,11 @@ function BallTossPickAlien(props) {
                 />
               </div>
             </div>
-          )}
+          ) : null}
         </div>
       )}
 
-      {selected || pickResponse ? (
+      {selected || (isKidMode ? pickResponse : (alienAReciprocity && alienBReciprocity)) ? (
         <div class="m-16">
           <div class="flex justify-around">
             <button
