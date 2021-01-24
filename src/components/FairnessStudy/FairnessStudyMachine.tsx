@@ -1,6 +1,4 @@
-import React, { useState, useContext } from "react";
-import BallTossContext from "./BallTossContext";
-import SingleFairnessQuestion from "./FairnessStudyQuestions/SingleFairnessQuestion";
+import React, { useState } from "react";
 
 interface IFairnessStudyMachineProps {
   setTrialFunc(): void;
@@ -11,7 +9,6 @@ interface IFairnessStudyMachineProps {
 }
 
 function FairnessStudyMachine(props: IFairnessStudyMachineProps) {
-  const playerTime = useContext(BallTossContext);
   const [showPlayText, setShowPlayText] = useState(false);
   const { setTrialFunc, alienA, alienB, alienC, alienUser } = props;
   const choice = (alienUser.name === alienA.name) ? 0 : 

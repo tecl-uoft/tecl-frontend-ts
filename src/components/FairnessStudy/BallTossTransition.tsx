@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 interface IBallTossTransitionProps {
   endText: string;
@@ -8,7 +8,7 @@ interface IBallTossTransitionProps {
 }
 
 function BallTossTransition(props: IBallTossTransitionProps) {
-  const [scrollBot, setScrollBot] = useState(false);
+  
 //   useEffect(() => {
 //     window.setTimeout(() => {
 //       props.nextFunc();
@@ -17,13 +17,13 @@ function BallTossTransition(props: IBallTossTransitionProps) {
 //     // eslint-disable-next-line react-hooks/exhaustive-deps
 //   }, []);
   useEffect(() => {
-      setScrollBot(true);
+     
       window.scrollTo(0, document.body.scrollHeight);
   }, []);
   return (
     <div><div className="container my-64 mx-auto px-2 pt-4">
       {props.isKidMode ? ( <div className="mb-0 flex justify-around">
-        <img id="planet" src={props.planet} style={{height: "300px"}} />
+        <img alt="planet" id="planet" src={props.planet} style={{height: "300px"}} />
       </div> ) : null }
       <p
         id="ball-toss-game-play-text"
