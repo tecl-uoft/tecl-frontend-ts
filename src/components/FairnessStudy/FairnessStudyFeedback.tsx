@@ -11,7 +11,7 @@ function FairnessStudyFeedback() {
   useEffect(() => {
     window.setTimeout(() => {
       window.open(
-        "https://app.prolific.co/submissions/complete?cc=1A0BAD35",
+        "https://app.prolific.co/submissions/complete?cc=85D2692E",
         "_blank"
       );
     }, 1000);
@@ -34,7 +34,7 @@ function FairnessStudyFeedback() {
         If it does not, please click{" "}
         <a
           className="text-orange-500"
-          href="https://app.prolific.co/submissions/complete?cc=1A0BAD35"
+          href="https://app.prolific.co/submissions/complete?cc=85D2692E"
           rel="noopener noreferrer"
           target="_blank"
         >
