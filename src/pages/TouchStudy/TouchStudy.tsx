@@ -1,13 +1,30 @@
 import React, { useEffect, useReducer, useRef, useState } from "react";
-import { reducer, initialState, State, Bar } from "./StudyReducer";
+import { reducer, initialState, State, Bar, ITouchStudySetup } from "./StudyReducer";
 import "./touchStudy.css";
+
+
 
 function TouchStudy() {
   const [studyState, dispatchStudy] = useReducer(reducer, initialState);
   const [touchArr, setTouchArr] = useState<any | undefined>(undefined);
   const [currentVideoSrc, setCurrentVideoSrc] = useState("");
+  const [manualMode, setManualMode] = useState(false);
 
+  const defaultSetup: ITouchStudySetup = {
+    leftPanel: "orange",
+    orangePanelValance: "positive",
+    fairOrder: "first",
+    fairActor: "A"
+  }
+  const [studySetup, setStudySetup] = useState<ITouchStudySetup>(defaultSetup)
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get("mode") === "manual") {
+      setManualMode(true)
+    }
+  }, []);
 
   useEffect(() => {
     if (studyState.video.url) {
@@ -44,6 +61,76 @@ function TouchStudy() {
     });
   };
 
+  const onVideoEnded = (e: React.SyntheticEvent<HTMLVideoElement, Event>) => {
+    if (
+      studyState.currentDispatch.type === "distribution" ||
+      studyState.currentDispatch.type === "test"
+    ) {
+      dispatchStudy(studyState.nextDispatch);
+    }
+  }
+
+  const onVideoLoadedMetaData = () => {
+    if (
+      studyState.currentDispatch.type === "test" &&
+      studyState.currentDispatch.trial % 2 === 1
+    ) {
+      /* Show bars after 3 seconds */
+      setTimeout(() => {
+        dispatchStudy(studyState.nextDispatch);
+      }, 3000);
+    }
+  }
+
+  const onVideoTouchStart = (e: React.TouchEvent<HTMLVideoElement>) => {
+    if (studyState.currentDispatch.type === "distribution") {
+      e.currentTarget.play();
+    }
+  }
+
+  const onNextBtnClick = () => {
+    if (!studyState.studySetup) {
+      new Promise((res, _) => {
+        res(dispatchStudy({ type: "setup", trial: -1, studySetup: studySetup }))
+      }).then(() => {
+        dispatchStudy(studyState.nextDispatch);
+      })
+    } else {
+      dispatchStudy(studyState.nextDispatch);
+    }
+  }
+
+  const handleLeftPanelSettingChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const leftPanel = e.currentTarget.value;
+    if (leftPanel !== "orange" && leftPanel !== "green") {
+      return;
+    }
+    setStudySetup({ ...studySetup, leftPanel })
+  }
+
+  const handleValanceSettingChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const orangePanelValance = e.currentTarget.value;
+    if (orangePanelValance !== "positive" && orangePanelValance !== "negative") {
+      return;
+    }
+    setStudySetup({ ...studySetup, orangePanelValance })
+  }
+
+  const handleFairClipSettingChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const fairOrder = e.currentTarget.value;
+    if (fairOrder !== "first" && fairOrder !== "second") {
+      return;
+    }
+    setStudySetup({ ...studySetup, fairOrder })
+  }
+  const handleActorSettingChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const fairActor = e.currentTarget.value;
+    if (fairActor !== "A" && fairActor !== "B") {
+      return;
+    }
+    setStudySetup({ ...studySetup, fairActor })
+  }
+
   return (
     <div
       onTouchStart={handleTouchStart(studyState, touchArr, setTouchArr)}
@@ -53,26 +140,23 @@ function TouchStudy() {
       <div
         onTouchEnd={onBarClick(studyState.leftBar)}
         id="left-screen"
-        className={`flex ${
-          studyState?.leftBar.barType === "A" ? "bg-orange-600" : "bg-green-600"
-        } ${studyState.leftBar.isHidden && "hidden"}`}
+        className={`flex ${studyState?.leftBar.barType === "orange" ? "bg-orange-600" : "bg-green-600"
+          } ${studyState.leftBar.isHidden && "hidden"}`}
       >
         <div
           id="left-btn"
-          className={`justify-center w-16 h-16 m-auto ${
-            studyState.leftBar.barType === "A"
-              ? "bg-orange-800"
-              : "bg-green-800"
-          } md:w-32 md:h-32 outline`}
+          className={`justify-center w-16 h-16 m-auto ${studyState.leftBar.barType === "orange"
+            ? "bg-orange-800 rounded-full" /* Orange Circle */
+            : "bg-green-800 rounded-md" /* Green Square */
+            } md:w-32 md:h-32 outline`}
         />
       </div>
       <div
         id="middle-screen"
-        className={`flex flex-col ${
-          studyState.currentDispatch.type === "distribution"
-            ? "w-screen h-screen"
-            : "w-full h-full"
-        }  ${studyState?.video.isHidden ? "hidden" : ""}`}
+        className={`flex flex-col ${studyState.currentDispatch.type === "distribution"
+          ? "w-screen h-screen"
+          : "w-full h-full"
+          }  ${studyState?.video.isHidden ? "hidden" : ""}`}
         style={{
           gridColumn:
             studyState.currentDispatch.type === "distribution"
@@ -80,35 +164,50 @@ function TouchStudy() {
               : "line2 / line3",
         }}
       >
+        {manualMode && studyState.currentDispatch.trial === 0 && (
+          <div className="flex flex-col space-y-6">
+            <h2 className="text-xl mt-12 text-center">Manul Mode: <br /> Please choose your specfic condition.</h2>
+            <div className="flex flex-col space-y-4 mt-24 justify-between">
+              <label className="block">
+                <span className="text-gray-700">Left Panel</span>
+                <select onChange={handleLeftPanelSettingChange} value={studySetup.leftPanel} className="form-select p-2 mt-1 block w-full rounded-sm">
+                  <option value="orange">Orange Circle</option>
+                  <option value="green">Green Square</option>
+                </select>
+              </label>
+              <label className="block">
+                <span className="text-gray-700">Orange panel valence</span>
+                <select onChange={handleValanceSettingChange} value={studySetup.orangePanelValance} className="form-select p-2 mt-1 block w-full">
+                  <option value="positive">Positive</option>
+                  <option value="negative">Negative</option>
+                </select>
+              </label>
+            </div>
+            <div className="flex flex-col space-y-4 mt-16 justify-between">
+              <label className="block">
+                <span className="text-gray-700">Order of fair/unfair clips</span>
+                <select onChange={handleFairClipSettingChange} value={studySetup.fairOrder} className="form-select p-2 mt-1 block w-full">
+                  <option value="first" >Fair Clips First</option>
+                  <option value="second" >Unfair Clips First</option>
+                </select>
+              </label>
+              <label className="block">
+                <span className="text-gray-700">Fair actor identity</span>
+                <select onChange={handleActorSettingChange} value={studySetup.fairActor} className="form-select p-2 mt-1 block w-full">
+                  <option value="A">Actor A</option>
+                  <option value="B">Actor B</option>
+                </select>
+              </label>
+            </div>
+          </div>)}
         <video
-          onLoadedMetadata={() => {
-            if (
-              studyState.currentDispatch.type === "test" &&
-              studyState.currentDispatch.trial % 2 === 1
-            ) {
-              /* Show bars after 3 seconds */
-              setTimeout(() => {
-                dispatchStudy(studyState.nextDispatch);
-              }, 3000);
-            }
-          }}
-          onEnded={(e) => {
-            if (
-              studyState.currentDispatch.type === "distribution" ||
-              studyState.currentDispatch.type === "test"
-            ) {
-              dispatchStudy(studyState.nextDispatch);
-            }
-          }}
+          onLoadedMetadata={onVideoLoadedMetaData}
+          onEnded={onVideoEnded}
           ref={videoRef}
           autoPlay={
             studyState.currentDispatch.type === "distribution" ? true : false
           }
-          onTouchStart={(e) => {
-            if (studyState.currentDispatch.type === "distribution") {
-              e.currentTarget.play();
-            }
-          }}
+          onTouchStart={onVideoTouchStart}
           key={currentVideoSrc}
           id="video"
           className="px-2 my-auto"
@@ -121,9 +220,7 @@ function TouchStudy() {
             "bg-gray-300 rounded-lg text-md " +
             `${studyState.currentDispatch.type !== "training" ? "" : ""}`
           }
-          onClick={() => {
-            dispatchStudy(studyState.nextDispatch);
-          }}
+          onClick={onNextBtnClick}
         >
           Next
         </button>
@@ -131,17 +228,15 @@ function TouchStudy() {
       <div
         onTouchEnd={onBarClick(studyState.rightBar)}
         id="right-screen"
-        className={`flex ${
-          studyState.rightBar.barType === "A" ? "bg-orange-600" : "bg-green-600"
-        } ${studyState.rightBar.isHidden && "hidden"}`}
+        className={`flex ${studyState.rightBar.barType === "orange" ? "bg-orange-600" : "bg-green-600"
+          } ${studyState.rightBar.isHidden && "hidden"}`}
       >
         <div
           id="right-btn"
-          className={`justify-center w-16 h-16 m-auto ${
-            studyState.rightBar.barType === "A"
-              ? "bg-orange-800"
-              : "bg-green-800"
-          } rounded-full md:w-32 md:h-32 outline`}
+          className={`justify-center w-16 h-16 m-auto ${studyState.rightBar.barType === "orange"
+            ? "bg-orange-800 rounded-full" /* Orange Circle */
+            : "bg-green-800 rounded-md" /* Green Square */
+            }  md:w-32 md:h-32 outline`}
         />
       </div>
     </div>
@@ -171,9 +266,9 @@ function handleTouchStart(
     const target = (targetEl as HTMLDivElement).id;
     let barType = "";
     if (target === "right-screen" || target === "right-btn") {
-      barType = studyState?.rightBar.barType === "A" ? "Punish" : "Reward";
+      barType = studyState?.rightBar.barType === "orange" ? "Punish" : "Reward";
     } else if (target === "left-screen" || target === "left-btn") {
-      barType = studyState?.leftBar.barType === "A" ? "Punish" : "Reward";
+      barType = studyState?.leftBar.barType === "orange" ? "Punish" : "Reward";
     }
     /* console.log(touchArr); */
 

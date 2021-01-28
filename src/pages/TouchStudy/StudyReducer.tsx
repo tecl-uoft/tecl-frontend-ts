@@ -1,15 +1,25 @@
 import { VideoLinks } from "./videoLinks.json";
 
 export type Action = {
-  type: "training" | "distribution" | "test" | "finish";
+  type: "setup" | "training" | "distribution" | "test" | "finish";
   trial: number;
+  studySetup?: ITouchStudySetup;
 };
 
+type PanelOptions = "orange" | "green"
+
 export type Bar = {
-  barType: "A" | "B";
+  barType: PanelOptions;
   isHidden: boolean;
   videoOnClick: string;
 };
+
+export interface ITouchStudySetup {
+  leftPanel: PanelOptions;
+  orangePanelValance: "positive" | "negative";
+  fairOrder: "first" | "second";
+  fairActor: "A" | "B"
+}
 
 export type State = {
   currentDispatch: Action;
@@ -20,6 +30,7 @@ export type State = {
     url: string;
   };
   nextDispatch: Action;
+  studySetup: ITouchStudySetup | undefined
 };
 
 const shuffledArr = shuffleArray([0, 1]);
@@ -27,32 +38,46 @@ const rearrangeChoiceArr = (arr: any[]) => {
   return [arr[shuffledArr[0]], arr[shuffledArr[1]]];
 };
 
-const allBarTypes = rearrangeChoiceArr(["A", "B"]);
+/* const allBarTypes = rearrangeChoiceArr(["A", "B"]); */
 
 const initialState: State = {
-  leftBar: { barType: allBarTypes[0], isHidden: true, videoOnClick: "" },
-  rightBar: { barType: allBarTypes[1], isHidden: true, videoOnClick: "" },
+  leftBar: { barType: "orange", isHidden: true, videoOnClick: "" },
+  rightBar: { barType: "green", isHidden: true, videoOnClick: "" },
   video: { url: "", isHidden: false },
-  currentDispatch: { type: "training", trial: 1 },
+  currentDispatch: { type: "training", trial: 0 },
   nextDispatch: { type: "training", trial: 1 },
+  studySetup: undefined
 };
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
+    case "setup":
+      if (!action.studySetup) {
+        break;
+      }
+      return {
+        ...state,
+        leftBar: { ...state.leftBar, barType: action.studySetup.leftPanel },
+        rightBar: {
+          ...state.rightBar,
+          barType: action.studySetup.leftPanel === "green" ? "orange" : "green"
+        },
+        studySetup: action.studySetup
+      }
     case "training":
-      const trainingVideoOrder = rearrangeChoiceArr([
-        VideoLinks.AlexPunishRight,
-        VideoLinks.AlexRewardRight,
-      ]);
+      const isLeftBarPosOrange = state.studySetup?.orangePanelValance === "positive" && state.studySetup.leftPanel === "orange"
+      const leftBarVideo = isLeftBarPosOrange ? VideoLinks.AlexRewardLeft : VideoLinks.AlexPunishLeft;
+      const rightBarVideo = isLeftBarPosOrange ? VideoLinks.AlexPunishRight : VideoLinks.AlexPunishRight;
+
       if (action.trial === 1) {
         return {
           ...initialState,
           leftBar: {
-            ...initialState.leftBar,
+            ...state.leftBar,
             isHidden: false,
-            videoOnClick: trainingVideoOrder[0],
+            videoOnClick: leftBarVideo,
           },
-          video: { ...initialState.video, url: trainingVideoOrder[0] },
+          video: { ...initialState.video, url: leftBarVideo },
           nextDispatch: { type: "training", trial: 2 },
           currentDispatch: action,
         };
@@ -60,11 +85,11 @@ function reducer(state: State, action: Action): State {
         return {
           ...initialState,
           rightBar: {
-            ...initialState.rightBar,
+            ...state.rightBar,
             isHidden: false,
-            videoOnClick: trainingVideoOrder[1],
+            videoOnClick: rightBarVideo,
           },
-          video: { ...initialState.video, url: trainingVideoOrder[1] },
+          video: { ...initialState.video, url: rightBarVideo },
           nextDispatch: { type: "training", trial: 3 },
           currentDispatch: action,
         };
@@ -72,16 +97,16 @@ function reducer(state: State, action: Action): State {
         return {
           ...initialState,
           leftBar: {
-            ...initialState.leftBar,
+            ...state.leftBar,
             isHidden: false,
-            videoOnClick: trainingVideoOrder[0],
+            videoOnClick: leftBarVideo,
           },
           rightBar: {
-            ...initialState.rightBar,
+            ...state.rightBar,
             isHidden: false,
-            videoOnClick: trainingVideoOrder[1],
+            videoOnClick: rightBarVideo,
           },
-          video: { ...initialState.video, url: trainingVideoOrder[0] },
+          video: { ...initialState.video, url: leftBarVideo },
           nextDispatch: { type: "distribution", trial: 1 },
           currentDispatch: action,
         };
@@ -145,6 +170,7 @@ function reducer(state: State, action: Action): State {
         } else {
           /* Second in set is allowing participant to choose */
           return {
+            ...state,
             leftBar: {
               ...initialState.leftBar,
               isHidden: false,
@@ -160,7 +186,7 @@ function reducer(state: State, action: Action): State {
             currentDispatch: action,
           };
         }
-      } else if (action.trial === (videoOrder.length * 2 )+ 1) {
+      } else if (action.trial === (videoOrder.length * 2) + 1) {
         return {
           ...initialState,
           currentDispatch: { type: "finish", trial: 0 },
