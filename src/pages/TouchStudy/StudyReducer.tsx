@@ -60,20 +60,13 @@ function reducer(state: State, action: Action): State {
         studySetup: action.studySetup,
       };
     case "training":
-      const TrainingVideo =
-        state.studySetup?.fairActor === "A"
-          ? {
-              rewardLeft: VideoLinks.AlexRewardLeft,
-              punishLeft: VideoLinks.AlexPunishLeft,
-              rewardRight: VideoLinks.AlexRewardRight,
-              punishRight: VideoLinks.AlexPunishRight,
-            }
-          : {
-              rewardLeft: VideoLinks.RachelRewardLeft,
-              punishLeft: VideoLinks.RachelPunishLeft,
-              rewardRight: VideoLinks.RachelRewardRight,
-              punishRight: VideoLinks.RachelPunishRight,
-            };
+      const TrainingVideo = {
+        punishLeft: VideoLinks.HayleePunishLeft,
+        rewardLeft: VideoLinks.HayleeRewardLeft,
+        punishRight: VideoLinks.HayleePunishRight,
+        rewardRight: VideoLinks.HayleeRewardRight,
+      };
+
       const isLeftBarPosOrange =
         state.studySetup?.orangePanelValance === "positive" &&
         state.studySetup.leftPanel === "orange";
@@ -133,39 +126,31 @@ function reducer(state: State, action: Action): State {
     case "distribution":
       const totalDistributionOrder = [
         VideoLinks.FairToysA,
+        VideoLinks.UnfairToysB,
         VideoLinks.FairToysB,
         VideoLinks.UnfairToysA,
-        VideoLinks.UnfairToysB,
         VideoLinks.FairSnacksA,
+        VideoLinks.UnfairSnacksB,
         VideoLinks.FairSnacksB,
         VideoLinks.UnfairSnacksA,
-        VideoLinks.UnfairSnacksB,
       ];
       if (!state.studySetup) {
         break;
       }
-      const { fairOrder, fairActor } = state.studySetup;
+      const { fairOrder } = state.studySetup;
       const distributionOrder = totalDistributionOrder.reduce<string[]>(
         (acc, link, idx) => {
-          /* Actor B only */
-          if (fairActor === "B" && idx % 2 === 0) {
-            if (fairOrder === "first") {
+          if (fairOrder === "first") {
+            if (idx === 0 || idx === 1 || idx === 4 || idx === 5) {
               acc.push(link);
-            } else {
-              idx % 4 === 0
-                ? acc.push(totalDistributionOrder[idx - 2])
-                : acc.push(totalDistributionOrder[idx + 2]);
             }
-          } else if (fairActor === "A" && idx % 2 === 1) {
-            /* Actor A only */
-            /* Fair first */
-            if (fairOrder === "first") {
-              acc.push(link);
-            } else {
-              /* Unfair first */
-              idx % 3 === 0
-                ? acc.push(totalDistributionOrder[idx - 2])
-                : acc.push(totalDistributionOrder[idx + 2]);
+          } else {
+            if (idx === 2 || idx === 3 || idx === 6 || idx === 7) {
+              if (idx % 2 === 0) {
+                acc.push(totalDistributionOrder[idx + 1]);
+              } else {
+                acc.push(totalDistributionOrder[idx - 1]);
+              }
             }
           }
           return acc;
@@ -216,27 +201,25 @@ function reducer(state: State, action: Action): State {
       const isTestLeftBarPosOrange =
         orangePanelValance === "positive" && leftPanel === "orange";
 
-      const videoOrder = [
-        /* {
-          punishLeft: VideoLinks.AlexPunishLeft,
-          rewardLeft: VideoLinks.AlexRewardLeft,
-          punishRight: VideoLinks.AlexPunishRight,
-          rewardRight: VideoLinks.AlexRewardRight,
-        },
-        {
-          punishLeft: VideoLinks.RachelPunishLeft,
-          rewardLeft: VideoLinks.RachelRewardLeft,
-          punishRight: VideoLinks.RachelPunishRight,
-          rewardRight: VideoLinks.RachelRewardRight,
-        }, */
-        {
-          punishLeft: VideoLinks.HayleePunishLeft,
-          rewardLeft: VideoLinks.HayleeRewardLeft,
-          punishRight: VideoLinks.HayleePunishRight,
-          rewardRight: VideoLinks.HayleeRewardRight,
-        },
-      ]
-      .map((videoSet) => {
+      const videoOrder =
+        state.studySetup?.fairActor === "A"
+          ? [
+              {
+                rewardLeft: VideoLinks.AlexRewardLeft,
+                punishLeft: VideoLinks.AlexPunishLeft,
+                rewardRight: VideoLinks.AlexRewardRight,
+                punishRight: VideoLinks.AlexPunishRight,
+              },
+            ]
+          : [
+              {
+                rewardLeft: VideoLinks.RachelRewardLeft,
+                punishLeft: VideoLinks.RachelPunishLeft,
+                rewardRight: VideoLinks.RachelRewardRight,
+                punishRight: VideoLinks.RachelPunishRight,
+              },
+            ];
+      videoOrder.map((videoSet) => {
         /* Wrong just order video fairness first or unfair first / dont include person distributing */
         if (isTestLeftBarPosOrange) {
           return [videoSet.rewardLeft, videoSet.punishRight];
@@ -247,7 +230,8 @@ function reducer(state: State, action: Action): State {
 
       if (action.trial <= videoOrder.length * 2) {
         /* For all trials in 2 sets, i.e 1 and 2, 3 and 4... */
-        const videoURL = videoOrder[Math.floor((action.trial + 1) / 2) - 1];
+        const videoURL: any =
+          videoOrder[Math.floor((action.trial + 1) / 2) - 1];
         if (action.trial % 2 === 1) {
           /* First in set is showing the face of participant */
           return {
