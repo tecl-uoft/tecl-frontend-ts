@@ -235,7 +235,8 @@ function reducer(state: State, action: Action): State {
           punishRight: VideoLinks.HayleePunishRight,
           rewardRight: VideoLinks.HayleeRewardRight,
         },
-      ].map((videoSet) => {
+      ]
+      .map((videoSet) => {
         /* Wrong just order video fairness first or unfair first / dont include person distributing */
         if (isTestLeftBarPosOrange) {
           return [videoSet.rewardLeft, videoSet.punishRight];
