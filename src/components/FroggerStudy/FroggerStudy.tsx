@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import FroggerConsentForm from "./FroggerConsentForm";
 import FroggerGame from "./FroggerGame";
 import FroggerPractice from "./FroggerPractice";
@@ -16,9 +16,25 @@ enum FroggerStudyStates {
 function FroggerStudy() {
   const [studyState, setStudyState] = useState(
     process.env.NODE_ENV === "development"
-      ? FroggerStudyStates.StudyGame
+      ? FroggerStudyStates.AskConsent
       : FroggerStudyStates.AskConsent
   );
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (navigator.mediaDevices.getUserMedia && videoRef.current) {
+      navigator.mediaDevices
+        .getUserMedia({ video: true })
+        .then(function (stream) {
+          if (videoRef.current) {
+            videoRef.current.srcObject = stream;
+          }
+        })
+        .catch(function (error) {
+          console.log("Something went wrong!");
+        });
+    }
+  }, [videoRef]);
 
   function cycleStudyStates(froggerStudyState: FroggerStudyStates) {
     let state = null;
@@ -58,7 +74,19 @@ function FroggerStudy() {
     return state;
   }
 
-  return <div>{cycleStudyStates(studyState)}</div>;
+  return (
+    <div>
+      {
+        <video
+          className="absolute w-1/2 h-64 mx-auto"
+          ref={videoRef}
+          autoPlay={true}
+          id="videoElement"
+        ></video>
+      }{" "}
+      {cycleStudyStates(studyState)}
+    </div>
+  );
 }
 
 export default FroggerStudy;
