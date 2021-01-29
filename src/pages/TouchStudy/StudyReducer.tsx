@@ -148,7 +148,7 @@ function reducer(state: State, action: Action): State {
       const distributionOrder = totalDistributionOrder.reduce<string[]>(
         (acc, link, idx) => {
           /* Actor B only */
-          if (fairActor === "A" && idx % 2 === 0) {
+          if (fairActor === "B" && idx % 2 === 0) {
             if (fairOrder === "first") {
               acc.push(link);
             } else {
@@ -156,8 +156,8 @@ function reducer(state: State, action: Action): State {
                 ? acc.push(totalDistributionOrder[idx - 2])
                 : acc.push(totalDistributionOrder[idx + 2]);
             }
-          } else if (fairActor === "B" && idx % 2 === 1) {
-            /* Actor B only */
+          } else if (fairActor === "A" && idx % 2 === 1) {
+            /* Actor A only */
             /* Fair first */
             if (fairOrder === "first") {
               acc.push(link);
@@ -217,7 +217,7 @@ function reducer(state: State, action: Action): State {
         orangePanelValance === "positive" && leftPanel === "orange";
 
       const videoOrder = [
-        {
+        /* {
           punishLeft: VideoLinks.AlexPunishLeft,
           rewardLeft: VideoLinks.AlexRewardLeft,
           punishRight: VideoLinks.AlexPunishRight,
@@ -228,7 +228,7 @@ function reducer(state: State, action: Action): State {
           rewardLeft: VideoLinks.RachelRewardLeft,
           punishRight: VideoLinks.RachelPunishRight,
           rewardRight: VideoLinks.RachelRewardRight,
-        },
+        }, */
         {
           punishLeft: VideoLinks.HayleePunishLeft,
           rewardLeft: VideoLinks.HayleeRewardLeft,
