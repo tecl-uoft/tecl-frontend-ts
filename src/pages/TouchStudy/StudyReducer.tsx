@@ -6,7 +6,7 @@ export type Action = {
   studySetup?: ITouchStudySetup;
 };
 
-type PanelOptions = "orange" | "green"
+type PanelOptions = "orange" | "green";
 
 export type Bar = {
   barType: PanelOptions;
@@ -18,7 +18,7 @@ export interface ITouchStudySetup {
   leftPanel: PanelOptions;
   orangePanelValance: "positive" | "negative";
   fairOrder: "first" | "second";
-  fairActor: "A" | "B"
+  fairActor: "A" | "B";
 }
 
 export type State = {
@@ -30,12 +30,7 @@ export type State = {
     url: string;
   };
   nextDispatch: Action;
-  studySetup: ITouchStudySetup | undefined
-};
-
-const shuffledArr = shuffleArray([0, 1]);
-const rearrangeChoiceArr = (arr: any[]) => {
-  return [arr[shuffledArr[0]], arr[shuffledArr[1]]];
+  studySetup: ITouchStudySetup | undefined;
 };
 
 /* const allBarTypes = rearrangeChoiceArr(["A", "B"]); */
@@ -46,7 +41,7 @@ const initialState: State = {
   video: { url: "", isHidden: false },
   currentDispatch: { type: "training", trial: 0 },
   nextDispatch: { type: "training", trial: 1 },
-  studySetup: undefined
+  studySetup: undefined,
 };
 
 function reducer(state: State, action: Action): State {
@@ -60,14 +55,34 @@ function reducer(state: State, action: Action): State {
         leftBar: { ...state.leftBar, barType: action.studySetup.leftPanel },
         rightBar: {
           ...state.rightBar,
-          barType: action.studySetup.leftPanel === "green" ? "orange" : "green"
+          barType: action.studySetup.leftPanel === "green" ? "orange" : "green",
         },
-        studySetup: action.studySetup
-      }
+        studySetup: action.studySetup,
+      };
     case "training":
-      const isLeftBarPosOrange = state.studySetup?.orangePanelValance === "positive" && state.studySetup.leftPanel === "orange"
-      const leftBarVideo = isLeftBarPosOrange ? VideoLinks.AlexRewardLeft : VideoLinks.AlexPunishLeft;
-      const rightBarVideo = isLeftBarPosOrange ? VideoLinks.AlexPunishRight : VideoLinks.AlexPunishRight;
+      const TrainingVideo =
+        state.studySetup?.fairActor === "A"
+          ? {
+              rewardLeft: VideoLinks.AlexRewardLeft,
+              punishLeft: VideoLinks.AlexPunishLeft,
+              rewardRight: VideoLinks.AlexRewardRight,
+              punishRight: VideoLinks.AlexPunishRight,
+            }
+          : {
+              rewardLeft: VideoLinks.RachelRewardLeft,
+              punishLeft: VideoLinks.RachelPunishLeft,
+              rewardRight: VideoLinks.RachelRewardRight,
+              punishRight: VideoLinks.RachelPunishRight,
+            };
+      const isLeftBarPosOrange =
+        state.studySetup?.orangePanelValance === "positive" &&
+        state.studySetup.leftPanel === "orange";
+      const leftBarVideo = isLeftBarPosOrange
+        ? TrainingVideo.rewardLeft
+        : TrainingVideo.punishRight;
+      const rightBarVideo = isLeftBarPosOrange
+        ? TrainingVideo.rewardRight
+        : TrainingVideo.punishRight;
 
       if (action.trial === 1) {
         return {
@@ -80,6 +95,7 @@ function reducer(state: State, action: Action): State {
           video: { ...initialState.video, url: leftBarVideo },
           nextDispatch: { type: "training", trial: 2 },
           currentDispatch: action,
+          studySetup: state.studySetup,
         };
       } else if (action.trial === 2) {
         return {
@@ -92,6 +108,7 @@ function reducer(state: State, action: Action): State {
           video: { ...initialState.video, url: rightBarVideo },
           nextDispatch: { type: "training", trial: 3 },
           currentDispatch: action,
+          studySetup: state.studySetup,
         };
       } else if (action.trial === 3) {
         return {
@@ -109,23 +126,62 @@ function reducer(state: State, action: Action): State {
           video: { ...initialState.video, url: leftBarVideo },
           nextDispatch: { type: "distribution", trial: 1 },
           currentDispatch: action,
+          studySetup: state.studySetup,
         };
       }
       break;
     case "distribution":
-      const distributionOrder = shuffleArray([
+      const totalDistributionOrder = [
+        VideoLinks.FairSnacksA,
+        VideoLinks.FairSnacksB,
         VideoLinks.UnfairSnacksA,
-        VideoLinks.UnfairToysA,
         VideoLinks.UnfairSnacksB,
+        VideoLinks.FairToysA,
+        VideoLinks.FairToysB,
+        VideoLinks.UnfairToysA,
         VideoLinks.UnfairToysB,
-      ]);
+      ];
+      if (!state.studySetup) {
+        break;
+      }
+      const { fairOrder, fairActor } = state.studySetup;
+      const distributionOrder = totalDistributionOrder.reduce<string[]>(
+        (acc, link, idx) => {
+          /* Actor B only */
+          if (fairActor === "A" && idx % 2 === 0) {
+            if (fairOrder === "first") {
+              acc.push(link);
+            } else {
+              idx % 4 === 0
+                ? acc.push(totalDistributionOrder[idx - 2])
+                : acc.push(totalDistributionOrder[idx + 2]);
+            }
+          } else if (fairActor === "B" && idx % 2 === 1) {
+            /* Actor B only */
+            /* Fair first */
+            if (fairOrder === "first") {
+              acc.push(link);
+            } else {
+              /* Unfair first */
+              idx % 3 === 0
+                ? acc.push(totalDistributionOrder[idx - 2])
+                : acc.push(totalDistributionOrder[idx + 2]);
+            }
+          }
+          return acc;
+        },
+        []
+      );
+
       if (action.trial <= distributionOrder.length * 2 - 1) {
         if (action.trial % 2 === 1) {
+          /* Put a video of a baby shake inbetween each video */
           return {
             ...initialState,
             video: { url: VideoLinks.BabyShaker, isHidden: false },
             nextDispatch: { type: "distribution", trial: action.trial + 1 },
             currentDispatch: action,
+            studySetup: state.studySetup,
           };
         } else {
           return {
@@ -136,6 +192,7 @@ function reducer(state: State, action: Action): State {
             },
             nextDispatch: { type: "distribution", trial: action.trial + 1 },
             currentDispatch: action,
+            studySetup: state.studySetup,
           };
         }
       } else if (action.trial === distributionOrder.length * 2) {
@@ -147,15 +204,46 @@ function reducer(state: State, action: Action): State {
           },
           nextDispatch: { type: "test", trial: 1 },
           currentDispatch: action,
+          studySetup: state.studySetup,
         };
       }
       break;
     case "test":
+      if (!state.studySetup || !state.studySetup.leftPanel) {
+        break;
+      }
+      const { leftPanel, orangePanelValance } = state.studySetup;
+      const isTestLeftBarPosOrange =
+        orangePanelValance === "positive" && leftPanel === "orange";
+
       const videoOrder = [
-        [VideoLinks.AlexPunishLeft, VideoLinks.AlexRewardLeft],
-        [VideoLinks.RachelPunishRight, VideoLinks.RachelRewardRight],
-        [VideoLinks.RachelPunishLeft, VideoLinks.RachelRewardLeft],
-      ].map((subArr) => rearrangeChoiceArr(subArr));
+        {
+          punishLeft: VideoLinks.AlexPunishLeft,
+          rewardLeft: VideoLinks.AlexRewardLeft,
+          punishRight: VideoLinks.AlexPunishRight,
+          rewardRight: VideoLinks.AlexRewardRight,
+        },
+        {
+          punishLeft: VideoLinks.RachelPunishLeft,
+          rewardLeft: VideoLinks.RachelRewardLeft,
+          punishRight: VideoLinks.RachelPunishRight,
+          rewardRight: VideoLinks.RachelRewardRight,
+        },
+        {
+          punishLeft: VideoLinks.HayleePunishLeft,
+          rewardLeft: VideoLinks.HayleeRewardLeft,
+          punishRight: VideoLinks.HayleePunishRight,
+          rewardRight: VideoLinks.HayleeRewardRight,
+        },
+      ].map((videoSet) => {
+        /* Wrong just order video fairness first or unfair first / dont include person distributing */
+        if (isTestLeftBarPosOrange) {
+          return [videoSet.rewardLeft, videoSet.punishRight];
+        } else {
+          return [videoSet.punishLeft, videoSet.rewardRight];
+        }
+      });
+
       if (action.trial <= videoOrder.length * 2) {
         /* For all trials in 2 sets, i.e 1 and 2, 3 and 4... */
         const videoURL = videoOrder[Math.floor((action.trial + 1) / 2) - 1];
@@ -166,30 +254,33 @@ function reducer(state: State, action: Action): State {
             video: { url: videoURL[0], isHidden: false },
             nextDispatch: { type: "test", trial: action.trial + 1 },
             currentDispatch: action,
+            studySetup: state.studySetup,
           };
         } else {
           /* Second in set is allowing participant to choose */
           return {
             ...state,
             leftBar: {
-              ...initialState.leftBar,
+              ...state.leftBar,
               isHidden: false,
               videoOnClick: videoURL[0],
             },
             rightBar: {
-              ...initialState.rightBar,
+              ...state.rightBar,
               isHidden: false,
               videoOnClick: videoURL[1],
             },
             video: { url: videoURL[0], isHidden: false },
             nextDispatch: { type: "test", trial: action.trial + 1 },
             currentDispatch: action,
+            studySetup: state.studySetup,
           };
         }
-      } else if (action.trial === (videoOrder.length * 2) + 1) {
+      } else if (action.trial === videoOrder.length * 2 + 1) {
         return {
           ...initialState,
           currentDispatch: { type: "finish", trial: 0 },
+          studySetup: state.studySetup,
         };
       }
       break;
@@ -203,7 +294,7 @@ function reducer(state: State, action: Action): State {
 
 /* Randomize array in-place using Durstenfeld shuffle algorithm, 
     returns new array */
-function shuffleArray<T>(originalArray: T[]) {
+/* function shuffleArray<T>(originalArray: T[]) {
   const array = [...originalArray];
   for (var i = array.length - 1; i > 0; i--) {
     var j = Math.floor(Math.random() * (i + 1));
@@ -212,6 +303,6 @@ function shuffleArray<T>(originalArray: T[]) {
     array[j] = temp;
   }
   return array;
-}
+} */
 
 export { reducer, initialState };
