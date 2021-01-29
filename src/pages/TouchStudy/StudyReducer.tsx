@@ -132,14 +132,14 @@ function reducer(state: State, action: Action): State {
       break;
     case "distribution":
       const totalDistributionOrder = [
-        VideoLinks.FairSnacksA,
-        VideoLinks.FairSnacksB,
-        VideoLinks.UnfairSnacksA,
-        VideoLinks.UnfairSnacksB,
         VideoLinks.FairToysA,
         VideoLinks.FairToysB,
         VideoLinks.UnfairToysA,
         VideoLinks.UnfairToysB,
+        VideoLinks.FairSnacksA,
+        VideoLinks.FairSnacksB,
+        VideoLinks.UnfairSnacksA,
+        VideoLinks.UnfairSnacksB,
       ];
       if (!state.studySetup) {
         break;
