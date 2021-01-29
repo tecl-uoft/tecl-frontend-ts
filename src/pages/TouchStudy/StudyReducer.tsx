@@ -72,10 +72,10 @@ function reducer(state: State, action: Action): State {
         state.studySetup.leftPanel === "orange";
       const leftBarVideo = isLeftBarPosOrange
         ? TrainingVideo.rewardLeft
-        : TrainingVideo.punishRight;
+        : TrainingVideo.punishLeft;
       const rightBarVideo = isLeftBarPosOrange
-        ? TrainingVideo.rewardRight
-        : TrainingVideo.punishRight;
+        ? TrainingVideo.punishRight
+        : TrainingVideo.rewardRight; 
 
       if (action.trial === 1) {
         return {
@@ -201,7 +201,7 @@ function reducer(state: State, action: Action): State {
       const isTestLeftBarPosOrange =
         orangePanelValance === "positive" && leftPanel === "orange";
 
-      const videoOrder =
+      const videoOrderSet =
         state.studySetup?.fairActor === "A"
           ? [
               {
@@ -209,6 +209,12 @@ function reducer(state: State, action: Action): State {
                 punishLeft: VideoLinks.AlexPunishLeft,
                 rewardRight: VideoLinks.AlexRewardRight,
                 punishRight: VideoLinks.AlexPunishRight,
+              },
+              {
+                rewardLeft: VideoLinks.RachelRewardLeft,
+                punishLeft: VideoLinks.RachelPunishLeft,
+                rewardRight: VideoLinks.RachelRewardRight,
+                punishRight: VideoLinks.RachelPunishRight,
               },
             ]
           : [
@@ -218,8 +224,14 @@ function reducer(state: State, action: Action): State {
                 rewardRight: VideoLinks.RachelRewardRight,
                 punishRight: VideoLinks.RachelPunishRight,
               },
+              {
+                rewardLeft: VideoLinks.AlexRewardLeft,
+                punishLeft: VideoLinks.AlexPunishLeft,
+                rewardRight: VideoLinks.AlexRewardRight,
+                punishRight: VideoLinks.AlexPunishRight,
+              },
             ];
-      videoOrder.map((videoSet) => {
+      const videoOrder = videoOrderSet.map((videoSet) => {
         /* Wrong just order video fairness first or unfair first / dont include person distributing */
         if (isTestLeftBarPosOrange) {
           return [videoSet.rewardLeft, videoSet.punishRight];
@@ -230,8 +242,7 @@ function reducer(state: State, action: Action): State {
 
       if (action.trial <= videoOrder.length * 2) {
         /* For all trials in 2 sets, i.e 1 and 2, 3 and 4... */
-        const videoURL: any =
-          videoOrder[Math.floor((action.trial + 1) / 2) - 1];
+        const videoURL = videoOrder[Math.floor((action.trial + 1) / 2) - 1];
         if (action.trial % 2 === 1) {
           /* First in set is showing the face of participant */
           return {
