@@ -202,7 +202,7 @@ function reducer(state: State, action: Action): State {
         orangePanelValance === "positive" && leftPanel === "orange";
 
       const videoOrderSet =
-        state.studySetup?.fairActor === "A"
+        state.studySetup?.fairActor === "A" && state.studySetup.fairOrder === "first"
           ? [
               {
                 rewardLeft: VideoLinks.AlexRewardLeft,
