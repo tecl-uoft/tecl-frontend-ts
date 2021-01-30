@@ -10,6 +10,7 @@ import { useStudy } from "../../context/StudyContext";
 import { CalendarRemoveModal } from "../CalendarRemoveModal";
 import { CalendarEventModal } from "../CalendarEventModal";
 import { HeadExitButton } from "../HeadExitButton";
+import listPlugin from "@fullcalendar/list";
 
 interface IStudyHoursSetterModalProps {
   setShowModal(showModal: boolean): void;
@@ -64,15 +65,17 @@ function StudyHoursSetterModal(props: IStudyHoursSetterModalProps) {
                 </h2>
                 <FullCalendar
                   headerToolbar={{
-                    left: "today",
+                    left: "today,timeGridWeek,listWeek",
                     center: "title",
                     right: "prev next",
                   }}
                   initialEvents={[...studyCtx.studyState.scheduleEvents]}
                   selectable
-                  slotDuration={"00:" + studyCtx.studyState.defaultTimeInterval + ":00"}
+                  slotDuration={
+                    "00:" + studyCtx.studyState.defaultTimeInterval + ":00"
+                  }
                   nowIndicator={true}
-                  plugins={[timeGridPlugin, interactionPlugin]}
+                  plugins={[timeGridPlugin, interactionPlugin, listPlugin]}
                   initialView="timeGridWeek"
                   select={handleDateSelect}
                   allDaySlot={false}
