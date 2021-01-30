@@ -37,12 +37,14 @@ function Dashboard() {
       setUpdateList(false);
     }
   }, [updateList]);
+  if (!authCtx?.authState.user) {
+    return (<> </>);
+  }
 
   return (
     <div className="container flex flex-col px-8 py-4 mx-auto">
       <h1 className="mx-auto text-3xl font-bold">
-        {authCtx?.authState.user &&
-          authCtx.authState.user.firstName &&
+        {authCtx.authState.user.firstName &&
           authCtx.authState.isAuthenticated &&
           `Hello ${authCtx.authState.user.firstName}!`}
       </h1>
@@ -70,9 +72,11 @@ function Dashboard() {
               <ul className="mb-4 text-lg">
                 {study.leadResearchers.map((researcher, idx) => {
                   return (
-                    <li className="flex" key={idx}>{`${idx + 1}. ${researcher.email
-                      } (${researcher.firstName} ${researcher.lastName ? researcher.lastName : ""
-                      }) `}</li>
+                    <li className="flex" key={idx}>{`${idx + 1}. ${
+                      researcher.email
+                    } (${researcher.firstName} ${
+                      researcher.lastName ? researcher.lastName : ""
+                    }) `}</li>
                   );
                 })}
               </ul>
@@ -132,7 +136,6 @@ function CoordinatorsPanel({ studyName }: { studyName: string }) {
   };
 
   const onCoordinatorEnter = (e: React.KeyboardEvent<HTMLDivElement>) => {
-
     if (e.key === "Enter") {
       if (participantAddText === "") {
         alert("Empty box");
@@ -143,13 +146,15 @@ function CoordinatorsPanel({ studyName }: { studyName: string }) {
       // Trigger the button element with a click
       addCurrentCoordinator();
     }
-
-  }
+  };
 
   return (
     <div className="mt-2">
       <h4 className="my-auto text-xl">Add Additional RAs:</h4>
-      <div className="flex w-1/3 mt-2 space-x-2" onKeyPress={onCoordinatorEnter}>
+      <div
+        className="flex w-1/3 mt-2 space-x-2"
+        onKeyPress={onCoordinatorEnter}
+      >
         {" "}
         <Input
           value={participantAddText}
@@ -241,8 +246,9 @@ function AppointmentPanel({ study }: { study: IStudy }) {
                   new Date(event.start) >= new Date() && (
                     <tr
                       key={idx}
-                      className={`hover:shadow-md hover:text-red-800 cursor-pointer ${idx % 2 === 0 && "bg-orange-200"
-                        }`}
+                      className={`hover:shadow-md hover:text-red-800 cursor-pointer ${
+                        idx % 2 === 0 && "bg-orange-200"
+                      }`}
                     >
                       <td className="px-4 py-2 text-left">
                         {event.participantInfo.child.firstName +
