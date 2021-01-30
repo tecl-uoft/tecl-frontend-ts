@@ -101,15 +101,15 @@ function Dashboard() {
 
 function StudyTitlePanel({ study }: { study: IStudy }) {
   return (
-    <div className="flex space-x-4">
-      <h3 className="py-1 text-2xl font-semibold rounded ">
+    <div className="flex flex-col ">
+      <h3 className="pt-1 text-2xl font-semibold rounded ">
         {study.studyName} Study
       </h3>
       <div
-        className="p-2 my-1 text-white rounded select-none"
+        className="h-2 mb-4 w-full text-white rounded select-none"
         style={{ backgroundColor: study.keyColor }}
       >
-        Key Color
+       
       </div>
     </div>
   );
