@@ -23,6 +23,7 @@ function StudyHoursSetterModal(props: IStudyHoursSetterModalProps) {
   const [selectInfo, setSelectInfo] = useState<DateSelectArg | undefined>(
     undefined
   );
+
   const studyCtx = useStudy();
 
   const handleDateSelect = (selectInfo: DateSelectArg) => {
@@ -33,6 +34,8 @@ function StudyHoursSetterModal(props: IStudyHoursSetterModalProps) {
     setShowDeleteModal(true);
     setEventClick(clickInfo.event);
   };
+
+  /* TODO: Add key so refresh the comonent on study add */
 
   return (
     <div className="fixed inset-0 z-10 overflow-y-auto">
