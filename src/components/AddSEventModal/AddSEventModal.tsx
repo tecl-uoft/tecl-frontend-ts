@@ -90,11 +90,11 @@ function AddSEventModal(props: IAddSEventModalProps) {
       <FocusedModal setShowModal={setShowAddSEventModal}>
         <h1 className="flex md:flex-row flex-col justify-center mx-2 mb-1 text-xl">
           {" "}
-          Join study:{" "}
+          Join Study:{" "}
           <div className="mx-2 text-xl font-bold">
             {studyState && studyState.studyName},{" "}
           </div>
-          lead by:{" "}
+          Lead By:{" "}
           <div className="mx-2 text-xl font-bold">{eventClick?.title} </div>
         </h1>
 
