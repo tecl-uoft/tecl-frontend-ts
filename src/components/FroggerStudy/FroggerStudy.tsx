@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import FroggerConsentForm from "./FroggerConsentForm";
+import FroggerVideoConsentForm from "./FroggerVideoConsentForm"
 import FroggerGame from "./FroggerGame";
 import FroggerPractice from "./FroggerPractice";
 import FroggerInstructions from "./FroggerInstructions";
@@ -7,6 +8,7 @@ import ErrorNotFound from "../../pages/ErrorNotFound";
 
 enum FroggerStudyStates {
   AskConsent = "askConsent",
+  AskVideoConsent = "askVideoConsent",
   PracticeGame = "practiceGame",
   InstructionVideo = "instructionVideo",
   StudyGame = "studyGame",
@@ -16,7 +18,7 @@ enum FroggerStudyStates {
 function FroggerStudy() {
   const [studyState, setStudyState] = useState(
     process.env.NODE_ENV === "development"
-      ? FroggerStudyStates.AskConsent
+      ? FroggerStudyStates.AskVideoConsent
       : FroggerStudyStates.AskConsent
   );
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -42,10 +44,18 @@ function FroggerStudy() {
       case FroggerStudyStates.AskConsent:
         state = (
           <FroggerConsentForm
-            consentFunc={() => setStudyState(FroggerStudyStates.PracticeGame)}
+            consentFunc={() => setStudyState(FroggerStudyStates.AskVideoConsent)}
             noConsentFunc={() => setStudyState(FroggerStudyStates.NoConsent)}
           />
         );
+        break;
+      case FroggerStudyStates.AskVideoConsent:
+        state = ( 
+          <FroggerVideoConsentForm
+          consentFunc={() => setStudyState(FroggerStudyStates.PracticeGame)}
+          noConsentFunc={() => setStudyState(FroggerStudyStates.NoConsent)}
+          />
+        )
         break;
       case FroggerStudyStates.PracticeGame:
         state = (
