@@ -38,20 +38,10 @@ function MeetingCalendar(props: IMeetingCalendarProps) {
               center: "title",
               right: "dayGridMonth,timeGridWeek,listWeek",
             }}
-            initialEvents={[
-              ...studyState.scheduleEvents,
-              {
-                groupId: "testGroupId",
-                start: Date.now(),
-                end: Date.now(),
-                display: "inverse-background",
-                color: "#cbd5e0",
-                allDay: true,
-              },
-            ]}
+            initialEvents={studyState.scheduleEvents}
             allDaySlot={false}
             nowIndicator={true}
-            selectable
+           
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
             initialView={defaultView}
             eventClick={handleEventClick}

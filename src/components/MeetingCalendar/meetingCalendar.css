@@ -1,9 +1,22 @@
 .fc {
   height: 80vh;
 }
-
+/* 
 .fc .fc-scrollgrid table tbody {
   cursor: pointer;
+} */
+
+.fc .fc-timegrid-col{
+  background-color: #cbd5e04b;
+}
+
+.fc .fc-timegrid-slot-label {
+  background-color: white;
+}
+
+.fc .fc-timegrid-col-events {
+    display: flex;
+    cursor: pointer;
 }
 
 /* .fc .fc-timegrid tbody {
