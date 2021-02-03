@@ -1,12 +1,12 @@
 import React, { createContext, useContext, useState } from "react";
 import ScheduleEventService, {
-  ICreateScheduleEventProps, IScheduleEvent,
+  ICreateScheduleEventProps,
+  IScheduleEvent,
 } from "../services/ScheduleEventService";
 import StudyService, { IStudy } from "../services/StudyService";
 
 import { Props } from "./commonTypes";
 import { v4 as uuidv4 } from "uuid";
-import _ from "lodash";
 
 interface IStudyContext {
   /* Create a study to set up a scheduling system for */
@@ -60,8 +60,7 @@ export function StudyProvider({ children }: Props) {
     if (studyState) {
       ScheduleEventService.remove(calId)
         .then(() => {
-          const unremovedScheduleEvents = _.filter(
-            studyState.scheduleEvents,
+          const unremovedScheduleEvents = studyState.scheduleEvents.filter(
             (se) => {
               return se.id !== calId;
             }
