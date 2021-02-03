@@ -72,7 +72,7 @@ function StudyHoursSetterModal(props: IStudyHoursSetterModalProps) {
                     center: "title",
                     right: "prev next",
                   }}
-                  initialEvents={studyCtx.studyState.scheduleEvents}
+                  events={studyCtx.studyState.scheduleEvents}
                   selectable
                   slotDuration={
                     "00:" + studyCtx.studyState.defaultTimeInterval + ":00"
