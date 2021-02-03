@@ -55,7 +55,7 @@ function StudyHoursSetterModal(props: IStudyHoursSetterModalProps) {
           aria-modal="true"
           aria-labelledby="modal-headline"
         >
-          <div className="pb-2">
+          <div className="study-setter-cal pb-2">
             {studyCtx?.studyState && (
               <>
                 <div className="flex justify-end -mb-6">
@@ -72,7 +72,7 @@ function StudyHoursSetterModal(props: IStudyHoursSetterModalProps) {
                     center: "title",
                     right: "prev next",
                   }}
-                  initialEvents={[...studyCtx.studyState.scheduleEvents]}
+                  initialEvents={studyCtx.studyState.scheduleEvents}
                   selectable
                   slotDuration={
                     "00:" + studyCtx.studyState.defaultTimeInterval + ":00"

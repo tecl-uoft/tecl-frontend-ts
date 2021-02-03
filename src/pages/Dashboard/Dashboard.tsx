@@ -35,17 +35,20 @@ function Dashboard() {
         })
         .catch((err) => {
           new Promise((res, rej) => {
-            res(alert("You must be logged in to access the dashboard. Redirecting to login..."))
+            res(
+              alert(
+                "You must be logged in to access the dashboard. Redirecting to login..."
+              )
+            );
           }).then(() => {
-            history.push("/login")
-          })
-          
+            history.push("/login");
+          });
         });
       setUpdateList(false);
     }
   }, [updateList, history]);
   if (!authCtx?.authState.user) {
-    return (<> </>);
+    return <> </>;
   }
 
   return (
@@ -115,9 +118,7 @@ function StudyTitlePanel({ study }: { study: IStudy }) {
       <div
         className="h-2 mb-4 w-full text-white rounded select-none"
         style={{ backgroundColor: study.keyColor }}
-      >
-       
-      </div>
+      ></div>
     </div>
   );
 }

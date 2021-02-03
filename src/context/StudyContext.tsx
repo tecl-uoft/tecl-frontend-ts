@@ -35,7 +35,7 @@ export function StudyProvider({ children }: Props) {
         setStudyState(study);
       })
       .catch((err) => {
-        alert(`${err}`);
+        alert(`Cannot find and set this particular study. ${err}`);
       });
     return;
   }
