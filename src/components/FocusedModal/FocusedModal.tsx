@@ -11,13 +11,18 @@ function FocusedModal(props: IFocusedModalProps) {
       <div className="flex items-end justify-center min-h-screen px-2 pt-4 pb-20 text-center sm:block sm:p-0">
         <div
           className="fixed inset-0 transition-opacity cursor-pointer"
+          aria-hidden="true"
           onClick={() => props.setShowModal(false)}
         >
           <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
         </div>
         {/* <!-- This element is to trick the browser into centering the modal contents. --> */}
-        <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
-        &#8203;
+        <span
+          className="hidden sm:inline-block sm:align-middle sm:h-screen"
+          aria-hidden="true"
+        >
+          &#8203;
+        </span>
         <div
           className="inline-block p-6 my-6 align-top transition-all transform bg-white rounded-lg"
           role="dialog"
