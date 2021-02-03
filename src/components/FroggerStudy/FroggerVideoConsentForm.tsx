@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import ConsentTemplate from "../common/ConsentTemplate";
-import Input from "../common/Input";
 
 interface IFroggerConsentFormProps {
   noConsentFunc: Function;
@@ -29,7 +28,6 @@ function FroggerVideoConsentForm(props: IFroggerConsentFormProps) {
 }
 
 function ConsentFormBody() {
-  const [name, setName] = useState("");
   return (
     <div>
       <h3 className="text-xl">
@@ -73,7 +71,10 @@ function ConsentFormBody() {
             "I agree for the photo and video recorded material to be used in the media (e.g., third- party web, newspaper or television stories about this research).",
           ].map((question, idx) => {
             return (
-              <div className="flex space-x-4 justify-between space-y-6" key={idx}>
+              <div
+                className="flex space-x-4 justify-between space-y-6"
+                key={idx}
+              >
                 {" "}
                 <p> {question}</p>{" "}
                 <div className="flex space-x-10">
