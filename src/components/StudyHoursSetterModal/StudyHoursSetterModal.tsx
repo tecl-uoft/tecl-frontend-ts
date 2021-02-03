@@ -96,6 +96,7 @@ function StudyHoursSetterModal(props: IStudyHoursSetterModalProps) {
               <CalendarEventModal
                 createEventFunc={() => {}}
                 selectInfo={selectInfo}
+                eventAPI={eventClick}
                 setShowEventModal={setShowEventModal}
               />
             )}

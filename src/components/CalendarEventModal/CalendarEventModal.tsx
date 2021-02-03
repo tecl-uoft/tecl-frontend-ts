@@ -17,18 +17,18 @@ interface ICalendarEventModalProps {
   selectInfo: DateSelectArg | undefined;
   setShowEventModal: Dispatch<SetStateAction<boolean>>;
   createEventFunc(): void;
+  eventAPI?: EventApi;
 }
 
 function CalendarEventModal(props: ICalendarEventModalProps) {
   const studyCtx = useStudy();
   const authCtx = useAuth();
-  const { selectInfo } = props;
+  const { selectInfo, eventAPI } = props;
   const [endRecurringDate, setEndRecurringDate] = useState("");
   const [interval, setInterval] = useState(0);
   const [time, setTime] = useState({ startTime: "", endTime: "" });
   const [addParticipant, setAddParticipant] = useState(false);
   const [bookingDeadline, setBookingDeadline] = useState("");
-  const [eventAPI, setEventAPI] = useState<null | EventApi>(null);
   const [showAddSEventModal, setShowAddSEventModal] = useState(false);
 
   const onCheckAddParticipant = () => {
@@ -71,7 +71,6 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
     const selectInfo = props.selectInfo;
 
     if (selectInfo && studyCtx) {
-      const calendarApi = selectInfo.view.calendar;
       if (!authCtx || !authCtx.authState.user) {
         alert("Must be logged in to make a change");
       } else if (studyCtx?.studyState) {
@@ -85,16 +84,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
           parseInt(time.endTime.slice(0, 2)),
           parseInt(time.endTime.slice(3, 5))
         );
-        const event = {
-          title: eventTitle,
-          start: startTime,
-          end: endTime,
-          allDay: selectInfo.allDay,
-          color: studyCtx.studyState.keyColor,
-        };
-        /* Add study state locally to calendar */
-        const newEvent = calendarApi.addEvent(event);
-        setEventAPI(newEvent);
+
         /* Send request to add state to database */
         const availability: ICreateScheduleEventProps = {
           start: new Date(startTime).toISOString(),
@@ -106,17 +96,22 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
           bookingDeadline,
         };
         new Promise((res, rej) => {
-          res(studyCtx.createScheduleEvent(availability))
-        }).then(() => {
-          if (addParticipant) {
-            setShowAddSEventModal(false);
-            window.location.pathname = "scheduling";
-          }
-        }).then(() => {
-          props.setShowEventModal(false);
+          res(studyCtx.createScheduleEvent(availability));
         })
-
-
+          .then(() => {
+            props.setShowEventModal(false);
+          })
+          .then(() => {
+            if (addParticipant) {
+              setShowAddSEventModal(false);
+              window.location.pathname = "scheduling";
+            } else {
+              if (!studyCtx.studyState) {
+                return;
+              }
+              studyCtx.findAndSetStudy(studyCtx.studyState.studyName);
+            }
+          });
       }
 
       /* calendarApi.unselect();
@@ -145,8 +140,10 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
             ></div>
           </div>
           {/* <!-- This element is to trick the browser into centering the modal contents. --> */}
-          <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
-          &#8203;
+          <span className="hidden sm:inline-block sm:align-middle sm:h-screen">
+            &#8203;
+          </span>
+
           <div
             className="inline-block overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
             role="dialog"
@@ -156,7 +153,6 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
             <div className="px-4 pt-4 bg-white">
               <div className="sm:flex sm:items-start">
                 <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 mx-auto bg-green-100 border-2 border-green-600 rounded-full sm:mx-0 sm:h-10 sm:w-10">
-                  {/* <!-- Heroicon name: exclamation --> */}
                   <svg
                     fill="none"
                     viewBox="0 0 24 24"
@@ -265,13 +261,18 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                         setBookingDeadline(e.currentTarget.value)
                       }
                     >
-                      {
-                        [2, 3, 4, 5, 6, 7].map((days) => {
-                          return (
-                            <option key={days} value={DateTime.local().minus({ days }).toFormat("yyyy-MM-dd")}>{days} days before availability</option>
-                          )
-                        })
-                      }
+                      {[2, 3, 4, 5, 6, 7].map((days) => {
+                        return (
+                          <option
+                            key={days}
+                            value={DateTime.local()
+                              .minus({ days })
+                              .toFormat("yyyy-MM-dd")}
+                          >
+                            {days} days before availability
+                          </option>
+                        );
+                      })}
                     </select>
                   </div>
                 )}
