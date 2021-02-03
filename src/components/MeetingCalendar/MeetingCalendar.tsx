@@ -40,6 +40,7 @@ function MeetingCalendar(props: IMeetingCalendarProps) {
             }}
             initialEvents={studyState.scheduleEvents}
             allDaySlot={false}
+            slotDuration={"01:00:00"}
             nowIndicator={true}
             dayMaxEventRows={5}
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
