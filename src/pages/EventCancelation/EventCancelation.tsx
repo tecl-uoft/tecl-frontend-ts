@@ -27,20 +27,18 @@ function EventCancelation() {
           alert("Remove failed, contact study leader for next steps")
         );
     }
-  }
+  };
 
   useEffect(() => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const eventId = urlParams.get("eventId");
     const eventHash = urlParams.get("eventHash");
-    console.log(eventId);
 
     if (eventId && eventHash) {
       ScheduleEventService.read(eventId)
         .then((scheduleEvent) => {
           setScheduleEvent(scheduleEvent);
-          console.log(scheduleEvent);
         })
         .catch((err) => {
           alert(err);
@@ -131,7 +129,8 @@ function EventCancelation() {
                   </label>
                   <div className="block w-full p-1 mb-1 text-xl text-gray-700 bg-gray-200 rounded">
                     {" "}
-                    {findAge(scheduleEvent.participantInfo.child.dob) + " old"}{" "}
+                    {findAge(scheduleEvent.participantInfo.child.dob) +
+                      " old"}{" "}
                   </div>
                 </div>
               </div>

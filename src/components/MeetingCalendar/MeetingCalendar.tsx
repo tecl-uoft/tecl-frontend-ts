@@ -31,7 +31,7 @@ function MeetingCalendar(props: IMeetingCalendarProps) {
   return (
     <div className="pb-6">
       {studyState && (
-        <div key={studyState.studyName + defaultView}>
+        <div className="meeting-cal" key={studyState.studyName + defaultView}>
           <FullCalendar
             headerToolbar={{
               left: "prev,next today",

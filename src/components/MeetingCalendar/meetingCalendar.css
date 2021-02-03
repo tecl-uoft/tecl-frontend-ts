@@ -1,12 +1,16 @@
 .fc {
   height: 80vh;
 }
-/* 
+
 .fc .fc-scrollgrid table tbody {
   cursor: pointer;
-} */
+}
 
-.fc .fc-timegrid-col{
+.meeting-cal .fc .fc-scrollgrid table tbody {
+  cursor: inherit;
+}
+
+.meeting-cal .fc .fc-timegrid-col{
   background-color: #cbd5e04b;
 }
 
@@ -14,9 +18,20 @@
   background-color: white;
 }
 
-.fc .fc-timegrid-col-events {
-    display: flex;
+ .fc .fc-timegrid-col-events {
     cursor: pointer;
+}
+
+.fc .fc-timegrid-event:hover {
+  opacity: 0.8;
+}
+
+.fc .fc-list-event{
+  cursor: pointer;
+}
+
+.fc .fc-daygrid-event{
+  cursor: pointer;
 }
 
 /* .fc .fc-timegrid tbody {

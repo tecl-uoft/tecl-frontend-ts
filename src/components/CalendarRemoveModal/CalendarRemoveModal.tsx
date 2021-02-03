@@ -18,7 +18,6 @@ function CalendarRemoveModal(props: ICalendarRemoveModalProps) {
     if (eventClick) {
       ScheduleEventService.read(eventClick.id)
         .then((event) => {
-          console.log(event);
           setBookedDate(event.dateBooked ? event.dateBooked : "");
         })
         .catch(() => {
@@ -30,7 +29,6 @@ function CalendarRemoveModal(props: ICalendarRemoveModalProps) {
   const onClickDelete = () => {
     /* eventClick?.setProp("display", "background"); */
     const calId = eventClick?.id;
-    console.log(eventClick);
     if (calId) {
       studyCtx?.removeScheduleEvent(calId);
       eventClick?.remove();
