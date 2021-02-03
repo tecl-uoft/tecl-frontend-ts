@@ -1,4 +1,4 @@
-import { DateSelectArg } from "@fullcalendar/react";
+import { DateSelectArg, EventApi } from "@fullcalendar/react";
 import React, {
   ChangeEvent,
   Dispatch,
@@ -11,6 +11,7 @@ import { useStudy } from "../../context/StudyContext";
 import { ICreateScheduleEventProps } from "../../services/ScheduleEventService";
 import { DateTime } from "luxon";
 import Label from "../common/Label";
+import { AddSEventModal } from "../AddSEventModal";
 
 interface ICalendarEventModalProps {
   selectInfo: DateSelectArg | undefined;
@@ -27,6 +28,8 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
   const [time, setTime] = useState({ startTime: "", endTime: "" });
   const [addParticipant, setAddParticipant] = useState(false);
   const [bookingDeadline, setBookingDeadline] = useState("");
+  const [eventAPI, setEventAPI] = useState<null | EventApi>(null);
+  const [showAddSEventModal, setShowAddSEventModal] = useState(false);
 
   const onCheckAddParticipant = () => {
     setAddParticipant(!addParticipant);
@@ -68,6 +71,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
     const selectInfo = props.selectInfo;
 
     if (selectInfo && studyCtx) {
+      const calendarApi = selectInfo.view.calendar;
       if (!authCtx || !authCtx.authState.user) {
         alert("Must be logged in to make a change");
       } else if (studyCtx?.studyState) {
@@ -81,7 +85,16 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
           parseInt(time.endTime.slice(0, 2)),
           parseInt(time.endTime.slice(3, 5))
         );
-
+        const event = {
+          title: eventTitle,
+          start: startTime,
+          end: endTime,
+          allDay: selectInfo.allDay,
+          color: studyCtx.studyState.keyColor,
+        };
+        /* Add study state locally to calendar */
+        const newEvent = calendarApi.addEvent(event);
+        setEventAPI(newEvent);
         /* Send request to add state to database */
         const availability: ICreateScheduleEventProps = {
           start: new Date(startTime).toISOString(),
@@ -93,16 +106,17 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
           bookingDeadline,
         };
         new Promise((res, rej) => {
-          res(studyCtx.createScheduleEvent(availability));
+          res(studyCtx.createScheduleEvent(availability))
+        }).then(() => {
+          if (addParticipant) {
+            setShowAddSEventModal(false);
+            window.location.pathname = "scheduling";
+          }
+        }).then(() => {
+          props.setShowEventModal(false);
         })
-          .then(() => {
-            if (addParticipant) {
-              window.location.pathname = "scheduling";
-            }
-          })
-          .then(() => {
-            props.setShowEventModal(false);
-          });
+
+
       }
 
       /* calendarApi.unselect();
@@ -251,18 +265,13 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                         setBookingDeadline(e.currentTarget.value)
                       }
                     >
-                      {[2, 3, 4, 5, 6, 7].map((days) => {
-                        return (
-                          <option
-                            key={days}
-                            value={DateTime.local()
-                              .minus({ days })
-                              .toFormat("yyyy-MM-dd")}
-                          >
-                            {days} days before availability
-                          </option>
-                        );
-                      })}
+                      {
+                        [2, 3, 4, 5, 6, 7].map((days) => {
+                          return (
+                            <option key={days} value={DateTime.local().minus({ days }).toFormat("yyyy-MM-dd")}>{days} days before availability</option>
+                          )
+                        })
+                      }
                     </select>
                   </div>
                 )}
@@ -306,6 +315,13 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
           </div>
         </div>
       </div>
+      {eventAPI && showAddSEventModal && (
+        <AddSEventModal
+          setShowAddSEventModal={props.setShowEventModal}
+          studyState={studyCtx?.studyState}
+          eventClick={eventAPI}
+        />
+      )}
     </>
   );
 }
