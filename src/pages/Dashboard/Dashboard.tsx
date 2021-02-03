@@ -11,9 +11,11 @@ import StudyService, { IStudy } from "../../services/StudyService";
 import { BookedCalendar } from "../../components/BookedCalendar";
 import { DateTime } from "luxon";
 import Input from "../../components/common/Input";
+import { useHistory } from "react-router-dom";
 
 function Dashboard() {
   const authCtx = useAuth();
+  const history = useHistory();
 
   const [showAddStudyModal, setShowAddStudyModal] = useState(false);
   const [userStudyList, setUserStudyList] = useState<IStudy[] | undefined>(
@@ -32,11 +34,16 @@ function Dashboard() {
           setUserStudyList(studyList);
         })
         .catch((err) => {
-          alert(err);
+          new Promise((res, rej) => {
+            res(alert("You must be logged in to access the dashboard. Redirecting to login..."))
+          }).then(() => {
+            history.push("/login")
+          })
+          
         });
       setUpdateList(false);
     }
-  }, [updateList]);
+  }, [updateList, history]);
   if (!authCtx?.authState.user) {
     return (<> </>);
   }
