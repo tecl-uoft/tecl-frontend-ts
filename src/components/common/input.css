@@ -1,0 +1,17 @@
+.react-calendar__month-view__days__day--weekend {
+  color: inherit;
+}
+
+.react-calendar__tile--now {
+    border-radius: 25%;
+    background: rgba(245, 158, 11);
+    color: white;
+  }
+  
+
+.react-calendar__tile--active {
+  border-radius: 25%;
+  color: white;
+  background: #006edc;
+}
+
