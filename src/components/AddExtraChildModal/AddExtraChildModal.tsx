@@ -65,7 +65,7 @@ function AddExtraChildModal({
         </h2>
         {registerChildern.map((child, idx) => {
           return (
-            <div className="mb-2">
+            <div key={idx} className="mb-2">
               <h3 className="flex justify-between block py-1 pl-4 my-2 text-lg font-bold text-gray-700 bg-orange-300 rounded">
                 <div className="mx-auto my-auto">
                   Information for Additional Child #{idx + 1}{" "}
