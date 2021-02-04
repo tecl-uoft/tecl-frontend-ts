@@ -19,6 +19,7 @@ import { StudyProvider } from "./context/StudyContext";
 import { EventCancelation } from "./pages/EventCancelation";
 import { TouchStudy } from "./pages/TouchStudy";
 import { PrivacyPolicy } from "./pages/PrivacyPolicy";
+import { Toaster } from "react-hot-toast";
 
 const TeamsStudyGame = lazy(() => import("./pages/TeamsStudyGame"));
 const EyeTrackingGame = lazy(() => import("./pages/EyeTrackingGame"));
@@ -30,6 +31,7 @@ function App() {
     <div className="App">
       <AuthProvider>
         <StudyProvider>
+          <Toaster />
           <Suspense fallback={<Loading />}>
             <BrowserRouter>
               <Header />

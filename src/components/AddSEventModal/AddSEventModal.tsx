@@ -1,7 +1,7 @@
 import { EventApi } from "@fullcalendar/react";
 import { DateTime } from "luxon";
 import React, { MouseEvent, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import ScheduleEventService from "../../services/ScheduleEventService";
 import { IStudy } from "../../services/StudyService";
 import { AddExtraChildModal } from "../AddExtraChildModal";
@@ -118,7 +118,6 @@ function AddSEventModal(props: IAddSEventModalProps) {
 
   return (
     <div>
-      <Toaster />
       <FocusedModal setShowModal={setShowAddSEventModal}>
         <h1 className="flex md:flex-row flex-col justify-center mx-2 mb-1 text-xl">
           {" "}
