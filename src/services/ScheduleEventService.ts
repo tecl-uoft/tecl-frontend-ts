@@ -167,6 +167,10 @@ export interface IBookedScheduleEvent {
       dob: string;
     };
   };
+  bookedBy?: {
+    firstName: string;
+    lastName: string;
+  }
 }
 
 async function listBooked(studyName: string): Promise<IBookedScheduleEvent[]> {

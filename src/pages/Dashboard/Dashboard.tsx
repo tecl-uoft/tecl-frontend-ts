@@ -240,8 +240,9 @@ function AppointmentPanel({ study }: { study: IStudy }) {
         <table className="min-w-full bg-white">
           <thead className="font-semibold text-white bg-gray-700 text-md">
             <tr>
-              <th className="px-4 py-2 text-left">Name</th>
-              <th className="px-4 py-2 text-left">Parent</th>
+              <th className="px-4 py-2 text-left">Booked By</th>
+              <th className="px-4 py-2 text-left">Child Name</th>
+              <th className="px-4 py-2 text-left">Parent Name</th>
               <th className="px-4 py-2 text-left">Appointment Date</th>
               <th className="px-4 py-2 text-left">Email</th>
               <th className="px-4 py-2 text-left">Child Age</th>
@@ -258,6 +259,9 @@ function AppointmentPanel({ study }: { study: IStudy }) {
                         idx % 2 === 0 && "bg-orange-200"
                       }`}
                     >
+                      <td className="px-4 py-2 text-left">
+                        {event.bookedBy ? event.bookedBy.firstName + " " + event.bookedBy.lastName : "Parent"}
+                      </td>
                       <td className="px-4 py-2 text-left">
                         {event.participantInfo.child.firstName +
                           " " +
