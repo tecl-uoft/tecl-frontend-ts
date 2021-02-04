@@ -107,8 +107,12 @@ function AddSEventModal(props: IAddSEventModalProps) {
       })
         .then(() => {
           toast.success(
-            "Your appointment has been added. We will contact you via email shortly."
+            "Your appointment has been recived. We will contact you via email shortly.",
+            { duration: 4000 }
           );
+        })
+        .then(() => {
+          eventClick.remove();
         })
         .then(() => setShowAddSEventModal(false))
         .catch((err) => alert(err));
