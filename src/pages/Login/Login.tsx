@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
@@ -8,13 +8,6 @@ function Login() {
   const auth = useAuth();
   const [emailInput, setEmailInput] = useState<string>("");
   const [passwordInput, setPasswordInput] = useState<string>("");
-
-  useEffect(() => {
-    if (auth?.authState.isAuthenticated) {
-      toast.error("You are already logged in.")
-      history.push("/dashboard");
-    }
-  }, [auth, history])
 
   const handleLogin = () => {
     const user = {

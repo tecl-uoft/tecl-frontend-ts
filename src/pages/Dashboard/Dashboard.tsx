@@ -37,7 +37,6 @@ function Dashboard() {
         .catch((err) => {
           new Promise((res, rej) => {
             res(
-              
               toast(
                 "You must be logged in to access the dashboard. Redirecting to login...",
                 {
