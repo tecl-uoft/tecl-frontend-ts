@@ -12,6 +12,7 @@ import { BookedCalendar } from "../../components/BookedCalendar";
 import { DateTime } from "luxon";
 import Input from "../../components/common/Input";
 import { useHistory } from "react-router-dom";
+import toast from "react-hot-toast";
 
 function Dashboard() {
   const authCtx = useAuth();
@@ -36,8 +37,12 @@ function Dashboard() {
         .catch((err) => {
           new Promise((res, rej) => {
             res(
-              alert(
-                "You must be logged in to access the dashboard. Redirecting to login..."
+              
+              toast(
+                "You must be logged in to access the dashboard. Redirecting to login...",
+                {
+                  icon: "🔒"
+                }
               )
             );
           }).then(() => {
