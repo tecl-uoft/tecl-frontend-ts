@@ -111,14 +111,18 @@ function Dashboard() {
 
 function StudyTitlePanel({ study }: { study: IStudy }) {
   return (
-    <div className="flex flex-col ">
-      <h3 className="pt-1 text-2xl font-semibold rounded ">
-        {study.studyName} Study
-      </h3>
+    <div className="flex flex-col md:flex-row">
       <div
-        className="h-2 mb-4 w-full text-white rounded select-none"
+        className="h-2 my-auto flex-grow mx-6 text-white rounded select-none"
         style={{ backgroundColor: study.keyColor }}
-      ></div>
+      />
+      <div className="pt-1 inline-block text-2xl font-semibold rounded ">
+        {study.studyName} Study
+      </div>
+      <div
+        className="h-2 my-auto flex-grow mx-6 text-white rounded select-none"
+        style={{ backgroundColor: study.keyColor }}
+      />
     </div>
   );
 }
@@ -260,7 +264,11 @@ function AppointmentPanel({ study }: { study: IStudy }) {
                       }`}
                     >
                       <td className="px-4 py-2 text-left">
-                        {event.bookedBy ? event.bookedBy.firstName + " " + event.bookedBy.lastName : "Parent"}
+                        {event.bookedBy
+                          ? event.bookedBy.firstName +
+                            " " +
+                            event.bookedBy.lastName
+                          : "Parent"}
                       </td>
                       <td className="px-4 py-2 text-left">
                         {event.participantInfo.child.firstName +
