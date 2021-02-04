@@ -64,7 +64,7 @@ function Dashboard() {
           `Hello ${authCtx.authState.user.firstName}!`}
       </h1>
       <div className="flex justify-between">
-        <h2 className="text-3xl font-semibold">Current Studies</h2>
+        <h2 className="text-3xl font-semibold">Your Current Studies</h2>
         <div>
           <button
             onClick={onAddStudy}
@@ -116,7 +116,7 @@ function Dashboard() {
 
 function StudyTitlePanel({ study }: { study: IStudy }) {
   return (
-    <div className="flex flex-col md:flex-row">
+    <div className="flex flex-col md:flex-row md:mt-6">
       <div
         className="h-2 my-auto flex-grow mx-6 text-white rounded select-none"
         style={{ backgroundColor: study.keyColor }}
@@ -136,7 +136,7 @@ function StatisticsPanel({ study }: { study: IStudy }) {
   return (
     <div className="flex flex-col mt-2">
       <h4 className="my-auto text-xl">Statistics:</h4>
-      <p className="">Appointment Goals: {study.apptGoals} Appointments</p>
+      <p className="">Weekly Appointment Goals: {study.apptGoals} Appointments</p>
     </div>
   );
 }

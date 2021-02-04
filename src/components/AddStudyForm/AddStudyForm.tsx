@@ -112,7 +112,7 @@ function AddStudyForm(props: IAddStudyFormProps) {
         <div className="flex justify-around mb-2 -mx-3">
           <div className="flex items-center">
             <label className="block mr-4 text-xs font-bold tracking-wide text-gray-700 uppercase">
-              Appointment Goals:{" "}
+             Weekly Appointment Goals:{" "}
             </label>
             <input
               className="block w-16 p-2 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
