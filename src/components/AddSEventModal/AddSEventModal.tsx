@@ -1,6 +1,7 @@
 import { EventApi } from "@fullcalendar/react";
 import { DateTime } from "luxon";
 import React, { MouseEvent, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import ScheduleEventService from "../../services/ScheduleEventService";
 import { IStudy } from "../../services/StudyService";
 import { AddExtraChildModal } from "../AddExtraChildModal";
@@ -36,9 +37,43 @@ function AddSEventModal(props: IAddSEventModalProps) {
 
   const { setShowAddSEventModal, eventClick, studyState } = props;
 
+  const darkToastError = (msg: string) => {
+    toast.error(msg, {
+      style: {
+        borderRadius: "10px",
+        background: "#333",
+        color: "#fff",
+      },
+    });
+  };
+
   const submitJoinStudy = (e: MouseEvent<HTMLInputElement>) => {
     const childAgeInDays =
       Math.floor(DateTime.fromISO(childDob).diffNow("days").days) * -1;
+ 
+    if (
+      !firstNameField ||
+      !lastNameField ||
+      !emailField ||
+      !childFirstNameField ||
+      !childLastNameField ||
+      !childDob
+    ) {
+      darkToastError("Please make sure you complete all non-optional fields.");
+      return;
+    }
+
+    if (
+      studyState &&
+      (studyState.minAgeDays > childAgeInDays ||
+        studyState.maxAgeDays < childAgeInDays)
+    ) {
+      darkToastError(
+        "Unfortunately, due to your child's age, they cannot be part of this study."
+      );
+      return;
+    }
+
     /* Set event as background when it is booked */
     if (
       eventClick &&
@@ -73,10 +108,6 @@ function AddSEventModal(props: IAddSEventModalProps) {
         })
         .then(() => setShowAddSEventModal(false))
         .catch((err) => alert(err));
-    } else {
-      alert(
-        "Unfortunately, due to your child's age, they cannot be part of this study."
-      );
     }
   };
 
@@ -87,6 +118,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
 
   return (
     <div>
+      <Toaster />
       <FocusedModal setShowModal={setShowAddSEventModal}>
         <h1 className="flex md:flex-row flex-col justify-center mx-2 mb-1 text-xl">
           {" "}
