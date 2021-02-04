@@ -38,7 +38,7 @@ function Dashboard() {
           new Promise((res, rej) => {
             res(
               toast(
-                "You must be logged in to access the dashboard. Redirecting to login...",
+                "You are currently logged out. You must be logged in to access the dashboard. Redirecting to login...",
                 {
                   icon: "🔒"
                 }
