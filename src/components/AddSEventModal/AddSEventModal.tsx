@@ -1,6 +1,6 @@
 import { EventApi } from "@fullcalendar/react";
 import { DateTime } from "luxon";
-import React, { MouseEvent, useState } from "react";
+import React, { MouseEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import ScheduleEventService from "../../services/ScheduleEventService";
 import { IStudy } from "../../services/StudyService";
@@ -37,6 +37,10 @@ function AddSEventModal(props: IAddSEventModalProps) {
 
   const { setShowAddSEventModal, eventClick, studyState } = props;
 
+  useEffect(() => {
+    setChildDob(DateTime.fromJSDate(new Date()).toFormat("yyyy-MM-dd"));
+  }, []);
+
   const darkToastError = (msg: string) => {
     toast.error(msg, {
       style: {
@@ -50,7 +54,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
   const submitJoinStudy = (e: MouseEvent<HTMLInputElement>) => {
     const childAgeInDays =
       Math.floor(DateTime.fromISO(childDob).diffNow("days").days) * -1;
- 
+
     if (
       !firstNameField ||
       !lastNameField ||
@@ -102,9 +106,9 @@ function AddSEventModal(props: IAddSEventModalProps) {
         additionalCSCChildren,
       })
         .then(() => {
-          eventClick.setProp("title", "BOOKED");
-          eventClick.setProp("display", "background");
-          eventClick.setProp("textColor", "#000000");
+          toast.success(
+            "Your appointment has been added. We will contact you via email shortly."
+          );
         })
         .then(() => setShowAddSEventModal(false))
         .catch((err) => alert(err));
