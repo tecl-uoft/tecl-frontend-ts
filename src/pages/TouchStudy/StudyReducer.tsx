@@ -66,24 +66,29 @@ function reducer(state: State, action: Action): State {
         punishRight: VideoLinks.HayleePunishRight,
         rewardRight: VideoLinks.HayleeRewardRight,
       };
-
+      const isLeftBarOrange = state.studySetup?.leftPanel === "orange";
       const isLeftBarPosOrange =
-        state.studySetup?.orangePanelValance === "positive" &&
-        state.studySetup.leftPanel === "orange";
+        state.studySetup?.orangePanelValance === "positive" && isLeftBarOrange;
       const leftBarVideo = isLeftBarPosOrange
         ? TrainingVideo.rewardLeft
         : TrainingVideo.punishLeft;
       const rightBarVideo = isLeftBarPosOrange
         ? TrainingVideo.punishRight
-        : TrainingVideo.rewardRight; 
-
+        : TrainingVideo.rewardRight;
+   
       if (action.trial === 1) {
+        /* If left bar is orange display it first */
         return {
-          ...initialState,
+          ...state,
           leftBar: {
             ...state.leftBar,
-            isHidden: false,
+            isHidden: !isLeftBarOrange,
             videoOnClick: leftBarVideo,
+          },
+          rightBar: {
+            ...state.rightBar,
+            isHidden: isLeftBarOrange,
+            videoOnClick: rightBarVideo,
           },
           video: { ...initialState.video, url: leftBarVideo },
           nextDispatch: { type: "training", trial: 2 },
@@ -91,11 +96,17 @@ function reducer(state: State, action: Action): State {
           studySetup: state.studySetup,
         };
       } else if (action.trial === 2) {
+        /* if left bar is orange, display right bar second */
         return {
-          ...initialState,
+          ...state,
+          leftBar: {
+            ...state.leftBar,
+            isHidden: isLeftBarOrange,
+            videoOnClick: leftBarVideo,
+          },
           rightBar: {
             ...state.rightBar,
-            isHidden: false,
+            isHidden: !isLeftBarOrange,
             videoOnClick: rightBarVideo,
           },
           video: { ...initialState.video, url: rightBarVideo },
@@ -202,7 +213,8 @@ function reducer(state: State, action: Action): State {
         orangePanelValance === "positive" && leftPanel === "orange";
 
       const videoOrderSet =
-        state.studySetup?.fairActor === "A" && state.studySetup.fairOrder === "first"
+        state.studySetup?.fairActor === "A" &&
+        state.studySetup.fairOrder === "first"
           ? [
               {
                 rewardLeft: VideoLinks.AlexRewardLeft,
