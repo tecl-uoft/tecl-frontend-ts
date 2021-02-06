@@ -30,7 +30,7 @@ enum FairnessStudyStates {
 function FairnessStudy() {
   const [trialNum, setTrialNum] = useState(
     process.env.NODE_ENV === "development"
-      ? FairnessStudyStates.AskConsent
+      ? FairnessStudyStates.Machine
       : FairnessStudyStates.AskConsent
   );
   const [randomizedElements, setRandomizedElements] = useState(null as any);
@@ -180,7 +180,6 @@ function FairnessStudy() {
       
       let getsToThrow = null;
       getsToThrow = (isNaN(inputThrow) ? randomizedElements.getsToThrow : (inputThrow === 1))
-      console.log(getsToThrow)
       
       setTrialInfo({
         trialEqual,
@@ -302,6 +301,7 @@ function FairnessStudy() {
                   "Now, please answer some general questions about the game."
                 }
                 responseReady={true}
+                planet={"/assets/fairness-img/white.png"}
               />
             ),
             6: <FairnessStudyAttention 
