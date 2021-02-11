@@ -75,7 +75,7 @@ function reducer(state: State, action: Action): State {
       const rightBarVideo = isLeftBarPosOrange
         ? TrainingVideo.punishRight
         : TrainingVideo.rewardRight;
-   
+
       if (action.trial === 1) {
         /* If left bar is orange display it first */
         return {
@@ -136,32 +136,52 @@ function reducer(state: State, action: Action): State {
       break;
     case "distribution":
       const totalDistributionOrder = [
-        VideoLinks.FairToysA,
-        VideoLinks.UnfairToysB,
-        VideoLinks.FairToysB,
-        VideoLinks.UnfairToysA,
         VideoLinks.FairSnacksA,
         VideoLinks.UnfairSnacksB,
         VideoLinks.FairSnacksB,
         VideoLinks.UnfairSnacksA,
+        VideoLinks.FairToysA,
+        VideoLinks.UnfairToysB,
+        VideoLinks.FairToysB,
+        VideoLinks.UnfairToysA,
       ];
       if (!state.studySetup) {
         break;
       }
-      const { fairOrder } = state.studySetup;
+      const { fairOrder, fairActor } = state.studySetup;
       const distributionOrder = totalDistributionOrder.reduce<string[]>(
         (acc, link, idx) => {
-          if (fairOrder === "first") {
-            if (idx === 0 || idx === 1 || idx === 4 || idx === 5) {
-              acc.push(link);
+          if (
+            fairOrder === "first" &&
+            fairActor === "A" &&
+            [0, 1, 4, 5].includes(idx)
+          ) {
+            acc.push(link);
+          } else if (
+            fairOrder === "first" &&
+            fairActor === "B" &&
+            [2, 3, 6, 7].includes(idx)
+          ) {
+            acc.push(link);
+          } else if (
+            fairOrder === "second" &&
+            fairActor === "A" &&
+            [0, 1, 4, 5].includes(idx)
+          ) {
+            if (idx % 2 === 0) {
+              acc.push(totalDistributionOrder[idx + 1]);
+            } else {
+              acc.push(totalDistributionOrder[idx - 1]);
             }
-          } else {
-            if (idx === 2 || idx === 3 || idx === 6 || idx === 7) {
-              if (idx % 2 === 0) {
-                acc.push(totalDistributionOrder[idx + 1]);
-              } else {
-                acc.push(totalDistributionOrder[idx - 1]);
-              }
+          } else if (
+            fairOrder === "second" &&
+            fairActor === "B" &&
+            [2, 3, 6, 7].includes(idx)
+          ) {
+            if (idx % 2 === 0) {
+              acc.push(totalDistributionOrder[idx + 1]);
+            } else {
+              acc.push(totalDistributionOrder[idx - 1]);
             }
           }
           return acc;

@@ -196,16 +196,16 @@ function TouchStudy() {
       >
         {manualMode && studyState.currentDispatch.trial === 0 && (
           <div className="flex flex-col space-y-6">
-            <h2 className="text-xl mt-12 text-center">
+            <h2 className="mt-12 text-xl text-center">
               Manul Mode: <br /> Please choose your specfic condition.
             </h2>
-            <div className="flex flex-col space-y-4 mt-24 justify-between">
+            <div className="flex flex-col justify-between mt-24 space-y-4">
               <label className="block">
                 <span className="text-gray-700">Left Panel</span>
                 <select
                   onChange={handleLeftPanelSettingChange}
                   value={studySetup.leftPanel}
-                  className="form-select p-2 mt-1 block w-full rounded-sm"
+                  className="block w-full p-2 mt-1 rounded-sm form-select"
                 >
                   <option value="orange">Orange Circle</option>
                   <option value="green">Green Square</option>
@@ -216,14 +216,14 @@ function TouchStudy() {
                 <select
                   onChange={handleValanceSettingChange}
                   value={studySetup.orangePanelValance}
-                  className="form-select p-2 mt-1 block w-full"
+                  className="block w-full p-2 mt-1 form-select"
                 >
                   <option value="positive">Positive</option>
                   <option value="negative">Negative</option>
                 </select>
               </label>
             </div>
-            <div className="flex flex-col space-y-4 mt-16 justify-between">
+            <div className="flex flex-col justify-between mt-16 space-y-4">
               <label className="block">
                 <span className="text-gray-700">
                   Order of fair/unfair clips
@@ -231,7 +231,7 @@ function TouchStudy() {
                 <select
                   onChange={handleFairClipSettingChange}
                   value={studySetup.fairOrder}
-                  className="form-select p-2 mt-1 block w-full"
+                  className="block w-full p-2 mt-1 form-select"
                 >
                   <option value="first">Fair Clips First</option>
                   <option value="second">Unfair Clips First</option>
@@ -242,7 +242,7 @@ function TouchStudy() {
                 <select
                   onChange={handleActorSettingChange}
                   value={studySetup.fairActor}
-                  className="form-select p-2 mt-1 block w-full"
+                  className="block w-full p-2 mt-1 form-select"
                 >
                   <option value="A">Actor A</option>
                   <option value="B">Actor B</option>
@@ -339,10 +339,12 @@ function handleTouchStart(
       barType,
       touchPosition,
       currentVideo: studyState.video.url ? studyState.video.url.substr(66) : "",
+      studySetup: studyState.studySetup
     };
     if (!touchArr) {
       setTouchArr([touchInfo]);
     } else {
+      console.log(studyState.video.url.substr(66));
       setTouchArr([...touchArr, touchInfo]);
     }
   };
