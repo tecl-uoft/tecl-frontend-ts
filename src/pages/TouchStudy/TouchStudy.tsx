@@ -325,7 +325,6 @@ function handleTouchStart(
     } else if (target === "left-screen" || target === "left-btn") {
       barType = studyState?.leftBar.barType === "orange" ? "Punish" : "Reward";
     }
-    /* console.log(touchArr); */
 
     const touchInfo = {
       target,
@@ -344,7 +343,6 @@ function handleTouchStart(
     if (!touchArr) {
       setTouchArr([touchInfo]);
     } else {
-      console.log(studyState.video.url.substr(66));
       setTouchArr([...touchArr, touchInfo]);
     }
   };
