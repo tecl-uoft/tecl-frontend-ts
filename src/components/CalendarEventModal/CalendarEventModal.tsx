@@ -12,6 +12,8 @@ import { ICreateScheduleEventProps } from "../../services/ScheduleEventService";
 import { DateTime } from "luxon";
 import Label from "../common/Label";
 import { AddSEventModal } from "../AddSEventModal";
+import Input from "../common/Input";
+import toast from "react-hot-toast";
 
 interface ICalendarEventModalProps {
   selectInfo: DateSelectArg | undefined;
@@ -24,32 +26,53 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
   const studyCtx = useStudy();
   const authCtx = useAuth();
   const { selectInfo, eventAPI } = props;
-  const [endRecurringDate, setEndRecurringDate] = useState("");
-  const [interval, setInterval] = useState(0);
-  const [time, setTime] = useState({ startTime: "", endTime: "" });
+  const [repeatUntilWeeks, setRepeatUntilWeeks] = useState("0");
+  const [interval, setInterval] = useState("0");
+  const [startTime, setStartTime] = useState("");
   const [addParticipant, setAddParticipant] = useState(false);
   const [bookingDeadline, setBookingDeadline] = useState("");
   const [showAddSEventModal, setShowAddSEventModal] = useState(false);
+  const [endTime, setEndTime] = useState("");
+  const [endRepeat, setEndRepeat] = useState<DateTime | undefined>(undefined);
 
-  const onCheckAddParticipant = () => {
-    setAddParticipant(!addParticipant);
-  };
-
+  /* Sets the shown time interval as study default time interval */
   useEffect(() => {
     if (studyCtx?.studyState) {
-      setInterval(studyCtx.studyState.defaultTimeInterval);
+      setInterval(String(studyCtx.studyState.defaultTimeInterval));
     }
   }, [studyCtx]);
 
+  /* Updates Date ISO string for repeating weeks */
   useEffect(() => {
-    if (props.selectInfo?.start) {
-      setEndRecurringDate(
-        DateTime.fromJSDate(props.selectInfo.start).toFormat("yyyy-MM-dd")
+    if (selectInfo) {
+      setEndRepeat(
+        DateTime.fromISO(selectInfo.startStr).plus({
+          weeks: parseInt(repeatUntilWeeks),
+        })
       );
     }
+  }, [repeatUntilWeeks, selectInfo]);
+
+  /* Updates end time display string as interval changes */
+  useEffect(() => {
+    if (startTime) {
+      const endDateTime = DateTime.local()
+        .set({
+          hour: parseInt(startTime.substring(0, 2)),
+          minute: parseInt(startTime.substring(3, 5)),
+        })
+        .plus({ minute: parseInt(interval) });
+      setEndTime(endDateTime.toFormat("HH:mm"));
+    }
+  }, [startTime, interval]);
+
+  /* Set inital booking deadline and start time on launch */
+  useEffect(() => {
     if (props.selectInfo?.endStr) {
       setBookingDeadline(
-        DateTime.fromJSDate(props.selectInfo.end).toFormat("yyyy-MM-dd")
+        DateTime.fromJSDate(props.selectInfo.end)
+          .minus({ days: 2 })
+          .toFormat("yyyy-MM-dd")
       );
     }
 
@@ -57,89 +80,80 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
       const startTime = DateTime.fromISO(props.selectInfo.startStr).toFormat(
         "T"
       );
-      const endTime = DateTime.fromISO(props.selectInfo.endStr).toFormat("T");
-      setTime({ startTime, endTime });
+      setStartTime(startTime);
     }
   }, [props.selectInfo]);
 
+  const onCheckAddParticipant = () => setAddParticipant(!addParticipant);
+
   const onStartTimeChange = (e: ChangeEvent<HTMLInputElement>) =>
-    setTime({ ...time, startTime: e.currentTarget.value });
-  const onEndTimeChange = (e: ChangeEvent<HTMLInputElement>) =>
-    setTime({ ...time, endTime: e.currentTarget.value });
+    setStartTime(e.currentTarget.value);
+
+  const updateBookingDeadline = (e: ChangeEvent<HTMLSelectElement>) =>
+    setBookingDeadline(e.currentTarget.value);
 
   const onAdd = () => {
     const selectInfo = props.selectInfo;
-
-    if (selectInfo && studyCtx) {
-      if (!authCtx || !authCtx.authState.user) {
-        alert("Must be logged in to make a change");
-      } else if (studyCtx?.studyState) {
-        const eventTitle = `${authCtx?.authState.user?.firstName}`;
-        const startTime = new Date(selectInfo.startStr).setHours(
-          parseInt(time.startTime.slice(0, 2)),
-          parseInt(time.startTime.slice(3, 5))
-        );
-
-        const endTime = new Date(selectInfo.endStr).setHours(
-          parseInt(time.endTime.slice(0, 2)),
-          parseInt(time.endTime.slice(3, 5))
-        );
-
-        /* Send request to add state to database */
-        const availability: ICreateScheduleEventProps = {
-          start: new Date(startTime).toISOString(),
-          end: new Date(endTime).toISOString(),
-          title: eventTitle,
-          isRecurring: true,
-          endRecurringDate,
-          recurringInterval: interval,
-          bookingDeadline,
-        };
-        new Promise((res, rej) => {
-          res(studyCtx.createScheduleEvent(availability));
-        })
-          .then(() => {
-            props.setShowEventModal(false);
-          })
-          .then(() => {
-            if (addParticipant) {
-              setShowAddSEventModal(false);
-              window.location.pathname = "scheduling";
-            } else {
-              if (!studyCtx.studyState) {
-                return;
-              }
-              studyCtx.findAndSetStudy(studyCtx.studyState.studyName);
-            }
-          });
-      }
-
-      /* calendarApi.unselect();
-      props.setShowEventModal(false); */
+    if (!selectInfo || !studyCtx || !authCtx || !authCtx.authState.user) {
+      toast.error(
+        "Something has crashed in add an availability. Please contact the admin."
+      );
+      return;
     }
+    if (!endRepeat) {
+      toast.error("Repeat datetime not set. Report to admin.");
+      return;
+    }
+
+    const eventTitle = `${authCtx.authState.user?.firstName}`;
+    const startTimeStr = new Date(selectInfo.startStr).setHours(
+      parseInt(startTime.slice(0, 2)),
+      parseInt(startTime.slice(3, 5))
+    );
+    const endTimeStr = new Date(selectInfo.startStr).setHours(
+      parseInt(endTime.slice(0, 2)),
+      parseInt(endTime.slice(3, 5))
+    );
+
+    /* Send request to add state to database */
+    const availability: ICreateScheduleEventProps = {
+      start: new Date(startTimeStr).toISOString(),
+      end: new Date(endTimeStr).toISOString(),
+      title: eventTitle,
+      isRecurring: true,
+      endRecurringDate: endRepeat.toISO(),
+      recurringInterval: parseInt(interval),
+      bookingDeadline,
+    };
+    new Promise((res, rej) => {
+      res(studyCtx.createScheduleEvent(availability));
+    })
+      .then(() => {
+        props.setShowEventModal(false);
+      })
+      .then(() => {
+        if (addParticipant) {
+          setShowAddSEventModal(false);
+          window.location.pathname = "scheduling";
+        } else {
+          if (!studyCtx.studyState) {
+            return;
+          }
+          studyCtx.findAndSetStudy(studyCtx.studyState.studyName);
+        }
+      });
   };
 
   return (
     <>
       <div className="fixed inset-0 z-10 overflow-y-auto">
         <div className="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-          {/* <!--
-            Background overlay, show/hide based on modal state.
-      
-            Entering: "ease-out duration-300"
-              From: "opacity-0"
-              To: "opacity-100"
-            Leaving: "ease-in duration-200"
-              From: "opacity-100"
-              To: "opacity-0"
-          --> */}
           <div className="fixed inset-0 transition-opacity cursor-pointer">
             <div
               className="absolute inset-0 bg-gray-500 opacity-75"
               onClick={() => props.setShowEventModal(false)}
             ></div>
           </div>
-          {/* <!-- This element is to trick the browser into centering the modal contents. --> */}
           <span className="hidden sm:inline-block sm:align-middle sm:h-screen">
             &#8203;
           </span>
@@ -177,7 +191,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                       <>
                         <p className="my-1 text-2xl">
                           {DateTime.fromISO(selectInfo.startStr).toFormat(
-                            "DDDD"
+                            "EEEE, MMMM dd, yyyy"
                           )}{" "}
                         </p>
                       </>
@@ -189,7 +203,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
               <form className="px-2 pb-4 space-y-4 text-sm text-center">
                 <div className="flex -mx-3 ">
                   <div className="flex flex-col w-full px-3 mb-2 md:mb-0">
-                    <label className="w-full mb-4 text-lg font-bold tracking-wide text-gray-700">
+                    <label className="w-full mb-4 text-lg tracking-wide text-gray-700">
                       Add time availability as needed.
                     </label>
                     {selectInfo && (
@@ -197,83 +211,79 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                         <div className="w-1/3">
                           <Label text={"start time"} />
                           <input
-                            value={time.startTime}
+                            value={startTime}
                             onChange={onStartTimeChange}
                             type="time"
                             step={300}
                             className="block w-full p-2 text-gray-700 bg-gray-200 border rounded cursor-text focus:outline-none focus:bg-white"
                           />
                         </div>
-                        <p className="mx-4 text-lg">to</p>{" "}
-                        <div className="w-1/3">
-                          <Label text={"End time"} />
-                          <input
-                            value={time.endTime}
-                            onChange={onEndTimeChange}
-                            type="time"
-                            step={300}
-                            className="block w-full p-2 text-gray-700 bg-gray-200 border rounded cursor-text focus:outline-none focus:bg-white"
-                          />{" "}
-                        </div>
+                        {props.selectInfo && (
+                          <div className="px-3 mb-6 md:mb-0">
+                            <Label text={"Parent booking deadline:"} />
+                            <select
+                              className="block w-full p-2 mx-auto text-gray-700 bg-gray-200 border rounded cursor-pointer focus:outline-none focus:bg-white"
+                              value={bookingDeadline}
+                              onChange={updateBookingDeadline}
+                            >
+                              {[1, 2, 3, 4, 5, 6, 7].map((days) => {
+                                return (
+                                  props.selectInfo?.startStr && (
+                                    <option
+                                      key={days}
+                                      value={DateTime.fromISO(
+                                        props.selectInfo.startStr
+                                      )
+                                        .minus({ days })
+                                        .toFormat("yyyy-MM-dd")}
+                                    >
+                                      {days} days before availability
+                                    </option>
+                                  )
+                                );
+                              })}
+                            </select>
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>
                 </div>
                 {studyCtx?.studyState && (
-                  <div className="flex items-end justify-center">
-                    <div className="px-1 mx-6 mb-6 md:w-1/3 md:mb-0">
+                  <div className="flex items-start justify-center">
+                    <div className="px-1 mx-6 mb-6 align-bottom md:w-1/2 md:mb-0">
                       <Label text={"Appointment Length"} />
-                      <div className="flex items-end justify-center w-full align-bottom">
-                        <input
+                      <div className="flex justify-center px-2">
+                        <Input
                           value={interval}
-                          onChange={(e) =>
-                            setInterval(parseInt(e.currentTarget.value))
-                          }
-                          className="block w-16 p-2 text-gray-700 bg-gray-200 border rounded cursor-text focus:outline-none focus:bg-white"
                           type="number"
-                        />{" "}
-                        <p className="mx-2 text-xl">min.</p>
+                          valueSetter={setInterval}
+                        />
+                        <p className="mx-2 my-auto">min.</p>
+                      </div>
+                      <span className="w-full mx-2 my-auto">
+                        ({startTime + " to " + endTime})
+                      </span>
+                    </div>
+                    <div className="px-3 mb-6 align-bottom md:mb-0">
+                      <div>
+                        <Label text={"Repeat for: "} />
+                        <div className="flex justify-center px-4">
+                          <div className="w-1/3">
+                            <Input
+                              min={0}
+                              value={repeatUntilWeeks}
+                              type="number"
+                              valueSetter={setRepeatUntilWeeks}
+                            />
+                          </div>
+                          <span className="mx-2 my-auto">weeks</span>
+                        </div>
+                        <span className="mx-2 my-auto">
+                          Until{" " + endRepeat?.toFormat("EEE, MMM dd, yyyy")}
+                        </span>
                       </div>
                     </div>
-                    <div className="px-3 mb-6 md:mb-0">
-                      <Label text={"Add every week until..."} />
-                      <input
-                        className="block w-full p-2 text-gray-700 bg-gray-200 border rounded cursor-text focus:outline-none focus:bg-white"
-                        type="date"
-                        max={DateTime.fromJSDate(
-                          studyCtx.studyState.endDate
-                        ).toFormat("yyyy-MM-dd")}
-                        value={endRecurringDate}
-                        onChange={(e) =>
-                          setEndRecurringDate(e.currentTarget.value)
-                        }
-                      />
-                    </div>
-                  </div>
-                )}
-                {props.selectInfo && (
-                  <div className="px-3 mb-6 md:mb-0">
-                    <Label text={"When is the booking deadline for parents?"} />
-                    <select
-                      className="block w-1/2 p-2 mx-auto text-gray-700 bg-gray-200 border rounded cursor-pointer focus:outline-none focus:bg-white"
-                      value={bookingDeadline}
-                      onChange={(e) =>
-                        setBookingDeadline(e.currentTarget.value)
-                      }
-                    >
-                      {[2, 3, 4, 5, 6, 7].map((days) => {
-                        return (
-                          <option
-                            key={days}
-                            value={DateTime.local()
-                              .minus({ days })
-                              .toFormat("yyyy-MM-dd")}
-                          >
-                            {days} days before availability
-                          </option>
-                        );
-                      })}
-                    </select>
                   </div>
                 )}
 

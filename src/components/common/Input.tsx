@@ -9,6 +9,8 @@ function Input(props: {
   type: "number" | "text" | "email" | "date" | "tel";
   placeholder?: string;
   pattern?: string;
+  min?: string | number;
+  max?: string | number;
 }) {
   if (props.type === "date") {
     return (
@@ -38,6 +40,8 @@ function Input(props: {
       value={props.value}
       onChange={(e) => props.valueSetter(e.target.value)}
       placeholder={props.placeholder}
+      min={props.min}
+      max={props.max}
     />
   );
 }
