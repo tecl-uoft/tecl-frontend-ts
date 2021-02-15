@@ -92,21 +92,12 @@ function FairnessStudyMachine(props: IFairnessStudyMachineProps) {
 }
 
 function AlienDisplay(props: any) {
-  const { Alien, pickedAlien, setPickedAlien, setHasPickedAlien } = props;
+  const { Alien, setPickedAlien, setHasPickedAlien } = props;
 
   return (
     <div
       onClick={() => { 
         setPickedAlien(Alien.name);
-        fetch("/api/v1/fairness-study/results-kids", {
-          method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              pickedAlien: pickedAlien,
-              }),
-            });        
         setHasPickedAlien(true);
         
       }}
@@ -119,7 +110,7 @@ function AlienDisplay(props: any) {
 }
 
 function AlienDisplay2(props: any) {
-  const { Alien, throwAgain, setThrowAgain, setTrialFunc } = props;
+  const { Alien, throwAgain, setThrowAgain, setTrialFunc, pickedAlien } = props;
 
   return (
     <div
@@ -132,6 +123,7 @@ function AlienDisplay2(props: any) {
             },
             body: JSON.stringify({
               throwAgain: throwAgain,
+              pickedAlien: pickedAlien,
               }),
             });        
         setTrialFunc();
