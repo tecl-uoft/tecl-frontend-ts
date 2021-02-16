@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import BallTossContext from "./BallTossContext";
 
 interface IFairnessStudyMachineProps {
   setTrialFunc(): void;
@@ -16,6 +17,8 @@ function FairnessStudyMachine(props: IFairnessStudyMachineProps) {
   const [pickedAlien, setPickedAlien] = useState("");
   const [hasPickedAlien, setHasPickedAlien] = useState(false);
   const [throwAgain, setThrowAgain] = useState("");
+
+  const playerTime = useContext(BallTossContext);
 
   return ( 
     <div className="container flex flex-col mx-auto my-32">
@@ -74,12 +77,16 @@ function FairnessStudyMachine(props: IFairnessStudyMachineProps) {
         <AlienDisplay2
             Alien={ alienA }
             throwAgain={throwAgain}
+            pickedAlien={pickedAlien}
+            playerTime={playerTime}
             setThrowAgain={setThrowAgain}
             setTrialFunc={setTrialFunc}
           />
         <AlienDisplay2       
             Alien={ alienB }
             throwAgain={throwAgain}
+            pickedAlien={pickedAlien}
+            playerTime={playerTime}
             setThrowAgain={setThrowAgain}
             setTrialFunc={setTrialFunc}
           />
@@ -92,7 +99,7 @@ function FairnessStudyMachine(props: IFairnessStudyMachineProps) {
 }
 
 function AlienDisplay(props: any) {
-  const { Alien, setPickedAlien, setHasPickedAlien } = props;
+  const { Alien, pickedAlien, setPickedAlien, setHasPickedAlien } = props;
 
   return (
     <div
@@ -110,19 +117,24 @@ function AlienDisplay(props: any) {
 }
 
 function AlienDisplay2(props: any) {
-  const { Alien, throwAgain, setThrowAgain, setTrialFunc, pickedAlien } = props;
+  const { Alien, throwAgain, setThrowAgain, setTrialFunc, pickedAlien, playerTime } = props;
+
+  useEffect(() => {
+    console.log(pickedAlien);
+  }, [])
 
   return (
     <div
       onClick={() => { 
-        setThrowAgain(Alien.name);
+        console.log(Alien.name)
         fetch("/api/v1/fairness-study/results-kids", {
           method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              throwAgain: throwAgain,
+              participantStartTime: playerTime,
+              throwAgain: Alien.name,
               pickedAlien: pickedAlien,
               }),
             });        
