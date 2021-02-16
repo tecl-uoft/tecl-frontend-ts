@@ -41,6 +41,7 @@ function FairnessStudyMachine(props: IFairnessStudyMachineProps) {
           onClick={() => {
             // setTrialFunc();
             setHasPickedAlien(true);
+            setPickedAlien(alienUser.name);
             setShowPlayText(true);
           }}
             className={`bg-red-100 hover:bg-red-300 w-full mt-6 font-bold rounded-lg py-4 px-8 shadow-lg focus:outline-none uppercase tracking-wider`}
