@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import BallTossContext from "./BallTossContext";
 
 interface IFairnessStudyMachineProps {
@@ -119,10 +119,6 @@ function AlienDisplay(props: any) {
 
 function AlienDisplay2(props: any) {
   const { Alien, throwAgain, setThrowAgain, setTrialFunc, pickedAlien, playerTime } = props;
-
-  useEffect(() => {
-    console.log(pickedAlien);
-  }, [])
 
   return (
     <div
