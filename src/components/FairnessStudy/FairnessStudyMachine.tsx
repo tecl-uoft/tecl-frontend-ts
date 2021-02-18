@@ -25,7 +25,7 @@ function FairnessStudyMachine(props: IFairnessStudyMachineProps) {
     <> {
     !showPlayText ? (
       <div>
-      <div className="mr-0 mb-16 flex justify-around">
+      <div className="flex justify-around mb-16 mr-0">
           <img id="machine" src="/assets/fairness_img/machine.png" alt="Machine" style={{height: "300px", maxWidth: "100%"}}/>
       </div>
       <div className="flex justify-around">
@@ -51,7 +51,7 @@ function FairnessStudyMachine(props: IFairnessStudyMachineProps) {
       </div>
       </div> )
          : !hasPickedAlien ? ( 
-        <div className="flex justify-around text-gray-800 text-2xl mb-16">
+        <div className="flex justify-around mb-16 text-2xl text-gray-800">
             <AlienDisplay
                 Alien={(choice === 0) ? alienB : alienA }
                 pickedAlien={pickedAlien}
@@ -69,12 +69,12 @@ function FairnessStudyMachine(props: IFairnessStudyMachineProps) {
       </div> ) :
       (
         <div>
-          <div className="text-2xl font-bold text-gray-800 mr-0 mb-16 flex justify-around">
+          <div className="flex justify-around mb-16 mr-0 text-2xl font-bold text-gray-800">
           <p>
             Now it's your turn to throw the ball one more time!
           </p>
           </div>
-        <div className="flex justify-around text-gray-800 text-2xl mb-16">
+        <div className="flex justify-around mb-16 text-2xl text-gray-800">
         <AlienDisplay2
             Alien={ alienA }
             throwAgain={throwAgain}
@@ -100,7 +100,7 @@ function FairnessStudyMachine(props: IFairnessStudyMachineProps) {
 }
 
 function AlienDisplay(props: any) {
-  const { Alien, pickedAlien, setPickedAlien, setHasPickedAlien } = props;
+  const { Alien, /* pickedAlien, */ setPickedAlien, setHasPickedAlien } = props;
 
   return (
     <div
@@ -118,7 +118,7 @@ function AlienDisplay(props: any) {
 }
 
 function AlienDisplay2(props: any) {
-  const { Alien, throwAgain, setThrowAgain, setTrialFunc, pickedAlien, playerTime } = props;
+  const { Alien, /* throwAgain, setThrowAgain, */ setTrialFunc, pickedAlien, playerTime } = props;
 
   return (
     <div
