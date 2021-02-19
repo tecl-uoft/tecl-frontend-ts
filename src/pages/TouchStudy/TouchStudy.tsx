@@ -37,7 +37,6 @@ function TouchStudy() {
         });
     }
   }, []);
-  
 
   useEffect(() => {
     if (studyState.video.url) {
@@ -92,8 +91,6 @@ function TouchStudy() {
       studyState.currentDispatch.type === "test" &&
       studyState.currentDispatch.trial % 2 === 1
     ) {
-     
-
       /* Show bars after 5 seconds */
       setTimeout(() => {
         dispatchStudy(studyState.nextDispatch);
@@ -201,6 +198,12 @@ function TouchStudy() {
               : "line2 / line3",
         }}
       >
+        {studyState.currentDispatch.type === "distribution" &&
+          studyState.currentDispatch.trial === 1 && (
+            <h3 className="mx-auto mt-2 text-md ">
+              Please click on the video below to get started.
+            </h3>
+          )}
         {manualMode && studyState.currentDispatch.trial === 0 && (
           <div className="flex flex-col space-y-6">
             <h2 className="mt-12 text-xl text-center">
