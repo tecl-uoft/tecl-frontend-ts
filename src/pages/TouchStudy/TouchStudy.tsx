@@ -37,6 +37,7 @@ function TouchStudy() {
         });
     }
   }, []);
+  
 
   useEffect(() => {
     if (studyState.video.url) {
@@ -52,6 +53,8 @@ function TouchStudy() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ touchStudy: { trialInformation: touchArr } }),
+      }).then(() => {
+        window.location.reload();
       });
     }
   }, [studyState.currentDispatch.type, touchArr]);
@@ -188,7 +191,7 @@ function TouchStudy() {
         id="middle-screen"
         className={`flex flex-col ${
           studyState.currentDispatch.type === "distribution"
-            ? "w-screen h-screen"
+            ? "w-full h-full"
             : "w-full h-full"
         }  ${studyState?.video.isHidden ? "hidden" : ""}`}
         style={{
