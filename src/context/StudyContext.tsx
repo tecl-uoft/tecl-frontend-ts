@@ -12,7 +12,7 @@ interface IStudyContext {
   /* Create a study to set up a scheduling system for */
   createScheduleEvent(
     createScheduleEventProps: ICreateScheduleEventProps
-  ): void;
+  ): Promise<void>;
   removeScheduleEvent(calId: string): void;
   studyState: IStudy | undefined;
   findAndSetStudy(studyName: string): void;
@@ -75,9 +75,9 @@ export function StudyProvider({ children }: Props) {
   }
 
   /* Add a schedule event for the current study state */
-  function createScheduleEvent(
+  async function createScheduleEvent(
     createScheduleEventProps: ICreateScheduleEventProps
-  ): void {
+  ): Promise<void> {
     if (studyState) {
       const { title, start, end } = createScheduleEventProps;
 
@@ -89,20 +89,21 @@ export function StudyProvider({ children }: Props) {
         color: studyState.keyColor,
         id: uuidv4(),
       };
-      ScheduleEventService.create(
-        studyState.studyName,
-        createScheduleEventProps
-      )
-        .then(() => {
-          /* Add Created events to existing set of events in study */
-          setStudyState({
-            ...studyState,
-            scheduleEvents: [...studyState.scheduleEvents, scheduleEvent],
-          });
-        })
-        .catch((err) => {
-          alert(`Error in Study context, Received: ${err.message}`);
+
+      try {
+        await ScheduleEventService.create(
+          studyState.studyName,
+          createScheduleEventProps
+        );
+
+        setStudyState({
+          ...studyState,
+          scheduleEvents: [...studyState.scheduleEvents, scheduleEvent],
         });
+      } catch (err) {
+        alert(`Error in Study context, Received: ${err.message}`);
+      }
+
       return;
     }
   }

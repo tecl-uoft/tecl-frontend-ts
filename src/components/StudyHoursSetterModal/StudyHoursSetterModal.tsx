@@ -55,7 +55,7 @@ function StudyHoursSetterModal(props: IStudyHoursSetterModalProps) {
           aria-modal="true"
           aria-labelledby="modal-headline"
         >
-          <div className="study-setter-cal pb-2">
+          <div className="pb-2 study-setter-cal">
             {studyCtx?.studyState && (
               <>
                 <div className="flex justify-end -mb-6">

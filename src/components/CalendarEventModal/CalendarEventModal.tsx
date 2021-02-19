@@ -60,8 +60,15 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
       selectInfo?.end &&
       studyCtx?.studyState?.defaultTimeInterval
     ) {
+      const numIntervalBlocks =
+        DateTime.fromJSDate(selectInfo.end).diff(
+          DateTime.fromJSDate(selectInfo.start),
+          "minutes"
+        ).minutes / studyCtx.studyState.defaultTimeInterval;
       const endDateTime = DateTime.fromJSDate(selectInfo.end).plus({
-        minutes: parseInt(interval) - studyCtx.studyState.defaultTimeInterval,
+        minutes:
+          (parseInt(interval) - studyCtx.studyState.defaultTimeInterval) *
+          numIntervalBlocks,
       });
       setEndTime(endDateTime.toFormat("HH:mm"));
     }
@@ -115,7 +122,6 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
       parseInt(endTime.slice(0, 2)),
       parseInt(endTime.slice(3, 5))
     );
-    console.log(startTime, endTime);
 
     /* Send request to add state to database */
     const availability: ICreateScheduleEventProps = {
@@ -127,9 +133,8 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
       recurringInterval: parseInt(interval),
       bookingDeadline,
     };
-    new Promise((res, rej) => {
-      res(studyCtx.createScheduleEvent(availability));
-    })
+    studyCtx
+      .createScheduleEvent(availability)
       .then(() => {
         props.setShowEventModal(false);
       })
