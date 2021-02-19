@@ -45,7 +45,7 @@ const initialState: State = {
 };
 
 function reducer(state: State, action: Action): State {
-  console.log(state.leftBar.barType, state, action);
+
   switch (action.type) {
     case "setup":
       if (!action.studySetup) {
