@@ -15,7 +15,7 @@
 }
 
 .fc .fc-timegrid-slot-label {
-  background-color: white;
+  background-color: inherit;
 }
 
  .fc .fc-timegrid-col-events {
