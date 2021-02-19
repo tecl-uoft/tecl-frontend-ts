@@ -82,11 +82,15 @@ function TouchStudy() {
     }
   };
 
-  const onVideoLoadedMetaData = () => {
+  const onVideoLoadedMetaData = (
+    e: React.SyntheticEvent<HTMLVideoElement, Event>
+  ) => {
     if (
       studyState.currentDispatch.type === "test" &&
       studyState.currentDispatch.trial % 2 === 1
     ) {
+     
+
       /* Show bars after 5 seconds */
       setTimeout(() => {
         dispatchStudy(studyState.nextDispatch);
@@ -263,7 +267,7 @@ function TouchStudy() {
           id="video"
           className="px-2 my-auto"
         >
-          <source type="video/mp4" src={currentVideoSrc} />
+          <source type="video/mp4" src={currentVideoSrc + "#t=0.1"} />
         </video>
         <button
           id="next-button"
@@ -338,7 +342,7 @@ function handleTouchStart(
       barType,
       touchPosition,
       currentVideo: studyState.video.url ? studyState.video.url.substr(66) : "",
-      studySetup: studyState.studySetup
+      studySetup: studyState.studySetup,
     };
     if (!touchArr) {
       setTouchArr([touchInfo]);
