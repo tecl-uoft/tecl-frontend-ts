@@ -67,12 +67,22 @@ function reducer(state: State, action: Action): State {
         rewardRight: VideoLinks.HayleeRewardRight,
       };
       const isLeftBarOrange = state.studySetup?.leftPanel === "orange";
-      const isLeftBarPosOrange =
-        state.studySetup?.orangePanelValance === "positive" && isLeftBarOrange;
-      const leftBarVideo = isLeftBarPosOrange
-        ? TrainingVideo.rewardLeft
-        : TrainingVideo.punishLeft;
-      const rightBarVideo = isLeftBarPosOrange
+      const isOrangePositive =
+        state.studySetup?.orangePanelValance === "positive";
+
+      const leftBarVideo = isLeftBarOrange
+        ? isOrangePositive
+          ? TrainingVideo.rewardLeft
+          : TrainingVideo.punishLeft
+        : isOrangePositive
+        ? TrainingVideo.punishLeft
+        : TrainingVideo.rewardLeft;
+
+      const rightBarVideo = !isLeftBarOrange
+        ? isOrangePositive
+          ? TrainingVideo.rewardRight
+          : TrainingVideo.punishRight
+        : isOrangePositive
         ? TrainingVideo.punishRight
         : TrainingVideo.rewardRight;
 

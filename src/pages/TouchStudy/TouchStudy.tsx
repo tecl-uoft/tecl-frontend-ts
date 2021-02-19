@@ -87,10 +87,10 @@ function TouchStudy() {
       studyState.currentDispatch.type === "test" &&
       studyState.currentDispatch.trial % 2 === 1
     ) {
-      /* Show bars after 3 seconds */
+      /* Show bars after 5 seconds */
       setTimeout(() => {
         dispatchStudy(studyState.nextDispatch);
-      }, 3000);
+      }, 5000);
     }
   };
 
