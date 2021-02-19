@@ -45,6 +45,7 @@ const initialState: State = {
 };
 
 function reducer(state: State, action: Action): State {
+  console.log(state.leftBar.barType, state, action);
   switch (action.type) {
     case "setup":
       if (!action.studySetup) {
@@ -204,6 +205,8 @@ function reducer(state: State, action: Action): State {
           /* Put a video of a baby shake inbetween each video */
           return {
             ...initialState,
+            rightBar: { ...state.rightBar, isHidden: true },
+            leftBar: { ...state.leftBar, isHidden: true },
             video: { url: VideoLinks.BabyShaker, isHidden: false },
             nextDispatch: { type: "distribution", trial: action.trial + 1 },
             currentDispatch: action,
@@ -212,6 +215,8 @@ function reducer(state: State, action: Action): State {
         } else {
           return {
             ...initialState,
+            rightBar: { ...state.rightBar, isHidden: true },
+            leftBar: { ...state.leftBar, isHidden: true },
             video: {
               url: distributionOrder[action.trial / 2 - 1],
               isHidden: false,
@@ -224,6 +229,8 @@ function reducer(state: State, action: Action): State {
       } else if (action.trial === distributionOrder.length * 2) {
         return {
           ...initialState,
+          rightBar: { ...state.rightBar, isHidden: true },
+          leftBar: { ...state.leftBar, isHidden: true },
           video: {
             url: distributionOrder[action.trial / 2 - 1],
             isHidden: false,
@@ -289,6 +296,8 @@ function reducer(state: State, action: Action): State {
           /* First in set is showing the face of participant */
           return {
             ...initialState,
+            rightBar: { ...state.rightBar, isHidden: true },
+            leftBar: { ...state.leftBar, isHidden: true },
             video: { url: videoURL[0], isHidden: false },
             nextDispatch: { type: "test", trial: action.trial + 1 },
             currentDispatch: action,
