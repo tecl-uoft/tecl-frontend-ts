@@ -72,15 +72,21 @@ function ConsentFormBody() {
           ].map((question, idx) => {
             return (
               <div
-                className="flex space-x-4 justify-between space-y-6"
+                className="flex justify-between px-10 my-4"
                 key={idx}
               >
                 {" "}
-                <p> {question}</p>{" "}
-                <div className="flex space-x-10">
+                <p className="w-3/4"> {question}</p>{" "}
+                <div className="flex justify-end w-1/4 space-x-4">
                   {" "}
-                  <input className="w-6 h-6 mx-2" type="checkbox" />
-                  Yes <input className="w-6 h-6 mx-2" type="checkbox" /> No{" "}
+                  <div>
+                    <input className="w-6 h-6 mx-2" type="radio" />
+                    <label className="text-center">Yes</label>
+                  </div>
+                  <div>
+                    <input className="w-6 h-6 mx-2" type="radio" />{" "}
+                    <label>No</label>
+                  </div>
                 </div>{" "}
               </div>
             );

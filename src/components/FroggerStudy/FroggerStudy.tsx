@@ -86,14 +86,7 @@ function FroggerStudy() {
 
   return (
     <div>
-      {
-        <video
-          className="absolute w-1/2 h-64 mx-auto"
-          ref={videoRef}
-          autoPlay={true}
-          id="videoElement"
-        ></video>
-      }{" "}
+     
       {cycleStudyStates(studyState)}
     </div>
   );
