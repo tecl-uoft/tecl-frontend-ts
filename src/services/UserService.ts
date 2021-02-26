@@ -93,11 +93,12 @@ async function fetchAuthUser() {
     return resJson.user;
   }
 }
-
-export default {
+const UserService = {
   fetchAuthUser,
   login,
   googleLogin,
   logout,
   signup,
 };
+
+export default UserService;

@@ -1,4 +1,4 @@
-export default {
+const ScheduleEventScervice = {
   create,
   remove,
   updateParticipantInfo,
@@ -73,7 +73,7 @@ async function create(
       },
       body: JSON.stringify({ studyName, scheduleEvent }),
     });
-  
+
     if (!res.ok || res.status !== 201) {
       throw Error("Expected HTTP error status 201, got:" + res.status);
     }
@@ -170,7 +170,7 @@ export interface IBookedScheduleEvent {
   bookedBy?: {
     firstName: string;
     lastName: string;
-  }
+  };
 }
 
 async function listBooked(studyName: string): Promise<IBookedScheduleEvent[]> {
@@ -190,3 +190,5 @@ async function listBooked(studyName: string): Promise<IBookedScheduleEvent[]> {
     throw err;
   }
 }
+
+export default ScheduleEventScervice;

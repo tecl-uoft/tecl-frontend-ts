@@ -1,6 +1,6 @@
 import { IScheduleEvent } from "./ScheduleEventService";
 
-export default {
+const StudyService = {
   create,
   list,
   read,
@@ -9,7 +9,7 @@ export default {
 
 export interface IStudy {
   studyName: string;
-  leadResearchers: {email: string, firstName: string, lastName?: string}[];
+  leadResearchers: { email: string; firstName: string; lastName?: string }[];
   researchAssitants: string[];
   scheduleEvents: IScheduleEvent[];
   startDate: Date;
@@ -21,7 +21,6 @@ export interface IStudy {
   defaultTimeInterval: number;
   apptGoals: number;
 }
-
 export interface ICreateStudyProps {
   studyName: string;
   startDate: string;
@@ -106,3 +105,5 @@ async function read(studyName: string): Promise<IStudy> {
     throw err;
   }
 }
+
+export default StudyService;
