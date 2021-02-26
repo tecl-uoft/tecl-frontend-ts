@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from "react";
 import { BrowserRouter, Switch, Redirect, Route } from "react-router-dom";
 
 import Header from "./components/Header";
+import { Notification } from "./components/Notification";
 
 /* Route Pages */
 import Home from "./pages/Home";
@@ -33,6 +34,7 @@ function App() {
       <AuthProvider>
         <StudyProvider>
           <Toaster />
+          <Notification />
           <Suspense fallback={<Loading />}>
             <BrowserRouter>
               <Header />
@@ -40,7 +42,11 @@ function App() {
                 <Route exact path="/" component={Home} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
-                <Route exact path="/participation/signup" component={ParticipationSignup} />
+                <Route
+                  exact
+                  path="/participation/signup"
+                  component={ParticipationSignup}
+                />
                 <Route
                   exact
                   path="/scheduling/cancel-event"
