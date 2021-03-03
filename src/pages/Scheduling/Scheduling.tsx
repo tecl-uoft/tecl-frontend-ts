@@ -66,7 +66,7 @@ function Scheduling() {
           setGivenAge={setGivenAge}
         />
       )}
-      <nav className="md:pl-12 mx-auto mt-2 md:space-x-2">
+      <nav className="mx-auto mt-2 md:pl-12 md:space-x-2">
         {!showNoMessage && (
           <button
             onClick={() => {
@@ -118,17 +118,17 @@ function Scheduling() {
       {currentStudy && (
         <>
           <div className="flex flex-col md:mb-3">
-            <h3 className="md:pl-12 text-center text-4xl font-bold underline">
+            <h3 className="text-4xl font-bold text-center underline md:pl-12">
               {`${currentStudy.studyName}`} Schedule
             </h3>
-            <div className="flex md:flex-row flex-col md:space-y-0 space-y-4 justify-between w-full pb-4 md:py-0">
-              <div className="w-64 md:h-32 text-xl"></div>
-              <h3 className="md:h-32 md:text-xl text-center">
-                <div className="w-full md:px-4 text-lg">
+            <div className="flex flex-col justify-between w-full pb-4 space-y-4 md:flex-row md:space-y-0 md:py-0">
+              <div className="w-64 text-xl md:h-32"></div>
+              <h3 className="overflow-scroll text-center md:h-32 md:text-xl">
+                <div className="w-full text-lg md:px-4">
                   {currentStudy.description}
                 </div>
               </h3>
-              <h3 className="flex flex-col text-lg md:text-left text-center">
+              <h3 className="flex flex-col text-lg text-center md:text-left">
                 <div className="underline max-w-1/3">Required Age Range</div>
                 <div className="w-64 mx-auto text-lg">
                   {" "}
@@ -142,7 +142,7 @@ function Scheduling() {
                   }
                 </div>
                 <div className="mt-1 underline">Current Time Zone</div>
-                <div className="block w-full md:pl-4 text-lg">
+                <div className="block w-full text-lg md:pl-4">
                   {DateTime.local().toFormat("ZZZZZ (ZZZZ)")}
                 </div>
               </h3>

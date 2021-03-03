@@ -5,6 +5,7 @@ const StudyService = {
   list,
   read,
   update,
+  listNames,
 };
 
 export interface IStudy {
@@ -31,6 +32,36 @@ export interface ICreateStudyProps {
   description: string;
   defaultTimeInterval: number;
   apptGoals: number;
+}
+
+export interface IStudyName {
+  studyName: string;
+  keyColor: string;
+  maxAgeDays: number;
+  minAgeDays: number;
+  description: string;
+}
+
+/* Get a list of studies either for all users or for the current authenticated user. */
+async function listNames({
+  ownedByUser,
+}: {
+  ownedByUser: boolean;
+}): Promise<IStudyName[]> {
+  try {
+    const response = await fetch(
+      `/api/v1/studies/names?ownedByUser=${ownedByUser}`
+    );
+
+    if (response.ok && response.status === 200) {
+      const { studies } = await response.json();
+      return studies as IStudyName[];
+    } else {
+      throw new Error("Failed to fetch Study service list");
+    }
+  } catch (err) {
+    throw err;
+  }
 }
 
 /* Create a study that is linked with the logged in user. User must be authenticated. */
