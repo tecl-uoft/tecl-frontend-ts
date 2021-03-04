@@ -15,7 +15,6 @@ function SchedulingV2() {
   useEffect(() => {
     StudyService.listNames({ ownedByUser: false })
       .then((studies) => {
-        console.log(studies);
         setStudyHeaders({ isLoaded: true, studies });
       })
       .catch((err) => notify.error(err.message));
@@ -52,6 +51,7 @@ function SchedulingV2() {
   );
   NavPanels.unshift(
     <InstructionNav
+      key={-1}
       setCurrentStudy={setCurrentStudy}
       currentStudy={currentStudy}
     />

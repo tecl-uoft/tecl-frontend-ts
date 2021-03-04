@@ -9,7 +9,7 @@ interface IInstructionNavProps {
 export function InstructionNav(props: IInstructionNavProps) {
   const { setCurrentStudy, currentStudy } = props;
   return (
-    <React.Fragment key={100}>
+    <React.Fragment>
       <button
         onClick={() => {
           setCurrentStudy(undefined);
