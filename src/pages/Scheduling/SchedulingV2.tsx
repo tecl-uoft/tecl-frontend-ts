@@ -79,7 +79,7 @@ function SchedulingV2() {
     );
 
     setNavPanels(NavPanels);
-  }, [givenAge]);
+  }, [givenAge, currentStudy, studyHeaders.studies]);
 
   if (!studyHeaders.isLoaded) {
     return <div>Loading...</div>;
