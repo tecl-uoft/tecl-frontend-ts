@@ -41,16 +41,31 @@ function FroggerGame(props: IFroggerGameProps) {
     }
   }, [loadingProgress]);
 
+  useEffect(() => {
+    const oldLog = window.console.log;
+    window.console = {
+      ...window.console,
+      log: function (msg: string) {
+        oldLog(msg, "11111")
+      },
+    };
+  }, []);
+
   const { nextState } = props;
+  
+
   const unityContent = new UnityContent(
-    "/scripts/frogger_real_1/Frogger_AdultGame_v1.json",
-    "/scripts/frogger_real_1/UnityLoader.js"
+    "/scripts/ArnavBuild_3.3.21/ArnavBuild_3.3.21.json",
+    "/scripts/ArnavBuild_3.3.21/UnityLoader.js"
   );
+  /* "/scripts/frogger_real_1/Frogger_AdultGame_v1.json",
+    "/scripts/frogger_real_1/UnityLoader.js" */
   unityContent.on("progress", (progression: number) => {
     setLoadingProgress(progression);
   });
 
-  unityContent.on("GameOver", () => {
+  unityContent.on("GameOver", function (x: any, y: any, time: any, area: any) {
+    console.log(x, y, time, area);
     setTimerSec(0);
     setTimerMin(0);
     setTimeOver(true);
