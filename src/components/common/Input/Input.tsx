@@ -1,6 +1,7 @@
 import { DateTime } from "luxon";
 import React, { Dispatch, SetStateAction } from "react";
 import DatePicker from "react-date-picker";
+import "./DatePicker.css";
 import "./input.css";
 
 function Input(props: {
