@@ -6,6 +6,7 @@ import StudyService, { IStudyName } from "../../services/StudyService";
 import { InstructionNav, Instructions } from "./Instructions";
 import AskBirthModal from "./AskBirthModal";
 import NoStudiesAvailable from "./NoStudiesAvailable";
+import { useAuth } from "../../context/AuthContext";
 
 function SchedulingV2() {
   const [studyHeaders, setStudyHeaders] = useState({
@@ -17,6 +18,7 @@ function SchedulingV2() {
   const [givenAge, setGivenAge] = useState<number | undefined>(undefined);
   const [navPanels, setNavPanels] = useState<JSX.Element[]>([]);
   const [showNotAvailable, setShowNotAvailable] = useState(true);
+  const authCtx = useAuth();
 
   useEffect(() => {
     StudyService.listNames({ ownedByUser: false })
@@ -84,7 +86,11 @@ function SchedulingV2() {
   if (!studyHeaders.isLoaded) {
     return <div>Loading...</div>;
   }
-  if (!showAskBirth && showNotAvailable) {
+  if (
+    !showAskBirth &&
+    showNotAvailable &&
+    !authCtx?.authState?.isAuthenticated
+  ) {
     return <NoStudiesAvailable />;
   }
 
