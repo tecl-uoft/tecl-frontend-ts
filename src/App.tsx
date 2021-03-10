@@ -22,6 +22,7 @@ import { TouchStudy } from "./pages/TouchStudy";
 import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 import { Toaster } from "react-hot-toast";
 import { ParticipationSelection } from "./pages/ParticipationSelection";
+import { ParticipationSignup } from "./pages/ParticipationSignup";
 
 const TeamsStudyGame = lazy(() => import("./pages/TeamsStudyGame"));
 const EyeTrackingGame = lazy(() => import("./pages/EyeTrackingGame"));
@@ -46,6 +47,11 @@ function App() {
                   exact
                   path="/participation/selection"
                   component={ParticipationSelection}
+                />
+                <Route
+                  exact
+                  path="/participation/signup"
+                  component={ParticipationSignup}
                 />
                 <Route
                   exact
