@@ -41,13 +41,13 @@ function MeetingCalHeader({ currentStudy }: { currentStudy: IStudyName }) {
         {`${currentStudy.studyName}`} Schedule
       </h3>
       <div className="flex flex-col justify-between w-full pb-4 space-y-4 md:flex-row md:space-y-0 md:py-0">
-        <div className="w-64 text-xl md:h-32"></div>
-        <h3 className="w-full h-32 text-center md:text-xl">
-          <div className="h-40 overflow-y-auto text-lg bg-gray-200 rounded-lg md:px-2">
-            {currentStudy.description}
-          </div>
+        <div className="w-64 text-xl md:h-32" />
+
+        <h3 className="w-full h-32 h-40 overflow-y-auto text-lg text-center bg-gray-200 rounded-lg md:px-2">
+          {currentStudy.description}
         </h3>
-        <h3 className="flex flex-col h-40 p-2 mx-2 text-lg text-center bg-gray-200 rounded-lg md:text-left">
+
+        <h3 className="flex flex-col h-40 p-2 mx-2 my-6 text-lg text-center bg-gray-200 rounded-lg md:text-left">
           <div className="underline max-w-1/3">Required Age Range</div>
           <div className="w-64 mx-auto text-lg">
             {" "}
