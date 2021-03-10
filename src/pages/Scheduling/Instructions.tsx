@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { IStudyName } from "../../services/StudyService";
 
 interface IInstructionNavProps {
@@ -57,15 +58,13 @@ export function Instructions() {
         <li>
           <strong className="text-2xl">
             Sign up to hear when new and fun online studies come out for your
-            child at{" "}
-            <a
+            child {" "}
+            <Link
+              to="/participation/signup"
               className="text-blue-600 no-underline hover:underline"
-              href="https://www.tecl.ca/sign-up"
-              target="_blank"
-              rel="noopener noreferrer"
             >
-              tecl.ca/sign-up
-            </a>
+              here
+            </Link>
             !
           </strong>
         </li>

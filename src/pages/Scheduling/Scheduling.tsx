@@ -3,6 +3,7 @@ import { MeetingCalendar } from "../../components/MeetingCalendar";
 import StudyService, { IStudy } from "../../services/StudyService";
 import { DateTime } from "luxon";
 import { AskBirthModal } from "../../components/AskBirthModal";
+import { Link } from "react-router-dom";
 
 function Scheduling() {
   const [allStudyList, setAllStudyList] = useState<IStudy[] | undefined>(
@@ -72,10 +73,11 @@ function Scheduling() {
             onClick={() => {
               setCurrentStudy(undefined);
             }}
-            className={`text-md font-semibold mb-1 rounded-lg text-white bg-orange-500 border-4 focus:outline-none ${currentStudy === undefined && !showNoMessage
-              ? "border-gray-800"
-              : "border-white"
-              }`}
+            className={`text-md font-semibold mb-1 rounded-lg text-white bg-orange-500 border-4 focus:outline-none ${
+              currentStudy === undefined && !showNoMessage
+                ? "border-gray-800"
+                : "border-white"
+            }`}
           >
             <div className="w-full px-2 py-1 border-2 border-white rounded-lg">
               Instructions
@@ -84,35 +86,36 @@ function Scheduling() {
         )}
         {allStudyList
           ? allStudyList.map((study: IStudy, idx: number) => {
-            if (
-              givenAge &&
-              (givenAge < study.minAgeDays || givenAge > study.maxAgeDays)
-            ) {
-              return null;
-            }
+              if (
+                givenAge &&
+                (givenAge < study.minAgeDays || givenAge > study.maxAgeDays)
+              ) {
+                return null;
+              }
 
-            return (
-              <React.Fragment key={idx}>
-                {(idx + 1) % 4 === 0 ? <br /> : null}
+              return (
+                <React.Fragment key={idx}>
+                  {(idx + 1) % 4 === 0 ? <br /> : null}
 
-                <button
-                  onClick={() => {
-                    setCurrentStudy(study);
-                  }}
-                  style={{ backgroundColor: study.keyColor }}
-                  className={`text-md font-semibold rounded-lg text-white border-4 focus:outline-none
-                ${currentStudy && currentStudy.studyName === study.studyName
-                      ? "border-gray-800"
-                      : "border-white"
-                    }`}
-                >
-                  <div className="w-full px-2 py-1 border-2 border-white rounded-lg">
-                    {study.studyName + " Study"}
-                  </div>
-                </button>
-              </React.Fragment>
-            );
-          })
+                  <button
+                    onClick={() => {
+                      setCurrentStudy(study);
+                    }}
+                    style={{ backgroundColor: study.keyColor }}
+                    className={`text-md font-semibold rounded-lg text-white border-4 focus:outline-none
+                ${
+                  currentStudy && currentStudy.studyName === study.studyName
+                    ? "border-gray-800"
+                    : "border-white"
+                }`}
+                  >
+                    <div className="w-full px-2 py-1 border-2 border-white rounded-lg">
+                      {study.studyName + " Study"}
+                    </div>
+                  </button>
+                </React.Fragment>
+              );
+            })
           : null}
       </nav>
       {currentStudy && (
@@ -135,9 +138,16 @@ function Scheduling() {
                   {
                     <div className="flex flex-col text-left md:ml-4">
                       {" "}
-                      <div> <strong>From</strong>: {getAgeFormat(currentStudy.minAgeDays)} </div>
-                      <div> <strong>To</strong>: {"  "}
-                        {getAgeFormat(currentStudy.maxAgeDays)}{" "}</div>
+                      <div>
+                        {" "}
+                        <strong>From</strong>:{" "}
+                        {getAgeFormat(currentStudy.minAgeDays)}{" "}
+                      </div>
+                      <div>
+                        {" "}
+                        <strong>To</strong>: {"  "}
+                        {getAgeFormat(currentStudy.maxAgeDays)}{" "}
+                      </div>
                     </div>
                   }
                 </div>
@@ -156,15 +166,13 @@ function Scheduling() {
       {showNoMessage && (
         <h3 className="w-3/4 mx-auto mt-32 text-2xl font-bold text-center ">
           There are no studies availabe for you right now. <br /> Sign up to
-          hear when new and fun online studies come out for your child at{" "}
-          <a
+          hear when new and fun online studies come out for your child {" "}
+          <Link
+            to="/participation/signup"
             className="text-blue-600 no-underline hover:underline"
-            href="https://www.tecl.ca/sign-up"
-            target="_blank"
-            rel="noopener noreferrer"
           >
-            tecl.ca/sign-up
-          </a>{" "}
+            here
+          </Link>{" "}
           or get back to us later!
         </h3>
       )}
@@ -228,15 +236,13 @@ function Instructions() {
         <li>
           <strong className="text-2xl">
             Sign up to hear when new and fun online studies come out for your
-            child at{" "}
-            <a
+            child{" "}
+            <Link
+              to="/participation/signup"
               className="text-blue-600 no-underline hover:underline"
-              href="https://www.tecl.ca/sign-up"
-              target="_blank"
-              rel="noopener noreferrer"
             >
-              tecl.ca/sign-up
-            </a>
+              here
+            </Link>
             !
           </strong>
         </li>

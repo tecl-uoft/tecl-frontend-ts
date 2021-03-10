@@ -7,7 +7,7 @@ function ParticipationSelection() {
       <h2 className="mt-6 text-2xl font-bold text-center">
         Select a method to schedule an online study session.
       </h2>
-      <div className="flex flex-col justify-center w-full md:flex-row md:px-12"  >
+      <div className="flex flex-col justify-center w-full md:flex-row md:px-12">
         <div className="w-full m-2">
           <Link to={"/scheduling?askAge=true"}>
             <div className="p-4 pb-8 border-2 border-gray-500 rounded-lg shadow hover:bg-gray-200 hover:text-orange-500">
@@ -34,10 +34,9 @@ function ParticipationSelection() {
           </Link>
         </div>
         <div className="w-full m-2 border-2 border-gray-500 rounded-lg">
-          <a
-            href="https://tecl.ca/sign-up"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/participation/signup"
+            className="text-blue-600 no-underline hover:underline"
           >
             <div className="p-4 pb-8 rounded-lg shadow hover:bg-gray-200 hover:text-orange-500">
               <img
@@ -53,13 +52,13 @@ function ParticipationSelection() {
               </p>
               <p className="mt-2 text-center text-gray-600 md:h-64">
                 In this option, you will be able to allow a staff member to book
-                a study session for you. Selecting this box will redirect you to
-                tecl.ca/sign-up where you can put in minimal information and a
-                staff for our lab will be in contact with you through email to
-                help book you in.
+                a study session for you. Selecting this box will redirect to a
+                form where you can put in minimal information and a staff for
+                our lab will be in contact with you through email to help book
+                you in.
               </p>
             </div>
-          </a>
+          </Link>
         </div>
       </div>
     </div>
