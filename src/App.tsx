@@ -21,7 +21,7 @@ import { EventCancelation } from "./pages/EventCancelation";
 import { TouchStudy } from "./pages/TouchStudy";
 import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 import { Toaster } from "react-hot-toast";
-import { ParticipationSignup } from "./pages/ParticipationSignup";
+import { ParticipationSelection } from "./pages/ParticipationSelection";
 
 const TeamsStudyGame = lazy(() => import("./pages/TeamsStudyGame"));
 const EyeTrackingGame = lazy(() => import("./pages/EyeTrackingGame"));
@@ -44,8 +44,8 @@ function App() {
                 <Route exact path="/signup" component={Signup} />
                 <Route
                   exact
-                  path="/participation/signup"
-                  component={ParticipationSignup}
+                  path="/participation/selection"
+                  component={ParticipationSelection}
                 />
                 <Route
                   exact

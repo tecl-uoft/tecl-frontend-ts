@@ -1,16 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function ParticipationSignup() {
+function ParticipationSelection() {
   return (
     <div className="flex flex-col py-4">
-      <h2 className="text-2xl font-bold text-center mt-6">
+      <h2 className="mt-6 text-2xl font-bold text-center">
         Select a method to schedule an online study session.
       </h2>
-      <div className="flex flex-col md:flex-row w-full justify-center md:px-12 ">
+      <div className="flex flex-col justify-center w-full md:flex-row md:px-12"  >
         <div className="w-full m-2">
           <Link to={"/scheduling?askAge=true"}>
-            <div className="p-4 pb-8 hover:bg-gray-200 hover:text-orange-500 rounded-lg shadow">
+            <div className="p-4 pb-8 border-2 border-gray-500 rounded-lg shadow hover:bg-gray-200 hover:text-orange-500">
               <img
                 className="h-64 mx-auto"
                 src={
@@ -19,10 +19,10 @@ function ParticipationSignup() {
                 alt={"participant self signup"}
               />
 
-              <p className="text-gray-600 text-xl text-center mt-4">
+              <p className="mt-4 text-xl text-center text-gray-600">
                 <b>Book a study session by youself!</b>
               </p>
-              <p className="text-gray-600 mt-2 md:h-64 text-center">
+              <p className="mt-2 text-center text-gray-600 md:h-64">
                 In this option, you will be able to select a study based on your
                 child's age and choose a time slot where both you and one of our
                 staff members are free to video chat online. Selecting on this
@@ -33,13 +33,13 @@ function ParticipationSignup() {
             </div>
           </Link>
         </div>
-        <div className="w-full m-2">
+        <div className="w-full m-2 border-2 border-gray-500 rounded-lg">
           <a
             href="https://tecl.ca/sign-up"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <div className="p-4 pb-8 hover:bg-gray-200 hover:text-orange-500 rounded-lg shadow">
+            <div className="p-4 pb-8 rounded-lg shadow hover:bg-gray-200 hover:text-orange-500">
               <img
                 className="h-64 mx-auto"
                 src={
@@ -48,10 +48,10 @@ function ParticipationSignup() {
                 alt={"participant tecl signup"}
               />
 
-              <p className="text-gray-600 text-xl text-center mt-4">
+              <p className="mt-4 text-xl text-center text-gray-600">
                 <b>Let a staff member book your study session!</b>
               </p>
-              <p className="text-gray-600 mt-2 md:h-64 text-center">
+              <p className="mt-2 text-center text-gray-600 md:h-64">
                 In this option, you will be able to allow a staff member to book
                 a study session for you. Selecting this box will redirect you to
                 tecl.ca/sign-up where you can put in minimal information and a
@@ -66,4 +66,4 @@ function ParticipationSignup() {
   );
 }
 
-export default ParticipationSignup;
+export default ParticipationSelection;
