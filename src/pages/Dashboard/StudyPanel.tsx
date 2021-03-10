@@ -62,7 +62,7 @@ function StudyTitlePanel({
   return (
     <div
       onClick={onClickHidePanels}
-      className="flex flex-col cursor-pointer md:flex-row md:mt-6 hover:opacity-50"
+      className="flex flex-col cursor-pointer md:flex-row md:mt-6 hover:text-gray-600"
     >
       <div
         className="flex-grow h-2 mx-6 my-auto text-white rounded select-none"
@@ -76,7 +76,7 @@ function StudyTitlePanel({
         style={{ backgroundColor: study.keyColor }}
       />
       <button
-        className="w-12 m-4 ml-0 text-2xl text-white rounded-lg"
+        className="w-12 m-4 ml-0 text-2xl text-white no-underline rounded-lg"
         style={{ backgroundColor: study.keyColor }}
       >
         {showPanel ? "-" : "+"}
