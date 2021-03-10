@@ -41,11 +41,18 @@ function ParticipationSignup() {
         your child is the right age for our studies!
       </p>
       <div className="flex flex-col justify-between md:flex-row">
-        <img
-          className="md:h-64 md:w-64 md:mr-4 md:mt-10"
-          src="/assets/giftcard.png"
-          alt="gift card"
-        />
+        <div className="md:mr-4 md:mt-10">
+          <img
+            className="md:h-64 md:w-64 "
+            src="/assets/giftcard.png"
+            alt="gift card"
+          />
+          <img
+            className="md:h-64 md:w-64 "
+            src="/assets/teclafterschool.png"
+            alt="gift card"
+          />
+        </div>
         <form className="flex flex-col py-4 mx-auto space-y-4 md:w-3/4">
           <h2 className="block py-1 mb-2 text-lg font-bold text-center text-gray-700 bg-orange-300 rounded">
             Parent Information
