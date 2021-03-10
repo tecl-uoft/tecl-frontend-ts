@@ -8,9 +8,9 @@ function ParticipationSelection() {
         Select a method to schedule an online study session.
       </h2>
       <div className="flex flex-col justify-center w-full md:flex-row md:px-12"  >
-        <div className="w-full m-2">
+        <div className="w-full m-2 border-2 border-gray-500 rounded-lg">
           <Link to={"/scheduling?askAge=true"}>
-            <div className="p-4 pb-8 border-2 border-gray-500 rounded-lg shadow hover:bg-gray-200 hover:text-orange-500">
+            <div className="p-4 pb-8 shadow hover:bg-gray-200 hover:text-orange-500">
               <img
                 className="h-64 mx-auto"
                 src={
