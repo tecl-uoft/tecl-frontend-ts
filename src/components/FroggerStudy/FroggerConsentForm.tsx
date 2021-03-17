@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import ConsentTemplate from "../common/ConsentTemplate";
 import Input from "../common/Input";
@@ -9,7 +8,7 @@ interface IFroggerConsentFormProps {
 }
 
 function FroggerConsentForm(props: IFroggerConsentFormProps) {
-  const studyName = "frogger";
+  const studyName = "Frogger";
   const pi = "Jessica Sommerville";
   const address = "University of Toronto, 100 St. George Street, M5S 2E5";
   const telephone = "(416) 978-6903";
@@ -30,7 +29,43 @@ function FroggerConsentForm(props: IFroggerConsentFormProps) {
 }
 
 function ConsentFormBody() {
-  const [name, setName] = useState("");
+  const [formState, setFormState] = useState({
+    parentName: "",
+    childName: "",
+    childBirthday: "",
+    childGender: "",
+    sign: "",
+    signDate: "",
+    email: "",
+    phone: "",
+    sendSummary: false,
+    includeFutureResearch: false,
+    futureResearch: "",
+  });
+  const formStateSetter = {
+    parentName: (parentName: string) =>
+      setFormState((s) => ({ ...s, parentName })),
+    childName: (childName: string) =>
+      setFormState((s) => ({ ...s, childName })),
+    childBirthday: (childBirthday: string) =>
+      setFormState((s) => ({ ...s, childBirthday })),
+    childGender: (childGender: string) =>
+      setFormState((s) => ({ ...s, childGender })),
+    sign: (sign: string) => setFormState((s) => ({ ...s, sign })),
+    signDate: (signDate: string) => setFormState((s) => ({ ...s, signDate })),
+    email: (email: string) => setFormState((s) => ({ ...s, email })),
+    phone: (phone: string) => setFormState((s) => ({ ...s, phone })),
+    sendSummary: () =>
+      setFormState((s) => ({ ...s, sendSummary: !s.sendSummary })),
+    includeFutureResearch: () =>
+      setFormState((s) => ({
+        ...s,
+        includeFutureResearch: !s.includeFutureResearch,
+      })),
+    futureResearch: (futureResearch: string) =>
+      setFormState((s) => ({ ...s, futureResearch })),
+  };
+
   return (
     <div>
       <i>
@@ -55,76 +90,92 @@ function ConsentFormBody() {
         we would be happy to provide you with one.
         <div className="w-full">
           I{" "}
-          <div className="mx-2 w-full md:w-1/2 inline-block">
+          <div className="inline-block w-full mx-2 md:w-1/2">
             <Input
-              placeholder="PRINT name of parent/guardian"
-              value={name}
-              valueSetter={setName}
+              placeholder="Name of parent/guardian"
+              value={formState.parentName}
+              valueSetter={formStateSetter.parentName}
               type="text"
             />{" "}
           </div>
           , having read the above information, give permission for my child
-          <div className="mx-2 w-full md:w-1/2 inline-block">
+          <div className="inline-block w-full mx-2 md:w-1/2">
             <Input
-              placeholder="PRINT name of child"
-              value={name}
-              valueSetter={setName}
+              placeholder="Name of child"
+              value={formState.childName}
+              valueSetter={formStateSetter.childName}
               type="text"
             />{" "}
           </div>
           , to participate. <br />
           Child’s Birthday:{" "}
-          <div className="mx-2 inline-block">
+          <div className="inline-block mx-2">
             <Input
-              placeholder="PRINT name of child"
-              value={name}
-              valueSetter={setName}
+              value={formState.childBirthday}
+              valueSetter={formStateSetter.childBirthday}
               type="date"
             />{" "}
           </div>{" "}
           <br />
           Child’s Gender:{" "}
-          <div className="mx-2 w-full md:w-64 inline-block">
+          <div className="inline-block w-full mx-2 md:w-64">
             <Input
-              placeholder="PRINT gender of child"
-              value={name}
-              valueSetter={setName}
+              placeholder="Gender of child"
+              value={formState.childGender}
+              valueSetter={formStateSetter.childGender}
               type="text"
             />{" "}
           </div>{" "}
           <br />
-          <div className="mr-2 w-full md:w-1/2 my-6 inline-block">
+          <div className="inline-block w-full my-6 mr-2 md:w-1/2">
             <Input
               placeholder="Signature of
               parent/guardian"
-              value={name}
-              valueSetter={setName}
+              value={formState.sign}
+              valueSetter={formStateSetter.sign}
               type="text"
             />{" "}
           </div>
-          <div className="mx-2 inline-block">
-            <Input value={name} valueSetter={setName} type="date" />{" "}
+          <div className="inline-block mx-2">
+            <Input
+              value={formState.signDate}
+              valueSetter={formStateSetter.signDate}
+              type="date"
+            />{" "}
           </div>{" "}
           <br />
           Please provide your email and/or phone number if you would like to
           receive a summary of the findings when the study is complete and/or if
           you would like us to keep your contact information on file so we can
           contact you about other research studies your child(ren) may be
-          eligible to participate in. Please PRINT clearly below. <br /> <br />
+          eligible to participate in. Please clearly below. <br /> <br />
           Email:{" "}
-          <div className="mx-2 inline-block">
-            <Input value={name} valueSetter={setName} type="email" />{" "}
+          <div className="inline-block mx-2">
+            <Input
+              value={formState.email}
+              valueSetter={formStateSetter.email}
+              type="email"
+            />{" "}
           </div>{" "}
           <br />
           Telephone:{" "}
-          <div className="mx-2 inline-block">
-            <Input value={name} valueSetter={setName} type="tel" />{" "}
+          <div className="inline-block mx-2">
+            <Input
+              value={formState.phone}
+              valueSetter={formStateSetter.phone}
+              type="tel"
+            />{" "}
           </div>{" "}
         </div>{" "}
-        <input className="h-5 w-5 mx-2 -mb-6" type="checkbox" />
+        <input
+          className="w-5 h-5 mx-2 -mb-6 cursor-pointer"
+          checked={formState.sendSummary}
+          onChange={formStateSetter.sendSummary}
+          type="checkbox"
+        />
         Please send me a summary of the findings when the study is complete{" "}
         <br />
-        <input className="h-5 w-5 mx-2 -mb-6" type="checkbox" />
+        <input className="w-5 h-5 mx-2 -mb-6 cursor-pointer" type="checkbox" />
         The University of Toronto Child Study Centre and The Laboratory for
         Infant Studies, groups of researchers studying child development, would
         like to keep your contact information on file so that we can contact you
@@ -133,7 +184,11 @@ function ConsentFormBody() {
         of birth, and genders if you would like them to participate in future
         research: <br />{" "}
         <div className="w-full mt-2">
-          <Input value={name} valueSetter={setName} type="email" />{" "}
+          <Input
+            value={formState.futureResearch}
+            valueSetter={formStateSetter.futureResearch}
+            type="email"
+          />{" "}
         </div>{" "}
       </div>
     </div>

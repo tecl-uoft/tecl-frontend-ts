@@ -46,7 +46,7 @@ function FroggerGame(props: IFroggerGameProps) {
     window.console = {
       ...window.console,
       log: function (msg: string) {
-        oldLog(msg, "11111")
+        oldLog(msg[2])
       },
     };
   }, []);

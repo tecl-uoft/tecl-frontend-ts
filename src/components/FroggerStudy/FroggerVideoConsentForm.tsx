@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ConsentTemplate from "../common/ConsentTemplate";
 
 interface IFroggerConsentFormProps {
@@ -7,11 +7,15 @@ interface IFroggerConsentFormProps {
 }
 
 function FroggerVideoConsentForm(props: IFroggerConsentFormProps) {
-  const studyName = "frogger";
+  const studyName = "Frogger";
   const pi = "Jessica Sommerville";
   const address = "University of Toronto, 100 St. George Street, M5S 2E5";
   const telephone = "(416) 978-6903";
   const email = "jessica.sommerville@utoronto.ca";
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <ConsentTemplate
@@ -28,9 +32,32 @@ function FroggerVideoConsentForm(props: IFroggerConsentFormProps) {
 }
 
 function ConsentFormBody() {
+  const [formState, setFormState] = useState({
+    vc1: false,
+    vc2: false,
+    vc3: false,
+    vc4: false,
+    vc5: false,
+    vc6: false,
+    vc7: false,
+    vc8: false,
+    vc9: false,
+  });
+  const formStateSetter = [
+    () => setFormState((s) => ({ ...s, vc1: !s.vc1 })),
+    () => setFormState((s) => ({ ...s, vc2: !s.vc2 })),
+    () => setFormState((s) => ({ ...s, vc3: !s.vc3 })),
+    () => setFormState((s) => ({ ...s, vc4: !s.vc4 })),
+    () => setFormState((s) => ({ ...s, vc5: !s.vc5 })),
+    () => setFormState((s) => ({ ...s, vc6: !s.vc6 })),
+    () => setFormState((s) => ({ ...s, vc7: !s.vc7 })),
+    () => setFormState((s) => ({ ...s, vc8: !s.vc8 })),
+    () => setFormState((s) => ({ ...s, vc9: !s.vc9 })),
+  ];
+
   return (
     <div>
-      <h3 className="text-xl">
+      <h3 className="text-md">
         {" "}
         <b>Video Release Consent and Webcam Recording</b>
       </h3>
@@ -60,31 +87,77 @@ function ConsentFormBody() {
         child in each of these ways: <br /> <br />
         <div className="flex flex-col justify-between">
           {[
-            "I agree to have my child’s photo taken and/or to being videoed.",
-            " The photo and video recorded material may be used by the investigators for this research project.",
-            " I agree for the photo and video recorded material to be used by the investigators in future research projects, after this project has ended.",
-            "I agree for the photo and video recorded material to be published in scholarly venues describing the research (e.g., in an academic journal or thesis).",
-            "I agree for the photo and video recorded material to be used in research presentations at scientific meetings.",
-            "I agree for the photo and video recorded material to be used in public presentations to non-scientific groups.",
-            "I agree for the photo and video recorded material to be shown in classrooms to university students.",
-            "I agree for the photo and video recorded material to be shown on the Toronto Early Childhood Cognition Lab website, or Facebook page. ",
-            "I agree for the photo and video recorded material to be used in the media (e.g., third- party web, newspaper or television stories about this research).",
+            {
+              state: formState.vc1,
+              q:
+                "I agree to have my child’s photo taken and/or to being videoed.",
+            },
+            {
+              state: formState.vc2,
+              q:
+                " The photo and video recorded material may be used by the investigators for this research project.",
+            },
+            {
+              state: formState.vc3,
+              q:
+                " I agree for the photo and video recorded material to be used by the investigators in future research projects, after this project has ended.",
+            },
+            {
+              state: formState.vc4,
+              q:
+                "I agree for the photo and video recorded material to be published in scholarly venues describing the research (e.g., in an academic journal or thesis).",
+            },
+            {
+              state: formState.vc5,
+              q:
+                "I agree for the photo and video recorded material to be used in research presentations at scientific meetings.",
+            },
+            {
+              state: formState.vc6,
+              q:
+                "I agree for the photo and video recorded material to be used in public presentations to non-scientific groups.",
+            },
+            {
+              state: formState.vc7,
+              q:
+                "I agree for the photo and video recorded material to be shown in classrooms to university students.",
+            },
+            {
+              state: formState.vc8,
+              q:
+                "I agree for the photo and video recorded material to be shown on the Toronto Early Childhood Cognition Lab website, or Facebook page. ",
+            },
+            {
+              state: formState.vc9,
+              q:
+                "I agree for the photo and video recorded material to be used in the media (e.g., third- party web, newspaper or television stories about this research).",
+            },
           ].map((question, idx) => {
             return (
-              <div
-                className="flex justify-between px-10 my-4"
-                key={idx}
-              >
+              <div className="flex justify-between px-10 my-2" key={idx}>
                 {" "}
-                <p className="w-3/4"> {question}</p>{" "}
+                <p className="w-3/4">
+                  {" "}
+                  {idx + 1}. {question.q}
+                </p>{" "}
                 <div className="flex justify-end w-1/4 space-x-4">
                   {" "}
                   <div>
-                    <input className="w-6 h-6 mx-2" type="radio" />
+                    <input
+                      checked={question.state}
+                      onChange={formStateSetter[idx]}
+                      className="w-6 h-6 mx-2 cursor-pointer "
+                      type="radio"
+                    />
                     <label className="text-center">Yes</label>
                   </div>
                   <div>
-                    <input className="w-6 h-6 mx-2" type="radio" />{" "}
+                    <input
+                      checked={!question.state}
+                      onChange={formStateSetter[idx]}
+                      className="w-6 h-6 mx-2 cursor-pointer"
+                      type="radio"
+                    />{" "}
                     <label>No</label>
                   </div>
                 </div>{" "}

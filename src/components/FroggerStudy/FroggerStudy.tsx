@@ -18,7 +18,7 @@ enum FroggerStudyStates {
 function FroggerStudy() {
   const [studyState, setStudyState] = useState(
     process.env.NODE_ENV === "development"
-      ? FroggerStudyStates.StudyGame
+      ? FroggerStudyStates.AskConsent
       : FroggerStudyStates.AskConsent
   );
   const videoRef = useRef<HTMLVideoElement>(null);
