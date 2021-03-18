@@ -47,7 +47,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
     if (selectInfo) {
       setEndRepeat(
         DateTime.fromISO(selectInfo.startStr).plus({
-          weeks: parseInt(repeatUntilWeeks),
+          weeks: parseInt(repeatUntilWeeks) || 0,
         })
       );
     }
@@ -66,9 +66,8 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
           "minutes"
         ).minutes / studyCtx.studyState.defaultTimeInterval;
       const endDateTime = DateTime.fromJSDate(selectInfo.end).plus({
-        minutes:
-          (parseInt(interval) - studyCtx.studyState.defaultTimeInterval) *
-          numIntervalBlocks,
+        minutes: (parseInt(interval) - studyCtx.studyState.defaultTimeInterval) *
+            numIntervalBlocks || -1 * studyCtx.studyState.defaultTimeInterval * numIntervalBlocks,
       });
       setEndTime(endDateTime.toFormat("HH:mm"));
     }
@@ -278,7 +277,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                         <div className="flex justify-center px-4">
                           <div className="w-1/3">
                             <Input
-                              min={0}
+                              min={"0"}
                               value={repeatUntilWeeks}
                               type="number"
                               valueSetter={setRepeatUntilWeeks}
