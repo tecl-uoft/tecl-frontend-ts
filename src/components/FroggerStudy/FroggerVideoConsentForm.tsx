@@ -33,15 +33,15 @@ function FroggerVideoConsentForm(props: IFroggerConsentFormProps) {
 
 function ConsentFormBody() {
   const [formState, setFormState] = useState({
-    vc1: false,
-    vc2: false,
-    vc3: false,
-    vc4: false,
-    vc5: false,
-    vc6: false,
-    vc7: false,
-    vc8: false,
-    vc9: false,
+    vc1: true,
+    vc2: true,
+    vc3: true,
+    vc4: true,
+    vc5: true,
+    vc6: true,
+    vc7: true,
+    vc8: true,
+    vc9: true,
   });
   const formStateSetter = [
     () => setFormState((s) => ({ ...s, vc1: !s.vc1 })),
