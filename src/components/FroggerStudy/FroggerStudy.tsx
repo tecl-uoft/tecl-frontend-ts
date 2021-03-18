@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import FroggerConsentForm from "./FroggerConsentForm";
-import FroggerVideoConsentForm from "./FroggerVideoConsentForm"
+import FroggerVideoConsentForm from "./FroggerVideoConsentForm";
 import FroggerGame from "./FroggerGame";
 import FroggerPractice from "./FroggerPractice";
 import FroggerInstructions from "./FroggerInstructions";
 import ErrorNotFound from "../../pages/ErrorNotFound";
+import FroggerImgInstructions from "./FroggerImgInstructions";
 
 enum FroggerStudyStates {
   AskConsent = "askConsent",
@@ -13,12 +14,13 @@ enum FroggerStudyStates {
   InstructionVideo = "instructionVideo",
   StudyGame = "studyGame",
   NoConsent = "noConsent",
+  ImgInstructions = "imgInstructions",
 }
 
 function FroggerStudy() {
   const [studyState, setStudyState] = useState(
     process.env.NODE_ENV === "development"
-      ? FroggerStudyStates.AskConsent
+      ? FroggerStudyStates.ImgInstructions
       : FroggerStudyStates.AskConsent
   );
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -44,18 +46,29 @@ function FroggerStudy() {
       case FroggerStudyStates.AskConsent:
         state = (
           <FroggerConsentForm
-            consentFunc={() => setStudyState(FroggerStudyStates.AskVideoConsent)}
+            consentFunc={() =>
+              setStudyState(FroggerStudyStates.AskVideoConsent)
+            }
             noConsentFunc={() => setStudyState(FroggerStudyStates.NoConsent)}
           />
         );
         break;
       case FroggerStudyStates.AskVideoConsent:
-        state = ( 
+        state = (
           <FroggerVideoConsentForm
-          consentFunc={() => setStudyState(FroggerStudyStates.PracticeGame)}
-          noConsentFunc={() => setStudyState(FroggerStudyStates.NoConsent)}
+            consentFunc={() =>
+              setStudyState(FroggerStudyStates.ImgInstructions)
+            }
+            noConsentFunc={() => setStudyState(FroggerStudyStates.NoConsent)}
           />
-        )
+        );
+        break;
+      case FroggerStudyStates.ImgInstructions:
+        state = (
+          <FroggerImgInstructions
+            nextState={() => setStudyState(FroggerStudyStates.PracticeGame)}
+          />
+        );
         break;
       case FroggerStudyStates.PracticeGame:
         state = (
@@ -84,12 +97,7 @@ function FroggerStudy() {
     return state;
   }
 
-  return (
-    <div>
-     
-      {cycleStudyStates(studyState)}
-    </div>
-  );
+  return <div>{cycleStudyStates(studyState)}</div>;
 }
 
 export default FroggerStudy;
