@@ -90,7 +90,7 @@ function ConsentFormBody() {
             {
               state: formState.vc1,
               q:
-                "I agree to have my child’s photo taken and/or to being videoed.",
+                "I agree to have my child’s photo taken and/or to being video-ed.",
             },
             {
               state: formState.vc2,
@@ -134,7 +134,7 @@ function ConsentFormBody() {
             },
           ].map((question, idx) => {
             return (
-              <div className="flex justify-between px-10 my-2" key={idx}>
+              <div className={`flex justify-between px-10 my-2 py-2 rounded-md ${"bg-gray-200"}`} key={idx}>
                 {" "}
                 <p className="w-3/4">
                   {" "}
