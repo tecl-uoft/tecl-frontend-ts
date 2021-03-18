@@ -39,7 +39,7 @@ function Header() {
           <img
             className="h-8 lg:h-16"
             src={process.env.PUBLIC_URL + "/assets/tecl-logo-full.png"}
-            alt="tecl logo"
+            alt="Toronto Early Cognition Lab Online"
           />
         </Link>
         <MobileNavPanel />
