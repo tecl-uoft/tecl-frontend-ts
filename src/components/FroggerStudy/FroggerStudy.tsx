@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import FroggerConsentForm from "./FroggerConsentForm";
 import FroggerVideoConsentForm from "./FroggerVideoConsentForm";
 import FroggerGame from "./FroggerGame";
@@ -27,22 +27,6 @@ function FroggerStudy() {
       ? FroggerStudyStates.CameraTest
       : FroggerStudyStates.AskConsent
   );
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    if (navigator.mediaDevices.getUserMedia && videoRef.current) {
-      navigator.mediaDevices
-        .getUserMedia({ video: true })
-        .then(function (stream) {
-          if (videoRef.current) {
-            videoRef.current.srcObject = stream;
-          }
-        })
-        .catch(function (error) {
-          console.log("Something went wrong!");
-        });
-    }
-  }, [videoRef]);
 
   function cycleStudyStates(froggerStudyState: FroggerStudyStates) {
     let state = null;
@@ -68,7 +52,11 @@ function FroggerStudy() {
         );
         break;
       case FroggerStudyStates.CameraTest:
-        state = <FroggerCameraTest nextState={() => setStudyState(FroggerStudyStates.ImgInstructions)} />;
+        state = (
+          <FroggerCameraTest
+            nextState={() => setStudyState(FroggerStudyStates.ImgInstructions)}
+          />
+        );
         break;
       case FroggerStudyStates.ImgInstructions:
         state = (
