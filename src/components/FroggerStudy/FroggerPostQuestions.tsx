@@ -54,7 +54,7 @@ function FroggerPostQuestions() {
     {
       state: formState.q3,
       q: "Did you find this area?",
-      img: "",
+      img: "/assets/frogger/q2i.png",
     },
     {
       state: formState.q4,
@@ -70,22 +70,22 @@ function FroggerPostQuestions() {
     {
       state: formState.q6,
       q: "Is this part of the game?",
-      img: "",
+      img: "/assets/frogger/q6i.png",
     },
     {
       state: formState.q7,
       q: "Is this part of the game?",
-      img: "",
+      img: "/assets/frogger/q7i.png",
     },
     {
       state: formState.q8,
       q: "Is this part of the game?",
-      img: "",
+      img: "/assets/frogger/q8i.png",
     },
     {
       state: formState.q9,
       q: "Is this part of the game?",
-      img: "",
+      img: "/assets/frogger/q9i.png",
     },
     {
       state: formState.q10,
@@ -119,16 +119,21 @@ function FroggerPostQuestions() {
           }
 
           return (
+            <div>
             <div
               key={idx}
               className={`flex justify-between px-10 my-2 py-2 rounded-md ${"bg-gray-200"}`}
             >
               <p className="w-3/4">{question.q}</p>
-              {( idx !== 1) && (
+              {idx !== 1 && (
                 <div className="flex justify-end w-1/4 space-x-4">
                   <div>
                     <input
-                      checked={typeof(question.state) === "boolean" ? question.state : false}
+                      checked={
+                        typeof question.state === "boolean"
+                          ? question.state
+                          : false
+                      }
                       onChange={formStateSetter[idx]}
                       className="w-6 h-6 mx-2 cursor-pointer "
                       type="radio"
@@ -137,7 +142,11 @@ function FroggerPostQuestions() {
                   </div>
                   <div>
                     <input
-                      checked={typeof(question.state) === "boolean" ? !question.state : false}
+                      checked={
+                        typeof question.state === "boolean"
+                          ? !question.state
+                          : false
+                      }
                       onChange={formStateSetter[idx]}
                       className="w-6 h-6 mx-2 cursor-pointer"
                       type="radio"
@@ -146,6 +155,8 @@ function FroggerPostQuestions() {
                   </div>
                 </div>
               )}
+              </div>
+              {question.img && <img alt={"question"} className="h-full" src={question.img} />}
             </div>
           );
         })}
