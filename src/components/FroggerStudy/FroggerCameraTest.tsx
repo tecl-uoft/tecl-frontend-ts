@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import streamRecorder from "./streamRecorder";
 
 function FroggerCameraTest({ nextState }: { nextState: () => void }) {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -11,7 +12,11 @@ function FroggerCameraTest({ nextState }: { nextState: () => void }) {
           if (videoRef.current) {
             videoRef.current.srcObject = stream;
           }
-        });
+        }).then(() => {
+          if (videoRef.current) {
+            streamRecorder(videoRef.current, 4000);
+          }
+        })
     }
   }, [videoRef]);
 

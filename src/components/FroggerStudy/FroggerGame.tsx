@@ -46,13 +46,20 @@ function FroggerGame(props: IFroggerGameProps) {
     window.console = {
       ...window.console,
       log: function (msg: string) {
-        oldLog(msg[2])
+        if (msg) {
+          oldLog(msg[0]);
+        } 
       },
+    };
+    return () => {
+      window.console = {
+        ...window.console,
+        log: oldLog,
+      };
     };
   }, []);
 
   const { nextState } = props;
-  
 
   const unityContent = new UnityContent(
     "/scripts/ArnavBuild_3.3.21/ArnavBuild_3.3.21.json",

@@ -2,7 +2,7 @@ interface CanvasElement extends HTMLCanvasElement {
   captureStream(frameRate?: number): MediaStream;
 }
 
-function streamRecorder(canvas: HTMLCanvasElement, recordingTime: number) {
+function streamRecorder(canvas: HTMLCanvasElement | HTMLVideoElement, recordingTime: number) {
   // Optional frames per second argument.
   const stream = (canvas as CanvasElement).captureStream(25);
   let recordedChunks: any = [];
@@ -27,10 +27,13 @@ function streamRecorder(canvas: HTMLCanvasElement, recordingTime: number) {
     const blobFile = new Blob(recordedChunks, {
       type: "video/webm",
     });
-    console.log("blobfile", blobFile);
-    fetch("/api/v1/frogger-study/upload-game-video", {
+    const fileName = new Date().getTime() + ".webm";
+    const fd = new FormData();
+    fd.append("video-file", blobFile, fileName);
+
+    fetch("http://localhost:3000/api/v1/frogger-study/upload-game-video", {
       method: "POST",
-      body: new File([blobFile], "test1.webm"),
+      body: fd,
     })
       .then((res) => {
         console.log(res.body);
@@ -38,8 +41,8 @@ function streamRecorder(canvas: HTMLCanvasElement, recordingTime: number) {
       .catch((err) => console.log(err));
   }
 
-  // demo: to download after 9sec
-  setTimeout((event) => {
+  // demo: to download after recordingTime sec
+  setTimeout(() => {
     mediaRecorder.stop();
   }, recordingTime);
 }
