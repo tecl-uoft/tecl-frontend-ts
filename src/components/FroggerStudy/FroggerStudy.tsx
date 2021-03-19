@@ -6,6 +6,7 @@ import FroggerPractice from "./FroggerPractice";
 import FroggerInstructions from "./FroggerInstructions";
 import ErrorNotFound from "../../pages/ErrorNotFound";
 import FroggerImgInstructions from "./FroggerImgInstructions";
+import FroggerPostQuestions from "./FroggerPostQuestions";
 
 enum FroggerStudyStates {
   AskConsent = "askConsent",
@@ -13,6 +14,7 @@ enum FroggerStudyStates {
   PracticeGame = "practiceGame",
   InstructionVideo = "instructionVideo",
   StudyGame = "studyGame",
+  PostQuestions = "postQuestions",
   NoConsent = "noConsent",
   ImgInstructions = "imgInstructions",
 }
@@ -20,7 +22,7 @@ enum FroggerStudyStates {
 function FroggerStudy() {
   const [studyState, setStudyState] = useState(
     process.env.NODE_ENV === "development"
-      ? FroggerStudyStates.ImgInstructions
+      ? FroggerStudyStates.PostQuestions
       : FroggerStudyStates.AskConsent
   );
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -90,6 +92,9 @@ function FroggerStudy() {
             nextState={() => setStudyState(FroggerStudyStates.InstructionVideo)}
           />
         );
+        break;
+      case FroggerStudyStates.PostQuestions:
+        state = <FroggerPostQuestions />;
         break;
       default:
         state = <ErrorNotFound />;
