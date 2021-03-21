@@ -3,14 +3,18 @@ import FroggerGame from "../../components/FroggerStudy/FroggerGame";
 import FroggerInstructions from "../../components/FroggerStudy/FroggerInstructions";
 import FroggerPractice from "../../components/FroggerStudy/FroggerPractice";
 import ErrorNotFound from "../ErrorNotFound";
+import EndScreen from "./EndScreen";
 
 enum FroggerStudyStates {
   PracticeGame = "practiceGame",
   InstructionVideo = "instructionVideo",
   StudyGame = "studyGame",
+  EndScreen = "endScreen",
 }
 
 function FroggerModStudyGame() {
+  const [ playerMovements, setPlayerMovements ] = useState<string[][]>([])
+
   const [studyState, setStudyState] = useState(
     process.env.NODE_ENV === "development"
       ? FroggerStudyStates.StudyGame
@@ -37,9 +41,12 @@ function FroggerModStudyGame() {
       case FroggerStudyStates.StudyGame:
         state = (
           <FroggerGame
-            nextState={() => setStudyState(FroggerStudyStates.InstructionVideo)}
+            nextState={() => setStudyState(FroggerStudyStates.EndScreen)}
           />
         );
+        break;
+      case FroggerStudyStates.EndScreen:
+        state = <EndScreen />;
         break;
       default:
         state = <ErrorNotFound />;

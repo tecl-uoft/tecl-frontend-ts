@@ -43,7 +43,7 @@ function FroggerGame(props: IFroggerGameProps) {
   useEffect(() => {
     if (loadingProgress === 1) {
       const canvas = document.querySelector("canvas") as HTMLCanvasElement;
-      streamRecorder(canvas, 2000);
+     /*  streamRecorder(canvas, 2000); */
     }
   }, [loadingProgress]);
 
@@ -61,7 +61,7 @@ function FroggerGame(props: IFroggerGameProps) {
               } else if (coordArr[3].includes("explore")) {
                 coordArr[3] = "explore";
               } else {
-                coordArr[3] = "";
+                coordArr[3] = "none";
               }
             }
           } catch (e) {
@@ -94,6 +94,8 @@ function FroggerGame(props: IFroggerGameProps) {
     setTimeOver(true);
   });
 
+  const onFullScreenClick = () => unityContent.setFullscreen(true);
+
   return (
     <div className="container px-2 pt-4 mx-auto mt-6 mb-16">
       <StudyTitleText text={"Complete the objective as shown."} />
@@ -120,8 +122,9 @@ function FroggerGame(props: IFroggerGameProps) {
           Time is up!{" "}
         </div>
       )}
+      { isMod && <button onClick={onFullScreenClick} className="px-6 py-2 mx-auto mt-6 text-white bg-gray-800 rounded-lg ">Full Screen</button> }
       <div className="flex justify-around mt-6">
-        {timeOver ? (
+        {timeOver || isMod ? (
           <button
             onClick={() => nextState()}
             className="w-full px-8 py-4 font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400 focus:outline-none"
