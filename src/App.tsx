@@ -23,7 +23,7 @@ import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 import { Toaster } from "react-hot-toast";
 import { ParticipationSelection } from "./pages/ParticipationSelection";
 import { ParticipationSignup } from "./pages/ParticipationSignup";
-
+const FroggerModStudyGame = lazy(() => import("./pages/FroggerModStudyGame/FroggerModStudyGame"))
 const TeamsStudyGame = lazy(() => import("./pages/TeamsStudyGame"));
 const EyeTrackingGame = lazy(() => import("./pages/EyeTrackingGame"));
 const FroggerStudyGame = lazy(() => import("./pages/FroggerStudyGame"));
@@ -82,6 +82,11 @@ function App() {
                   exact
                   path="/study/frogger/game"
                   component={FroggerStudyGame}
+                />
+                <Route
+                  exact
+                  path="/study/frogger/mod/game"
+                  component={FroggerModStudyGame}
                 />
                 <Route
                   exact

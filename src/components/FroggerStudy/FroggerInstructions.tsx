@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import StudyTitleText from "../common/StudyTitleText";
 
 interface IFroggerInstructionsProps {
@@ -6,6 +6,26 @@ interface IFroggerInstructionsProps {
 }
 
 function FroggerInstructions(props: IFroggerInstructionsProps) {
+  const [videoSrc, setVideoSrc] = useState(
+    "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/Frogger_Instructions_v6.mp4"
+  );
+
+  useEffect(() => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const study_type = urlParams.get("study_type");
+
+    if (study_type === "1") {
+      setVideoSrc(
+        "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/frogger/Frogger_Instructions_Female.mp4"
+      );
+    } else if (study_type === "2") {
+      setVideoSrc(
+        "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/frogger/Frogger_Instructions_Male.mp4"
+      );
+    }
+  }, []);
+
   const { nextState } = props;
   return (
     <div className="container px-2 mx-auto mb-12">
@@ -13,11 +33,9 @@ function FroggerInstructions(props: IFroggerInstructionsProps) {
       <h4 className="mb-4 text-2xl text-center text-gray-800">
         Make sure to learn the objective of the game.
       </h4>
-      <video className="px-32 focus:outline-none" controls>
-        <source
-          src="https://tecl-online-assets.s3.ca-central-1.amazonaws.com/Frogger_Instructions_v6.mp4"
-          type="video/mp4"
-        />
+      {console.log(videoSrc)}
+      <video className="px-32 min-h-64 focus:outline-none" controls>
+        <source src={videoSrc} type="video/mp4" />
         Your browser does not support the video.
       </video>
       <div className="flex justify-around mt-6">

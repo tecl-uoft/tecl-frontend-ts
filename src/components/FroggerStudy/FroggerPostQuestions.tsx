@@ -106,7 +106,7 @@ function FroggerPostQuestions() {
             return <React.Fragment key={idx} />;
           }
 
-          if (idx === 1 && formState.q1 && typeof question.state === "string") {
+          if (formState.q1 === false && typeof question.state === "string") {
             return (
               <div key={idx} className="h-64 p-2 bg-gray-300 rounded-lg -pb-2">
                 <input

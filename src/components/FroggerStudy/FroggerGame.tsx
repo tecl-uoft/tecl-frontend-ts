@@ -17,10 +17,16 @@ function FroggerGame(props: IFroggerGameProps) {
   const [timerSec, setTimerSec] = useState(timerStartTime.seconds);
   const [timerMin, setTimerMin] = useState(timerStartTime.minutes);
   const [timeOver, setTimeOver] = useState(false);
+  const [isMod, setIsMod] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
 
   useEffect(() => {
-    if (loadingProgress === 1) {
+    const pathString = window.location.pathname;
+    if (pathString.includes("/mod")) {
+      setIsMod(true);
+    }
+
+    if (loadingProgress === 1 && !pathString.includes("/mod")) {
       setTimeout(() => {
         if (timerSec === 0 && timerMin > 0) {
           setTimerSec(59);
@@ -47,8 +53,21 @@ function FroggerGame(props: IFroggerGameProps) {
       ...window.console,
       log: function (msg: string) {
         if (msg) {
-          oldLog(msg[0]);
-        } 
+          try {
+            let coordArr = msg.split(" -- ");
+            if (coordArr.length === 4) {
+              if (coordArr[3].includes("imitate")) {
+                coordArr[3] = "imitate";
+              } else if (coordArr[3].includes("explore")) {
+                coordArr[3] = "explore";
+              } else {
+                coordArr[3] = "";
+              }
+            }
+          } catch (e) {
+            oldLog(e);
+          }
+        }
       },
     };
     return () => {
@@ -62,17 +81,14 @@ function FroggerGame(props: IFroggerGameProps) {
   const { nextState } = props;
 
   const unityContent = new UnityContent(
-    "/scripts/ArnavBuild_3.3.21/ArnavBuild_3.3.21.json",
-    "/scripts/ArnavBuild_3.3.21/UnityLoader.js"
+    "/scripts/frogger_real_2/FunctioningBuild_3.19.21.json",
+    "/scripts/frogger_real_2/UnityLoader.js"
   );
-  /* "/scripts/frogger_real_1/Frogger_AdultGame_v1.json",
-    "/scripts/frogger_real_1/UnityLoader.js" */
   unityContent.on("progress", (progression: number) => {
     setLoadingProgress(progression);
   });
 
   unityContent.on("GameOver", function (x: any, y: any, time: any, area: any) {
-    console.log(x, y, time, area);
     setTimerSec(0);
     setTimerMin(0);
     setTimeOver(true);
@@ -81,7 +97,7 @@ function FroggerGame(props: IFroggerGameProps) {
   return (
     <div className="container px-2 pt-4 mx-auto mt-6 mb-16">
       <StudyTitleText text={"Complete the objective as shown."} />
-      <h4 className="mt-4 mb-4 text-2xl text-center text-gray-800">
+      {!isMod && <h4 className="mt-4 mb-4 text-2xl text-center text-gray-800">
         You have:{" "}
         <b className="bold">
           {" "}
@@ -90,7 +106,7 @@ function FroggerGame(props: IFroggerGameProps) {
           }`} minutes{" "}
         </b>{" "}
         remaining.
-      </h4>
+      </h4>}
       {loadingProgress !== 1 ? (
         <div>{`Loading ${Math.floor(loadingProgress * 100)} percent...`}</div>
       ) : null}
