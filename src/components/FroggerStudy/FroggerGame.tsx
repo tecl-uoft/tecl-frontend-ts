@@ -6,6 +6,7 @@ import StudyTitleText from "../common/StudyTitleText";
 
 interface IFroggerGameProps {
   nextState(): void;
+  setPlayerMovements?: React.Dispatch<React.SetStateAction<string[][]>>
 }
 
 function FroggerGame(props: IFroggerGameProps) {
@@ -19,6 +20,8 @@ function FroggerGame(props: IFroggerGameProps) {
   const [timeOver, setTimeOver] = useState(false);
   const [isMod, setIsMod] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
+
+  const {setPlayerMovements} = props;
 
   useEffect(() => {
     const pathString = window.location.pathname;
@@ -47,6 +50,7 @@ function FroggerGame(props: IFroggerGameProps) {
     }
   }, [loadingProgress]);
 
+  
   useEffect(() => {
     const oldLog = window.console.log;
     window.console = {
@@ -55,7 +59,7 @@ function FroggerGame(props: IFroggerGameProps) {
         if (msg) {
           try {
             let coordArr = msg.split(" -- ");
-            if (coordArr.length === 4) {
+            if (coordArr.length >= 4) {
               if (coordArr[3].includes("imitate")) {
                 coordArr[3] = "imitate";
               } else if (coordArr[3].includes("explore")) {
@@ -63,9 +67,12 @@ function FroggerGame(props: IFroggerGameProps) {
               } else {
                 coordArr[3] = "none";
               }
+              if (setPlayerMovements) {
+                setPlayerMovements(o => [...o, coordArr])
+              }
             }
           } catch (e) {
-            oldLog(e);
+            oldLog(msg);
           }
         }
       },
@@ -76,7 +83,7 @@ function FroggerGame(props: IFroggerGameProps) {
         log: oldLog,
       };
     };
-  }, []);
+  }, [setPlayerMovements]);
 
   const { nextState } = props;
 

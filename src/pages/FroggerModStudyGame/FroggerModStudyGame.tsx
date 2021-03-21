@@ -13,13 +13,28 @@ enum FroggerStudyStates {
 }
 
 function FroggerModStudyGame() {
-  const [ playerMovements, setPlayerMovements ] = useState<string[][]>([])
+  const [playerMovements, setPlayerMovements] = useState<string[][]>([]);
 
   const [studyState, setStudyState] = useState(
     process.env.NODE_ENV === "development"
       ? FroggerStudyStates.StudyGame
       : FroggerStudyStates.InstructionVideo
   );
+
+  const onFinishClick = () => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const studyType = urlParams.get("study_type");
+    const participantId = urlParams.get("participant_id")
+    fetch("/api/v1/frogger-study/data", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ playerMovements, studyType, participantId }),
+    });
+    setStudyState(FroggerStudyStates.EndScreen);
+  };
 
   function cycleStudyStates(froggerStudyState: FroggerStudyStates) {
     let state = null;
@@ -41,7 +56,8 @@ function FroggerModStudyGame() {
       case FroggerStudyStates.StudyGame:
         state = (
           <FroggerGame
-            nextState={() => setStudyState(FroggerStudyStates.EndScreen)}
+            setPlayerMovements={setPlayerMovements}
+            nextState={onFinishClick}
           />
         );
         break;
