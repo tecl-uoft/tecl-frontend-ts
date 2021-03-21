@@ -20,6 +20,7 @@ function FroggerGame(props: IFroggerGameProps) {
   const [timeOver, setTimeOver] = useState(false);
   const [isMod, setIsMod] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
+  const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder>()
 
   const {setPlayerMovements} = props;
 
@@ -46,7 +47,8 @@ function FroggerGame(props: IFroggerGameProps) {
   useEffect(() => {
     if (loadingProgress === 1) {
       const canvas = document.querySelector("canvas") as HTMLCanvasElement;
-     /*  streamRecorder(canvas, 2000); */
+      const mediaRecorder = streamRecorder(canvas, 0);
+      setMediaRecorder(mediaRecorder)
     }
   }, [loadingProgress]);
 
@@ -102,6 +104,10 @@ function FroggerGame(props: IFroggerGameProps) {
   });
 
   const onFullScreenClick = () => unityContent.setFullscreen(true);
+  const onNextClick = () => {
+    mediaRecorder?.stop();
+    nextState();
+  }
 
   return (
     <div className="container px-2 pt-4 mx-auto mt-6 mb-16">
@@ -133,7 +139,7 @@ function FroggerGame(props: IFroggerGameProps) {
       <div className="flex justify-around mt-6">
         {timeOver || isMod ? (
           <button
-            onClick={() => nextState()}
+            onClick={onNextClick}
             className="w-full px-8 py-4 font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400 focus:outline-none"
           >
             Next

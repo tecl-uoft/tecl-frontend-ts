@@ -2,7 +2,10 @@ interface CanvasElement extends HTMLCanvasElement {
   captureStream(frameRate?: number): MediaStream;
 }
 
-function streamRecorder(canvas: HTMLCanvasElement | HTMLVideoElement, recordingTime: number) {
+function streamRecorder(
+  canvas: HTMLCanvasElement | HTMLVideoElement,
+  recordingTime: number
+) {
   // Optional frames per second argument.
   const stream = (canvas as CanvasElement).captureStream(25);
   let recordedChunks: any = [];
@@ -25,26 +28,36 @@ function streamRecorder(canvas: HTMLCanvasElement | HTMLVideoElement, recordingT
 
   function download() {
     const blobFile = new Blob(recordedChunks, {
-      type: "video/webm",
+      type: "video/mp4",
     });
-    const fileName = new Date().getTime() + ".webm";
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const studyType = urlParams.get("study_type");
+    const participantId = urlParams.get("participant_id");
+    const trialType = studyType === "2" ? "male" : "female";
+    const fileName =
+      participantId + "_" + trialType + "_" + new Date().getTime() + ".mp4";
     const fd = new FormData();
     fd.append("video-file", blobFile, fileName);
 
-    fetch("http://localhost:3000/api/v1/frogger-study/upload-game-video", {
+    fetch("/api/v1/frogger-study/upload-game-video", {
       method: "POST",
       body: fd,
     })
       .then((res) => {
-        console.log(res.body);
+        /* console.log(res.body); */
       })
       .catch((err) => console.log(err));
   }
 
   // demo: to download after recordingTime sec
-  setTimeout(() => {
-    mediaRecorder.stop();
-  }, recordingTime);
+  if (recordingTime > 0) {
+    setTimeout(() => {
+      mediaRecorder.stop();
+    }, recordingTime);
+  }
+
+  return mediaRecorder;
 }
 
 export default streamRecorder;
