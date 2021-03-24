@@ -6,7 +6,7 @@ import StudyTitleText from "../common/StudyTitleText";
 
 interface IFroggerGameProps {
   nextState(): void;
-  setPlayerMovements?: React.Dispatch<React.SetStateAction<string[][]>>
+  setPlayerMovements?: React.Dispatch<React.SetStateAction<string[][]>>;
 }
 
 function FroggerGame(props: IFroggerGameProps) {
@@ -20,9 +20,12 @@ function FroggerGame(props: IFroggerGameProps) {
   const [timeOver, setTimeOver] = useState(false);
   const [isMod, setIsMod] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
-  const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder>()
+  const [mediaRecorder, setMediaRecorder] = useState<{
+    mediaRecorder: MediaRecorder;
+    recordedChunks: Blob[];
+  }>();
 
-  const {setPlayerMovements} = props;
+  const { setPlayerMovements } = props;
 
   useEffect(() => {
     const pathString = window.location.pathname;
@@ -46,13 +49,15 @@ function FroggerGame(props: IFroggerGameProps) {
 
   useEffect(() => {
     if (loadingProgress === 1) {
-      const canvas = document.querySelector("canvas") as HTMLCanvasElement;
-      const mediaRecorder = streamRecorder(canvas, 0);
-      setMediaRecorder(mediaRecorder)
+      const canvas = document.querySelector<HTMLCanvasElement>("canvas");
+      if (canvas) {
+        streamRecorder(canvas, 0).then((res) => setMediaRecorder(res));
+        const div = document.querySelector<HTMLDivElement>("#frogger-game") || canvas;
+        canvas.onscroll = div.onscroll
+      }
     }
   }, [loadingProgress]);
 
-  
   useEffect(() => {
     const oldLog = window.console.log;
     window.console = {
@@ -62,6 +67,7 @@ function FroggerGame(props: IFroggerGameProps) {
           try {
             let coordArr = msg.split(" -- ");
             if (coordArr.length >= 4) {
+              console.log(coordArr.slice(0,4))
               if (coordArr[3].includes("imitate")) {
                 coordArr[3] = "imitate";
               } else if (coordArr[3].includes("explore")) {
@@ -70,7 +76,7 @@ function FroggerGame(props: IFroggerGameProps) {
                 coordArr[3] = "none";
               }
               if (setPlayerMovements) {
-                setPlayerMovements(o => [...o, coordArr])
+                setPlayerMovements((o) => [...o, coordArr.slice(0,4)]);
               }
             }
           } catch (e) {
@@ -103,25 +109,30 @@ function FroggerGame(props: IFroggerGameProps) {
     setTimeOver(true);
   });
 
-  const onFullScreenClick = () => unityContent.setFullscreen(true);
+  // const onFullScreenClick = () => unityContent.setFullscreen(true);
   const onNextClick = () => {
-    mediaRecorder?.stop();
+    if (mediaRecorder && mediaRecorder.mediaRecorder) {
+      mediaRecorder.mediaRecorder.stop();
+    }
+
     nextState();
-  }
+  };
 
   return (
-    <div className="px-2 pt-4 mx-auto mt-6 mb-16">
+    <div className="px-2 pt-4 mx-auto mt-6 mb-16" id="frogger-game">
       {!isMod && <StudyTitleText text={"Complete the objective as shown."} />}
-      {!isMod && <h4 className="mt-4 mb-4 text-2xl text-center text-gray-800">
-        You have:{" "}
-        <b className="bold">
-          {" "}
-          {`${timerMin}:${
-            timerSec > 9 ? timerSec : "0" + timerSec
-          }`} minutes{" "}
-        </b>{" "}
-        remaining.
-      </h4>}
+      {!isMod && (
+        <h4 className="mt-4 mb-4 text-2xl text-center text-gray-800">
+          You have:{" "}
+          <b className="bold">
+            {" "}
+            {`${timerMin}:${
+              timerSec > 9 ? timerSec : "0" + timerSec
+            }`} minutes{" "}
+          </b>{" "}
+          remaining.
+        </h4>
+      )}
       {loadingProgress !== 1 ? (
         <div>{`Loading ${Math.floor(loadingProgress * 100)} percent...`}</div>
       ) : null}
@@ -135,7 +146,14 @@ function FroggerGame(props: IFroggerGameProps) {
           Time is up!{" "}
         </div>
       )}
-      { isMod && <button onClick={onFullScreenClick} className="px-6 py-2 mx-auto mt-6 text-white bg-gray-800 rounded-lg ">Full Screen</button> }
+      {/* {isMod && (
+        <button
+          onClick={onFullScreenClick}
+          className="px-6 py-2 mx-auto mt-6 text-white bg-gray-800 rounded-lg "
+        >
+          Full Screen
+        </button>
+      )} */}
       <div className="flex justify-around mt-6">
         {timeOver || isMod ? (
           <button
