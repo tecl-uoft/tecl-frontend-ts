@@ -125,7 +125,7 @@ function FroggerGame(props: IFroggerGameProps) {
       {loadingProgress !== 1 ? (
         <div>{`Loading ${Math.floor(loadingProgress * 100)} percent...`}</div>
       ) : null}
-      {!timeOver ? (
+      {!timeOver || isMod ? (
         <div className="px-32">
           <Unity unityContent={unityContent} />
         </div>
