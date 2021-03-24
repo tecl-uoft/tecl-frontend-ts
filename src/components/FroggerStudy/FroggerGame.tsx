@@ -65,7 +65,7 @@ function FroggerGame(props: IFroggerGameProps) {
           try {
             let coordArr = msg.split(" -- ");
             if (coordArr.length >= 4) {
-              console.log(coordArr.slice(0, 4));
+              
               if (coordArr[3].includes("imitate")) {
                 coordArr[3] = "imitate";
               } else if (coordArr[3].includes("explore")) {
