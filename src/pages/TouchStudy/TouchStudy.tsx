@@ -82,26 +82,37 @@ function TouchStudy() {
   const onVideoEnded = (e: React.SyntheticEvent<HTMLVideoElement, Event>) => {
     if (studyState.currentDispatch.type === "distribution") {
       dispatchStudy(studyState.nextDispatch);
-    } else if (studyState.currentDispatch.type === "test") {
-      setTimeout(() => {
-        dispatchStudy(studyState.nextDispatch);
-      }, 60 * 1000);
     }
   };
 
   const onVideoLoadedMetaData = (
     e: React.SyntheticEvent<HTMLVideoElement, Event>
   ) => {
-    if (
-      studyState.currentDispatch.type === "test" &&
-      studyState.currentDispatch.trial % 2 === 1
-    ) {
-      /* Show bars after 5 seconds */
-      setTimeout(() => {
-        dispatchStudy(studyState.nextDispatch);
-      }, 5000);
+    if (studyState.currentDispatch.type === "test") {
+      if (studyState.currentDispatch.trial % 2 === 1) {
+        /* Show bars after 5 seconds */
+        setTimeout(() => {
+          dispatchStudy(studyState.nextDispatch);
+        }, 5000);
+      }
     }
   };
+
+  useEffect(() => {
+    if (
+      studyState.currentDispatch.type === "test" &&
+      studyState.currentDispatch.trial % 2 === 0
+    ) {
+      /* Allow child to touch screen for 60 seconds after demo */
+      setTimeout(() => {
+        dispatchStudy(studyState.nextDispatch);
+      }, 60000);
+    }
+  }, [
+    studyState.currentDispatch.type,
+    studyState.currentDispatch.trial,
+    studyState.nextDispatch,
+  ]);
 
   const onVideoTouchStart = (e: React.TouchEvent<HTMLVideoElement>) => {
     if (studyState.currentDispatch.type === "distribution") {
@@ -342,12 +353,14 @@ function handleTouchStart(
     }
     const trialNum =
       studyState.currentDispatch.type !== "training"
-        ? Math.round(studyState.currentDispatch.trial / 2) 
+        ? Math.round(studyState.currentDispatch.trial / 2)
         : studyState.currentDispatch.trial;
-    
+
     const videoEl = document.querySelector<HTMLVideoElement>("video");
-    const currentVideo = videoEl ? videoEl.currentSrc.substr(66).replace("#t=0.1", "") : "";
-    
+    const currentVideo = videoEl
+      ? videoEl.currentSrc.substr(66).replace("#t=0.1", "")
+      : "";
+
     const touchInfo = {
       target,
       timestamp: Math.round(e.timeStamp) / 1000,
