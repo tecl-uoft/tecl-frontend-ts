@@ -14,7 +14,7 @@ function FroggerPractice(props: IFroggerPracticeProps) {
   );
 
   return (
-    <div className="container px-2 pt-4 mx-auto mb-16">
+    <div className="px-2 pt-4 mx-auto mb-16">
       <StudyTitleText
         text={"Before starting, let's get familiar with the game..."}
       />

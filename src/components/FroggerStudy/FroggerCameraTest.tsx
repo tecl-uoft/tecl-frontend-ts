@@ -7,7 +7,7 @@ function FroggerCameraTest({ nextState }: { nextState: () => void }) {
   useEffect(() => {
     if (navigator.mediaDevices.getUserMedia && videoRef.current) {
       navigator.mediaDevices
-        .getUserMedia({ video: true })
+        .getUserMedia({ video: true, audio: true })
         .then(function (stream) {
           if (videoRef.current) {
             videoRef.current.srcObject = stream;

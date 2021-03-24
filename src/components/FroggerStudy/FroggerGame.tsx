@@ -110,8 +110,8 @@ function FroggerGame(props: IFroggerGameProps) {
   }
 
   return (
-    <div className="container px-2 pt-4 mx-auto mt-6 mb-16">
-      <StudyTitleText text={"Complete the objective as shown."} />
+    <div className="px-2 pt-4 mx-auto mt-6 mb-16">
+      {!isMod && <StudyTitleText text={"Complete the objective as shown."} />}
       {!isMod && <h4 className="mt-4 mb-4 text-2xl text-center text-gray-800">
         You have:{" "}
         <b className="bold">
