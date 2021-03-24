@@ -52,8 +52,6 @@ function FroggerGame(props: IFroggerGameProps) {
       const canvas = document.querySelector<HTMLCanvasElement>("canvas");
       if (canvas) {
         streamRecorder(canvas, 0).then((res) => setMediaRecorder(res));
-        const div = document.querySelector<HTMLDivElement>("#frogger-game") || canvas;
-        canvas.onscroll = div.onscroll
       }
     }
   }, [loadingProgress]);
@@ -67,7 +65,7 @@ function FroggerGame(props: IFroggerGameProps) {
           try {
             let coordArr = msg.split(" -- ");
             if (coordArr.length >= 4) {
-              console.log(coordArr.slice(0,4))
+              console.log(coordArr.slice(0, 4));
               if (coordArr[3].includes("imitate")) {
                 coordArr[3] = "imitate";
               } else if (coordArr[3].includes("explore")) {
@@ -76,7 +74,7 @@ function FroggerGame(props: IFroggerGameProps) {
                 coordArr[3] = "none";
               }
               if (setPlayerMovements) {
-                setPlayerMovements((o) => [...o, coordArr.slice(0,4)]);
+                setPlayerMovements((o) => [...o, coordArr.slice(0, 4)]);
               }
             }
           } catch (e) {
@@ -96,8 +94,8 @@ function FroggerGame(props: IFroggerGameProps) {
   const { nextState } = props;
 
   const unityContent = new UnityContent(
-    "/scripts/frogger_real/FunctioningBuild_3.21.21.json",
-    "/scripts/frogger_real/UnityLoader.js"
+    "/scripts/FunctioningBuild_3.23.21/Build/FunctioningBuild_3.23.21.json",
+    "/scripts/FunctioningBuild_3.23.21/Build/UnityLoader.js"
   );
   unityContent.on("progress", (progression: number) => {
     setLoadingProgress(progression);
