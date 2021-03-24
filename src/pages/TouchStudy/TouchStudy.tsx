@@ -344,7 +344,10 @@ function handleTouchStart(
       studyState.currentDispatch.type !== "training"
         ? Math.round(studyState.currentDispatch.trial / 2) 
         : studyState.currentDispatch.trial;
-
+    
+    const videoEl = document.querySelector<HTMLVideoElement>("video");
+    const currentVideo = videoEl ? videoEl.currentSrc.substr(66).replace("#t=0.1", "") : "";
+    
     const touchInfo = {
       target,
       timestamp: Math.round(e.timeStamp) / 1000,
@@ -356,7 +359,7 @@ function handleTouchStart(
       },
       barType,
       touchPosition,
-      currentVideo: studyState.video.url ? studyState.video.url.substr(66) : "",
+      currentVideo,
       studySetup: studyState.studySetup,
     };
     if (!touchArr) {
