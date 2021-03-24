@@ -46,12 +46,16 @@ function TouchStudy() {
 
   useEffect(() => {
     if (touchArr && studyState.currentDispatch.type === "finish") {
+      const urlParams = new URLSearchParams(window.location.search);
+      const participantId = urlParams.get("participant_id");
       fetch("/api/v1/touch-study", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ touchStudy: { trialInformation: touchArr } }),
+        body: JSON.stringify({
+          touchStudy: { trialInformation: touchArr, participantId },
+        }),
       }).then(() => {
         window.location.reload();
       });
@@ -336,6 +340,10 @@ function handleTouchStart(
     } else if (target === "left-screen" || target === "left-btn") {
       barType = studyState?.leftBar.barType === "orange" ? "Punish" : "Reward";
     }
+    const trialNum =
+      studyState.currentDispatch.type !== "training"
+        ? Math.round(studyState.currentDispatch.trial / 2) 
+        : studyState.currentDispatch.trial;
 
     const touchInfo = {
       target,
@@ -343,7 +351,7 @@ function handleTouchStart(
       numTouches: e.touches.length,
       touchType: touchType,
       trialType: {
-        trialNum: studyState.currentDispatch.trial,
+        trialNum,
         trialType: studyState.currentDispatch.type,
       },
       barType,
