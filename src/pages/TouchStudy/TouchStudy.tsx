@@ -76,11 +76,12 @@ function TouchStudy() {
   };
 
   const onVideoEnded = (e: React.SyntheticEvent<HTMLVideoElement, Event>) => {
-    if (
-      studyState.currentDispatch.type === "distribution" ||
-      studyState.currentDispatch.type === "test"
-    ) {
+    if (studyState.currentDispatch.type === "distribution") {
       dispatchStudy(studyState.nextDispatch);
+    } else if (studyState.currentDispatch.type === "test") {
+      setTimeout(() => {
+        dispatchStudy(studyState.nextDispatch);
+      }, 60 * 1000);
     }
   };
 
