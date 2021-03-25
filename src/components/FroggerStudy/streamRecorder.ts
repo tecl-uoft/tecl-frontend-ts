@@ -12,7 +12,7 @@ function streamRecorder(
   const stream = (canvas as CanvasElement).captureStream(40);
   let recordedChunks: Blob[] = [];
 
-  const options = { mimeType: "video/webm; codecs=vp9" };
+  const options = { mimeType: "video/webm" };
   const mediaRecorder = new MediaRecorder(stream, options);
 
   const handleDataAvailable = (event: BlobEvent) => {
@@ -41,7 +41,7 @@ function streamRecorder(
 }
 
 export function upload(recordedChunks: Blob[]) {
-  const blobFile = new Blob(recordedChunks, { type: "video/mp4" });
+  const blobFile = new Blob(recordedChunks, { type: "video/webm" });
  /*  getBlobDuration(blobFile).then(function (duration) {
     console.log(duration + " seconds");
   }); */
@@ -51,7 +51,7 @@ export function upload(recordedChunks: Blob[]) {
   const participantId = urlParams.get("participant_id");
   const trialType = studyType === "2" ? "male" : "female";
   const fileName =
-    participantId + "_" + trialType + "_" + new Date().getTime() + ".mp4";
+    participantId + "_" + trialType + "_" + new Date().getTime() + ".webm";
   const fd = new FormData();
   fd.append("video-file", blobFile, fileName);
   console.log(blobFile.size, fd);

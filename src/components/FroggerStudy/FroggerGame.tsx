@@ -50,11 +50,11 @@ function FroggerGame(props: IFroggerGameProps) {
   useEffect(() => {
     if (loadingProgress === 1) {
       const canvas = document.querySelector<HTMLCanvasElement>("canvas");
-      if (canvas) {
+      if (canvas && !isMod) {
         streamRecorder(canvas, 0).then((res) => setMediaRecorder(res));
       }
     }
-  }, [loadingProgress]);
+  }, [loadingProgress, isMod]);
 
   useEffect(() => {
     const oldLog = window.console.log;
