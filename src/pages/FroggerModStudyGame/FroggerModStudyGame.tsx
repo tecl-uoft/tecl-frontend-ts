@@ -20,15 +20,13 @@ function FroggerModStudyGame() {
       ? FroggerStudyStates.StudyGame
       : FroggerStudyStates.PracticeGame
   );
-  useEffect(() => {
-    console.log(playerMovements)
-  }, [playerMovements])
+  useEffect(() => {}, [playerMovements]);
 
   const onFinishClick = () => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const studyType = urlParams.get("study_type");
-    const participantId = urlParams.get("participant_id")
+    const participantId = urlParams.get("participant_id");
     fetch("/api/v1/frogger-study/data", {
       method: "POST",
       headers: {

@@ -74,7 +74,7 @@ function FroggerGame(props: IFroggerGameProps) {
                 coordArr[3] = "none";
               }
               if (setPlayerMovements) {
-                console.log(coordArr.slice(0, 4))
+                /* console.log(coordArr.slice(0, 4)) */
                 setPlayerMovements((o) => [...o, coordArr.slice(0, 4)]);
               }
             }
