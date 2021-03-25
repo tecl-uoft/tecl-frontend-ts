@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FroggerGame from "../../components/FroggerStudy/FroggerGame";
 import FroggerInstructions from "../../components/FroggerStudy/FroggerInstructions";
 import FroggerPractice from "../../components/FroggerStudy/FroggerPractice";
@@ -20,6 +20,9 @@ function FroggerModStudyGame() {
       ? FroggerStudyStates.StudyGame
       : FroggerStudyStates.PracticeGame
   );
+  useEffect(() => {
+    console.log(playerMovements)
+  }, [playerMovements])
 
   const onFinishClick = () => {
     const queryString = window.location.search;
