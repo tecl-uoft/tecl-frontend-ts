@@ -34,6 +34,18 @@ function FroggerModStudyGame() {
       },
       body: JSON.stringify({ playerMovements, studyType, participantId }),
     });
+    try {
+      const csvArr = playerMovements.map((e) => e.join(",")).join("\n");
+      const csvContent = "x,y,time,area\n" + csvArr;
+      const link = document.createElement("a");
+      link.download = participantId + "_" + studyType + "_" + new Date().getTime() +".csv"
+      link.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(csvContent);
+      document.body.appendChild(link);
+      link.click();
+    } catch (err) {
+      alert("Sorry, cannot dowload file.")
+    }
+
     setStudyState(FroggerStudyStates.EndScreen);
   };
 

@@ -65,7 +65,6 @@ function FroggerGame(props: IFroggerGameProps) {
           try {
             let coordArr = msg.split(" -- ");
             if (coordArr.length >= 4) {
-              
               if (coordArr[3].includes("imitate")) {
                 coordArr[3] = "imitate";
               } else if (coordArr[3].includes("explore")) {
@@ -142,7 +141,7 @@ function FroggerGame(props: IFroggerGameProps) {
       ) : (
         <div className="py-64 text-6xl text-center text-gray-800 bg-gray-500 rounded-lg">
           {" "}
-          Time is up!{" "}
+          Game Completed!{" "}
         </div>
       )}
       {/* {isMod && (
