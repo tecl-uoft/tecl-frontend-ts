@@ -20,31 +20,36 @@ function FroggerModStudyGame() {
       ? FroggerStudyStates.StudyGame
       : FroggerStudyStates.PracticeGame
   );
-  useEffect(() => {}, [playerMovements]);
+  useEffect(() => {
+    console.log(playerMovements.length);
+  }, [playerMovements]);
 
-  const onFinishClick = () => {
+  const onFinishClick = async () => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const studyType = urlParams.get("study_type");
     const participantId = urlParams.get("participant_id");
-    fetch("/api/v1/frogger-study/data", {
+    await fetch("/api/v1/frogger-study/data", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ playerMovements, studyType, participantId }),
     });
-    try {
+    /* try {
       const csvArr = playerMovements.map((e) => e.join(",")).join("\n");
       const csvContent = "x,y,time,area\n" + csvArr;
+
       const link = document.createElement("a");
-      link.download = participantId + "_" + studyType + "_" + new Date().getTime() +".csv"
-      link.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(csvContent);
+      link.download =
+        participantId + "_" + studyType + "_" + new Date().getTime() + ".csv";
+      link.href =
+        "data:text/plain;charset=utf-8," + encodeURIComponent(csvContent);
       document.body.appendChild(link);
       link.click();
     } catch (err) {
-      alert("Sorry, cannot dowload file.")
-    }
+      alert("Sorry, cannot dowload file.");
+    } */
 
     setStudyState(FroggerStudyStates.EndScreen);
   };
