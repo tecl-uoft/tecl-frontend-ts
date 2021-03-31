@@ -27,6 +27,8 @@ function Header() {
       setSelected("Schedule");
     } else if (location.pathname.endsWith("/dashboard")) {
       setSelected("Dashboard");
+    } else if (location.pathname.endsWith("/participation/signup")) {
+      setSelected("Sign Up");
     } else {
       setSelected("");
     }
@@ -69,7 +71,7 @@ function MobileNavPanel() {
   );
 }
 
-type NavOptions = "Home" | "Login" | "Schedule" | "Dashboard" | "";
+type NavOptions = "Home" | "Login" | "Schedule" | "Dashboard" | "Sign Up" | "";
 
 interface INavPanel {
   selected: NavOptions;
@@ -90,6 +92,10 @@ function NavPanel(props: INavPanel) {
     {
       link: "/",
       text: "Home",
+    },
+    {
+      link: "/participation/signup",
+      text: "Sign Up",
     },
     /* {
       link: "/scheduling",
