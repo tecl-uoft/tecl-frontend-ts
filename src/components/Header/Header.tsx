@@ -22,7 +22,7 @@ function Header() {
     if (location.pathname.endsWith("/")) {
       setSelected("Home");
     } else if (location.pathname.endsWith("/login")) {
-      setSelected("Login");
+      setSelected("Lab Login");
     } else if (location.pathname.endsWith("/scheduling")) {
       setSelected("Schedule");
     } else if (location.pathname.endsWith("/dashboard")) {
@@ -71,7 +71,7 @@ function MobileNavPanel() {
   );
 }
 
-type NavOptions = "Home" | "Login" | "Schedule" | "Dashboard" | "Sign Up" | "";
+type NavOptions = "Home" | "Lab Login" | "Schedule" | "Dashboard" | "Sign Up" | "";
 
 interface INavPanel {
   selected: NavOptions;
@@ -113,7 +113,7 @@ function NavPanel(props: INavPanel) {
     });
     panelOptions.push({
       link: "/login",
-      text: "Login",
+      text: "Lab Login",
     });
   }
 
@@ -130,7 +130,7 @@ function NavPanel(props: INavPanel) {
       });
       panelOptions.push({
         link: "/login",
-        text: "Login",
+        text: "Lab Login",
       });
     } else {
       panelOptions.push({
@@ -153,7 +153,7 @@ function NavPanel(props: INavPanel) {
     <nav className="hidden lg:block">
       <ol className="inline-flex text-white">
         {panelOptions.map((option, idx) =>
-          isLoggedIn && option.text === "Login" ? (
+          isLoggedIn && option.text === "Lab Login" ? (
             <button
               className={`px-4 font-bold ${
                 option.text === selected ? " text-orange-500" : ""

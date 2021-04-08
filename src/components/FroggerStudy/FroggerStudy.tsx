@@ -24,7 +24,7 @@ enum FroggerStudyStates {
 function FroggerStudy() {
   const [studyState, setStudyState] = useState(
     process.env.NODE_ENV === "development"
-      ? FroggerStudyStates.StudyGame
+      ? FroggerStudyStates.PostQuestions
       : FroggerStudyStates.AskConsent
   );
 
