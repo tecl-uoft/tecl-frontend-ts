@@ -362,16 +362,19 @@ function handleTouchStart(
       : "";
 
     let touchCategory = "";
+    const isSideScreen =
+      target.endsWith("left-screen") || target.endsWith("right-screen");
+    const isBtn = target.endsWith("btn");
     if (currentVideo.startsWith("Reward")) {
-      if (target.endsWith("screen")) {
+      if (isSideScreen) {
         touchCategory = "reward-panel";
-      } else if (target.endsWith("btn")) {
+      } else if (isBtn) {
         touchCategory = "reward-btn";
       }
     } else if (currentVideo.startsWith("Punish")) {
-      if (target.endsWith("screen")) {
+      if (isSideScreen) {
         touchCategory = "punish-panel";
-      } else if (target.endsWith("btn")) {
+      } else if (isBtn) {
         touchCategory = "punish-btn";
       }
     }
