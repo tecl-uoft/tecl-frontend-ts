@@ -361,6 +361,21 @@ function handleTouchStart(
       ? videoEl.currentSrc.substr(66).replace("#t=0.1", "")
       : "";
 
+    let touchCategory = "";
+    if (currentVideo.startsWith("Reward")) {
+      if (target.endsWith("screen")) {
+        touchCategory = "reward-panel";
+      } else if (target.endsWith("btn")) {
+        touchCategory = "reward-btn";
+      }
+    } else if (currentVideo.startsWith("Punish")) {
+      if (target.endsWith("screen")) {
+        touchCategory = "punish-panel";
+      } else if (target.endsWith("btn")) {
+        touchCategory = "punish-btn";
+      }
+    }
+
     const touchInfo = {
       target,
       timestamp: Math.round(e.timeStamp) / 1000,
@@ -374,6 +389,7 @@ function handleTouchStart(
       touchPosition,
       currentVideo,
       studySetup: studyState.studySetup,
+      touchCategory,
     };
     if (!touchArr) {
       setTouchArr([touchInfo]);
