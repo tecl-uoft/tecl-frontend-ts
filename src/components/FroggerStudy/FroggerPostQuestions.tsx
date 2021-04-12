@@ -13,7 +13,8 @@ interface IPostQuestion {
   q10?: boolean;
 }
 
-function FroggerPostQuestions() {
+function FroggerPostQuestions(props: { nextState: () => void }) {
+  const { nextState } = props;
   const [formState, setFormState] = useState<IPostQuestion>({
     q1: undefined,
     q2: undefined,
@@ -95,7 +96,7 @@ function FroggerPostQuestions() {
   ];
 
   return (
-    <div className="flex flex-col w-full space-y-4 text-2xl">
+    <div className="flex flex-col w-full py-8 space-y-4 text-2xl">
       <h1 className="mt-20 text-3xl text-center">
         Thank you for playing! <br /> Now, we have some questions about the
         game!
@@ -119,48 +120,60 @@ function FroggerPostQuestions() {
           }
 
           return (
-            <div>
-            <div
-              key={idx}
-              className={`flex justify-between px-10 my-2 py-2 rounded-md ${"bg-gray-200"}`}
-            >
-              <p className="w-3/4">{question.q}</p>
-              {idx !== 1 && (
-                <div className="flex justify-end w-1/4 space-x-4">
-                  <div>
-                    <input
-                      checked={
-                        typeof question.state === "boolean"
-                          ? question.state
-                          : false
-                      }
-                      onChange={formStateSetter[idx]}
-                      className="w-6 h-6 mx-2 cursor-pointer "
-                      type="radio"
-                    />
-                    <label className="text-center">Yes</label>
+            <div className="my-2 bg-gray-200 rounded-lg">
+              <div
+                key={idx}
+                className={`flex justify-between px-10 py-2 rounded-md `}
+              >
+                <p className="w-3/4">{question.q}</p>
+                {idx !== 1 && (
+                  <div className="flex justify-end w-1/4 space-x-4">
+                    <div>
+                      <input
+                        checked={
+                          typeof question.state === "boolean"
+                            ? question.state
+                            : false
+                        }
+                        onChange={formStateSetter[idx]}
+                        className="w-6 h-6 mx-2 cursor-pointer "
+                        type="radio"
+                      />
+                      <label className="text-center">Yes</label>
+                    </div>
+                    <div>
+                      <input
+                        checked={
+                          typeof question.state === "boolean"
+                            ? !question.state
+                            : false
+                        }
+                        onChange={formStateSetter[idx]}
+                        className="w-6 h-6 mx-2 cursor-pointer"
+                        type="radio"
+                      />
+                      <label>No</label>
+                    </div>
                   </div>
-                  <div>
-                    <input
-                      checked={
-                        typeof question.state === "boolean"
-                          ? !question.state
-                          : false
-                      }
-                      onChange={formStateSetter[idx]}
-                      className="w-6 h-6 mx-2 cursor-pointer"
-                      type="radio"
-                    />
-                    <label>No</label>
-                  </div>
-                </div>
-              )}
+                )}
               </div>
-              {question.img && <img alt={"question"} className="h-full" src={question.img} />}
+              {question.img && (
+                <img
+                  alt={"question"}
+                  className="h-full mx-auto my-4 rounded-lg"
+                  src={question.img}
+                />
+              )}
             </div>
           );
         })}
       </div>
+      <button
+        onClick={nextState}
+        className="w-3/4 px-8 py-4 mx-auto mt-4 font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400 focus:outline-none"
+      >
+        Next
+      </button>
     </div>
   );
 }

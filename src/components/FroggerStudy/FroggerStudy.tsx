@@ -82,12 +82,12 @@ function FroggerStudy() {
       case FroggerStudyStates.StudyGame:
         state = (
           <FroggerGame
-            nextState={() => setStudyState(FroggerStudyStates.InstructionVideo)}
+            nextState={() => setStudyState(FroggerStudyStates.PostQuestions)}
           />
         );
         break;
       case FroggerStudyStates.PostQuestions:
-        state = <FroggerPostQuestions />;
+        state = <FroggerPostQuestions  nextState={() => setStudyState(FroggerStudyStates.InstructionVideo)} />;
         break;
       default:
         state = <ErrorNotFound />;
