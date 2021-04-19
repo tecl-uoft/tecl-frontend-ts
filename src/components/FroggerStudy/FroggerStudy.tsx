@@ -8,6 +8,7 @@ import ErrorNotFound from "../../pages/ErrorNotFound";
 import FroggerImgInstructions from "./FroggerImgInstructions";
 import FroggerPostQuestions from "./FroggerPostQuestions";
 import FroggerCameraTest from "./FroggerCameraTest";
+import DemographicQuestions from "./DemographicQuestions";
 
 enum FroggerStudyStates {
   AskConsent = "askConsent",
@@ -19,12 +20,13 @@ enum FroggerStudyStates {
   NoConsent = "noConsent",
   ImgInstructions = "imgInstructions",
   CameraTest = "camTest",
+  DemoQuestions = "DemoQ",
 }
 
 function FroggerStudy() {
   const [studyState, setStudyState] = useState(
     process.env.NODE_ENV === "development"
-      ? FroggerStudyStates.PostQuestions
+      ? FroggerStudyStates.AskConsent
       : FroggerStudyStates.AskConsent
   );
 
@@ -44,9 +46,7 @@ function FroggerStudy() {
       case FroggerStudyStates.AskVideoConsent:
         state = (
           <FroggerVideoConsentForm
-            consentFunc={() =>
-              setStudyState(FroggerStudyStates.CameraTest)
-            }
+            consentFunc={() => setStudyState(FroggerStudyStates.CameraTest)}
             noConsentFunc={() => setStudyState(FroggerStudyStates.NoConsent)}
           />
         );
@@ -87,7 +87,18 @@ function FroggerStudy() {
         );
         break;
       case FroggerStudyStates.PostQuestions:
-        state = <FroggerPostQuestions  nextState={() => setStudyState(FroggerStudyStates.InstructionVideo)} />;
+        state = (
+          <FroggerPostQuestions
+            nextState={() => setStudyState(FroggerStudyStates.DemoQuestions)}
+          />
+        );
+        break;
+      case FroggerStudyStates.DemoQuestions:
+        state = (
+          <DemographicQuestions
+            nextState={() => setStudyState(FroggerStudyStates.InstructionVideo)}
+          />
+        );
         break;
       default:
         state = <ErrorNotFound />;

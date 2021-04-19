@@ -96,7 +96,7 @@ function FroggerPostQuestions(props: { nextState: () => void }) {
   ];
 
   return (
-    <div className="flex flex-col w-full py-8 space-y-4 text-2xl">
+    <div className="flex flex-col w-full pb-8 space-y-4 text-2xl">
       <h1 className="mt-20 text-3xl text-center">
         Thank you for playing! <br /> Now, we have some questions about the
         game!
@@ -170,7 +170,7 @@ function FroggerPostQuestions(props: { nextState: () => void }) {
       </div>
       <button
         onClick={nextState}
-        className="w-3/4 px-8 py-4 mx-auto mt-4 font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400 focus:outline-none"
+        className="w-3/4 px-8 py-4 mx-auto mt-4 text-lg font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400 focus:outline-none"
       >
         Next
       </button>
