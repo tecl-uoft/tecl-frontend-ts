@@ -8,7 +8,7 @@ type MultiChoiceProps = IQuestionProps<{ num: number; select: string }> & {
 /**
  *
  *
- * A Likert scale component
+ * A multiple choice component
  *
  * @param props
  * @param props.choices list of all possible choices
@@ -21,6 +21,7 @@ function MultiChoice(props: MultiChoiceProps) {
   const [response, setResponse] = useState<
     { num: number; select: string } | undefined
   >(undefined);
+  const [otherOption, setOtherOption] = useState("");
 
   useEffect(() => {
     if (!response) {
@@ -30,9 +31,9 @@ function MultiChoice(props: MultiChoiceProps) {
   }, [response, responseSetter]);
   return (
     <div>
-      <div className="px-2 pt-4 my-8 mb-2 text-lg text-gray-800">
+      <div className="p-4 my-8 mb-2 text-lg text-gray-800 bg-blue-200 rounded-md">
         <p className="flex mb-2 text-2xl "> {question} </p>
-        <div className="flex flex-col justify-around p-4 space-y-4 bg-blue-200 rounded-lg">
+        <div className="flex flex-col justify-around space-y-4 bg-blue-200 rounded-lg">
           {choices.map((value, index: number) => {
             if (value.startsWith("@text")) {
               return (
@@ -42,15 +43,17 @@ function MultiChoice(props: MultiChoiceProps) {
                     <input
                       type="text"
                       key={index}
-                      onChange={(e) =>
+                      onChange={(e) => {
                         setResponse({
                           num: index + 1,
                           select: e.currentTarget.value,
-                        })
-                      }
-                      value={response?.select || ""}
+                        });
+                        setOtherOption(e.currentTarget.value);
+                      }}
+                      placeholder={"Write your other choice here."}
+                      value={otherOption}
                       className={`bg-gray-100 hover:shadow-lg hover:bg-gray-200 rounded-lg w-full py-2 px-4 ${
-                        value === response?.select
+                        value === otherOption
                           ? "bg-orange-400 hover:bg-orange-400"
                           : ""
                       }`}
@@ -63,7 +66,10 @@ function MultiChoice(props: MultiChoiceProps) {
             return (
               <button
                 key={index}
-                onClick={() => setResponse({ num: index + 1, select: value })}
+                onClick={() => {
+                  setResponse({ num: index + 1, select: value });
+                  setOtherOption("");
+                }}
                 className={` bg-orange-100 hover:shadow-lg hover:bg-orange-200  font-bold rounded-lg focus:outline-none  tracking-wider py-2 uppercase"}
               ${
                 value === response?.select
