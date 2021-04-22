@@ -10,6 +10,8 @@ interface IFroggerGameProps {
 }
 
 function FroggerGame(props: IFroggerGameProps) {
+
+  const { setPlayerMovements } = props;
   const timerStartTime = {
     minutes: 7,
     seconds: 0,
@@ -25,7 +27,6 @@ function FroggerGame(props: IFroggerGameProps) {
     recordedChunks: Blob[];
   }>();
 
-  const { setPlayerMovements } = props;
 
   useEffect(() => {
     const pathString = window.location.pathname;
@@ -144,14 +145,13 @@ function FroggerGame(props: IFroggerGameProps) {
           Game Completed!{" "}
         </div>
       )}
-      {/* {isMod && (
+      {isMod && (
         <button
-          onClick={onFullScreenClick}
           className="px-6 py-2 mx-auto mt-6 text-white bg-gray-800 rounded-lg "
         >
           Full Screen
         </button>
-      )} */}
+      )}
       <div className="flex justify-around mt-6">
         {timeOver || isMod ? (
           <button
