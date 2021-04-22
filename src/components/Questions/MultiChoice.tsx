@@ -31,15 +31,15 @@ function MultiChoice(props: MultiChoiceProps) {
   }, [response, responseSetter]);
   return (
     <div>
-      <div className="p-4 my-8 mb-2 text-lg text-gray-800 bg-blue-200 rounded-md">
-        <p className="flex mb-2 text-2xl "> {question} </p>
-        <div className="flex flex-col justify-around space-y-4 bg-blue-200 rounded-lg">
+      <div className="p-4 my-4 mb-2 text-gray-800 rounded-md text-md ">
+        <p className="flex mb-2 text-lg font-bold"> {question} </p>
+        <div className="flex flex-col justify-around space-y-4 rounded-lg">
           {choices.map((value, index: number) => {
             if (value.startsWith("@text")) {
               return (
-                <div className="w-full space-x-4 font-bold tracking-wider">
-                  <label>{value.replace("@text", "")}:</label>
-                  <div>
+                <div className="w-full space-x-4 font-bold tracking-wider align-middle">
+                  <label className="inline-block align-middle">{value.replace("@text", "")}:</label>
+                  <div className="mt-2">
                     <input
                       type="text"
                       key={index}
@@ -53,8 +53,8 @@ function MultiChoice(props: MultiChoiceProps) {
                       placeholder={"Write your other choice here."}
                       value={otherOption}
                       className={`bg-gray-100 hover:shadow-lg hover:bg-gray-200 rounded-lg w-full py-2 px-4 ${
-                        value === otherOption
-                          ? "bg-orange-400 hover:bg-orange-400"
+                         "" !== otherOption
+                          ? "bg-orange-200 hover:bg-orange-200 font-bold tracking-wider"
                           : ""
                       }`}
                     />
@@ -70,10 +70,10 @@ function MultiChoice(props: MultiChoiceProps) {
                   setResponse({ num: index + 1, select: value });
                   setOtherOption("");
                 }}
-                className={` bg-orange-100 hover:shadow-lg hover:bg-orange-200  font-bold rounded-lg focus:outline-none  tracking-wider py-2 uppercase"}
+                className={` bg-orange-100 hover:shadow-lg hover:bg-orange-200  font-bold rounded-lg  tracking-wider py-2 uppercase"}
               ${
                 value === response?.select
-                  ? "bg-orange-400 hover:bg-orange-400"
+                  ? "bg-orange-200 hover:bg-orange-200"
                   : ""
               }`}
               >

@@ -39,8 +39,8 @@ function LikertScale(props: ILikertScaleProps) {
   }, [response, responseSetter]);
   return (
     <div>
-      <div className="px-2 pt-4 my-8 mb-2 text-lg text-gray-800">
-        <p className="flex mb-2 text-2xl "> {question} </p>
+      <div className="px-2 my-4 text-lg text-gray-800">
+        <p className="flex mb-2 text-lg font-bold "> {question} </p>
         <div className="flex justify-around space-x-12 bg-orange-100 rounded-full">
           {(scale as number[]).map((value, index: number) => {
             return (

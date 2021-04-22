@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { LikertScale } from "../Questions";
 import MultiChoice from "../Questions/MultiChoice";
+import * as questionAndChocicesDefault from "./demoQ.json";
 
 function DemographicQuestions(props: { nextState: () => void }) {
   const { nextState } = props;
@@ -22,32 +23,32 @@ function DemographicQuestions(props: { nextState: () => void }) {
 }
 
 function MCQuestions(props: { nextState: () => void }) {
-  const questionAndChocices = [
-    { question: "What is you gender? ", choices: ["Male", "Female", "@text Other "] },
-  ];
   const [response, setResponse] = useState<{
     [key: number]: {
       question: string;
       response: { select: string; num: number };
     };
   }>({});
-
+  const questionAndChocices = questionAndChocicesDefault.main;
   return (
     <div>
       <div>adsjfdsalkfkjdfhasdkfjahsf</div>
       <div className="w-3/4 mx-auto md:w-1/2 ">
         {questionAndChocices.map((qa, idx) => {
           return (
-            <MultiChoice
-              choices={qa.choices}
-              question={idx + 1 + ". " + qa.question}
-              responseSetter={(res) =>
-                setResponse((r) => {
-                  r[idx] = { question: qa.question, response: res };
-                  return r;
-                })
-              }
-            />
+            <div>
+              <MultiChoice
+                choices={qa.choices}
+                question={idx + 1 + ". " + qa.question}
+                responseSetter={(res) =>
+                  setResponse((r) => {
+                    r[idx] = { question: qa.question, response: res };
+                    return r;
+                  })
+                }
+              />
+              <div className="w-full h-1 bg-blue-200 rounded-lg"> </div>
+            </div>
           );
         })}
       </div>
@@ -57,7 +58,11 @@ function MCQuestions(props: { nextState: () => void }) {
 
 function Questions(props: { nextState: () => void }) {
   const scale = [1, 2, 3, 4, 5];
-  const questions = ["How Often Do you play video game"];
+  const questions = [
+    "How often Do you play video games?",
+    "How often do you play platforming games (e.g., Mario)? ",
+    "How often do you use technology?",
+  ];
   const [response, setResponse] = useState<{
     [key: number]: { question: string; response: string | number };
   }>({});
@@ -71,16 +76,19 @@ function Questions(props: { nextState: () => void }) {
         <div className="w-3/4 mx-auto md:w-1/2 ">
           {questions.map((q, idx) => {
             return (
-              <LikertScale
-                scale={scale}
-                question={idx + 1 + ". " + q}
-                responseSetter={(res) =>
-                  setResponse((r) => {
-                    r[idx] = { question: q, response: res };
-                    return r;
-                  })
-                }
-              />
+              <div>
+                <LikertScale
+                  scale={scale}
+                  question={idx + 1 + ". " + q}
+                  responseSetter={(res) =>
+                    setResponse((r) => {
+                      r[idx] = { question: q, response: res };
+                      return r;
+                    })
+                  }
+                />
+                <div className="w-full h-1 bg-blue-200 rounded-lg" />
+              </div>
             );
           })}
         </div>
