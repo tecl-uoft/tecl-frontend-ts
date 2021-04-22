@@ -23,7 +23,7 @@ function DemographicQuestions(props: { nextState: () => void }) {
 
 function MCQuestions(props: { nextState: () => void }) {
   const questionAndChocices = [
-    { question: "How is it goin", choices: ["aa", "bb:"] },
+    { question: "What is you gender? ", choices: ["Male", "Female", "@text Other "] },
   ];
   const [response, setResponse] = useState<{
     [key: number]: {
