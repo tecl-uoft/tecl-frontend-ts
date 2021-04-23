@@ -1,177 +1,224 @@
-{"main": [
-  {
-    "question": "What is your gender?",
-    "choices": ["Male  (1)", "Female  (2)", "@text Other (Please specify)  (3)"]
-  },
+{
+  "main": [
+    {
+      "question": "What is your gender?",
+      "choices": [
+        "Male  (1)",
+        "Female  (2)",
+        "@text Other (Please specify)  (3)"
+      ]
+    },
 
-  {
-    "question": "What is the gender of Parent/Caregiver 2 (if applicable)?",
-    "choices": [
-      "Male  (1)",
-      "Female  (2)",
-      "@text Other (Please specify)  (3)",
-      "Not applicable  (4)"
-    ]
-  },
+    {
+      "question": "What is the gender of Parent/Caregiver 2 (if applicable)?",
+      "choices": [
+        "Male  (1)",
+        "Female  (2)",
+        "@text Other (Please specify)  (3)",
+        "Not applicable  (4)"
+      ]
+    },
 
-  {
-    "question": "What is the gender of your child?",
-    "choices": ["Male  (1)", "Female  (2)", "@text Other (Please specify)  (3)"]
-  },
+    {
+      "question": "What is the gender of your child?",
+      "choices": [
+        "Male  (1)",
+        "Female  (2)",
+        "@text Other (Please specify)  (3)"
+      ]
+    },
 
-  {
-    "question": "What age range do you fall under?",
-    "choices": [
-      " 18 to 29 years old  (1)",
-      " 30 to 39 years old  (2)",
-      " 40 to 49 years old  (3)",
-      " 50 years old and up  (4)"
-    ]
-  },
+    {
+      "question": "What age range do you fall under?",
+      "choices": [
+        " 18 to 29 years old  (1)",
+        " 30 to 39 years old  (2)",
+        " 40 to 49 years old  (3)",
+        " 50 years old and up  (4)"
+      ]
+    },
 
-  {
-    "question": "What age range does Parent/Caregiver 2 (if applicable) fall under?",
-    "choices": [
-      " 18 to 29 years old  (1)",
-      " 30 to 39 years old  (2)",
-      " 40 to 49 years old  (3)",
-      " 50 years old and up  (4)",
-      " Not applicable  (5)"
-    ]
-  },
+    {
+      "question": "What age range does Parent/Caregiver 2 (if applicable) fall under?",
+      "choices": [
+        " 18 to 29 years old  (1)",
+        " 30 to 39 years old  (2)",
+        " 40 to 49 years old  (3)",
+        " 50 years old and up  (4)",
+        " Not applicable  (5)"
+      ]
+    },
 
-  {
-    "question": "How would you describe your race/ethnicity? (You can select more than one)",
-    "choices": [
-      " Arab  (1)",
-      " Black  (2)",
-      " East Asian  (3)",
-      " Indigenous and/or Métis  (4)",
-      " Latin, Central or South American  (5)",
-      " Pacific Islander  (6)",
-      " South Asian  (7)",
-      " Southeast Asian  (8)",
-      " West Asian (e.g. Iranian, Afghan, etc.)  (9)",
-      " White  (10)",
-      "@text Other (Please specify)  (11"
-    ]
-  },
+    {
+      "question": "How would you describe your race/ethnicity? (You can select more than one)",
+      "choices": [
+        " Arab  (1)",
+        " Black  (2)",
+        " East Asian  (3)",
+        " Indigenous and/or Métis  (4)",
+        " Latin, Central or South American  (5)",
+        " Pacific Islander  (6)",
+        " South Asian  (7)",
+        " Southeast Asian  (8)",
+        " West Asian (e.g. Iranian, Afghan, etc.)  (9)",
+        " White  (10)",
+        "@text Other (Please specify)  (11"
+      ]
+    },
 
-  {
-    "question": "How would you describe the race/ethnicity of Parent/Caregiver 2 (if applicable)?(You can select more than one)",
-    "choices": [
-      " Arab  (1)",
-      " Black  (2)",
-      " East Asian  (3)",
-      " Indigenous and/or Métis  (4)",
-      " Latin, Central or South American  (5)",
-      " Pacific Islander  (6)",
-      " South Asian  (7)",
-      " Southeast Asian  (8)",
-      " West Asian (e.g. Iranian, Afghan, etc.)  (9)",
-      " White  (10)",
-      "@text Other (Please specify)  (11",
-      " Not applicable  (12)"
-    ]
-  },
+    {
+      "question": "How would you describe the race/ethnicity of Parent/Caregiver 2 (if applicable)?(You can select more than one)",
+      "choices": [
+        " Arab  (1)",
+        " Black  (2)",
+        " East Asian  (3)",
+        " Indigenous and/or Métis  (4)",
+        " Latin, Central or South American  (5)",
+        " Pacific Islander  (6)",
+        " South Asian  (7)",
+        " Southeast Asian  (8)",
+        " West Asian (e.g. Iranian, Afghan, etc.)  (9)",
+        " White  (10)",
+        "@text Other (Please specify)  (11",
+        " Not applicable  (12)"
+      ]
+    },
 
-  {
-    "question": " How would you describe the race/ethnicity of your child? (You [can select more than one)",
-    "choices": [
-      " Arab  (1)",
-      " Black  (2)",
-      " East Asian  (3)",
-      " Indigenous and/or Métis  (4)",
-      " Latin, Central or South American  (5)",
-      " Pacific Islander  (6)",
-      " South Asian  (7)",
-      " Southeast Asian  (8)",
-      " West Asian (e.g. Iranian, Afghan, etc.)  (9)",
-      " White  (10)",
-      "@text Other (Please specify)  (11"
-    ]
-  },
+    {
+      "question": " How would you describe the race/ethnicity of your child? (You [can select more than one)",
+      "choices": [
+        " Arab  (1)",
+        " Black  (2)",
+        " East Asian  (3)",
+        " Indigenous and/or Métis  (4)",
+        " Latin, Central or South American  (5)",
+        " Pacific Islander  (6)",
+        " South Asian  (7)",
+        " Southeast Asian  (8)",
+        " West Asian (e.g. Iranian, Afghan, etc.)  (9)",
+        " White  (10)",
+        "@text Other (Please specify)  (11"
+      ]
+    },
 
-  {
-    "question": " What is your nationality?",
-    "choices": [
-      " Canadian  (1)",
-      " American  (2)",
-      "@text Other (Please specify)  (3)"
-    ]
-  },
+    {
+      "question": " What is your nationality?",
+      "choices": [
+        " Canadian  (1)",
+        " American  (2)",
+        "@text Other (Please specify)  (3)"
+      ]
+    },
 
-  {
-    "question": " What is the nationality of Parent/Caregiver 2 (if applicable)?",
-    "choices": [
-      " Canadian  (1)",
-      " American  (2)",
-      "@text Other (Please specify)  (3)",
-      " Not applicable  (4)"
-    ]
-  },
+    {
+      "question": " What is the nationality of Parent/Caregiver 2 (if applicable)?",
+      "choices": [
+        " Canadian  (1)",
+        " American  (2)",
+        "@text Other (Please specify)  (3)",
+        " Not applicable  (4)"
+      ]
+    },
 
-  {
-    "question": " What is the nationality of your child?",
-    "choices": [
-      " Canadian  (1)",
-      " American  (2)",
-      "@text Other (Please specify)  (3)"
-    ]
-  },
+    {
+      "question": " What is the nationality of your child?",
+      "choices": [
+        " Canadian  (1)",
+        " American  (2)",
+        "@text Other (Please specify)  (3)"
+      ]
+    },
 
-  {
-    "question": " Did your family immigrate to Canada or the United States?",
-    "choices": ["  Yes (1)", " No  (2)"]
-  },
-  {
-    "question": " If yes to the previous questionestion, which nationality do you identify most strongly with?",
-    "choices": [
-      " Canadian  (1)",
-      " American (2)",
-      "@text Other (Please specify)  (3)"
-    ]
-  },
+    {
+      "question": " Did your family immigrate to Canada or the United States?",
+      "choices": ["  Yes (1)", " No  (2)"]
+    },
+    {
+      "question": " If yes to the previous questionestion, which nationality do you identify most strongly with?",
+      "choices": [
+        " Canadian  (1)",
+        " American (2)",
+        "@text Other (Please specify)  (3)"
+      ]
+    },
 
-  {
-    "question": " What is the highest level of education you have attained?",
-    "choices": [
-      " Less than a high school degree  (1)",
-      " High school  (2)",
-      " College degree  (3)",
-      " Bachelor's Degree  (4)",
-      " Master's Degree  (5)",
-      " Doctoral Degree  (6)",
-      " Professional Degree  (7)"
-    ]
-  },
+    {
+      "question": " What is the highest level of education you have attained?",
+      "choices": [
+        " Less than a high school degree  (1)",
+        " High school  (2)",
+        " College degree  (3)",
+        " Bachelor's Degree  (4)",
+        " Master's Degree  (5)",
+        " Doctoral Degree  (6)",
+        " Professional Degree  (7)"
+      ]
+    },
 
-  {
-    "question": " What is the highest level of education Parent/Caregiver 2 (if applicable) has attained?",
-    "choices": [
-      " Less than a high school degree  (1)",
-      " High school  (2)",
-      " College degree  (3)",
-      " Bachelor's Degree  (4)",
-      " Master's Degree  (5)",
-      " Doctoral Degree  (6)",
-      " Professional Degree  (7)",
-      " Not applicable  (8)"
-    ]
-  },
+    {
+      "question": " What is the highest level of education Parent/Caregiver 2 (if applicable) has attained?",
+      "choices": [
+        " Less than a high school degree  (1)",
+        " High school  (2)",
+        " College degree  (3)",
+        " Bachelor's Degree  (4)",
+        " Master's Degree  (5)",
+        " Doctoral Degree  (6)",
+        " Professional Degree  (7)",
+        " Not applicable  (8)"
+      ]
+    },
 
-  {
-    "question": " What is your job/occupation? ",
-    "choices": ["@text (If you have more than one, please separate by commas)"]
-  },
+    {
+      "question": " What is your job/occupation? ",
+      "choices": [
+        "@text (If you have more than one, please separate by commas)"
+      ]
+    },
 
-  {
-    "question": " What is Parent/Caregiver 2's (if applicable) job/occupation? ",
-    "choices": ["@text (If you have more than one, please separate by commas)"]
-  },
+    {
+      "question": " What is Parent/Caregiver 2's (if applicable) job/occupation? ",
+      "choices": [
+        "@text (If you have more than one, please separate by commas)"
+      ]
+    },
 
-  {
-    "question": "A Does your child speak any language(s) other than Elish?",
-    "choices": ["  Yes (1)", " No  (2)"]
-  }
-] }
+    {
+      "question": "A Does your child speak any language(s) other than Elish?",
+      "choices": ["  Yes (1)", " No  (2)"]
+    }
+  ],
+  "prefrence": [
+    {
+      "question": "What do you think is more important for a child to have? (please choose ONE option)",
+      "choices": ["Independence", "Respect for Elders"]
+    },
+    {
+      "question": "What do you think is more important for a child to have? (please choose ONE option) ",
+      "choices": ["Obedience", "Self-Reliance"]
+    },
+    {
+      "question": "What do you think is more important for a child to have? (please choose ONE option)",
+      "choices": ["Curiosity", "Good Manners"]
+    },
+    {
+      "question": "What do you think is more important for a child to have? (please choose ONE option)",
+      "choices": ["Being Considerate", "Well Behaved"]
+    }
+  ],
+  "creative": [
+    " Independent",
+    " Confident",
+    " Risk-taker",
+    "Adventurous",
+    " Curious ",
+    " Original ",
+    " Open-minded",
+    " Likes complicated problems",
+    " Unconventional",
+    " Insightful",
+    " Inventive ",
+    "Looks for new ways of doing things",
+    "Imaginative"
+  ]
+}
