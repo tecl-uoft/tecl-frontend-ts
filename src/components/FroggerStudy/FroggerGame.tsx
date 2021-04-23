@@ -10,7 +10,6 @@ interface IFroggerGameProps {
 }
 
 function FroggerGame(props: IFroggerGameProps) {
-
   const { setPlayerMovements } = props;
   const timerStartTime = {
     minutes: 7,
@@ -26,7 +25,6 @@ function FroggerGame(props: IFroggerGameProps) {
     mediaRecorder: MediaRecorder;
     recordedChunks: Blob[];
   }>();
-
 
   useEffect(() => {
     const pathString = window.location.pathname;
@@ -74,7 +72,6 @@ function FroggerGame(props: IFroggerGameProps) {
                 coordArr[3] = "none";
               }
               if (setPlayerMovements) {
-                /* console.log(coordArr.slice(0, 4)) */
                 setPlayerMovements((o) => [...o, coordArr.slice(0, 4)]);
               }
             }
@@ -102,7 +99,7 @@ function FroggerGame(props: IFroggerGameProps) {
     setLoadingProgress(progression);
   });
 
-  unityContent.on("GameOver", function (x: any, y: any, time: any, area: any) {
+  unityContent.on("GameOver", () => {
     setTimerSec(0);
     setTimerMin(0);
     setTimeOver(true);
@@ -146,9 +143,7 @@ function FroggerGame(props: IFroggerGameProps) {
         </div>
       )}
       {isMod && (
-        <button
-          className="px-6 py-2 mx-auto mt-6 text-white bg-gray-800 rounded-lg "
-        >
+        <button className="px-6 py-2 mx-auto mt-6 text-white bg-gray-800 rounded-lg ">
           Full Screen
         </button>
       )}

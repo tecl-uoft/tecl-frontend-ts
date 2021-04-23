@@ -24,7 +24,7 @@ function FroggerImgInstructions({ nextState }: { nextState: () => void }) {
           </div>
         );
         break;
-      case 2:
+      case 3:
         state = (
           <div>
             This is Frog! You’ll play as Frog in today’s game. <br /> To move
@@ -37,7 +37,7 @@ function FroggerImgInstructions({ nextState }: { nextState: () => void }) {
           </div>
         );
         break;
-      case 3:
+      case 5:
         state = (
           <div>
             In the game, the enemies are chickens! <br /> Jump on them to get
@@ -63,7 +63,7 @@ function FroggerImgInstructions({ nextState }: { nextState: () => void }) {
           </div>
         );
         break;
-      case 5:
+      case 2:
         state = (
           <div>
             YOUR GOAL: <br /> Find a trophy to win.
@@ -92,12 +92,9 @@ function FroggerImgInstructions({ nextState }: { nextState: () => void }) {
         >
           Next
         </button>
-        
       </h3>
     </div>
   );
 }
-
-
 
 export default FroggerImgInstructions;

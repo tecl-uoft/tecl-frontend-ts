@@ -1,7 +1,13 @@
 import React, { useEffect, useRef } from "react";
-import streamRecorder from "./streamRecorder";
+import streamRecorder, { IRecorder } from "./streamRecorder";
 
-function FroggerCameraTest({ nextState }: { nextState: () => void }) {
+function FroggerCameraTest({
+  nextState,
+  setVideoRecorder,
+}: {
+  nextState: () => void;
+  setVideoRecorder: (videoRecorder: IRecorder) => void;
+}) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -12,16 +18,23 @@ function FroggerCameraTest({ nextState }: { nextState: () => void }) {
           if (videoRef.current) {
             videoRef.current.srcObject = stream;
           }
-        }).then(() => {
-          if (videoRef.current) {
-            streamRecorder(videoRef.current, 4000);
-          }
         })
+        .then(() => {
+          if (videoRef.current) {
+            streamRecorder(videoRef.current, 0).then((res) =>
+              setVideoRecorder(res)
+            );
+          }
+        });
     }
   }, [videoRef]);
 
   return (
-    <div className="container py-6 mx-auto text-center">
+    <div className="container pb-6 mx-auto text-center">
+      <h2 className="py-2 mb-5 text-2xl font-bold text-center bg-red-200">
+        Note: You will NOT receive the payment if your video and audio are NOT
+        working{" "}
+      </h2>
       <h3 className="mb-8 text-3xl font-semibold text-center text-gray-800 underline">
         Let get your camera set up!
       </h3>

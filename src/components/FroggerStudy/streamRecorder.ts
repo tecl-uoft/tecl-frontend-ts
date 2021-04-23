@@ -1,7 +1,10 @@
-/* import getBlobDuration from "get-blob-duration"; */
-
 interface CanvasElement extends HTMLCanvasElement {
   captureStream(frameRate?: number): MediaStream;
+}
+
+export interface IRecorder {
+  mediaRecorder: MediaRecorder;
+  recordedChunks: Blob[];
 }
 
 function streamRecorder(
@@ -15,19 +18,18 @@ function streamRecorder(
   const options = { mimeType: "video/webm" };
   const mediaRecorder = new MediaRecorder(stream, options);
 
-  const handleDataAvailable = (event: BlobEvent) => {
+  function handleDataAvailable(event: BlobEvent) {
     if (event.data.size > 0) {
       recordedChunks.push(event.data);
-      // console.log(recordedChunks);
       // download();
     } else {
       alert("Error, no data captured");
     }
-  };
-  
+  }
+
   mediaRecorder.ondataavailable = handleDataAvailable;
   mediaRecorder.onstop = () => upload(recordedChunks);
-  mediaRecorder.start();
+  mediaRecorder.start(10);
 
   // demo: to download after recordingTime sec
   if (recordingTime > 0) {
@@ -42,7 +44,7 @@ function streamRecorder(
 
 export function upload(recordedChunks: Blob[]) {
   const blobFile = new Blob(recordedChunks, { type: "video/webm" });
- /*  getBlobDuration(blobFile).then(function (duration) {
+  /*  getBlobDuration(blobFile).then(function (duration) {
     console.log(duration + " seconds");
   }); */
   const queryString = window.location.search;
@@ -53,16 +55,32 @@ export function upload(recordedChunks: Blob[]) {
   const fileName =
     participantId + "_" + trialType + "_" + new Date().getTime() + ".webm";
   const fd = new FormData();
+
   fd.append("video-file", blobFile, fileName);
-  console.log(blobFile.size, fd);
+  getBlobDuration(blobFile).then((r) => console.log(r));
   fetch("/api/v1/frogger-study/upload-game-video", {
     method: "POST",
     body: fd,
   })
     .then((res) => {
-      /* console.log(res.body); */
+      console.log(fd.entries().next().value);
     })
     .catch((err) => console.log(err));
+}
+
+async function getBlobDuration(blob: Blob) {
+  const tempVideoEl = document.createElement("video");
+
+  tempVideoEl.addEventListener("loadedmetadata", () => {
+    // Chrome bug: https://bugs.chromium.org/p/chromium/issues/detail?id=642012
+    if (tempVideoEl.duration === Infinity) {
+      tempVideoEl.currentTime = Number.MAX_SAFE_INTEGER;
+      tempVideoEl.ontimeupdate = () => {
+        tempVideoEl.ontimeupdate = null;
+        tempVideoEl.currentTime = 0;
+      };
+    }
+  });
 }
 
 export default streamRecorder;

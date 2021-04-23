@@ -26,9 +26,13 @@ enum FroggerStudyStates {
 function FroggerStudy() {
   const [studyState, setStudyState] = useState(
     process.env.NODE_ENV === "development"
-      ? FroggerStudyStates.PostQuestions
+      ? FroggerStudyStates.AskVideoConsent
       : FroggerStudyStates.AskConsent
   );
+  const [videoRecorder, setVideoRecorder] = useState<{
+    mediaRecorder: MediaRecorder;
+    recordedChunks: Blob[];
+  }>();
 
   function cycleStudyStates(froggerStudyState: FroggerStudyStates) {
     let state = null;
@@ -54,6 +58,7 @@ function FroggerStudy() {
       case FroggerStudyStates.CameraTest:
         state = (
           <FroggerCameraTest
+            setVideoRecorder={setVideoRecorder}
             nextState={() => setStudyState(FroggerStudyStates.ImgInstructions)}
           />
         );
