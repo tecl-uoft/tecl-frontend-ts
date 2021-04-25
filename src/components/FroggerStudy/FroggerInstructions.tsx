@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import FroggerStudyService from "../../services/FroggerStudyService";
 import StudyTitleText from "../common/StudyTitleText";
 
 interface IFroggerInstructionsProps {
@@ -12,17 +13,21 @@ function FroggerInstructions(props: IFroggerInstructionsProps) {
 
   useEffect(() => {
     const queryString = window.location.search;
+    const isMod = queryString.includes("/mod");
     const urlParams = new URLSearchParams(queryString);
     const study_type = urlParams.get("study_type");
+    const studyFor = urlParams.get("studyFor");
 
-    if (study_type === "1") {
-      setVideoSrc(
-        "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/frogger/Frogger_Instructions_Female.mp4"
-      );
-    } else if (study_type === "2") {
-      setVideoSrc(
-        "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/frogger/Frogger_Instructions_Male.mp4"
-      );
+    if (isMod) {
+      const videoSrcLink =
+        study_type === "1"
+          ? "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/frogger/Frogger_Instructions_Female.mp4"
+          : "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/frogger/Frogger_Instructions_Male.mp4";
+      setVideoSrc(videoSrcLink);
+    } else {
+      if (studyFor === "child" || studyFor === "adult") {
+        
+      }
     }
   }, []);
 

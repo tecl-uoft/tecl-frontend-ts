@@ -9,8 +9,10 @@ import FroggerImgInstructions from "./FroggerImgInstructions";
 import FroggerPostQuestions from "./FroggerPostQuestions";
 import FroggerCameraTest from "./FroggerCameraTest";
 import DemographicQuestions from "./DemographicQuestions";
+import RestrictionScreen from "./RestrictionScreen";
 
 enum FroggerStudyStates {
+  RestrictionScreen = "resScreen",
   AskConsent = "askConsent",
   AskVideoConsent = "askVideoConsent",
   PracticeGame = "practiceGame",
@@ -26,8 +28,8 @@ enum FroggerStudyStates {
 function FroggerStudy() {
   const [studyState, setStudyState] = useState(
     process.env.NODE_ENV === "development"
-      ? FroggerStudyStates.AskVideoConsent
-      : FroggerStudyStates.AskConsent
+      ? FroggerStudyStates.RestrictionScreen
+      : FroggerStudyStates.RestrictionScreen  
   );
   const [videoRecorder, setVideoRecorder] = useState<{
     mediaRecorder: MediaRecorder;
@@ -37,6 +39,10 @@ function FroggerStudy() {
   function cycleStudyStates(froggerStudyState: FroggerStudyStates) {
     let state = null;
     switch (froggerStudyState) {
+      case FroggerStudyStates.RestrictionScreen:
+        state = <RestrictionScreen />;
+        break;
+
       case FroggerStudyStates.AskConsent:
         state = (
           <FroggerConsentForm

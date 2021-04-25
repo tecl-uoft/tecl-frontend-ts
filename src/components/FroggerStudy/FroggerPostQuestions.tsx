@@ -81,7 +81,6 @@ function FroggerPostQuestions(props: { nextState: () => void }) {
         {questions.map((question, idx) => {
           return (
             <div key={idx}>
-              {new String(formState[0])}
               {formState[0] === false && (
                 <div className="h-64 p-2 bg-gray-300 rounded-lg -pb-2">
                   <input
