@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import FroggerStudyService from "../../services/FroggerStudyService";
 import StudyTitleText from "../common/StudyTitleText";
 import { IFroggerParticipant } from "./FroggerStudy";
 
@@ -41,7 +40,7 @@ function FroggerInstructions(props: IFroggerInstructionsProps) {
       }
       setVideoSrc(mainURL + videoFile);
     }
-  }, [videoSrc]);
+  }, [videoSrc, participant]);
 
   const { nextState } = props;
   return (
