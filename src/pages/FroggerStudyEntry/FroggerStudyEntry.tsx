@@ -17,7 +17,7 @@ function FroggerStudyEntry() {
         influences their social behavior."
         studyImgURI="/assets/frogger_study.svg"
         studyImgAlt="Frogger Study"
-        studyTrialURI="/study/frogger/game"
+        studyTrialURI="/study/frogger/open/game"
       />
     </div>
   );

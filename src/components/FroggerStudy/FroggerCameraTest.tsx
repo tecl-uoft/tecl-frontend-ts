@@ -27,7 +27,7 @@ function FroggerCameraTest({
           }
         });
     }
-  }, [videoRef]);
+  }, [videoRef, setVideoRecorder]);
 
   return (
     <div className="container pb-6 mx-auto text-center">

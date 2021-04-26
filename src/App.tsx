@@ -80,7 +80,7 @@ function App() {
 
                 <Route
                   exact
-                  path="/study/frogger/game"
+                  path="/study/frogger/open/game"
                   component={FroggerStudyGame}
                 />
                 <Route

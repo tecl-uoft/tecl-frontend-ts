@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FroggerConsentForm from "./FroggerConsentForm";
 import FroggerVideoConsentForm from "./FroggerVideoConsentForm";
 import FroggerGame from "./FroggerGame";
@@ -29,12 +29,30 @@ function FroggerStudy() {
   const [studyState, setStudyState] = useState(
     process.env.NODE_ENV === "development"
       ? FroggerStudyStates.RestrictionScreen
-      : FroggerStudyStates.RestrictionScreen  
+      : FroggerStudyStates.RestrictionScreen
   );
+  const [participant, setParticipant] = useState({
+    id: "",
+    type: "",
+    study: "",
+  });
   const [videoRecorder, setVideoRecorder] = useState<{
     mediaRecorder: MediaRecorder;
     recordedChunks: Blob[];
   }>();
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("participant_id");
+    const type = urlParams.get("type");
+    const study = Math.random() < 0.5 ? "playful" : "pedogagical";
+    if (id && type) {
+      setParticipant({ id, type, study });
+      process.env.NODE_ENV === "development"
+        ? setStudyState(FroggerStudyStates.InstructionVideo)
+        : setStudyState(FroggerStudyStates.AskConsent);
+    }
+  }, []);
 
   function cycleStudyStates(froggerStudyState: FroggerStudyStates) {
     let state = null;
