@@ -30,6 +30,9 @@ export interface IFroggerParticipant {
   type: string;
   study: "playful" | "pedogagical" | "";
 }
+export interface IFroggerResponse {
+  [key: string]: { [key: string]: string | boolean };
+}
 
 function FroggerStudy() {
   const [studyState, setStudyState] = useState(
@@ -46,6 +49,7 @@ function FroggerStudy() {
     mediaRecorder: MediaRecorder;
     recordedChunks: Blob[];
   }>();
+  const [response, setResponse] = useState<IFroggerResponse>({});
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -74,6 +78,7 @@ function FroggerStudy() {
               setStudyState(FroggerStudyStates.AskVideoConsent)
             }
             noConsentFunc={() => setStudyState(FroggerStudyStates.NoConsent)}
+            setResponse={setResponse}
           />
         );
         break;
