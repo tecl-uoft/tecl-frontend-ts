@@ -63,7 +63,7 @@ function FroggerStudy() {
     if (id && type) {
       setParticipant({ id, type, study });
       process.env.NODE_ENV === "development"
-        ? setStudyState(FroggerStudyStates.PostQuestions)
+        ? setStudyState(FroggerStudyStates.StudyGame)
         : setStudyState(FroggerStudyStates.AskConsent);
     }
   }, []);
@@ -129,6 +129,7 @@ function FroggerStudy() {
         state = (
           <FroggerGame
             nextState={() => setStudyState(FroggerStudyStates.PostQuestions)}
+            participant={participant}
           />
         );
         break;

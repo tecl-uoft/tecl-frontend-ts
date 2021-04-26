@@ -3,14 +3,16 @@ import Unity, { UnityContent } from "react-unity-webgl";
 import { useEffect } from "react";
 import streamRecorder from "./streamRecorder";
 import StudyTitleText from "../common/StudyTitleText";
+import { IFroggerParticipant } from "./FroggerStudy";
 
 interface IFroggerGameProps {
   nextState(): void;
   setPlayerMovements?: React.Dispatch<React.SetStateAction<string[][]>>;
+  participant?: IFroggerParticipant;
 }
 
 function FroggerGame(props: IFroggerGameProps) {
-  const { setPlayerMovements } = props;
+  const { setPlayerMovements, participant } = props;
   const timerStartTime = {
     minutes: 7,
     seconds: 0,
@@ -19,6 +21,7 @@ function FroggerGame(props: IFroggerGameProps) {
   const [timerSec, setTimerSec] = useState(timerStartTime.seconds);
   const [timerMin, setTimerMin] = useState(timerStartTime.minutes);
   const [timeOver, setTimeOver] = useState(false);
+  const [unityContent, setUnityContent] = useState<UnityContent>();
   const [isMod, setIsMod] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [mediaRecorder, setMediaRecorder] = useState<{
@@ -91,19 +94,30 @@ function FroggerGame(props: IFroggerGameProps) {
 
   const { nextState } = props;
 
-  const unityContent = new UnityContent(
-    "/scripts/FunctioningBuild_3.23.21/Build/FunctioningBuild_3.23.21.json",
-    "/scripts/FunctioningBuild_3.23.21/Build/UnityLoader.js"
-  );
-  unityContent.on("progress", (progression: number) => {
-    setLoadingProgress(progression);
-  });
+  useEffect(() => {
+    const build =
+      participant?.type === "adult"
+        ? "/scripts/FunctioningBuild_Adult_4.20.21/Build/FunctioningBuild_Adult_4.20.21.json"
+        : "/scripts/FunctioningBuild_3.23.21/Build/FunctioningBuild_3.23.21.json";
 
-  unityContent.on("GameOver", () => {
-    setTimerSec(0);
-    setTimerMin(0);
-    setTimeOver(true);
-  });
+    const loader =
+      participant?.type === "adult"
+        ? "/scripts/FunctioningBuild_Adult_4.20.21/Build/UnityLoader.js"
+        : "/scripts/FunctioningBuild_3.23.21/Build/UnityLoader.js";
+
+    const unityContent = new UnityContent(build, loader);
+    unityContent.on("progress", (progression: number) => {
+      setLoadingProgress(progression);
+    });
+
+    unityContent.on("GameOver", () => {
+      setTimerSec(0);
+      setTimerMin(0);
+      setTimeOver(true);
+    });
+
+    setUnityContent(unityContent);
+  }, [participant]);
 
   // const onFullScreenClick = () => unityContent.setFullscreen(true);
   const onNextClick = () => {
@@ -116,8 +130,10 @@ function FroggerGame(props: IFroggerGameProps) {
 
   return (
     <div className="px-2 pt-4 mx-auto mt-6 mb-16" id="frogger-game">
-      {!isMod && !timeOver && <StudyTitleText text={"Complete the objective as shown."} />}
-      {(!isMod && !timeOver) && (
+      {!isMod && !timeOver && (
+        <StudyTitleText text={"Complete the objective as shown."} />
+      )}
+      {!isMod && !timeOver && (
         <h4 className="mt-4 mb-4 text-2xl text-center text-gray-800">
           You have:{" "}
           <b className="bold">
@@ -132,7 +148,7 @@ function FroggerGame(props: IFroggerGameProps) {
       {loadingProgress !== 1 ? (
         <div>{`Loading ${Math.floor(loadingProgress * 100)} percent...`}</div>
       ) : null}
-      {!timeOver || isMod ? (
+      {(!timeOver || isMod) && unityContent ? (
         <div className="px-32">
           <Unity unityContent={unityContent} />
         </div>
