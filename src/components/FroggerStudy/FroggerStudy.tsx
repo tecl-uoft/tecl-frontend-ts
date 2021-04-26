@@ -25,13 +25,19 @@ enum FroggerStudyStates {
   DemoQuestions = "DemoQ",
 }
 
+export interface IFroggerParticipant {
+  id: string;
+  type: string;
+  study: "playful" | "pedogagical" | "";
+}
+
 function FroggerStudy() {
   const [studyState, setStudyState] = useState(
     process.env.NODE_ENV === "development"
       ? FroggerStudyStates.RestrictionScreen
       : FroggerStudyStates.RestrictionScreen
   );
-  const [participant, setParticipant] = useState({
+  const [participant, setParticipant] = useState<IFroggerParticipant>({
     id: "",
     type: "",
     study: "",
@@ -49,7 +55,7 @@ function FroggerStudy() {
     if (id && type) {
       setParticipant({ id, type, study });
       process.env.NODE_ENV === "development"
-        ? setStudyState(FroggerStudyStates.InstructionVideo)
+        ? setStudyState(FroggerStudyStates.AskConsent)
         : setStudyState(FroggerStudyStates.AskConsent);
     }
   }, []);
@@ -104,6 +110,7 @@ function FroggerStudy() {
       case FroggerStudyStates.InstructionVideo:
         state = (
           <FroggerInstructions
+            participant={participant}
             nextState={() => setStudyState(FroggerStudyStates.StudyGame)}
           />
         );

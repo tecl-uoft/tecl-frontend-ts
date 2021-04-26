@@ -1,35 +1,47 @@
 import React, { useEffect, useState } from "react";
 import FroggerStudyService from "../../services/FroggerStudyService";
 import StudyTitleText from "../common/StudyTitleText";
+import { IFroggerParticipant } from "./FroggerStudy";
 
 interface IFroggerInstructionsProps {
   nextState(): void;
+  participant?: IFroggerParticipant;
 }
 
 function FroggerInstructions(props: IFroggerInstructionsProps) {
-  const [videoSrc, setVideoSrc] = useState(
-    "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/Frogger_Instructions_v6.mp4"
-  );
+  const { participant } = props;
+  const [videoSrc, setVideoSrc] = useState("");
 
   useEffect(() => {
     const queryString = window.location.search;
     const isMod = queryString.includes("/mod");
     const urlParams = new URLSearchParams(queryString);
     const study_type = urlParams.get("study_type");
-    const studyFor = urlParams.get("studyFor");
-
     if (isMod) {
       const videoSrcLink =
         study_type === "1"
           ? "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/frogger/Frogger_Instructions_Female.mp4"
           : "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/frogger/Frogger_Instructions_Male.mp4";
       setVideoSrc(videoSrcLink);
-    } else {
-      if (studyFor === "child" || studyFor === "adult") {
-        
+    } else if (participant) {
+      const { type, study } = participant;
+      const mainURL =
+        "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/frogger_videos/";
+      let videoFile = "";
+      if (type === "child") {
+        videoFile =
+          study === "playful"
+            ? "Infrognito_Playful_Child.mp4"
+            : "Infrognito_Pedogagical_Child.mp4";
+      } else if (type === "adult") {
+        videoFile =
+          study === "playful"
+            ? "Infrognito_Playful_Adult.mp4"
+            : "Infrognito_Pedogagical_Adult.mp4";
       }
+      setVideoSrc(mainURL + videoFile);
     }
-  }, []);
+  }, [videoSrc]);
 
   const { nextState } = props;
   return (
