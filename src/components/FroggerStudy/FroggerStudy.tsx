@@ -50,6 +50,10 @@ function FroggerStudy() {
     recordedChunks: Blob[];
   }>();
   const [response, setResponse] = useState<IFroggerResponse>({});
+  
+  useEffect(() => {
+    console.log(response)
+  }, [response])
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);

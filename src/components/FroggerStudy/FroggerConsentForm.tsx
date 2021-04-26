@@ -50,12 +50,12 @@ function FroggerConsentForm(props: IFroggerConsentFormProps) {
 
   const submitConsentA = () => {
     if (
-      (formState.parentName && "",
-      formState.childName && "",
-      formState.childBirthday && "",
-      formState.childGender && "",
-      formState.sign && "",
-      formState.signDate && "")
+      formState.parentName &&
+      formState.childName &&
+      formState.childBirthday &&
+      formState.childGender &&
+      formState.sign &&
+      formState.signDate
     ) {
       props.setResponse((r) => {
         r.consentA = formState;
