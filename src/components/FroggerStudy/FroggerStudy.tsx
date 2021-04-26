@@ -10,6 +10,7 @@ import FroggerPostQuestions from "./FroggerPostQuestions";
 import FroggerCameraTest from "./FroggerCameraTest";
 import DemographicQuestions from "./DemographicQuestions";
 import RestrictionScreen from "./RestrictionScreen";
+import ThanksNote from "./ThanksNote";
 
 enum FroggerStudyStates {
   RestrictionScreen = "resScreen",
@@ -23,6 +24,7 @@ enum FroggerStudyStates {
   ImgInstructions = "imgInstructions",
   CameraTest = "camTest",
   DemoQuestions = "DemoQ",
+  ThanksNote = "ThankNote",
 }
 
 export interface IFroggerParticipant {
@@ -50,10 +52,10 @@ function FroggerStudy() {
     recordedChunks: Blob[];
   }>();
   const [response, setResponse] = useState<IFroggerResponse>({});
-  
+
   useEffect(() => {
-    console.log(response)
-  }, [response])
+    console.log(response);
+  }, [response]);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -63,7 +65,7 @@ function FroggerStudy() {
     if (id && type) {
       setParticipant({ id, type, study });
       process.env.NODE_ENV === "development"
-        ? setStudyState(FroggerStudyStates.StudyGame)
+        ? setStudyState(FroggerStudyStates.ThanksNote)
         : setStudyState(FroggerStudyStates.AskConsent);
     }
   }, []);
@@ -144,9 +146,12 @@ function FroggerStudy() {
       case FroggerStudyStates.DemoQuestions:
         state = (
           <DemographicQuestions
-            nextState={() => setStudyState(FroggerStudyStates.InstructionVideo)}
+            nextState={() => setStudyState(FroggerStudyStates.ThanksNote)}
           />
         );
+        break;
+      case FroggerStudyStates.ThanksNote:
+        state = <ThanksNote />;
         break;
       default:
         state = <ErrorNotFound />;

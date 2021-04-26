@@ -18,7 +18,7 @@ function DemographicQuestions(props: { nextState: () => void }) {
       case 3:
         return <PrefrenceQs nextState={setDemoState} />;
       case 4:
-        return <CreativeQs nextState={setDemoState} />;
+        return <CreativeQs nextState={nextState} />;
       default:
         return <> </>;
     }
@@ -26,7 +26,7 @@ function DemographicQuestions(props: { nextState: () => void }) {
   return updateState(demoState);
 }
 
-function CreativeQs(props: { nextState: (demoState: number) => void }) {
+function CreativeQs(props: { nextState: () => void }) {
   const [response, setResponse] = useState<{
     [key: number]: {
       question: string;
@@ -44,7 +44,7 @@ function CreativeQs(props: { nextState: (demoState: number) => void }) {
   ];
 
   const questions = questionAndChocicesDefault.creative;
-  const setDemoState = () => props.nextState(4);
+  const setDemoState = () => props.nextState();
   return (
     <div>
       <Banner forChild={false} />
