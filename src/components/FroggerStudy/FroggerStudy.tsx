@@ -91,6 +91,7 @@ function FroggerStudy() {
           <FroggerVideoConsentForm
             consentFunc={() => setStudyState(FroggerStudyStates.CameraTest)}
             noConsentFunc={() => setStudyState(FroggerStudyStates.NoConsent)}
+            setResponse={setResponse}
           />
         );
         break;
