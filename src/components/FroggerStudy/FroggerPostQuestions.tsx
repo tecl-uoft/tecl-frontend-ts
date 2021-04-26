@@ -128,7 +128,7 @@ function FroggerPostQuestions(props: {
                 <React.Fragment />
               )}
               <div className="my-2 rounded-lg">
-                {idx !== 1 && (
+                {idx !== 1 && ((idx !== 3 && idx !== 4) || formState.q3 === true) && (
                   <div
                     className={`flex justify-between px-10 py-2 rounded-md `}
                   >
@@ -178,7 +178,7 @@ function FroggerPostQuestions(props: {
                   />
                 </div>
               )}
-              <div className="w-full h-1 bg-blue-200 rounded-full" />
+             {(idx !== 1 || formState.q1 === false) && ((idx !== 3 && idx !== 4) || formState.q3 === true) && <div className="w-full h-1 bg-blue-200 rounded-full" />}
             </div>
           );
         })}
