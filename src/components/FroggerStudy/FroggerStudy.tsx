@@ -11,6 +11,8 @@ import FroggerCameraTest from "./FroggerCameraTest";
 import DemographicQuestions from "./DemographicQuestions";
 import RestrictionScreen from "./RestrictionScreen";
 import ThanksNote from "./ThanksNote";
+import FroggerStudyService from "../../services/FroggerStudyService";
+import { notify } from "../Notification";
 
 enum FroggerStudyStates {
   RestrictionScreen = "resScreen",
@@ -53,6 +55,15 @@ function FroggerStudy() {
   }>();
   const [response, setResponse] = useState<IFroggerResponse>({});
 
+  const submitStudyResults = () => {
+    FroggerStudyService.results(participant, response)
+      .then(() => {
+        setStudyState(FroggerStudyStates.ThanksNote);
+        notify.success("Data Submitted!");
+      })
+      .catch((err) => notify.error(err.message));
+  };
+
   useEffect(() => {
     console.log(response);
   }, [response]);
@@ -65,7 +76,7 @@ function FroggerStudy() {
     if (id && type) {
       setParticipant({ id, type, study });
       process.env.NODE_ENV === "development"
-        ? setStudyState(FroggerStudyStates.ThanksNote)
+        ? setStudyState(FroggerStudyStates.AskConsent)
         : setStudyState(FroggerStudyStates.AskConsent);
     }
   }, []);
@@ -146,7 +157,8 @@ function FroggerStudy() {
       case FroggerStudyStates.DemoQuestions:
         state = (
           <DemographicQuestions
-            nextState={() => setStudyState(FroggerStudyStates.ThanksNote)}
+            nextState={submitStudyResults}
+            setResponse={setResponse}
           />
         );
         break;

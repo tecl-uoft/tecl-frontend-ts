@@ -52,7 +52,7 @@ function FroggerGame(props: IFroggerGameProps) {
   useEffect(() => {
     if (loadingProgress === 1) {
       const canvas = document.querySelector<HTMLCanvasElement>("canvas");
-      if (canvas && !isMod) {
+      if (canvas) {
         streamRecorder(canvas, 0).then((res) => setMediaRecorder(res));
       }
     }
