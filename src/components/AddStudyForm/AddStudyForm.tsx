@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useState } from "react";
 import StudyService from "../../services/StudyService";
+import Input from "../common/Input";
 import { HeadExitButton } from "../HeadExitButton";
 
 interface IAddStudyFormProps {
@@ -9,6 +10,9 @@ interface IAddStudyFormProps {
 function AddStudyForm(props: IAddStudyFormProps) {
   const [defaultInterval, setDefaultInterval] = useState(60);
   const [apptGoals, setApptGoals] = useState(0);
+  const [ gcalId, setGcalId ] = useState("");
+
+  const onGcalIdChange = (e: ChangeEvent<HTMLInputElement>) => setGcalId(e.currentTarget.value)
 
   const onDefaultIntervalChange = (e: ChangeEvent<HTMLInputElement>) =>
     setDefaultInterval(parseInt(e.currentTarget.value));
@@ -63,6 +67,7 @@ function AddStudyForm(props: IAddStudyFormProps) {
         startDate,
         endDate,
         keyColor,
+        gcalId,
         minAgeDays: minTotalDays,
         maxAgeDays: maxTotalDays,
         description,
@@ -112,7 +117,7 @@ function AddStudyForm(props: IAddStudyFormProps) {
         <div className="flex justify-around mb-2 -mx-3">
           <div className="flex items-center">
             <label className="block mr-4 text-xs font-bold tracking-wide text-gray-700 uppercase">
-             Weekly Appointment Goals:{" "}
+              Weekly Appointment Goals:{" "}
             </label>
             <input
               className="block w-16 p-2 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
@@ -187,6 +192,18 @@ function AddStudyForm(props: IAddStudyFormProps) {
               className="block w-full p-2 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:outline-none focus:bg-white focus:border-gray-500"
               type="date"
             ></input>
+          </div>
+        </div>
+        <div className="mb-4 space-y-2">
+          <h3>TECL Google Calendar ID:</h3>
+          <div className="w-full px-1 ">
+            <input
+              value={gcalId} 
+              onChange={onGcalIdChange}
+              placeholder="ex. an13jnd1jjwndbr3g@group.calendar.google.com"
+              className="block w-full p-2 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:outline-none focus:bg-white focus:border-gray-500"
+              type="text"
+            />
           </div>
         </div>
 
