@@ -3,6 +3,7 @@ import { IQuestionProps } from "./IQuestionProps";
 
 type MultiChoiceProps = IQuestionProps<{ num: number; select: string }> & {
   choices: string[];
+  selectMultiple?: boolean 
 };
 
 /**
@@ -17,7 +18,7 @@ type MultiChoiceProps = IQuestionProps<{ num: number; select: string }> & {
  * @returns
  */
 function MultiChoice(props: MultiChoiceProps) {
-  const { choices, question, responseSetter } = props;
+  const { choices, question, responseSetter, selectMultiple } = props;
   const [response, setResponse] = useState<
     { num: number; select: string } | undefined
   >(undefined);
@@ -50,11 +51,11 @@ function MultiChoice(props: MultiChoiceProps) {
                         });
                         setOtherOption(e.currentTarget.value);
                       }}
-                      placeholder={"Write your other choice here."}
+                      placeholder={"Write your choice for this option here."}
                       value={otherOption}
                       className={`bg-gray-100 hover:shadow-lg hover:bg-gray-200 rounded-lg w-full py-2 px-4 ${
                          "" !== otherOption
-                          ? "bg-orange-200 hover:bg-orange-200 font-bold tracking-wider"
+                          ? "bg-orange-300 hover:bg-orange-300 font-bold tracking-wider"
                           : ""
                       }`}
                     />
@@ -73,7 +74,7 @@ function MultiChoice(props: MultiChoiceProps) {
                 className={` bg-orange-100 hover:shadow-lg hover:bg-orange-200  font-bold rounded-lg  tracking-wider py-2 uppercase"}
               ${
                 value === response?.select
-                  ? "bg-orange-200 hover:bg-orange-200"
+                  ? "bg-orange-300 hover:bg-orange-300"
                   : ""
               }`}
               >

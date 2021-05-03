@@ -24,16 +24,29 @@ function FroggerPostQuestions(props: {
   });
 
   const formStateSetter: any[] = [
-    () => setFormState((s) => ({ ...s, q1: !s.q1 })),
+    () => setFormState((s) => ({ ...s, q1: false })),
     (e: ChangeEvent<HTMLTextAreaElement>) =>
       setFormState((s) => ({ ...s, q2: e.currentTarget.value })),
-    () => setFormState((s) => ({ ...s, q3: !s.q3 })),
-    () => setFormState((s) => ({ ...s, q4: !s.q4 })),
-    () => setFormState((s) => ({ ...s, q5: !s.q5 })),
-    () => setFormState((s) => ({ ...s, q6: !s.q6 })),
-    () => setFormState((s) => ({ ...s, q7: !s.q7 })),
-    () => setFormState((s) => ({ ...s, q8: !s.q8 })),
-    () => setFormState((s) => ({ ...s, q9: !s.q9 })),
+    () => setFormState((s) => ({ ...s, q3: false })),
+    () => setFormState((s) => ({ ...s, q4: false })),
+    () => setFormState((s) => ({ ...s, q5: false })),
+    () => setFormState((s) => ({ ...s, q6: false })),
+    () => setFormState((s) => ({ ...s, q7: false })),
+    () => setFormState((s) => ({ ...s, q8: false })),
+    () => setFormState((s) => ({ ...s, q9: false })),
+  ];
+
+  const formStateSetterYes: any[] = [
+    () => setFormState((s) => ({ ...s, q1: true })),
+    (e: ChangeEvent<HTMLTextAreaElement>) =>
+      setFormState((s) => ({ ...s, q2: e.currentTarget.value })),
+    () => setFormState((s) => ({ ...s, q3: true })),
+    () => setFormState((s) => ({ ...s, q4: true })),
+    () => setFormState((s) => ({ ...s, q5: true })),
+    () => setFormState((s) => ({ ...s, q6: true })),
+    () => setFormState((s) => ({ ...s, q7: true })),
+    () => setFormState((s) => ({ ...s, q8: true })),
+    () => setFormState((s) => ({ ...s, q9: true })),
   ];
 
   const questions = [
@@ -46,7 +59,9 @@ function FroggerPostQuestions(props: {
     {
       ref: "q2",
       state: formState.q2,
-      q: "Why didn’t you copy the video? There are no wrong answers! ",
+      q: `Why did${
+        !formState.q1 ? "n’t" : ""
+      } you copy the video? There are no wrong answers! `,
       img: "",
     },
     {
@@ -100,8 +115,7 @@ function FroggerPostQuestions(props: {
       q1 === undefined ||
       (q2 === "" && q1 === false) ||
       q3 === undefined ||
-      q4 === undefined ||
-      q5 === undefined ||
+      (q3 === true && (q4 === undefined || q5 === undefined)) ||
       q6 === undefined ||
       q7 === undefined ||
       q8 === undefined ||
@@ -116,7 +130,7 @@ function FroggerPostQuestions(props: {
 
   return (
     <div className="flex flex-col w-full pb-8 space-y-4 text-lg">
-      <h1 className="mt-20 text-2xl font-bold text-center">
+      <h1 className="mt-12 text-2xl font-bold text-center">
         Thank you for playing! <br /> Now, we have some questions about the
         game!
       </h1>
@@ -124,39 +138,37 @@ function FroggerPostQuestions(props: {
         {questions.map((question, idx) => {
           return (
             <div key={idx + question.ref}>
-              {(idx === 3 || idx === 4) && formState.q3 === false && (
-                <React.Fragment />
-              )}
               <div className="my-2 rounded-lg">
-                {idx !== 1 && ((idx !== 3 && idx !== 4) || formState.q3 === true) && (
-                  <div
-                    className={`flex justify-between px-10 py-2 rounded-md `}
-                  >
-                    <p className="w-3/4">{question.q}</p>
+                {idx !== 1 &&
+                  ((idx !== 3 && idx !== 4) || formState.q3 === true) && (
+                    <div
+                      className={`flex justify-between px-10 py-2 rounded-md `}
+                    >
+                      <p className="w-3/4">{question.q}</p>
 
-                    <div className="flex justify-end w-1/4 space-x-4">
-                      <div>
-                        <input
-                          checked={question.state === true}
-                          onChange={formStateSetter[idx]}
-                          className="w-6 h-6 mx-2 cursor-pointer"
-                          type="radio"
-                        />
+                      <div className="flex justify-end w-1/4 space-x-4">
+                        <div>
+                          <input
+                            checked={question.state === true}
+                            onChange={formStateSetterYes[idx]}
+                            className="w-6 h-6 mx-2 cursor-pointer"
+                            type="radio"
+                          />
 
-                        <label className="text-center">Yes</label>
-                      </div>
-                      <div>
-                        <input
-                          checked={question.state === false}
-                          onChange={formStateSetter[idx]}
-                          className="w-6 h-6 mx-2 cursor-pointer "
-                          type="radio"
-                        />
-                        <label>No</label>
+                          <label className="text-center">Yes</label>
+                        </div>
+                        <div>
+                          <input
+                            checked={question.state === false}
+                            onChange={formStateSetter[idx]}
+                            className="w-6 h-6 mx-2 cursor-pointer "
+                            type="radio"
+                          />
+                          <label>No</label>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                )}
+                  )}
                 {question.img && (
                   <img
                     alt={"question"}
@@ -165,7 +177,7 @@ function FroggerPostQuestions(props: {
                   />
                 )}
               </div>
-              {formState.q1 === false && idx === 1 && (
+              {formState.q1 !== undefined && idx === 1 && (
                 <div className="p-2 px-10 rounded-md rounded-lg ">
                   <p className="w-3/4 mb-4">{question.q}</p>
                   <textarea
@@ -178,7 +190,10 @@ function FroggerPostQuestions(props: {
                   />
                 </div>
               )}
-             {(idx !== 1 || formState.q1 === false) && ((idx !== 3 && idx !== 4) || formState.q3 === true) && <div className="w-full h-1 bg-blue-200 rounded-full" />}
+              {(idx !== 1 || formState.q1 !== undefined) &&
+                ((idx !== 3 && idx !== 4) || formState.q3 === true) && (
+                  <div className="w-full h-1 bg-blue-200 rounded-full" />
+                )}
             </div>
           );
         })}

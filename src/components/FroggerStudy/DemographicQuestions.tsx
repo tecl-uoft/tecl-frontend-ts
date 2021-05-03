@@ -273,7 +273,7 @@ function Questions(props: { nextState: (demoState: number) => void }) {
 function InitalInst(props: { setDemoState: (state: number) => void }) {
   return (
     <div className="flex flex-col w-full pb-8 space-y-4 text-2xl">
-      <p className="mx-4 my-64 text-center">
+      <p className="mx-4 my-32 text-center">
         You’re almost done! We just have some surveys for you to finish. <br />{" "}
         <br />
         Some will be for parents to fill out and others will be for children to
