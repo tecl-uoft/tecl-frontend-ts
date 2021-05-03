@@ -40,9 +40,7 @@ export interface IFroggerResponse {
 
 function FroggerStudy() {
   const [studyState, setStudyState] = useState(
-    process.env.NODE_ENV === "development"
-      ? FroggerStudyStates.RestrictionScreen
-      : FroggerStudyStates.RestrictionScreen
+    FroggerStudyStates.RestrictionScreen
   );
   const [participant, setParticipant] = useState<IFroggerParticipant>({
     id: "",
@@ -76,7 +74,7 @@ function FroggerStudy() {
     if (id && type) {
       setParticipant({ id, type, study });
       process.env.NODE_ENV === "development"
-        ? setStudyState(FroggerStudyStates.AskConsent)
+        ? setStudyState(FroggerStudyStates.PostQuestions)
         : setStudyState(FroggerStudyStates.AskConsent);
     }
   }, []);
