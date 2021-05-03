@@ -63,18 +63,14 @@ function FroggerStudy() {
   };
 
   useEffect(() => {
-    console.log(response);
-  }, [response]);
-
-  useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get("participant_id");
-    const type = urlParams.get("type");
+    const type = Math.random() < 0.5 ? "adult" : "child";
     const study = Math.random() < 0.5 ? "playful" : "pedogagical";
     if (id && type) {
       setParticipant({ id, type, study });
       process.env.NODE_ENV === "development"
-        ? setStudyState(FroggerStudyStates.PostQuestions)
+        ? setStudyState(FroggerStudyStates.AskConsent)
         : setStudyState(FroggerStudyStates.AskConsent);
     }
   }, []);

@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import ConsentTemplate from "../common/ConsentTemplate";
 import Input from "../common/Input";
 import { notify } from "../Notification";
@@ -67,6 +67,13 @@ function FroggerConsentForm(props: IFroggerConsentFormProps) {
     }
   };
 
+  const [isAdult, setIsAdult] = useState(false);
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isAdult = params.get("type") === "adult";
+    setIsAdult(isAdult);
+  }, []);
+
   const studyName = "Frogger";
   const pi = "Jessica Sommerville";
   const address = "University of Toronto, 100 St. George Street, M5S 2E5";
@@ -101,31 +108,42 @@ function FroggerConsentForm(props: IFroggerConsentFormProps) {
             You are also indicating that you have been given the opportunity to
             ask questions about the study and all of your questions have been
             answered to your satisfaction. By signing this consent form, you are
-            indicating that you voluntarily agree that you and your child will
-            participate in the study. If you would like a duplicate of this
-            form, please let the researcher know or contact us at the number or
-            email address below and we would be happy to provide you with one.
+            indicating that you voluntarily agree that you{" "}
+            {!isAdult && "and your child"} will participate in the study. If you
+            would like a duplicate of this form, please let the researcher know
+            or contact us at the number or email address below and we would be
+            happy to provide you with one.
+            <br /> <br />
+            {isAdult &&
+              "By clicking 'I agree' below you are indicating that you are at least 18 years old, have read this consent form and agree to participate in this research study. You are free to skip any question that you choose."}
             <div className="w-full">
-              I{" "}
-              <div className="inline-block w-full mx-2 md:w-1/2">
-                <Input
-                  placeholder="Name of parent/guardian"
-                  value={formState.parentName}
-                  valueSetter={formStateSetter.parentName}
-                  type="text"
-                />{" "}
-              </div>
-              , having read the above information, give permission for my child
-              <div className="inline-block w-full mx-2 md:w-1/2">
-                <Input
-                  placeholder="Name of child"
-                  value={formState.childName}
-                  valueSetter={formStateSetter.childName}
-                  type="text"
-                />{" "}
-              </div>
-              , to participate. <br />
-              Child’s Birthday:{" "}
+              {!isAdult && (
+                <>
+                  {" "}
+                  I{" "}
+                  <div className="inline-block w-full mx-2 md:w-1/2">
+                    <Input
+                      placeholder="Name of parent/guardian"
+                      value={formState.parentName}
+                      valueSetter={formStateSetter.parentName}
+                      type="text"
+                    />{" "}
+                  </div>
+                  , having read the above information, give permission for my
+                  child
+                  <div className="inline-block w-full mx-2 md:w-1/2">
+                    <Input
+                      placeholder="Name of child"
+                      value={formState.childName}
+                      valueSetter={formStateSetter.childName}
+                      type="text"
+                    />{" "}
+                  </div>
+                  , to participate.{" "}
+                </>
+              )}{" "}
+              <br />
+              {isAdult ? "My" : "Child's"} Birthday:{" "}
               <div className="inline-block mx-2">
                 <Input
                   value={formState.childBirthday}
@@ -134,39 +152,51 @@ function FroggerConsentForm(props: IFroggerConsentFormProps) {
                 />{" "}
               </div>{" "}
               <br />
-              Child’s Gender:{" "}
+              {isAdult ? "My" : "Child's"} Gender:{" "}
               <div className="inline-block w-full mx-2 md:w-64">
                 <Input
-                  placeholder="Gender of child"
+                  placeholder={isAdult ? "My Gender" : "Gender of child"}
                   value={formState.childGender}
                   valueSetter={formStateSetter.childGender}
                   type="text"
                 />{" "}
               </div>{" "}
               <br />
-              <div className="inline-block w-full my-6 mr-2 md:w-1/2">
-                <Input
-                  placeholder="Signature of
+              {!isAdult && (
+                <>
+                  <div className="inline-block w-full my-6 mr-2 md:w-1/2">
+                    <Input
+                      placeholder="Signature of
                   parent/guardian"
-                  value={formState.sign}
-                  valueSetter={formStateSetter.sign}
-                  type="text"
-                />{" "}
-              </div>
-              <div className="inline-block mx-2">
-                <Input
-                  value={formState.signDate}
-                  valueSetter={formStateSetter.signDate}
-                  type="date"
-                />{" "}
-              </div>{" "}
+                      value={formState.sign}
+                      valueSetter={formStateSetter.sign}
+                      type="text"
+                    />{" "}
+                  </div>
+                  <div className="inline-block mx-2">
+                    <Input
+                      value={formState.signDate}
+                      valueSetter={formStateSetter.signDate}
+                      type="date"
+                    />{" "}
+                  </div>{" "}
+                </>
+              )}
               <br />
               Please provide your email and/or phone number if you would like to
               receive a summary of the findings when the study is complete
-              and/or if you would like us to keep your contact information on
-              file so we can contact you about other research studies your
-              child(ren) may be eligible to participate in. Please clearly
-              below. <br /> <br />
+              {isAdult ? (
+                "."
+              ) : (
+                <>
+                  {" "}
+                  and/or if you would like us to keep your contact information
+                  on file so we can contact you about other research studies
+                  your child(ren) may be eligible to participate in. Please
+                  clearly below.{" "}
+                </>
+              )}{" "}
+              <br /> <br />
               Email:{" "}
               <div className="inline-block mx-2">
                 <Input
@@ -185,32 +215,36 @@ function FroggerConsentForm(props: IFroggerConsentFormProps) {
                 />{" "}
               </div>{" "}
             </div>{" "}
-            <input
-              className="w-5 h-5 mx-2 -mb-6 cursor-pointer"
-              checked={formState.sendSummary}
-              onChange={formStateSetter.sendSummary}
-              type="checkbox"
-            />
-            Please send me a summary of the findings when the study is complete{" "}
-            <br />
-            <input
-              className="w-5 h-5 mx-2 -mb-6 cursor-pointer"
-              type="checkbox"
-            />
-            The University of Toronto Child Study Centre and The Laboratory for
-            Infant Studies, groups of researchers studying child development,
-            would like to keep your contact information on file so that we can
-            contact you about other research projects your child(ren) may be
-            eligible to participate in. Please include the names of your child’s
-            siblings, dates of birth, and genders if you would like them to
-            participate in future research: <br />{" "}
-            <div className="w-full mt-2">
-              <Input
-                value={formState.futureResearch}
-                valueSetter={formStateSetter.futureResearch}
-                type="email"
-              />{" "}
-            </div>{" "}
+            {!isAdult && (
+              <>
+                <input
+                  className="w-5 h-5 mx-2 -mb-6 cursor-pointer"
+                  checked={formState.sendSummary}
+                  onChange={formStateSetter.sendSummary}
+                  type="checkbox"
+                />
+                Please send me a summary of the findings when the study is
+                complete <br />
+                <input
+                  className="w-5 h-5 mx-2 -mb-6 cursor-pointer"
+                  type="checkbox"
+                />
+                The University of Toronto Child Study Centre and The Laboratory
+                for Infant Studies, groups of researchers studying child
+                development, would like to keep your contact information on file
+                so that we can contact you about other research projects your
+                child(ren) may be eligible to participate in. Please include the
+                names of your child’s siblings, dates of birth, and genders if
+                you would like them to participate in future research: <br />{" "}
+                <div className="w-full mt-2">
+                  <Input
+                    value={formState.futureResearch}
+                    valueSetter={formStateSetter.futureResearch}
+                    type="email"
+                  />{" "}
+                </div>{" "}
+              </>
+            )}
           </div>
         </div>
       }

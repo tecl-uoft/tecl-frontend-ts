@@ -3,7 +3,8 @@ import { IQuestionProps } from "./IQuestionProps";
 
 type MultiChoiceProps = IQuestionProps<{ num: number; select: string }> & {
   choices: string[];
-  selectMultiple?: boolean 
+  selectMultiple?: boolean;
+  responseSetter: (res: { num: number; select: string }[]) => void;
 };
 
 /**
@@ -19,10 +20,23 @@ type MultiChoiceProps = IQuestionProps<{ num: number; select: string }> & {
  */
 function MultiChoice(props: MultiChoiceProps) {
   const { choices, question, responseSetter, selectMultiple } = props;
-  const [response, setResponse] = useState<
-    { num: number; select: string } | undefined
-  >(undefined);
+  const [response, setResponse] = useState<{ num: number; select: string }[]>(
+    []
+  );
+  const [selectedItems, setSelectedItems] = useState<{
+    [key: number]: boolean;
+  }>({});
   const [otherOption, setOtherOption] = useState("");
+
+  // set default indicies to 0
+  useEffect(() => {
+    choices.forEach((key, idx) => {
+      setSelectedItems((m) => {
+        m[idx] = false;
+        return m;
+      });
+    });
+  }, [choices]);
 
   useEffect(() => {
     if (!response) {
@@ -30,6 +44,35 @@ function MultiChoice(props: MultiChoiceProps) {
     }
     responseSetter(response);
   }, [response, responseSetter]);
+
+  const onTextChange = (index: number) => (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (!selectMultiple) {
+      let obj = { ...selectedItems };
+      choices.forEach((key, idx) => {
+        obj[idx] = false;
+      });
+      setSelectedItems(obj);
+    }
+
+    setOtherOption(e.currentTarget.value);
+  };
+
+  const onChoiceChange = (index: number) => () => {
+    let obj = { ...selectedItems };
+    obj[index] = !selectedItems[index];
+    if (selectMultiple) {
+    } else {
+      choices.forEach((key, idx) => {
+        obj[idx] = idx === index;
+      });
+      setOtherOption("");
+    }
+
+    setSelectedItems(obj);
+  };
+
   return (
     <div>
       <div className="p-4 my-4 mb-2 text-gray-800 rounded-md text-md ">
@@ -38,23 +81,22 @@ function MultiChoice(props: MultiChoiceProps) {
           {choices.map((value, index: number) => {
             if (value.startsWith("@text")) {
               return (
-                <div className="w-full space-x-4 font-bold tracking-wider align-middle">
-                  <label className="inline-block align-middle">{value.replace("@text", "")}:</label>
+                <div
+                  key={index}
+                  className="w-full space-x-4 font-bold tracking-wider align-middle"
+                >
+                  <label className="inline-block align-middle">
+                    {value.replace("@text", "")}:
+                  </label>
                   <div className="mt-2">
                     <input
                       type="text"
                       key={index}
-                      onChange={(e) => {
-                        setResponse({
-                          num: index + 1,
-                          select: e.currentTarget.value,
-                        });
-                        setOtherOption(e.currentTarget.value);
-                      }}
+                      onChange={onTextChange(index)}
                       placeholder={"Write your choice for this option here."}
                       value={otherOption}
                       className={`bg-gray-100 hover:shadow-lg hover:bg-gray-200 rounded-lg w-full py-2 px-4 ${
-                         "" !== otherOption
+                        "" !== otherOption
                           ? "bg-orange-300 hover:bg-orange-300 font-bold tracking-wider"
                           : ""
                       }`}
@@ -67,15 +109,10 @@ function MultiChoice(props: MultiChoiceProps) {
             return (
               <button
                 key={index}
-                onClick={() => {
-                  setResponse({ num: index + 1, select: value });
-                  setOtherOption("");
-                }}
-                className={` bg-orange-100 hover:shadow-lg hover:bg-orange-200  font-bold rounded-lg  tracking-wider py-2 uppercase"}
+                onClick={onChoiceChange(index)}
+                className={` bg-orange-100 hover:shadow-lg hover:bg-orange-200  font-bold rounded-lg  tracking-wider py-2 
               ${
-                value === response?.select
-                  ? "bg-orange-300 hover:bg-orange-300"
-                  : ""
+                selectedItems[index] ? "bg-orange-300 hover:bg-orange-300" : ""
               }`}
               >
                 {value}

@@ -1,4 +1,5 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import Input from "../common/Input";
 import { LikertScale } from "../Questions";
 import MultiChoice from "../Questions/MultiChoice";
 import * as questionAndChocicesDefault from "./demoQ.json";
@@ -10,23 +11,45 @@ function DemographicQuestions(props: {
 }) {
   const { nextState, setResponse } = props;
   const [demoState, setDemoState] = useState(0);
+  const [isAdult, setIsAdult] = useState(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isAdult = params.get("type") === "adult";
+    setIsAdult(isAdult);
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [demoState]);
 
+  const setNextState = () => {
+    demoState < 4 ? setDemoState(demoState + 1) : nextState();
+  };
+
   const updateState = (demoState: number) => {
     switch (demoState) {
       case 0:
-        return <InitalInst setDemoState={setDemoState} />;
+        return (
+          <InitalInst
+            setDemoState={isAdult ? () => setDemoState(2) : setNextState}
+          />
+        );
       case 1:
-        return <Questions nextState={setDemoState} />;
+        return <PrefrenceQs nextState={setNextState} />;
       case 2:
-        return <MCQuestions nextState={setDemoState} />;
+        return (
+          <Questions
+            isAdult={isAdult}
+            nextState={isAdult ? setNextState : () => setDemoState(4)}
+          />
+        );
       case 3:
-        return <PrefrenceQs nextState={setDemoState} />;
+        return <AdultQs nextState={setNextState} />;
       case 4:
-        return <CreativeQs nextState={nextState} />;
+        return <CreativeQs isAdult={isAdult} nextState={ isAdult ? setNextState : () => setDemoState(5)} />;
+      case 5:
+        return <MCQuestions nextState={setNextState} />;
       default:
         return <> </>;
     }
@@ -34,14 +57,86 @@ function DemographicQuestions(props: {
   return updateState(demoState);
 }
 
-function CreativeQs(props: { nextState: () => void }) {
+function AdultQs(props: { nextState: () => void }) {
   const [response, setResponse] = useState<{
     [key: number]: {
       question: string;
       response: string | number;
     };
   }>({});
+  const { nextState } = props;
+  const scale = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const scaleLabels = [
+    "Very strongly disagree",
+    "Strongly disagree",
+    "Moderately disagree",
+    "Slightly disagree",
+    "Feel neutral",
+    "Slightly agree",
+    "Moderately agree",
+    "Strongly agree",
+    "Very strongly agree",
+  ];
 
+  const adultAuth = questionAndChocicesDefault.adultAuth;
+
+  return (
+    <div>
+      <h2 className="mt-6 text-4xl font-bold tracking-wide text-center">
+        Authoritarianism Questionnaire
+      </h2>
+      <div className="w-3/4 mx-auto mb-4 space-y-6 text-left md:w-1/2">
+        <p>
+          Below is a list of statements. Please indicate how much you agree with
+          each statement by checking the appropriate space. If you do not know
+          the answer to any questions, feel free to leave these blank as well.
+        </p>
+        <h3 className="flex flex-col pb-6 mx-auto text-md">
+          <p className="text-xl text-bold">Use the following response items:</p>
+          {scale.map((rating, idx) => {
+            return (
+              <p className="text-left text-md" key={idx}>
+                {rating} = {scaleLabels[idx]}
+              </p>
+            );
+          })}
+        </h3>
+      </div>
+      <div className="w-3/4 h-1 mx-auto bg-blue-200 rounded-lg md:w-1/2" />
+      <div className="flex flex-col justify-center w-3/4 mx-auto space-y-8 md:w-1/2">
+        {adultAuth.map((q, idx) => {
+          return (
+            <div>
+              <LikertScale
+                scale={scale}
+                question={idx + 1 + ". " + q}
+                responseSetter={(res) =>
+                  setResponse((r) => {
+                    r[idx] = { question: q, response: res };
+                    return r;
+                  })
+                }
+              />
+              <div className="w-full h-1 bg-blue-200 rounded-lg" />
+            </div>
+          );
+        })}
+      </div>
+      <div className="flex justify-center w-full my-8">
+        <NextButton setDemoState={nextState} />
+      </div>
+    </div>
+  );
+}
+
+function CreativeQs(props: { nextState: () => void; isAdult: boolean }) {
+  const [response, setResponse] = useState<{
+    [key: number]: {
+      question: string;
+      response: string | number;
+    };
+  }>({});
+  const { nextState, isAdult } = props;
   const scale = [1, 2, 3, 4, 5];
   const scaleLabels = [
     "not true at all",
@@ -52,10 +147,10 @@ function CreativeQs(props: { nextState: () => void }) {
   ];
 
   const questions = questionAndChocicesDefault.creative;
-  const setDemoState = () => props.nextState();
+
   return (
     <div>
-      <Banner forChild={false} />
+      {!isAdult && <Banner forChild={false} />}
       <h2 className="mt-6 text-4xl font-bold tracking-wide text-center">
         Creativity Questionnaire
       </h2>
@@ -98,22 +193,22 @@ function CreativeQs(props: { nextState: () => void }) {
         })}
       </div>
       <div className="flex justify-center w-full my-8">
-        <NextButton setDemoState={setDemoState} />
+        <NextButton setDemoState={nextState} />
       </div>
     </div>
   );
 }
 
-function PrefrenceQs(props: { nextState: (demoState: number) => void }) {
+function PrefrenceQs(props: { nextState: () => void }) {
   const [response, setResponse] = useState<{
     [key: number]: {
       question: string;
-      response: { select: string; num: number };
+      response: { select: string; num: number }[];
     };
   }>({});
+  const { nextState } = props;
 
   const questions = questionAndChocicesDefault.prefrence;
-  const setDemoState = () => props.nextState(4);
   return (
     <div>
       <Banner forChild={false} />
@@ -128,7 +223,7 @@ function PrefrenceQs(props: { nextState: (demoState: number) => void }) {
               <MultiChoice
                 choices={qa.choices}
                 question={idx + 1 + ". " + qa.question}
-                responseSetter={(res) =>
+                responseSetter={(res: any) =>
                   setResponse((r) => {
                     r[idx] = { question: qa.question, response: res };
                     return r;
@@ -141,21 +236,22 @@ function PrefrenceQs(props: { nextState: (demoState: number) => void }) {
         })}
       </div>
       <div className="flex justify-center w-full my-8">
-        <NextButton setDemoState={setDemoState} />
+        <NextButton setDemoState={nextState} />
       </div>
     </div>
   );
 }
 
-function MCQuestions(props: { nextState: (demoState: number) => void }) {
+function MCQuestions(props: { nextState: () => void }) {
+  const {nextState} = props;
   const [response, setResponse] = useState<{
     [key: number]: {
       question: string;
-      response: { select: string; num: number };
+      response: { select: string; num: number }[];
     };
   }>({});
+  const [dateRes, setDateRes] = useState<string>("");
   const questionAndChocices = questionAndChocicesDefault.main;
-  const setDemoState = () => props.nextState(3);
 
   return (
     <div>
@@ -185,12 +281,15 @@ function MCQuestions(props: { nextState: (demoState: number) => void }) {
       </div>
       <div className="w-3/4 mx-auto md:w-1/2 ">
         {questionAndChocices.map((qa, idx) => {
+          const qNum = idx + 1;
+          const isMultiChoice = qa.question.includes("select more than one");
           return (
             <div>
               <MultiChoice
+                selectMultiple={isMultiChoice}
                 choices={qa.choices}
-                question={idx + 1 + ". " + qa.question}
-                responseSetter={(res) =>
+                question={qNum + ". " + qa.question}
+                responseSetter={(res: any) =>
                   setResponse((r) => {
                     r[idx] = { question: qa.question, response: res };
                     return r;
@@ -203,13 +302,14 @@ function MCQuestions(props: { nextState: (demoState: number) => void }) {
         })}
       </div>
       <div className="flex justify-center w-full my-6 ">
-        <NextButton setDemoState={setDemoState} />
+        <NextButton setDemoState={nextState} />
       </div>
     </div>
   );
 }
 
-function Questions(props: { nextState: (demoState: number) => void }) {
+function Questions(props: { nextState: () => void; isAdult: boolean }) {
+  const { nextState, isAdult } = props;
   const scale = [1, 2, 3, 4, 5];
   const scaleLabels = [
     "never",
@@ -226,11 +326,10 @@ function Questions(props: { nextState: (demoState: number) => void }) {
   const [response, setResponse] = useState<{
     [key: number]: { question: string; response: string | number };
   }>({});
-  const setDemoState = () => props.nextState(2);
   return (
     <div className="w-full">
       <div className="flex flex-col w-full pb-8 mb-6 space-y-4 text-2xl">
-        <Banner forChild={true} />
+        {!isAdult && <Banner forChild={true} />}
         <h2 className="text-2xl font-bold text-center">
           Experience with Video Games
         </h2>
@@ -264,13 +363,13 @@ function Questions(props: { nextState: (demoState: number) => void }) {
             );
           })}
         </div>
-        <NextButton setDemoState={setDemoState} />
+        <NextButton setDemoState={nextState} />
       </div>
     </div>
   );
 }
 
-function InitalInst(props: { setDemoState: (state: number) => void }) {
+function InitalInst(props: { setDemoState: () => void }) {
   return (
     <div className="flex flex-col w-full pb-8 space-y-4 text-2xl">
       <p className="mx-4 my-32 text-center">
@@ -280,7 +379,7 @@ function InitalInst(props: { setDemoState: (state: number) => void }) {
         fill out -- <br />
         we’ll let you know on every screen who should fill out the form!
       </p>
-      <NextButton setDemoState={() => props.setDemoState(1)} />
+      <NextButton setDemoState={() => props.setDemoState()} />
     </div>
   );
 }

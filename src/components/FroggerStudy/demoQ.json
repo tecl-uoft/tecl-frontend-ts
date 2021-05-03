@@ -62,12 +62,12 @@
         " Southeast Asian  (8)",
         " West Asian (e.g. Iranian, Afghan, etc.)  (9)",
         " White  (10)",
-        "@text Other (Please specify)  (11"
+        "@text Other (Please specify)  (11)"
       ]
     },
 
     {
-      "question": "How would you describe the race/ethnicity of Parent/Caregiver 2 (if applicable)?(You can select more than one)",
+      "question": "How would you describe the race/ethnicity of Parent/Caregiver 2 (if applicable)? (You can select more than one)",
       "choices": [
         " Arab  (1)",
         " Black  (2)",
@@ -79,11 +79,14 @@
         " Southeast Asian  (8)",
         " West Asian (e.g. Iranian, Afghan, etc.)  (9)",
         " White  (10)",
-        "@text Other (Please specify)  (11",
+        "@text Other (Please specify)  (11)",
         " Not applicable  (12)"
       ]
     },
-
+    {
+      "question": "When is your child's date of birth?",
+      "choices": ["Month (1) @months", "Day (2) @days", "Year (3) @years"]
+    },
     {
       "question": " How would you describe the race/ethnicity of your child? (You [can select more than one)",
       "choices": [
@@ -97,7 +100,7 @@
         " Southeast Asian  (8)",
         " West Asian (e.g. Iranian, Afghan, etc.)  (9)",
         " White  (10)",
-        "@text Other (Please specify)  (11"
+        "@text Other (Please specify)  (11)"
       ]
     },
 
@@ -182,10 +185,17 @@
         "@text (If you have more than one, please separate by commas)"
       ]
     },
-
     {
-      "question": "A Does your child speak any language(s) other than Elish?",
+      "question": "A Does your child speak any language(s) other than English?",
       "choices": ["  Yes (1)", " No  (2)"]
+    },
+    {
+      "question": "Please list the languages (other than English) which your child is exposed.",
+      "choices": [
+        "Language 1 @slider",
+        "Language 2 @slider",
+        "Language 3 @slider"
+      ]
     }
   ],
   "prefrence": [
@@ -220,5 +230,26 @@
     " Inventive ",
     "Looks for new ways of doing things",
     "Imaginative"
+  ],
+  "adultAuth": [
+    "The established authorities generally turn out to be right about things, while the radicals and protestors are usually just 'loud mouths' showing off their ignorance.",
+
+    "The only way our country can get through the crisis ahead is to get back to our traditional values, put some tough leaders in power, and silence the troublemakers spreading bad ideas.",
+
+    "You have to admire those who challenged the law and the majority's view by protesting for women's abortion rights, for animal rights, or to abolish school prayer.",
+
+    "Atheists and others who have rebelled against the established religions are no doubt every bit as good and virtuous as those who attend church regularly.",
+
+    "The 'old-fashioned ways' and the 'old-fashioned values' still show the best way to live.",
+
+    "Our country will be great if we honor the ways of our forefathers, do what the authorities tell us to do, and get rid of the 'rotten apples' who are ruining everything.",
+
+    "There is no 'one right way' to live life; everybody has to create their own way.",
+
+    "Some of the best people in our country are those who are challenging our government, criticizing religion, and ignoring the 'normal way things are supposed to be done.'",
+
+    "What our country really needs is a strong, determined leader who will crush evil, and take us back to our true path.",
+
+    "Our country needs free thinkers who have the courage to defy traditional ways, even if this upsets many people."
   ]
 }

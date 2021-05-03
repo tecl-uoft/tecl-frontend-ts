@@ -39,7 +39,7 @@ function RestrictionScreen() {
             <img
               className="h-64 mx-auto"
               src={
-                process.env.PUBLIC_URL + "/assets/participant_self_signup.svg"
+                process.env.PUBLIC_URL + "/assets/frogger/parent.svg"
               }
               alt={"adult"}
             />
@@ -67,7 +67,7 @@ function RestrictionScreen() {
             <img
               className="h-64 mx-auto"
               src={
-                process.env.PUBLIC_URL + "/assets/participant_tecl_signup.svg"
+                process.env.PUBLIC_URL + "/assets/frogger/child.svg"
               }
               alt={"child"}
             />
