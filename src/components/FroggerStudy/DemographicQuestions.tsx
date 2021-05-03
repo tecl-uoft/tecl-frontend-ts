@@ -1,12 +1,19 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { LikertScale } from "../Questions";
 import MultiChoice from "../Questions/MultiChoice";
 import * as questionAndChocicesDefault from "./demoQ.json";
 import { IFroggerResponse } from "./FroggerStudy";
 
-function DemographicQuestions(props: { nextState: () => void, setResponse:  Dispatch<SetStateAction<IFroggerResponse>> }) {
+function DemographicQuestions(props: {
+  nextState: () => void;
+  setResponse: Dispatch<SetStateAction<IFroggerResponse>>;
+}) {
   const { nextState, setResponse } = props;
   const [demoState, setDemoState] = useState(0);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [demoState]);
 
   const updateState = (demoState: number) => {
     switch (demoState) {
