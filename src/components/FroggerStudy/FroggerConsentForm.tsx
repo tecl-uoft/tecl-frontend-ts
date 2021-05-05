@@ -115,7 +115,7 @@ function FroggerConsentForm(props: IFroggerConsentFormProps) {
             happy to provide you with one.
             <br /> <br />
             {isAdult &&
-              "By clicking 'I agree' below you are indicating that you are at least 18 years old, have read this consent form and agree to participate in this research study. You are free to skip any question that you choose."}
+              "By clicking 'I CONSENT' below you are indicating that you are at least 18 years old, have read this consent form and agree to participate in this research study. You are free to skip any question that you choose."}
             <div className="w-full">
               {!isAdult && (
                 <>
