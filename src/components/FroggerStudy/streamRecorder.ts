@@ -1,3 +1,5 @@
+import { notify } from "../Notification";
+
 interface CanvasElement extends HTMLCanvasElement {
   captureStream(frameRate?: number): MediaStream;
 }
@@ -55,17 +57,20 @@ export function upload(recordedChunks: Blob[]) {
   const fileName =
     participantId + "_" + trialType + "_" + new Date().getTime() + ".webm";
   const fd = new FormData();
-
   fd.append("video-file", blobFile, fileName);
   getBlobDuration(blobFile).then((r) => console.log(r));
-  fetch("/api/v1/frogger-study/upload-game-video", {
+  const uploadPromise = fetch("/api/v1/frogger-study/upload-game-video", {
     method: "POST",
     body: fd,
-  })
-    .then((res) => {
-      console.log(fd.entries().next().value);
+  });
+
+  notify
+    .promise(uploadPromise, {
+      loading: "Please wait before exiting...",
+      success: "You may exit now.",
+      error: "Failed to configure data. Please email coordinator.",
     })
-    .catch((err) => console.log(err));
+    
 }
 
 async function getBlobDuration(blob: Blob) {
