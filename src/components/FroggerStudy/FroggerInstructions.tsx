@@ -13,7 +13,7 @@ function FroggerInstructions(props: IFroggerInstructionsProps) {
 
   useEffect(() => {
     const queryString = window.location.search;
-    const isMod = queryString.includes("/mod");
+    const isMod = window.location.pathname.includes("/mod");
     const urlParams = new URLSearchParams(queryString);
     const study_type = urlParams.get("study_type");
     if (isMod) {
