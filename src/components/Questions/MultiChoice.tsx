@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Input from "../common/Input";
 import { IQuestionProps } from "./IQuestionProps";
 import Slider from "./Slider";
 
@@ -59,6 +60,11 @@ function MultiChoice(props: MultiChoiceProps) {
         obj[idx] = false;
       });
       setSelectedItems(obj);
+    } else {
+      let obj = { ...selectedCustomItems };
+      obj[index] = e.currentTarget.value;
+      onChoiceChange(index);
+      setCustomSelectedItems(obj);
     }
 
     setOtherOption(e.currentTarget.value);
@@ -79,11 +85,11 @@ function MultiChoice(props: MultiChoiceProps) {
   };
 
   const onSliderChange = (index: number) => (res: string) => {
-    let obj = {...selectedCustomItems }
-    obj[index] = res
-    onChoiceChange(index)
-    setCustomSelectedItems(obj)
-  }
+    let obj = { ...selectedCustomItems };
+    obj[index] = res;
+    onChoiceChange(index);
+    setCustomSelectedItems(obj);
+  };
 
   return (
     <div>
@@ -117,9 +123,20 @@ function MultiChoice(props: MultiChoiceProps) {
                 </div>
               );
             } else if (value.startsWith("@slider")) {
-               return (  
-                 <Slider question={value.replace("@slider", "")} responseSetter={onSliderChange(index)} />
-               )
+              return (
+                <Slider
+                  question={value.replace("@slider", "")}
+                  responseSetter={onSliderChange(index)}
+                />
+              );
+            } else if (value.includes("@date")) {
+              return (
+                <Input
+                  type="date"
+                  value={selectedCustomItems[index]}
+                  valueSetter={onSliderChange(index)}
+                />
+              );
             }
 
             return (

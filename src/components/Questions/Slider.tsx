@@ -3,7 +3,7 @@ import { IQuestionProps } from "./IQuestionProps";
 import styles from "./slider.module.css";
 
 function Slider(props: IQuestionProps<string>) {
-  const [sliderVal, setSliderVal] = useState(50);
+  const [sliderVal, setSliderVal] = useState(0);
   const { question, responseSetter } = props;
   const MAX_VALUE = 100;
   const MIN_VALUE = 0;

@@ -85,7 +85,7 @@
     },
     {
       "question": "When is your child's date of birth?",
-      "choices": ["Month (1) @months", "Day (2) @days", "Year (3) @years"]
+      "choices": ["@date"]
     },
     {
       "question": " How would you describe the race/ethnicity of your child? (You [can select more than one)",
@@ -188,9 +188,16 @@
     {
       "question": "A Does your child speak any language(s) other than English?",
       "choices": ["  Yes (1)", " No  (2)"]
+
     },
     {
-      "question": "Please list the languages (other than English) which your child is exposed. (Must add to 100).",
+      "question": "Please list the top 3 languages (other than English) which your child is exposed (in order).",
+      "choices": [
+        "@text Languages"
+      ]
+    },
+    {
+      "question": "Please indicate the time dedicated for language use for each the languages above. (Must add to 100%).",
       "choices": [
         "@slider Language 1 ",
         "@slider Language 2 ",
