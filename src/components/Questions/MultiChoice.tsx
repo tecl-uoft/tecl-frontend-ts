@@ -44,12 +44,10 @@ function MultiChoice(props: MultiChoiceProps) {
     });
   }, [choices]);
 
+  // add response here
   useEffect(() => {
-    if (!response) {
-      return;
-    }
-    responseSetter(response);
-  }, [response, responseSetter]);
+    
+  }, [selectedItems, selectedCustomItems, otherOption, responseSetter]);
 
   const onTextChange = (index: number) => (
     e: React.ChangeEvent<HTMLInputElement>
@@ -86,10 +84,10 @@ function MultiChoice(props: MultiChoiceProps) {
 
   const onCustomChange = (res: string) => {
     //console.log(res)
-  }
+  };
 
   const onSliderChange = (index: number) => (res: string) => {
-    console.log(index, res )
+    console.log(index, res);
     let obj = { ...selectedCustomItems };
     obj[index] = res;
     onChoiceChange(index);
