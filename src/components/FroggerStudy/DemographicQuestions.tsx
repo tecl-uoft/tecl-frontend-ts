@@ -5,12 +5,19 @@ import MultiChoice from "../Questions/MultiChoice";
 import * as questionAndChocicesDefault from "./demoQ.json";
 import { IFroggerResponse } from "./FroggerStudy";
 
+interface IDemoResponse {
+  [key: string]: Object;
+}
+
+type DemoResponseDispatch = Dispatch<SetStateAction<IDemoResponse>>;
+
 function DemographicQuestions(props: {
   nextState: () => void;
   setResponse: Dispatch<SetStateAction<IFroggerResponse>>;
 }) {
   const { nextState, setResponse } = props;
   const [demoState, setDemoState] = useState(0);
+  const [demoResponse, setDemoResponse] = useState<IDemoResponse>({});
   const [isAdult, setIsAdult] = useState(false);
 
   useEffect(() => {
@@ -25,7 +32,12 @@ function DemographicQuestions(props: {
   }, [demoState]);
 
   const setNextState = () => {
-    demoState < 4 ? setDemoState(demoState + 1) : nextState();
+    if (demoState < 4) {
+      setDemoState(demoState + 1);
+    } else {
+      setResponse((r) => ({ ...r, demoResponse }));
+      nextState();
+    }
   };
 
   const updateState = (demoState: number) => {
@@ -37,20 +49,34 @@ function DemographicQuestions(props: {
           />
         );
       case 1:
-        return <PrefrenceQs nextState={setNextState} />;
+        return (
+          <PrefrenceQs
+            setDemoResponse={setDemoResponse}
+            nextState={setNextState}
+          />
+        );
       case 2:
         return (
           <Questions
             isAdult={isAdult}
+            setDemoResponse={setDemoResponse}
             nextState={isAdult ? setNextState : () => setDemoState(4)}
           />
         );
       case 3:
-        return <AdultQs nextState={setNextState} />;
+        return (
+          <AdultQs setDemoResponse={setDemoResponse} nextState={setNextState} />
+        );
       case 4:
-        return <CreativeQs isAdult={isAdult} nextState={ isAdult ? setNextState : () => setDemoState(5)} />;
+        return (
+          <CreativeQs
+            setDemoResponse={setDemoResponse}
+            isAdult={isAdult}
+            nextState={isAdult ? setNextState : () => setDemoState(5)}
+          />
+        );
       case 5:
-        return <MCQuestions nextState={setNextState} />;
+        return <MCQuestions setDemoResponse={setDemoResponse} nextState={setNextState} />;
       default:
         return <> </>;
     }
@@ -58,14 +84,17 @@ function DemographicQuestions(props: {
   return updateState(demoState);
 }
 
-function AdultQs(props: { nextState: () => void }) {
+function AdultQs(props: {
+  nextState: () => void;
+  setDemoResponse: DemoResponseDispatch;
+}) {
   const [response, setResponse] = useState<{
     [key: number]: {
       question: string;
       response: string | number;
     };
   }>({});
-  const { nextState } = props;
+  const { nextState, setDemoResponse } = props;
   const scale = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   const scaleLabels = [
     "Very strongly disagree",
@@ -78,6 +107,11 @@ function AdultQs(props: { nextState: () => void }) {
     "Strongly agree",
     "Very strongly agree",
   ];
+
+  const submitState = () => {
+    setDemoResponse((o) => ({ ...o, authQ: response }));
+    nextState();
+  };
 
   const adultAuth = questionAndChocicesDefault.adultAuth;
 
@@ -124,20 +158,24 @@ function AdultQs(props: { nextState: () => void }) {
         })}
       </div>
       <div className="flex justify-center w-full my-8">
-        <NextButton setDemoState={nextState} />
+        <NextButton setDemoState={submitState} />
       </div>
     </div>
   );
 }
 
-function CreativeQs(props: { nextState: () => void; isAdult: boolean }) {
+function CreativeQs(props: {
+  nextState: () => void;
+  isAdult: boolean;
+  setDemoResponse: DemoResponseDispatch;
+}) {
   const [response, setResponse] = useState<{
     [key: number]: {
       question: string;
       response: string | number;
     };
   }>({});
-  const { nextState, isAdult } = props;
+  const { nextState, isAdult, setDemoResponse } = props;
   const scale = [1, 2, 3, 4, 5];
   const scaleLabels = [
     "not true at all",
@@ -148,7 +186,10 @@ function CreativeQs(props: { nextState: () => void; isAdult: boolean }) {
   ];
 
   const questions = questionAndChocicesDefault.creative;
-
+  const submitState = () => {
+    setDemoResponse((o) => ({ ...o, creativeQs: response }));
+    nextState();
+  };
   return (
     <div>
       {!isAdult && <Banner forChild={false} />}
@@ -194,20 +235,27 @@ function CreativeQs(props: { nextState: () => void; isAdult: boolean }) {
         })}
       </div>
       <div className="flex justify-center w-full my-8">
-        <NextButton setDemoState={nextState} />
+        <NextButton setDemoState={submitState} />
       </div>
     </div>
   );
 }
 
-function PrefrenceQs(props: { nextState: () => void }) {
+function PrefrenceQs(props: {
+  nextState: () => void;
+  setDemoResponse: (res: IDemoResponse) => void;
+}) {
+  const { nextState, setDemoResponse } = props;
   const [response, setResponse] = useState<{
     [key: number]: {
       question: string;
       response: { select: string; num: number }[];
     };
   }>({});
-  const { nextState } = props;
+  const submitState = () => {
+    setDemoResponse({ prefQs: response });
+    nextState();
+  };
 
   const questions = questionAndChocicesDefault.prefrence;
   return (
@@ -237,22 +285,27 @@ function PrefrenceQs(props: { nextState: () => void }) {
         })}
       </div>
       <div className="flex justify-center w-full my-8">
-        <NextButton setDemoState={nextState} />
+        <NextButton setDemoState={submitState} />
       </div>
     </div>
   );
 }
 
-function MCQuestions(props: { nextState: () => void }) {
-  const {nextState} = props;
+function MCQuestions(props: { nextState: () => void, setDemoResponse: DemoResponseDispatch }) {
+  const { nextState, setDemoResponse } = props;
   const [response, setResponse] = useState<{
     [key: number]: {
       question: string;
       response: { select: string; num: number }[];
     };
   }>({});
-  const [dateRes, setDateRes] = useState<string>("");
   const questionAndChocices = questionAndChocicesDefault.main;
+
+  const submitState = () => {
+    setDemoResponse(o => ({...o, demographicQs: response}));
+    nextState();
+    
+  }
 
   return (
     <div>
@@ -303,14 +356,18 @@ function MCQuestions(props: { nextState: () => void }) {
         })}
       </div>
       <div className="flex justify-center w-full my-6 ">
-        <NextButton setDemoState={nextState} />
+        <NextButton setDemoState={submitState} />
       </div>
     </div>
   );
 }
 
-function Questions(props: { nextState: () => void; isAdult: boolean }) {
-  const { nextState, isAdult } = props;
+function Questions(props: {
+  nextState: () => void;
+  isAdult: boolean;
+  setDemoResponse: Dispatch<SetStateAction<IDemoResponse>>;
+}) {
+  const { nextState, isAdult, setDemoResponse } = props;
   const scale = [1, 2, 3, 4, 5];
   const scaleLabels = [
     "never",
@@ -327,6 +384,11 @@ function Questions(props: { nextState: () => void; isAdult: boolean }) {
   const [response, setResponse] = useState<{
     [key: number]: { question: string; response: string | number };
   }>({});
+
+  const submitState = () => {
+    setDemoResponse((o) => ({ ...o, expQs: response }));
+    nextState();
+  };
   return (
     <div className="w-full">
       <div className="flex flex-col w-full pb-8 mb-6 space-y-4 text-2xl">
@@ -364,7 +426,7 @@ function Questions(props: { nextState: () => void; isAdult: boolean }) {
             );
           })}
         </div>
-        <NextButton setDemoState={nextState} />
+        <NextButton setDemoState={submitState} />
       </div>
     </div>
   );

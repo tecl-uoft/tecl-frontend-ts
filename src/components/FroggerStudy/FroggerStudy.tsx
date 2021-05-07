@@ -35,7 +35,7 @@ export interface IFroggerParticipant {
   study: "playful" | "pedogagical" | "";
 }
 export interface IFroggerResponse {
-  [key: string]: { [key: string]: string | boolean };
+  [key: string]: { [key: string]: string | boolean | Object };
 }
 
 function FroggerStudy() {
