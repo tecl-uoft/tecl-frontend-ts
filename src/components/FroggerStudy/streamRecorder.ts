@@ -66,8 +66,8 @@ export function upload(recordedChunks: Blob[]) {
 
   notify
     .promise(uploadPromise, {
-      loading: "Please wait before exiting...",
-      success: "You may exit now.",
+      loading: "Please wait before continuing...",
+      success: "You may proceed now.",
       error: "Failed to configure data. Please email coordinator.",
     })
     
