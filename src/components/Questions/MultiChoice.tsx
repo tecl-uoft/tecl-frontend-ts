@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { IQuestionProps } from "./IQuestionProps";
+import Slider from "./Slider";
 
 type MultiChoiceProps = IQuestionProps<{ num: number; select: string }> & {
   choices: string[];
@@ -26,6 +27,10 @@ function MultiChoice(props: MultiChoiceProps) {
   const [selectedItems, setSelectedItems] = useState<{
     [key: number]: boolean;
   }>({});
+  const [selectedCustomItems, setCustomSelectedItems] = useState<{
+    [key: number]: string;
+  }>({});
+
   const [otherOption, setOtherOption] = useState("");
 
   // set default indicies to 0
@@ -73,6 +78,13 @@ function MultiChoice(props: MultiChoiceProps) {
     setSelectedItems(obj);
   };
 
+  const onSliderChange = (index: number) => (res: string) => {
+    let obj = {...selectedCustomItems }
+    obj[index] = res
+    onChoiceChange(index)
+    setCustomSelectedItems(obj)
+  }
+
   return (
     <div>
       <div className="p-4 my-4 mb-2 text-gray-800 rounded-md text-md ">
@@ -104,6 +116,10 @@ function MultiChoice(props: MultiChoiceProps) {
                   </div>
                 </div>
               );
+            } else if (value.startsWith("@slider")) {
+               return (  
+                 <Slider question={value.replace("@slider", "")} responseSetter={onSliderChange(index)} />
+               )
             }
 
             return (

@@ -190,11 +190,11 @@
       "choices": ["  Yes (1)", " No  (2)"]
     },
     {
-      "question": "Please list the languages (other than English) which your child is exposed.",
+      "question": "Please list the languages (other than English) which your child is exposed. (Must add to 100).",
       "choices": [
-        "Language 1 @slider",
-        "Language 2 @slider",
-        "Language 3 @slider"
+        "@slider Language 1 ",
+        "@slider Language 2 ",
+        "@slider Language 3" 
       ]
     }
   ],
