@@ -10,7 +10,7 @@ function Slider(props: IQuestionProps<string>) {
 
   useEffect(() => {
     responseSetter(sliderVal.toString());
-  }, [sliderVal]);
+  }, [sliderVal, responseSetter]);
 
   const onChangeSlider = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSliderVal(e.currentTarget.valueAsNumber);

@@ -53,9 +53,9 @@ async function email(participant: { type: "adult" | "child"; email: string }) {
       },
       body: JSON.stringify({ participant }),
     });
-
     if (!res.ok) {
-      throw new Error("Response failed");
+      const msg = await res.text()
+      throw new Error(`${res.statusText}: ${msg}`);
     }
     return;
   } catch (err) {

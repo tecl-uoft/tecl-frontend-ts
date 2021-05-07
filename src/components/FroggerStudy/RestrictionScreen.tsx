@@ -17,7 +17,7 @@ function RestrictionScreen() {
           notify.success("Email is sent!");
           hist.push("/study/frogger/information");
         })
-        .catch((err) => notify.error(err.message));
+        .catch((err) => {notify.error(err.message) });
     }
   };
   const selectAdult = () => setSelected("adult");

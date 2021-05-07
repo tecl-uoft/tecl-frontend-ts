@@ -191,7 +191,7 @@
 
     },
     {
-      "question": "Please list the top 3 languages (other than English) which your child is exposed (in order).",
+      "question": "Please list the top 3 languages (other than English) which your child is exposed to (in order).",
       "choices": [
         "@text Languages"
       ]
