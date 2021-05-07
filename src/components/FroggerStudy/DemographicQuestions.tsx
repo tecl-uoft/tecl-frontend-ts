@@ -22,7 +22,7 @@ function DemographicQuestions(props: {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isAdult = params.get("type") === "adult";
-    process.env.NODE_ENV === "development" ? setDemoState(5) : setDemoState(0);
+    process.env.NODE_ENV === "development" ? setDemoState(0) : setDemoState(0);
     setIsAdult(isAdult);
   }, []);
 
@@ -42,40 +42,39 @@ function DemographicQuestions(props: {
   const updateState = (demoState: number) => {
     switch (demoState) {
       case 0:
-        return (
-          <InitalInst
-            setDemoState={isAdult ? () => setDemoState(2) : setNextState}
-          />
-        );
+        return <InitalInst setDemoState={setNextState} />;
       case 1:
         return (
-          <PrefrenceQs
+          <Questions
+            isAdult={isAdult}
             setDemoResponse={setDemoResponse}
             nextState={setNextState}
           />
         );
       case 2:
         return (
-          <Questions
-            isAdult={isAdult}
-            setDemoResponse={setDemoResponse}
-            nextState={isAdult ? setNextState : () => setDemoState(4)}
-          />
-        );
-      case 3:
-        return (
-          <AdultQs setDemoResponse={setDemoResponse} nextState={setNextState} />
-        );
-      case 4:
-        return (
           <CreativeQs
             setDemoResponse={setDemoResponse}
             isAdult={isAdult}
-            nextState={isAdult ? setNextState : () => setDemoState(5)}
+            nextState={setNextState}
           />
         );
-      case 5:
-        return <MCQuestions setDemoResponse={setDemoResponse} nextState={setNextState} />;
+      case 3:
+        return !isAdult ? (
+          <PrefrenceQs
+            setDemoResponse={setDemoResponse}
+            nextState={setNextState}
+          />
+        ) : (
+          <AdultQs setDemoResponse={setDemoResponse} nextState={() => setDemoState(5)} />
+        );
+      case 4:
+        return (
+          <MCQuestions
+            setDemoResponse={setDemoResponse}
+            nextState={setNextState}
+          />
+        );
       default:
         return <> </>;
     }
@@ -290,7 +289,10 @@ function PrefrenceQs(props: {
   );
 }
 
-function MCQuestions(props: { nextState: () => void, setDemoResponse: DemoResponseDispatch }) {
+function MCQuestions(props: {
+  nextState: () => void;
+  setDemoResponse: DemoResponseDispatch;
+}) {
   const { nextState, setDemoResponse } = props;
   const [response, setResponse] = useState<{
     [key: number]: {
@@ -301,10 +303,9 @@ function MCQuestions(props: { nextState: () => void, setDemoResponse: DemoRespon
   const questionAndChocices = questionAndChocicesDefault.main;
 
   const submitState = () => {
-    setDemoResponse(o => ({...o, demographicQs: response}));
+    setDemoResponse((o) => ({ ...o, demographicQs: response }));
     nextState();
-    
-  }
+  };
 
   return (
     <div>
@@ -337,7 +338,7 @@ function MCQuestions(props: { nextState: () => void, setDemoResponse: DemoRespon
           const qNum = idx + 1;
           const isMultiChoice = qa.question.includes("select more than one");
           return (
-            <div key={idx + 200}  >
+            <div key={idx + 200}>
               <MultiChoice
                 selectMultiple={isMultiChoice}
                 choices={qa.choices}
