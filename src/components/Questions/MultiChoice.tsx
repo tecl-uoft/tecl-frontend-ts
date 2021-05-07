@@ -85,7 +85,7 @@ function MultiChoice(props: MultiChoiceProps) {
   };
 
   const onCustomChange = (res: string) => {
-    console.log(res)
+    //console.log(res)
   }
 
   const onSliderChange = (index: number) => (res: string) => {
