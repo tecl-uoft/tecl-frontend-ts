@@ -9,7 +9,7 @@ function Slider(props: IQuestionProps<string>) {
   const MIN_VALUE = 0;
 
   useEffect(() => {
-    responseSetter(sliderVal.toString());
+    //responseSetter(sliderVal.toString());
   }, [sliderVal, responseSetter]);
 
   const onChangeSlider = (e: React.ChangeEvent<HTMLInputElement>) => {

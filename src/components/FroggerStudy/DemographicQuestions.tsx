@@ -337,7 +337,7 @@ function MCQuestions(props: { nextState: () => void, setDemoResponse: DemoRespon
           const qNum = idx + 1;
           const isMultiChoice = qa.question.includes("select more than one");
           return (
-            <div>
+            <div key={idx + 200}  >
               <MultiChoice
                 selectMultiple={isMultiChoice}
                 choices={qa.choices}

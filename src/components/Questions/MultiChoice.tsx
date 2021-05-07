@@ -125,6 +125,7 @@ function MultiChoice(props: MultiChoiceProps) {
             } else if (value.startsWith("@slider")) {
               return (
                 <Slider
+                  key={index}
                   question={value.replace("@slider", "")}
                   responseSetter={onSliderChange(index)}
                 />
@@ -132,6 +133,7 @@ function MultiChoice(props: MultiChoiceProps) {
             } else if (value.includes("@date")) {
               return (
                 <Input
+                  key={index}
                   type="date"
                   value={selectedCustomItems[index]}
                   valueSetter={onSliderChange(index)}
