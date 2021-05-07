@@ -16,6 +16,7 @@ function DemographicQuestions(props: {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isAdult = params.get("type") === "adult";
+    process.env.NODE_ENV === "development" ? setDemoState(5) : setDemoState(0);
     setIsAdult(isAdult);
   }, []);
 
