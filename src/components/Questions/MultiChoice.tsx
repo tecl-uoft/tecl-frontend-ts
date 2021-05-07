@@ -84,7 +84,12 @@ function MultiChoice(props: MultiChoiceProps) {
     setSelectedItems(obj);
   };
 
+  const onCustomChange = (res: string) => {
+    console.log(res)
+  }
+
   const onSliderChange = (index: number) => (res: string) => {
+    console.log(index, res )
     let obj = { ...selectedCustomItems };
     obj[index] = res;
     onChoiceChange(index);
@@ -127,7 +132,7 @@ function MultiChoice(props: MultiChoiceProps) {
                 <Slider
                   key={index}
                   question={value.replace("@slider", "")}
-                  responseSetter={onSliderChange(index)}
+                  responseSetter={onCustomChange}
                 />
               );
             } else if (value.includes("@date")) {
