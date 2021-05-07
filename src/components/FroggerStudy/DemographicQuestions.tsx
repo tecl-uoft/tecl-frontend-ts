@@ -1,5 +1,4 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import Input from "../common/Input";
 import { LikertScale } from "../Questions";
 import MultiChoice from "../Questions/MultiChoice";
 import * as questionAndChocicesDefault from "./demoQ.json";

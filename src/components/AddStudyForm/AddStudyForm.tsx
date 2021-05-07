@@ -1,6 +1,5 @@
 import React, { ChangeEvent, useState } from "react";
 import StudyService from "../../services/StudyService";
-import Input from "../common/Input";
 import { HeadExitButton } from "../HeadExitButton";
 
 interface IAddStudyFormProps {
