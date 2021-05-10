@@ -58,7 +58,7 @@ function FroggerStudy() {
       .then(() => {
         videoRecorder?.mediaRecorder.stop(); 
         setStudyState(FroggerStudyStates.ThanksNote);
-        notify.success("Data Submitted!");
+        //notify.success("Data Submitted!");
       })
       .catch((err) => notify.error(err.message));
   };
