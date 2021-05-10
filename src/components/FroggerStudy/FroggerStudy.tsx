@@ -13,6 +13,7 @@ import RestrictionScreen from "./RestrictionScreen";
 import ThanksNote from "./ThanksNote";
 import FroggerStudyService from "../../services/FroggerStudyService";
 import { notify } from "../Notification";
+import NoConsent from "./NoConsent";
 
 enum FroggerStudyStates {
   RestrictionScreen = "resScreen",
@@ -56,7 +57,7 @@ function FroggerStudy() {
   const submitStudyResults = () => {
     FroggerStudyService.results(participant, response)
       .then(() => {
-        videoRecorder?.mediaRecorder.stop(); 
+        videoRecorder?.mediaRecorder.stop();
         setStudyState(FroggerStudyStates.ThanksNote);
         //notify.success("Data Submitted!");
       })
@@ -71,7 +72,7 @@ function FroggerStudy() {
     if (id && type) {
       setParticipant({ id, type, study });
       process.env.NODE_ENV === "development"
-        ? setStudyState(FroggerStudyStates.AskVideoConsent)
+        ? setStudyState(FroggerStudyStates.DemoQuestions)
         : setStudyState(FroggerStudyStates.AskConsent);
     }
   }, []);
@@ -159,6 +160,9 @@ function FroggerStudy() {
         break;
       case FroggerStudyStates.ThanksNote:
         state = <ThanksNote />;
+        break;
+      case FroggerStudyStates.NoConsent:
+        state = <NoConsent />;
         break;
       default:
         state = <ErrorNotFound />;

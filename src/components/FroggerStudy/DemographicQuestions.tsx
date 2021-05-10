@@ -66,7 +66,7 @@ function DemographicQuestions(props: {
             nextState={setNextState}
           />
         ) : (
-          <AdultQs setDemoResponse={setDemoResponse} nextState={() => setDemoState(4)} />
+          <AdultQs setDemoResponse={setDemoResponse} nextState={setNextState} />
         );
       case 4:
         return (
