@@ -8,9 +8,13 @@ interface IFroggerPracticeProps {
 
 function FroggerPractice(props: IFroggerPracticeProps) {
   const { nextState } = props;
+
+  // only on mod study or no?
   const unityContent = new UnityContent(
-    "/scripts/frogger_practice/Frogger_Practice_v2.json",
-    "/scripts/frogger_practice/UnityLoader.js"
+    "/scripts/Frogger_Practice_5.7.21/Frogger_Practice_5.7.21.json",
+    "/scripts/Frogger_Practice_5.7.21/UnityLoader.js"
+    //"/scripts/frogger_practice/Frogger_Practice_v2.json",
+    //"/scripts/frogger_practice/UnityLoader.js"
   );
 
   return (
