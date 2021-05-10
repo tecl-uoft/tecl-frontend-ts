@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Unity, { UnityContent } from "react-unity-webgl";
 import StudyTitleText from "../common/StudyTitleText";
 
@@ -8,7 +8,7 @@ interface IFroggerPracticeProps {
 
 function FroggerPractice(props: IFroggerPracticeProps) {
   const { nextState } = props;
-
+  const [gameOver, setGameOver] = useState(false)
   // only on mod study or no?
   const unityContent = new UnityContent(
     "/scripts/Frogger_Practice_5.7.21/Frogger_Practice_5.7.21.json",
@@ -16,6 +16,11 @@ function FroggerPractice(props: IFroggerPracticeProps) {
     //"/scripts/frogger_practice/Frogger_Practice_v2.json",
     //"/scripts/frogger_practice/UnityLoader.js"
   );
+
+  unityContent.on("GameOver", () => {
+  
+    setGameOver(true);
+  })
 
   return (
     <div className="px-2 pt-4 mx-auto mb-16">
@@ -34,14 +39,14 @@ function FroggerPractice(props: IFroggerPracticeProps) {
       <div className="px-32">
         <Unity unityContent={unityContent} />
       </div>
-      <div className="flex justify-around mt-6">
+      {gameOver && <div className="flex justify-around mt-6">
         <button
           onClick={() => nextState()}
           className="w-full px-8 py-4 font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400 focus:outline-none"
         >
           Next
         </button>
-      </div>
+      </div>}
     </div>
   );
 }
