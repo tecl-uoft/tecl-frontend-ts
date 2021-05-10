@@ -56,6 +56,7 @@ function FroggerStudy() {
   const submitStudyResults = () => {
     FroggerStudyService.results(participant, response)
       .then(() => {
+        videoRecorder?.mediaRecorder.stop(); 
         setStudyState(FroggerStudyStates.ThanksNote);
         notify.success("Data Submitted!");
       })
