@@ -146,7 +146,7 @@ function FroggerVideoConsentForm(props: IFroggerConsentFormProps) {
               photos of your child in each of these ways: <br /> <br />
               <div className="flex flex-col justify-between">
                 {questions.map((question, idx) => {
-                  if (idx === 0 || idx == 1) {
+                  if (idx === 0 || idx === 1) {
                     return <> </>
                   }
                   return (
@@ -186,7 +186,7 @@ function FroggerVideoConsentForm(props: IFroggerConsentFormProps) {
               </div>{" "}
               <br />
               If at any time in the future you change your mind about granting
-              us permission to use your child’s video or photos, please notify
+              us permission to use you or your child’s video or photos, please notify
               us and we will stop using it (except in the case of photos already
               published in books or journals or released to third parties in the
               case of media consent). <br />
