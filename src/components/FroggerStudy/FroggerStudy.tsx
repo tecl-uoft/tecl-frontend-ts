@@ -70,7 +70,7 @@ function FroggerStudy() {
     if (id && type) {
       setParticipant({ id, type, study });
       process.env.NODE_ENV === "development"
-        ? setStudyState(FroggerStudyStates.PostQuestions)
+        ? setStudyState(FroggerStudyStates.AskVideoConsent)
         : setStudyState(FroggerStudyStates.AskConsent);
     }
   }, []);

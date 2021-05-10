@@ -146,6 +146,9 @@ function FroggerVideoConsentForm(props: IFroggerConsentFormProps) {
               photos of your child in each of these ways: <br /> <br />
               <div className="flex flex-col justify-between">
                 {questions.map((question, idx) => {
+                  if (idx === 0 || idx == 1) {
+                    return <> </>
+                  }
                   return (
                     <div
                       className={`flex justify-between px-10 my-2 py-2 rounded-md ${"bg-gray-200"}`}
@@ -154,7 +157,7 @@ function FroggerVideoConsentForm(props: IFroggerConsentFormProps) {
                       {" "}
                       <p className="w-3/4">
                         {" "}
-                        {idx + 1}. {question.q}
+                        {idx -1}. {question.q}
                       </p>{" "}
                       <div className="flex justify-end w-1/4 space-x-4">
                         {" "}
