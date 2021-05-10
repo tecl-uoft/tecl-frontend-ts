@@ -6,7 +6,7 @@ import Slider from "./Slider";
 type MultiChoiceProps = IQuestionProps<{ num: number; select: string }> & {
   choices: string[];
   selectMultiple?: boolean;
-  responseSetter: (res: { num: number; select: string }[]) => void;
+  responseSetter: (res: any) => void;
 };
 
 /**
@@ -46,8 +46,8 @@ function MultiChoice(props: MultiChoiceProps) {
 
   // add response here
   useEffect(() => {
-    
-  }, [selectedItems, selectedCustomItems, otherOption, responseSetter]);
+    console.log({ selectedItems, otherOption, selectedCustomItems });
+  }, [selectedItems, selectedCustomItems, otherOption]);
 
   const onTextChange = (index: number) => (
     e: React.ChangeEvent<HTMLInputElement>
@@ -58,14 +58,17 @@ function MultiChoice(props: MultiChoiceProps) {
         obj[idx] = false;
       });
       setSelectedItems(obj);
+      responseSetter({ selectedItems: obj });
     } else {
       let obj = { ...selectedCustomItems };
       obj[index] = e.currentTarget.value;
       onChoiceChange(index);
       setCustomSelectedItems(obj);
+      responseSetter({ date: obj });
     }
 
     setOtherOption(e.currentTarget.value);
+    responseSetter({ otherOption: e.currentTarget.value });
   };
 
   const onChoiceChange = (index: number) => () => {
@@ -78,7 +81,7 @@ function MultiChoice(props: MultiChoiceProps) {
       });
       setOtherOption("");
     }
-
+    responseSetter({ selectedItems: obj });
     setSelectedItems(obj);
   };
 
@@ -87,7 +90,6 @@ function MultiChoice(props: MultiChoiceProps) {
   };
 
   const onSliderChange = (index: number) => (res: string) => {
-    console.log(index, res);
     let obj = { ...selectedCustomItems };
     obj[index] = res;
     onChoiceChange(index);

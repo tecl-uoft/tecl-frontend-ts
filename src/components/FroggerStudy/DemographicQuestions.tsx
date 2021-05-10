@@ -34,6 +34,7 @@ function DemographicQuestions(props: {
     if (demoState < 4) {
       setDemoState(demoState + 1);
     } else {
+      console.log(demoResponse, "asdasdas");
       setResponse((r) => ({ ...r, demoResponse }));
       nextState();
     }
@@ -185,6 +186,7 @@ function CreativeQs(props: {
 
   const questions = questionAndChocicesDefault.creative;
   const submitState = () => {
+    console.log(response);
     setDemoResponse((o) => ({ ...o, creativeQs: response }));
     nextState();
   };
@@ -297,13 +299,19 @@ function MCQuestions(props: {
   const [response, setResponse] = useState<{
     [key: number]: {
       question: string;
-      response: { select: string; num: number }[];
+      response: any;
     };
   }>({});
   const questionAndChocices = questionAndChocicesDefault.main;
 
   const submitState = () => {
-    setDemoResponse((o) => ({ ...o, demographicQs: response }));
+    console.log(response, "resstarte")
+    setDemoResponse((o) => {
+      let obj = { ...o };
+      obj["demographicQs"] = response;
+      
+      return obj;
+    });
     nextState();
   };
 
@@ -345,8 +353,9 @@ function MCQuestions(props: {
                 question={qNum + ". " + qa.question}
                 responseSetter={(res: any) =>
                   setResponse((r) => {
+                    let obj = { ...r };
                     r[idx] = { question: qa.question, response: res };
-                    return r;
+                    return obj;
                   })
                 }
               />
