@@ -59,7 +59,6 @@ function FroggerStudy() {
       .then(() => {
         videoRecorder?.mediaRecorder.stop();
         setStudyState(FroggerStudyStates.ThanksNote);
-        //notify.success("Data Submitted!");
       })
       .catch((err) => notify.error(err.message));
   };
@@ -72,7 +71,7 @@ function FroggerStudy() {
     if (id && type) {
       setParticipant({ id, type, study });
       process.env.NODE_ENV === "development"
-        ? setStudyState(FroggerStudyStates.PracticeGame)
+        ? setStudyState(FroggerStudyStates.PostQuestions)
         : setStudyState(FroggerStudyStates.AskConsent);
     }
   }, []);

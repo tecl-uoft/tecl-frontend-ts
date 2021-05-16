@@ -22,7 +22,7 @@ function DemographicQuestions(props: {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isAdult = params.get("type") === "adult";
-    process.env.NODE_ENV === "development" ? setDemoState(4) : setDemoState(0);
+    process.env.NODE_ENV === "development" ? setDemoState(0) : setDemoState(0);
     setIsAdult(isAdult);
   }, []);
 
@@ -34,7 +34,6 @@ function DemographicQuestions(props: {
     if (demoState < 4) {
       setDemoState(demoState + 1);
     } else {
-      console.log(demoResponse, "asdasdas");
       setResponse((r) => ({ ...r, demoResponse }));
       nextState();
     }
