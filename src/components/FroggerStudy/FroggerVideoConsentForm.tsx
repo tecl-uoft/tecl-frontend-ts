@@ -38,48 +38,49 @@ function FroggerVideoConsentForm(props: IFroggerConsentFormProps) {
     },
     {
       state: formState.vc2,
-      q:
-        " The photo and video recorded material may be used by the investigators for this research project.",
+      q: " The photo and video recorded material may be used by the investigators for this research project.",
     },
     {
       state: formState.vc3,
-      q:
-        " I agree for the photo and video recorded material to be used by the investigators in future research projects, after this project has ended.",
+      q: " I agree for the photo and video recorded material to be used by the investigators in future research projects, after this project has ended.",
     },
     {
       state: formState.vc4,
-      q:
-        "I agree for the photo and video recorded material to be published in scholarly venues describing the research (e.g., in an academic journal or thesis).",
+      q: "I agree for the photo and video recorded material to be published in scholarly venues describing the research (e.g., in an academic journal or thesis).",
     },
     {
       state: formState.vc5,
-      q:
-        "I agree for the photo and video recorded material to be used in research presentations at scientific meetings.",
+      q: "I agree for the photo and video recorded material to be used in research presentations at scientific meetings.",
     },
     {
       state: formState.vc6,
-      q:
-        "I agree for the photo and video recorded material to be used in public presentations to non-scientific groups.",
+      q: "I agree for the photo and video recorded material to be used in public presentations to non-scientific groups.",
     },
     {
       state: formState.vc7,
-      q:
-        "I agree for the photo and video recorded material to be shown in classrooms to university students.",
+      q: "I agree for the photo and video recorded material to be shown in classrooms to university students.",
     },
     {
       state: formState.vc8,
-      q:
-        "I agree for the photo and video recorded material to be shown on the Toronto Early Childhood Cognition Lab website, or Facebook page. ",
+      q: "I agree for the photo and video recorded material to be shown on the Toronto Early Childhood Cognition Lab website, or Facebook page. ",
     },
     {
       state: formState.vc9,
-      q:
-        "I agree for the photo and video recorded material to be used in the media (e.g., third- party web, newspaper or television stories about this research).",
+      q: "I agree for the photo and video recorded material to be used in the media (e.g., third- party web, newspaper or television stories about this research).",
     },
   ];
+ 
   const formStateSetter = [
-    () => setFormState((s) => ({ ...s, vc1: !s.vc1 })),
-    () => setFormState((s) => ({ ...s, vc2: !s.vc2 })),
+    () => {
+      if (formState.vc1)
+        notify.error("You must select yes for question 1, in order to get paid.");
+      setFormState((s) => ({ ...s, vc1: !s.vc1 }));
+    },
+    () => {
+      if (formState.vc2)
+        notify.error("You must select yes for question 2, in order to get paid.");
+      setFormState((s) => ({ ...s, vc2: !s.vc2 }));
+    },
     () => setFormState((s) => ({ ...s, vc3: !s.vc3 })),
     () => setFormState((s) => ({ ...s, vc4: !s.vc4 })),
     () => setFormState((s) => ({ ...s, vc5: !s.vc5 })),
@@ -100,8 +101,9 @@ function FroggerVideoConsentForm(props: IFroggerConsentFormProps) {
   return (
     <>
       <h2 className="py-2 mb-5 text-2xl font-bold text-center bg-red-200">
-        Note: You will NOT receive the payment if you do NOT record both video
-        and audio.
+        Note: Unfortunately, you cannot continue the study <br /> if you decide not to record both video
+        and audio (Q1 and Q2). <br />
+        
       </h2>
 
       <ConsentTemplate
@@ -146,18 +148,17 @@ function FroggerVideoConsentForm(props: IFroggerConsentFormProps) {
               photos of your child in each of these ways: <br /> <br />
               <div className="flex flex-col justify-between">
                 {questions.map((question, idx) => {
-                  if (idx === 0 || idx === 1) {
-                    return <> </>
-                  }
                   return (
                     <div
-                      className={`flex justify-between px-10 my-2 py-2 rounded-md ${"bg-gray-200"}`}
+                      className={`flex justify-between px-10 my-2 py-2 rounded-md ${
+                        idx === 0 || idx === 1 ? "bg-red-200" : "bg-gray-200"
+                      }`}
                       key={idx}
                     >
                       {" "}
                       <p className="w-3/4">
                         {" "}
-                        {idx -1}. {question.q}
+                        {idx + 1}. {question.q}
                       </p>{" "}
                       <div className="flex justify-end w-1/4 space-x-4">
                         {" "}
@@ -186,10 +187,10 @@ function FroggerVideoConsentForm(props: IFroggerConsentFormProps) {
               </div>{" "}
               <br />
               If at any time in the future you change your mind about granting
-              us permission to use you or your child’s video or photos, please notify
-              us and we will stop using it (except in the case of photos already
-              published in books or journals or released to third parties in the
-              case of media consent). <br />
+              us permission to use you or your child’s video or photos, please
+              notify us and we will stop using it (except in the case of photos
+              already published in books or journals or released to third
+              parties in the case of media consent). <br />
               If you have any questions, complaints or concerns regarding this
               research, either now or at any time in the future, please contact
               Dr. Jessica Sommerville at 416-978-1815 or
@@ -204,6 +205,5 @@ function FroggerVideoConsentForm(props: IFroggerConsentFormProps) {
     </>
   );
 }
-
 
 export default FroggerVideoConsentForm;
