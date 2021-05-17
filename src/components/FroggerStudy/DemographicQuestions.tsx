@@ -23,7 +23,7 @@ function DemographicQuestions(props: {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isAdult = params.get("type") === "adult";
-    process.env.NODE_ENV === "development" ? setDemoState(0) : setDemoState(0);
+    process.env.NODE_ENV === "development" ? setDemoState(3) : setDemoState(0);
     setIsAdult(isAdult);
   }, []);
 
@@ -187,7 +187,10 @@ function CreativeQs(props: {
 
   const questions = questionAndChocicesDefault.creative;
   const submitState = () => {
-    console.log(response);
+    if (Object.values(response).length !== 13) {
+      notify.error("Please fill out all of the responses.");
+      return;
+    }
     setDemoResponse((o) => ({ ...o, creativeQs: response }));
     nextState();
   };
@@ -254,6 +257,10 @@ function PrefrenceQs(props: {
     };
   }>({});
   const submitState = () => {
+    if (Object.values(response).length !== 4) {
+      notify.error("Please answer all of the questions.")
+      return;
+    }
     setDemoResponse((o) => ({ ...o, prefQs: response }));
     nextState();
   };
@@ -271,6 +278,7 @@ function PrefrenceQs(props: {
           return (
             <div key={idx}>
               <MultiChoice
+                selectMultiple={false}
                 choices={qa.choices}
                 question={idx + 1 + ". " + qa.question}
                 responseSetter={(res: any) =>

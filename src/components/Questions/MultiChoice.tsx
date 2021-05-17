@@ -46,7 +46,7 @@ function MultiChoice(props: MultiChoiceProps) {
 
   // add response here
   useEffect(() => {
-    console.log({ selectedItems, otherOption, selectedCustomItems });
+    // console.log({ selectedItems, otherOption, selectedCustomItems });
   }, [selectedItems, selectedCustomItems, otherOption]);
 
   const onTextChange = (index: number) => (
