@@ -215,16 +215,7 @@ function FroggerConsentForm(props: IFroggerConsentFormProps) {
                 />{" "}
               </div>{" "}
             </div>{" "}
-            <div className="my-6 font-bold">
-              Because today's study is unsupervised, it requires video and audio
-              consent so we can perform quality control. You only need to
-              consent to provide TECL with your materials. If you do not consent
-              to other permissions (e.g., conferences, Facebook), your data will
-              be kept confidential and will only seen by lab members. If you are
-              uncomfortable with providing any audio and video consent, please
-              reach out to tecl.psychology@utoronto.ca and we will be happy to
-              look for a more suitable study!
-            </div>
+       
             {!isAdult && (
               <>
                 <input

@@ -69,16 +69,20 @@ function FroggerVideoConsentForm(props: IFroggerConsentFormProps) {
       q: "I agree for the photo and video recorded material to be used in the media (e.g., third- party web, newspaper or television stories about this research).",
     },
   ];
- 
+
   const formStateSetter = [
     () => {
       if (formState.vc1)
-        notify.error("You must select yes for question 1, in order to get paid.");
+        notify.error(
+          "Note: You must select yes for question 1, in order to get paid."
+        );
       setFormState((s) => ({ ...s, vc1: !s.vc1 }));
     },
     () => {
       if (formState.vc2)
-        notify.error("You must select yes for question 2, in order to get paid.");
+        notify.error(
+          "Note: You must select yes for question 2, in order to get paid."
+        );
       setFormState((s) => ({ ...s, vc2: !s.vc2 }));
     },
     () => setFormState((s) => ({ ...s, vc3: !s.vc3 })),
@@ -100,10 +104,15 @@ function FroggerVideoConsentForm(props: IFroggerConsentFormProps) {
 
   return (
     <>
-      <h2 className="py-2 mb-5 text-2xl font-bold text-center bg-red-200">
-        Note: Unfortunately, you cannot continue the study <br /> if you decide not to record both video
-        and audio (Q1 and Q2). <br />
-        
+      <h2 className="container py-2 mx-auto mb-5 text-2xl font-bold text-center bg-red-200">
+        Because today's study is unsupervised, it requires video and audio
+        consent so we can perform quality control. You only need to consent to
+        provide TECL with your materials. If you do not consent to other
+        permissions (e.g., conferences, Facebook), your data will be kept
+        confidential and will only seen by lab members. If you are uncomfortable
+        with providing any audio and video consent, please reach out to
+        tecl.psychology@utoronto.ca and we will be happy to look for a more
+        suitable study!
       </h2>
 
       <ConsentTemplate
