@@ -44,11 +44,6 @@ function MultiChoice(props: MultiChoiceProps) {
     });
   }, [choices]);
 
-  // add response here
-  useEffect(() => {
-    // console.log({ selectedItems, otherOption, selectedCustomItems });
-  }, [selectedItems, selectedCustomItems, otherOption]);
-
   const onTextChange = (index: number) => (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -58,30 +53,29 @@ function MultiChoice(props: MultiChoiceProps) {
         obj[idx] = false;
       });
       setSelectedItems(obj);
-      responseSetter({ selectedItems: obj });
+      responseSetter({ selectedItems: obj, otherOption, selectedCustomItems });
     } else {
       let obj = { ...selectedCustomItems };
       obj[index] = e.currentTarget.value;
       onChoiceChange(index);
       setCustomSelectedItems(obj);
-      responseSetter({ date: obj });
+      responseSetter({ date: obj, otherOption, selectedCustomItems, selectedItems });
     }
 
     setOtherOption(e.currentTarget.value);
-    responseSetter({ otherOption: e.currentTarget.value });
+    responseSetter({ otherOption: e.currentTarget.value, selectedItems, selectedCustomItems });
   };
 
   const onChoiceChange = (index: number) => () => {
     let obj = { ...selectedItems };
     obj[index] = !selectedItems[index];
-    if (selectMultiple) {
-    } else {
+    if (!selectMultiple) {
       choices.forEach((key, idx) => {
         obj[idx] = idx === index;
       });
       setOtherOption("");
     }
-    responseSetter({ selectedItems: obj });
+    responseSetter({ selectedItems: obj, otherOption, selectedCustomItems });
     setSelectedItems(obj);
   };
 

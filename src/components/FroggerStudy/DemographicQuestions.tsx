@@ -19,25 +19,31 @@ function DemographicQuestions(props: {
   const [demoState, setDemoState] = useState(0);
   const [demoResponse, setDemoResponse] = useState<IDemoResponse>({});
   const [isAdult, setIsAdult] = useState(false);
+  const [isUpdated, setIsUpdated] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isAdult = params.get("type") === "adult";
-    process.env.NODE_ENV === "development" ? setDemoState(3) : setDemoState(0);
+    process.env.NODE_ENV === "development" ? setDemoState(4) : setDemoState(0);
     setIsAdult(isAdult);
   }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    console.log(demoResponse);
   }, [demoState]);
+
+  useEffect(() => {
+    if (isUpdated) nextState();
+  }, [isUpdated, nextState]);
 
   const setNextState = () => {
     if (demoState < 4) {
       setDemoState(demoState + 1);
     } else {
-      setResponse((r) => ({ ...r, demoResponse }));
-      nextState();
+      setResponse((r) => {
+        setIsUpdated(true);
+        return { ...r, demoResponse };
+      });
     }
   };
 
@@ -258,7 +264,7 @@ function PrefrenceQs(props: {
   }>({});
   const submitState = () => {
     if (Object.values(response).length !== 4) {
-      notify.error("Please answer all of the questions.")
+      notify.error("Please answer all of the questions.");
       return;
     }
     setDemoResponse((o) => ({ ...o, prefQs: response }));
@@ -311,17 +317,26 @@ function MCQuestions(props: {
       response: any;
     };
   }>({});
+  const [isUpdated, setIsUpdated] = useState(false);
   const questionAndChocices = questionAndChocicesDefault.main;
 
+  useEffect(() => {
+    if (isUpdated) {
+      setDemoResponse((o) => {
+        return o;
+      });
+      nextState();
+    }
+  }, [isUpdated]);
+
   const submitState = () => {
-    console.log(response, "resstarte");
     setDemoResponse((o) => {
       let obj = { ...o };
       obj["demographicQs"] = response;
 
+      setIsUpdated(true);
       return obj;
     });
-    nextState();
   };
 
   return (
