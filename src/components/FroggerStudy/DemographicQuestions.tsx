@@ -1,4 +1,5 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { notify } from "../Notification";
 import { LikertScale } from "../Questions";
 import MultiChoice from "../Questions/MultiChoice";
 import * as questionAndChocicesDefault from "./demoQ.json";
@@ -28,6 +29,7 @@ function DemographicQuestions(props: {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    console.log(demoResponse);
   }, [demoState]);
 
   const setNextState = () => {
@@ -217,7 +219,7 @@ function CreativeQs(props: {
       <div className="flex flex-col justify-center w-3/4 mx-auto space-y-8 md:w-1/2">
         {questions.map((q, idx) => {
           return (
-            <div>
+            <div key={idx + 100}>
               <LikertScale
                 scale={scale}
                 question={idx + 1 + ". " + q}
@@ -242,7 +244,7 @@ function CreativeQs(props: {
 
 function PrefrenceQs(props: {
   nextState: () => void;
-  setDemoResponse: (res: IDemoResponse) => void;
+  setDemoResponse: DemoResponseDispatch;
 }) {
   const { nextState, setDemoResponse } = props;
   const [response, setResponse] = useState<{
@@ -252,7 +254,7 @@ function PrefrenceQs(props: {
     };
   }>({});
   const submitState = () => {
-    setDemoResponse({ prefQs: response });
+    setDemoResponse((o) => ({ ...o, prefQs: response }));
     nextState();
   };
 
@@ -267,7 +269,7 @@ function PrefrenceQs(props: {
       <div className="w-3/4 mx-auto md:w-1/2">
         {questions.map((qa, idx) => {
           return (
-            <div>
+            <div key={idx}>
               <MultiChoice
                 choices={qa.choices}
                 question={idx + 1 + ". " + qa.question}
@@ -304,11 +306,11 @@ function MCQuestions(props: {
   const questionAndChocices = questionAndChocicesDefault.main;
 
   const submitState = () => {
-    console.log(response, "resstarte")
+    console.log(response, "resstarte");
     setDemoResponse((o) => {
       let obj = { ...o };
       obj["demographicQs"] = response;
-      
+
       return obj;
     });
     nextState();
@@ -394,6 +396,10 @@ function Questions(props: {
   }>({});
 
   const submitState = () => {
+    if (Object.values(response).length !== 3) {
+      notify.error("Please complete all of the questions.");
+      return;
+    }
     setDemoResponse((o) => ({ ...o, expQs: response }));
     nextState();
   };
@@ -418,7 +424,7 @@ function Questions(props: {
         <div className="flex flex-col justify-center w-3/4 mx-auto space-y-8 md:w-1/2">
           {questions.map((q, idx) => {
             return (
-              <div>
+              <div key={idx + 100}>
                 <LikertScale
                   scale={scale}
                   question={idx + 1 + ". " + q}
