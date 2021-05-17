@@ -327,7 +327,7 @@ function MCQuestions(props: {
       });
       nextState();
     }
-  }, [isUpdated]);
+  }, [isUpdated, nextState, setDemoResponse]);
 
   const submitState = () => {
     setDemoResponse((o) => {
