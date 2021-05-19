@@ -21,6 +21,7 @@ function FroggerPostQuestions(props: {
     q7: undefined,
     q8: undefined,
     q9: undefined,
+    q10: "",
   });
 
   const formStateSetter: any[] = [
@@ -34,6 +35,8 @@ function FroggerPostQuestions(props: {
     () => setFormState((s) => ({ ...s, q7: false })),
     () => setFormState((s) => ({ ...s, q8: false })),
     () => setFormState((s) => ({ ...s, q9: false })),
+    (e: ChangeEvent<HTMLTextAreaElement>) =>
+      setFormState((s) => ({ ...s, q10: e.currentTarget.value })),
   ];
 
   const formStateSetterYes: any[] = [
@@ -47,6 +50,8 @@ function FroggerPostQuestions(props: {
     () => setFormState((s) => ({ ...s, q7: true })),
     () => setFormState((s) => ({ ...s, q8: true })),
     () => setFormState((s) => ({ ...s, q9: true })),
+    (e: ChangeEvent<HTMLTextAreaElement>) =>
+      setFormState((s) => ({ ...s, q10: e.currentTarget.value })),
   ];
 
   const questions = [
@@ -73,8 +78,7 @@ function FroggerPostQuestions(props: {
     {
       ref: "q4",
       state: formState.q4,
-      q:
-        "When you couldn’t jump up, did you think you were doing something wrong? ",
+      q: "When you couldn’t jump up, did you think you were doing something wrong? ",
       img: "",
     },
     {
@@ -107,10 +111,16 @@ function FroggerPostQuestions(props: {
       q: "Is this part of the game?",
       img: "/assets/frogger/q9i.png",
     },
+    {
+      ref: "q10",
+      state: formState.q10,
+      q: "How do you know where the trophy is?",
+      img: "",
+    },
   ];
 
   const onSubmit = () => {
-    const { q1, q2, q3, q4, q5, q6, q7, q8, q9 } = formState;
+    const { q1, q2, q3, q4, q5, q6, q7, q8, q9, q10 } = formState;
     if (
       q1 === undefined ||
       (q2 === "" && q1 === false) ||
@@ -119,7 +129,8 @@ function FroggerPostQuestions(props: {
       q6 === undefined ||
       q7 === undefined ||
       q8 === undefined ||
-      q9 === undefined
+      q9 === undefined ||
+      q10 === ""
     ) {
       notify.error("Please fill out all answers available.");
     } else {
@@ -140,7 +151,7 @@ function FroggerPostQuestions(props: {
             <div key={idx + question.ref}>
               <div className="my-2 rounded-lg">
                 {idx !== 1 &&
-                  ((idx !== 3 && idx !== 4) || formState.q3 === true) && (
+                  ((idx !== 3 && idx !== 4) || formState.q3 === true) && idx < 9 && (
                     <div
                       className={`flex justify-between px-10 py-2 rounded-md `}
                     >
@@ -186,6 +197,19 @@ function FroggerPostQuestions(props: {
                     className="w-full p-4 bg-gray-100"
                     placeholder="Write you answer here."
                     value={formState.q2 as any}
+                    onChange={formStateSetter[idx]}
+                  />
+                </div>
+              )}
+              {idx === 9 && (
+                <div className="p-2 px-10 rounded-md rounded-lg ">
+                  <p className="w-3/4 mb-4">{question.q}</p>
+                  <textarea
+                    rows={4}
+                    cols={50}
+                    className="w-full p-4 bg-gray-100"
+                    placeholder="Write you answer here."
+                    value={formState.q10 as any}
                     onChange={formStateSetter[idx]}
                   />
                 </div>
