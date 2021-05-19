@@ -109,8 +109,8 @@ function FroggerGame(props: IFroggerGameProps) {
 
     const loader =
       participant?.type === "adult"
-        ? "public/scripts/FroggerAdult_Arnav_5.17.21/Build/UnityLoader.js"
-        : "public/scripts/FroggerChild_Arnav_5.17.21/Build/UnityLoader.js";
+        ? "/scripts/FroggerAdult_Arnav_5.17.21/Build/UnityLoader.js"
+        : "/scripts/FroggerChild_Arnav_5.17.21/Build/UnityLoader.js";
 
     const unityContent = new UnityContent(build, loader);
     unityContent.on("progress", (progression: number) => {
@@ -135,12 +135,12 @@ function FroggerGame(props: IFroggerGameProps) {
       setTimerSec(0);
       setTimerMin(0);
       setTimeOver(true);
+      
     });
-
+  
     setUnityContent(unityContent);
   }, [participant]);
 
-  // const onFullScreenClick = () => unityContent.setFullscreen(true);
   const onNextClick = () => {
     if (mediaRecorder && mediaRecorder.mediaRecorder) {
       mediaRecorder.mediaRecorder.stop();
@@ -166,11 +166,12 @@ function FroggerGame(props: IFroggerGameProps) {
           remaining.
         </h4>
       )}
+   
       {loadingProgress !== 1 ? (
         <div>{`Loading ${Math.floor(loadingProgress * 100)} percent...`}</div>
       ) : null}
       {(!timeOver || isMod) && unityContent ? (
-        <div className="px-32">
+        <div className="mx-16 md:mx-32">
           <Unity unityContent={unityContent} />
         </div>
       ) : (
@@ -179,11 +180,7 @@ function FroggerGame(props: IFroggerGameProps) {
           Game Completed!{" "}
         </div>
       )}
-      {isMod && (
-        <button className="px-6 py-2 mx-auto mt-6 text-white bg-gray-800 rounded-lg ">
-          Full Screen
-        </button>
-      )}
+
       <div className="flex justify-around mt-6">
         {timeOver || isMod ? (
           <button
