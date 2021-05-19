@@ -24,10 +24,17 @@ function FroggerGame(props: IFroggerGameProps) {
   const [unityContent, setUnityContent] = useState<UnityContent>();
   const [isMod, setIsMod] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
-  const [mediaRecorder, setMediaRecorder] = useState<{
-    mediaRecorder: MediaRecorder;
-    recordedChunks: Blob[];
-  }>();
+  const [mediaRecorder, setMediaRecorder] =
+    useState<{
+      mediaRecorder: MediaRecorder;
+      recordedChunks: Blob[];
+    }>();
+  const [fruits, setFruits] = useState({
+    cherry: 0,
+    pinapple: 0,
+    watermelon: 0,
+    orange: 0,
+  });
 
   useEffect(() => {
     const pathString = window.location.pathname;
@@ -97,17 +104,31 @@ function FroggerGame(props: IFroggerGameProps) {
   useEffect(() => {
     const build =
       participant?.type === "adult"
-        ? "/scripts/FunctioningBuild_Adult_4.20.21/Build/FunctioningBuild_Adult_4.20.21.json"
-        : "/scripts/FunctioningBuild_3.23.21/Build/FunctioningBuild_3.23.21.json";
+        ? "/scripts/FroggerAdult_Arnav_5.17.21/Build/FroggerAdult_Arnav_5.17.21.json"
+        : "/scripts/FroggerChild_Arnav_5.17.21/Build/FroggerChild_Arnav_5.17.21.json";
 
     const loader =
       participant?.type === "adult"
-        ? "/scripts/FunctioningBuild_Adult_4.20.21/Build/UnityLoader.js"
-        : "/scripts/FunctioningBuild_3.23.21/Build/UnityLoader.js";
+        ? "public/scripts/FroggerAdult_Arnav_5.17.21/Build/UnityLoader.js"
+        : "public/scripts/FroggerChild_Arnav_5.17.21/Build/UnityLoader.js";
 
     const unityContent = new UnityContent(build, loader);
     unityContent.on("progress", (progression: number) => {
       setLoadingProgress(progression);
+    });
+
+    unityContent.on("GotCherry", () => {
+      console.log("cheer");
+      setFruits((f) => ({ ...f, cherry: f.cherry + 1 }));
+    });
+    unityContent.on("GotPinapple", () => {
+      setFruits((f) => ({ ...f, pinapple: f.pinapple + 1 }));
+    });
+    unityContent.on("GotWatermelon", () => {
+      setFruits((f) => ({ ...f, watermelon: f.watermelon + 1 }));
+    });
+    unityContent.on("GotOrange", () => {
+      setFruits((f) => ({ ...f, orange: f.orange + 1 }));
     });
 
     unityContent.on("GameOver", () => {
@@ -124,7 +145,7 @@ function FroggerGame(props: IFroggerGameProps) {
     if (mediaRecorder && mediaRecorder.mediaRecorder) {
       mediaRecorder.mediaRecorder.stop();
     }
-
+    console.log(fruits);
     nextState();
   };
 

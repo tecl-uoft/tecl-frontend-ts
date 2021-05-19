@@ -58,8 +58,9 @@ function FroggerConsentForm(props: IFroggerConsentFormProps) {
       (isAdult || formState.signDate)
     ) {
       props.setResponse((r) => {
-        r.consentA = formState;
-        return r;
+        const obj = {...r}
+        obj.consentA = formState;
+        return obj;
       });
       props.consentFunc();
     } else {
