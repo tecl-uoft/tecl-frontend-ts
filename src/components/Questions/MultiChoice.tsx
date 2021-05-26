@@ -68,7 +68,6 @@ function MultiChoice(props: MultiChoiceProps) {
           otherOption,
           selectedCustomItems,
           selectedItems,
-          sliderLang,
         });
       }
 
@@ -77,7 +76,6 @@ function MultiChoice(props: MultiChoiceProps) {
         otherOption: e.currentTarget.value,
         selectedItems,
         selectedCustomItems,
-        sliderLang,
       });
     };
 
@@ -94,7 +92,6 @@ function MultiChoice(props: MultiChoiceProps) {
       selectedItems: obj,
       otherOption,
       selectedCustomItems,
-      sliderLang,
     });
     setSelectedItems(obj);
   };
@@ -102,12 +99,10 @@ function MultiChoice(props: MultiChoiceProps) {
   const onCustomChange = (idx: number) => (res: string) => {
     let obj = { ...sliderLang };
     obj[idx] = parseInt(res);
+    console.log(obj)
     setSliderLang(obj);
     responseSetter({
-      otherOption,
-      selectedCustomItems,
-      selectedItems,
-      sliderLang: obj
+      sliderLang: obj,
     });
     // console.log(idx, res, props.choices);
     //console.log(res)
