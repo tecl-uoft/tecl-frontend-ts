@@ -320,6 +320,15 @@ function MCQuestions(props: {
   const [isUpdated, setIsUpdated] = useState(false);
   const questionAndChocices = questionAndChocicesDefault.main;
 
+  const [showBanner, setShowBanner] = useState(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("type") === "child") {
+      setShowBanner(true);
+    }
+  }, []);
+
   useEffect(() => {
     if (isUpdated) {
       setDemoResponse((o) => {
@@ -341,7 +350,7 @@ function MCQuestions(props: {
 
   return (
     <div>
-      <Banner forChild={false} />
+      {showBanner && <Banner forChild={false} />}
       <div className="w-3/4 mx-auto space-y-12 text-lg font-bold text-left">
         <h2 className="mt-6 text-4xl font-bold tracking-wide text-center">
           Participant Demographics Survey
