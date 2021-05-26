@@ -10,6 +10,8 @@ function FroggerPostQuestions(props: {
   nextState: () => void;
   setResponse: Dispatch<SetStateAction<IFroggerResponse>>;
 }) {
+  const [q2Res, setQ2Res] = useState("");
+  const [q10Res, setQ10Res] = useState("");
   const { nextState, setResponse } = props;
   const [formState, setFormState] = useState<IFroggerPQFormState>({
     q1: undefined,
@@ -27,7 +29,7 @@ function FroggerPostQuestions(props: {
   const formStateSetter: any[] = [
     () => setFormState((s) => ({ ...s, q1: false })),
     (e: ChangeEvent<HTMLTextAreaElement>) =>
-      setFormState((s) => ({ ...s, q2: e.currentTarget.value })),
+      setFormState((s) => ({ ...s, q2: e.target.value || "x " })),
     () => setFormState((s) => ({ ...s, q3: false })),
     () => setFormState((s) => ({ ...s, q4: false })),
     () => setFormState((s) => ({ ...s, q5: false })),
@@ -36,9 +38,15 @@ function FroggerPostQuestions(props: {
     () => setFormState((s) => ({ ...s, q8: false })),
     () => setFormState((s) => ({ ...s, q9: false })),
     (e: ChangeEvent<HTMLTextAreaElement>) =>
-      setFormState((s) => ({ ...s, q10: e.currentTarget.value })),
+      setFormState((s) => ({ ...s, q10: e.target.value })),
   ];
 
+  const updateQ2Res = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setQ2Res(e.target.value);
+  };
+  const updateQ10Res = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setQ10Res(e.target.value);
+  };
   const formStateSetterYes: any[] = [
     () => setFormState((s) => ({ ...s, q1: true })),
     (e: ChangeEvent<HTMLTextAreaElement>) =>
@@ -123,18 +131,21 @@ function FroggerPostQuestions(props: {
     const { q1, q2, q3, q4, q5, q6, q7, q8, q9, q10 } = formState;
     if (
       q1 === undefined ||
-      (q2 === "" && q1 === false) ||
+      (q2Res === "" && q1 === false) ||
       q3 === undefined ||
       (q3 === true && (q4 === undefined || q5 === undefined)) ||
       q6 === undefined ||
       q7 === undefined ||
       q8 === undefined ||
       q9 === undefined ||
-      q10 === ""
+      q10Res === ""
     ) {
       notify.error("Please fill out all answers available.");
     } else {
-      setResponse((r) => ({ ...r, postQuestions: formState as any }));
+      setResponse((r) => ({
+        ...r,
+        postQuestions: { ...formState, q2: q2Res, q10: q10Res },
+      }));
       nextState();
     }
   };
@@ -151,7 +162,8 @@ function FroggerPostQuestions(props: {
             <div key={idx + question.ref}>
               <div className="my-2 rounded-lg">
                 {idx !== 1 &&
-                  ((idx !== 3 && idx !== 4) || formState.q3 === true) && idx < 9 && (
+                  ((idx !== 3 && idx !== 4) || formState.q3 === true) &&
+                  idx < 9 && (
                     <div
                       className={`flex justify-between px-10 py-2 rounded-md `}
                     >
@@ -196,8 +208,8 @@ function FroggerPostQuestions(props: {
                     cols={50}
                     className="w-full p-4 bg-gray-100"
                     placeholder="Write you answer here."
-                    value={formState.q2 as any}
-                    onChange={formStateSetter[idx]}
+                    value={q2Res}
+                    onChange={updateQ2Res}
                   />
                 </div>
               )}
@@ -209,8 +221,8 @@ function FroggerPostQuestions(props: {
                     cols={50}
                     className="w-full p-4 bg-gray-100"
                     placeholder="Write you answer here."
-                    value={formState.q10 as any}
-                    onChange={formStateSetter[idx]}
+                    value={q10Res}
+                    onChange={updateQ10Res}
                   />
                 </div>
               )}
