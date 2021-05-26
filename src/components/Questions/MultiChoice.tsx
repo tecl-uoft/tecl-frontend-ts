@@ -99,7 +99,7 @@ function MultiChoice(props: MultiChoiceProps) {
   const onCustomChange = (idx: number) => (res: string) => {
     let obj = { ...sliderLang };
     obj[idx] = parseInt(res);
-    console.log(obj)
+    
     setSliderLang(obj);
     responseSetter({
       sliderLang: obj,

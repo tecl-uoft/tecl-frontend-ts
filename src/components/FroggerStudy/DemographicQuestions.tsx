@@ -387,7 +387,7 @@ function MCQuestions(props: {
                 responseSetter={(res: any) =>
                   setResponse((r) => {
                     let obj = { ...r };
-                    r[idx] = { question: qa.question, response: res };
+                    obj[idx] = { question: qa.question, response: res };
                     return obj;
                   })
                 }
