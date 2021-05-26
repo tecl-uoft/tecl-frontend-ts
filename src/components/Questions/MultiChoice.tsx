@@ -104,14 +104,14 @@ function MultiChoice(props: MultiChoiceProps) {
     responseSetter({
       sliderLang: obj,
     });
-    // console.log(idx, res, props.choices);
-    //console.log(res)
   };
 
   const onDateChange = (index: number) => (res: string) => {
     let obj = { ...selectedCustomItems };
+    console.log(res)
     obj[index] = res;
-    onChoiceChange(index);
+    responseSetter({ date: res })
+    // onChoiceChange(index);
     setCustomSelectedItems(obj);
   };
 
