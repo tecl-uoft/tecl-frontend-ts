@@ -31,6 +31,7 @@ function MultiChoice(props: MultiChoiceProps) {
   const [selectedCustomItems, setCustomSelectedItems] = useState<{
     [key: number]: string;
   }>({});
+  const [sliderLang, setSliderLang] = useState<{ [key: number]: number }>({});
 
   const [otherOption, setOtherOption] = useState("");
 
@@ -44,27 +45,41 @@ function MultiChoice(props: MultiChoiceProps) {
     });
   }, [choices]);
 
-  const onTextChange = (index: number) => (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    if (!selectMultiple) {
-      let obj = { ...selectedItems };
-      choices.forEach((key, idx) => {
-        obj[idx] = false;
-      });
-      setSelectedItems(obj);
-      responseSetter({ selectedItems: obj, otherOption, selectedCustomItems });
-    } else {
-      let obj = { ...selectedCustomItems };
-      obj[index] = e.currentTarget.value;
-      onChoiceChange(index);
-      setCustomSelectedItems(obj);
-      responseSetter({ date: obj, otherOption, selectedCustomItems, selectedItems });
-    }
+  const onTextChange =
+    (index: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (!selectMultiple) {
+        let obj = { ...selectedItems };
+        choices.forEach((key, idx) => {
+          obj[idx] = false;
+        });
+        setSelectedItems(obj);
+        responseSetter({
+          selectedItems: obj,
+          otherOption,
+          selectedCustomItems,
+        });
+      } else {
+        let obj = { ...selectedCustomItems };
+        obj[index] = e.currentTarget.value;
+        onChoiceChange(index);
+        setCustomSelectedItems(obj);
+        responseSetter({
+          date: obj,
+          otherOption,
+          selectedCustomItems,
+          selectedItems,
+          sliderLang,
+        });
+      }
 
-    setOtherOption(e.currentTarget.value);
-    responseSetter({ otherOption: e.currentTarget.value, selectedItems, selectedCustomItems });
-  };
+      setOtherOption(e.currentTarget.value);
+      responseSetter({
+        otherOption: e.currentTarget.value,
+        selectedItems,
+        selectedCustomItems,
+        sliderLang,
+      });
+    };
 
   const onChoiceChange = (index: number) => () => {
     let obj = { ...selectedItems };
@@ -75,15 +90,30 @@ function MultiChoice(props: MultiChoiceProps) {
       });
       setOtherOption("");
     }
-    responseSetter({ selectedItems: obj, otherOption, selectedCustomItems });
+    responseSetter({
+      selectedItems: obj,
+      otherOption,
+      selectedCustomItems,
+      sliderLang,
+    });
     setSelectedItems(obj);
   };
 
-  const onCustomChange = (res: string) => {
+  const onCustomChange = (idx: number) => (res: string) => {
+    let obj = { ...sliderLang };
+    obj[idx] = parseInt(res);
+    setSliderLang(obj);
+    responseSetter({
+      otherOption,
+      selectedCustomItems,
+      selectedItems,
+      sliderLang: obj
+    });
+    // console.log(idx, res, props.choices);
     //console.log(res)
   };
 
-  const onSliderChange = (index: number) => (res: string) => {
+  const onDateChange = (index: number) => (res: string) => {
     let obj = { ...selectedCustomItems };
     obj[index] = res;
     onChoiceChange(index);
@@ -126,7 +156,7 @@ function MultiChoice(props: MultiChoiceProps) {
                 <Slider
                   key={index}
                   question={value.replace("@slider", "")}
-                  responseSetter={onCustomChange}
+                  responseSetter={onCustomChange(index)}
                 />
               );
             } else if (value.includes("@date")) {
@@ -135,7 +165,7 @@ function MultiChoice(props: MultiChoiceProps) {
                   key={index}
                   type="date"
                   value={selectedCustomItems[index]}
-                  valueSetter={onSliderChange(index)}
+                  valueSetter={onDateChange(index)}
                 />
               );
             }
