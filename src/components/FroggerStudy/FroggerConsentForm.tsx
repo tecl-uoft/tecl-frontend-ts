@@ -1,3 +1,4 @@
+import { DateTime } from "luxon";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import ConsentTemplate from "../common/ConsentTemplate";
 import Input from "../common/Input";
@@ -58,13 +59,27 @@ function FroggerConsentForm(props: IFroggerConsentFormProps) {
       (isAdult || formState.signDate)
     ) {
       props.setResponse((r) => {
-        const obj = {...r}
+        const obj = { ...r };
         obj.consentA = formState;
         return obj;
       });
       props.consentFunc();
     } else {
-      notify.error("You have missed a required field.");
+      if (!(isAdult || formState.parentName)) {
+        notify.error("You have missed the Name of parent/guardian field.");
+      } else if (!(isAdult || formState.childName)) {
+        notify.error("You have missed the Name of child field.");
+      } else if (!formState.childBirthday) {
+        notify.error("You have forgotten to update the Birthday field.");
+      } else if (!formState.childGender) {
+        notify.error("You have missed the Gender field.");
+      } else if (!(isAdult || formState.sign)) {
+        notify.error("You have missed the Signature field.");
+      } else if (!(isAdult || formState.signDate)) {
+        notify.error("You have missed the Signature Date field.");
+      } else {
+        notify.error("You have missed a required field.");
+      }
     }
   };
 
@@ -72,6 +87,7 @@ function FroggerConsentForm(props: IFroggerConsentFormProps) {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isAdult = params.get("type") === "adult";
+    setFormState(s => ({...s, signDate: DateTime.fromJSDate(new Date()).toFormat("yyyy-MM-dd") }) )
     setIsAdult(isAdult);
   }, []);
 
@@ -216,7 +232,6 @@ function FroggerConsentForm(props: IFroggerConsentFormProps) {
                 />{" "}
               </div>{" "}
             </div>{" "}
-       
             {!isAdult && (
               <>
                 <input
