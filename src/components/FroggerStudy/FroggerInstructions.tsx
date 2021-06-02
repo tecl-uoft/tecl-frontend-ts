@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import StudyTitleText from "../common/StudyTitleText";
+import { notify } from "../Notification";
 import { IFroggerParticipant } from "./FroggerStudy";
 
 interface IFroggerInstructionsProps {
@@ -8,8 +9,9 @@ interface IFroggerInstructionsProps {
 }
 
 function FroggerInstructions(props: IFroggerInstructionsProps) {
-  const { participant } = props;
+  const { participant, nextState } = props;
   const [videoSrc, setVideoSrc] = useState("");
+  const [isFinished, setIsFinished] = useState(false);
 
   useEffect(() => {
     const queryString = window.location.search;
@@ -18,14 +20,15 @@ function FroggerInstructions(props: IFroggerInstructionsProps) {
     const study_type = urlParams.get("study_type");
     if (isMod) {
       const videoSrcLink =
-        study_type === "1"
-          ? "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/frogger/Frogger_Instructions_Female.mp4"
-          : "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/frogger/Frogger_Instructions_Male.mp4";
+        "https://tecl-frogger-exp-videos.s3.ca-central-1.amazonaws.com/" +
+        (study_type === "1"
+          ? "Frogger_Instructions_Female.mp4"
+          : "Frogger_Instructions_Male.mp4");
       setVideoSrc(videoSrcLink);
     } else if (participant) {
       const { type, study } = participant;
       const mainURL =
-        "https://tecl-online-assets.s3.ca-central-1.amazonaws.com/frogger_videos/";
+        "https://tecl-frogger-exp-videos.s3.ca-central-1.amazonaws.com/";
       let videoFile = "";
       if (type === "child") {
         videoFile =
@@ -42,21 +45,38 @@ function FroggerInstructions(props: IFroggerInstructionsProps) {
     }
   }, [videoSrc, participant]);
 
-  const { nextState } = props;
+  const onVideoFinish = () => {
+    setIsFinished(true);
+  };
+
+  const onNextClick = () => {
+    const isMod = window.location.pathname.includes("/mod");
+    if (isMod || isFinished) {
+      nextState();
+    } else {
+      notify.error("Please finish the video before proceeding");
+    }
+  };
+
   return (
     <div className="container px-2 mx-auto mb-12">
       <StudyTitleText text={"Watch the instructional video below."} />
       <h4 className="mb-4 text-2xl text-center text-gray-800">
         Make sure to learn the objective of the game.
       </h4>
-      {console.log(videoSrc)}
-      <video className="px-32 min-h-64 focus:outline-none" controls>
-        <source src={videoSrc} type="video/mp4" />
-        Your browser does not support the video.
-      </video>
+      {videoSrc && (
+        <video
+          onEnded={onVideoFinish}
+          className="px-32 min-h-64 focus:outline-none"
+          controls
+        >
+          <source src={videoSrc} type="video/mp4" />
+          Your browser does not support the video.
+        </video>
+      )}
       <div className="flex justify-around mt-6">
         <button
-          onClick={() => nextState()}
+          onClick={onNextClick}
           className="w-full px-8 py-4 font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400 focus:outline-none"
         >
           Next
