@@ -336,13 +336,12 @@ function MCQuestions(props: {
       });
       nextState();
     }
-  }, [isUpdated, nextState, setDemoResponse]);
+  }, [isUpdated]);
 
   const submitState = () => {
     setDemoResponse((o) => {
       let obj = { ...o };
       obj["demographicQs"] = response;
-
       setIsUpdated(true);
       return obj;
     });
