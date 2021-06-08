@@ -81,7 +81,7 @@ function FroggerVideoConsentForm(props: IFroggerConsentFormProps) {
     () => {
       if (formState.vc2)
         notify.error(
-          "Note: You must select yes for question 2, in order to get paid."
+          "Note: You must select yes for question 2, in order to get continue."
         );
       setFormState((s) => ({ ...s, vc2: !s.vc2 }));
     },
@@ -94,12 +94,18 @@ function FroggerVideoConsentForm(props: IFroggerConsentFormProps) {
     () => setFormState((s) => ({ ...s, vc9: !s.vc9 })),
   ];
   const submitVideoConsent = () => {
-    props.setResponse((r) => {
-      r.consentB = formState;
-      return r;
-    });
-    props.consentFunc();
-    notify.success("Consent Submitted.");
+    if (!formState.vc1 || !formState.vc2) {
+      notify.error(
+        "Note: You must select yes for question 1 and 2, in order to get continue."
+      );
+    } else {
+      props.setResponse((r) => {
+        r.consentB = formState;
+        return r;
+      });
+      props.consentFunc();
+      notify.success("Consent Submitted.");
+    }
   };
 
   return (
