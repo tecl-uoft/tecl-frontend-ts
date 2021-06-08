@@ -24,7 +24,7 @@ function DemographicQuestions(props: {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isAdult = params.get("type") === "adult";
-    process.env.NODE_ENV === "development" ? setDemoState(4) : setDemoState(0);
+    process.env.NODE_ENV === "development" ? setDemoState(3) : setDemoState(0);
     setIsAdult(isAdult);
   }, []);
 
@@ -113,13 +113,15 @@ function AdultQs(props: {
     "Strongly agree",
     "Very strongly agree",
   ];
-
-  const submitState = () => {
-    setDemoResponse((o) => ({ ...o, authQ: response }));
-    nextState();
-  };
-
   const adultAuth = questionAndChocicesDefault.adultAuth;
+  const submitState = () => {
+    if (Object.keys(response).length !== adultAuth.length) {
+      notify.error("Please answer all possible questions.");
+    } else {
+      setDemoResponse((o) => ({ ...o, authQ: response }));
+      nextState();
+    }
+  };
 
   return (
     <div>
