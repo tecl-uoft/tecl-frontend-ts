@@ -14,6 +14,7 @@ function FroggerPostQuestions(props: {
   const [q10Res, setQ10Res] = useState("");
   const { nextState, setResponse } = props;
   const [formState, setFormState] = useState<IFroggerPQFormState>({
+    q0: undefined,
     q1: undefined,
     q2: "",
     q3: undefined,
@@ -25,6 +26,9 @@ function FroggerPostQuestions(props: {
     q9: undefined,
     q10: "",
   });
+  const [q0State, setQ0State] = useState<boolean | undefined>(undefined);
+  const [q11, setQ11] = useState("");
+  const [q12, setQ12] = useState("");
 
   const formStateSetter: any[] = [
     () => setFormState((s) => ({ ...s, q1: false })),
@@ -130,6 +134,7 @@ function FroggerPostQuestions(props: {
   const onSubmit = () => {
     const { q1, q2, q3, q4, q5, q6, q7, q8, q9, q10 } = formState;
     if (
+      q0State === undefined ||
       q1 === undefined ||
       (q2Res === "" && q1 === false) ||
       q3 === undefined ||
@@ -138,13 +143,22 @@ function FroggerPostQuestions(props: {
       q7 === undefined ||
       q8 === undefined ||
       q9 === undefined ||
-      q10Res === ""
+      q10Res === "" ||
+      q11 === "" ||
+      q12 === ""
     ) {
       notify.error("Please fill out all answers available.");
     } else {
       setResponse((r) => ({
         ...r,
-        postQuestions: { ...formState, q2: q2Res, q10: q10Res },
+        postQuestions: {
+          ...formState,
+          q2: q2Res,
+          q10: q10Res,
+          q11,
+          q12,
+          q0: q0State,
+        },
       }));
       nextState();
     }
@@ -157,6 +171,35 @@ function FroggerPostQuestions(props: {
         game!
       </h1>
       <div className="container flex flex-col justify-between mx-auto">
+        <div className="w-full h-1 bg-blue-200 rounded-full" />
+        <div className={`flex justify-between px-10 py-2 rounded-md `}>
+          <p className="w-3/4">
+            Did you think there was more than one way to solve the game?
+          </p>
+
+          <div className="flex justify-end w-1/4 space-x-4">
+            <div>
+              <input
+                checked={q0State === true}
+                onChange={() => setQ0State(true)}
+                className="w-6 h-6 mx-2 cursor-pointer"
+                type="radio"
+              />
+
+              <label className="text-center">Yes</label>
+            </div>
+            <div>
+              <input
+                checked={q0State === false}
+                onChange={() => setQ0State(false)}
+                className="w-6 h-6 mx-2 cursor-pointer "
+                type="radio"
+              />
+              <label>No</label>
+            </div>
+          </div>
+        </div>
+        <div className="w-full h-1 bg-blue-200 rounded-full" />
         {questions.map((question, idx) => {
           return (
             <div key={idx + question.ref}>
@@ -233,6 +276,94 @@ function FroggerPostQuestions(props: {
             </div>
           );
         })}
+        <div className={`flex justify-between px-10 py-2 rounded-md `}>
+          <p className="w-3/4">How do you know where the trophies are?</p>
+
+          <div className="flex flex-col justify-end w-1/4 py-2 space-y-2 ">
+            <div>
+              <input
+                checked={q11 === "There are pineapples"}
+                onChange={() => setQ11("There are pineapples")}
+                className="w-6 h-6 mx-2 cursor-pointer"
+                type="radio"
+              />
+
+              <label className="text-center">There are pineapples</label>
+            </div>
+            <div>
+              <input
+                checked={q11 === "There are chickens"}
+                onChange={() => setQ11("There are chickens")}
+                className="w-6 h-6 mx-2 cursor-pointer "
+                type="radio"
+              />
+              <label>There are chickens</label>
+            </div>
+            <div>
+              <input
+                checked={q11 === "There are boxes"}
+                onChange={() => setQ11("There are boxes")}
+                className="w-6 h-6 mx-2 cursor-pointer "
+                type="radio"
+              />
+              <label>There are boxes</label>
+            </div>
+            <div>
+              <input
+                checked={q11 === "There are watermelons"}
+                onChange={() => setQ11("There are watermelons")}
+                className="w-6 h-6 mx-2 cursor-pointer "
+                type="radio"
+              />
+              <label>There are watermelons</label>
+            </div>
+          </div>
+        </div>
+        <div className="w-full h-1 bg-blue-200 rounded-full" />
+        <div className={`flex justify-between px-10 py-2 rounded-md `}>
+          <p className="w-3/4">What marks the path in the video?</p>
+
+          <div className="flex flex-col justify-end w-1/4 py-2 space-y-2">
+            <div>
+              <input
+                checked={q12 === "Pineapples"}
+                onChange={() => setQ12("Pineapples")}
+                className="w-6 h-6 mx-2 cursor-pointer"
+                type="radio"
+              />
+
+              <label className="text-center">Pineapples</label>
+            </div>
+            <div>
+              <input
+                checked={q12 === "Chickens"}
+                onChange={() => setQ12("Chickens")}
+                className="w-6 h-6 mx-2 cursor-pointer "
+                type="radio"
+              />
+              <label>Chickens</label>
+            </div>
+            <div>
+              <input
+                checked={q12 === "Cherries"}
+                onChange={() => setQ12("Cherries")}
+                className="w-6 h-6 mx-2 cursor-pointer "
+                type="radio"
+              />
+              <label>Cherries</label>
+            </div>
+            <div>
+              <input
+                checked={q12 === "Boxes"}
+                onChange={() => setQ12("Boxes")}
+                className="w-6 h-6 mx-2 cursor-pointer "
+                type="radio"
+              />
+              <label>Boxes</label>
+            </div>
+          </div>
+        </div>
+        <div className="w-full h-1 bg-blue-200 rounded-full" />
       </div>
       <button
         onClick={onSubmit}
