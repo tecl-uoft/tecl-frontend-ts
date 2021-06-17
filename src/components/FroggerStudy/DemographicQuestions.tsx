@@ -350,6 +350,7 @@ function MCQuestions(props: {
       return obj;
     });
   };
+  let qCount = 0;
 
   return (
     <div>
@@ -379,13 +380,12 @@ function MCQuestions(props: {
       </div>
       <div className="w-3/4 mx-auto md:w-1/2 ">
         {questionAndChocices.map((qa, idx) => {
-          const qNum = idx + 1;
           const isMultiChoice = qa.question.includes("select more than one");
           const isChildType =
             qa.question.includes("Parent") ||
             qa.question.includes("child") ||
-            qa.question.includes("Parent/Caregiver") 
-            
+            qa.question.includes("Parent/Caregiver");
+          qCount = !isChildType || !isAdult ? qCount + 1 : qCount;
           return (
             <div key={idx + 200}>
               {(!isChildType || !isAdult) && (
@@ -393,7 +393,7 @@ function MCQuestions(props: {
                   <MultiChoice
                     selectMultiple={isMultiChoice}
                     choices={qa.choices}
-                    question={qa.question}
+                    question={qCount + ". " + qa.question}
                     responseSetter={(res: any) =>
                       setResponse((r) => {
                         let obj = { ...r };
