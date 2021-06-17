@@ -103,13 +103,13 @@ function FroggerVideoConsentForm(props: IFroggerConsentFormProps) {
   const submitVideoConsent = () => {
     if (!formState.vc1 && !isAdult) {
       notify.error(
-        "Note: You must select yes for question 1 in order to get continue."
+        "Note: You must select yes for question 1 in order to continue."
       );
     } else if (!formState.vc2) {
       notify.error(
         isAdult
-          ? "Note: You must select yes for question 1 in order to get continue."
-          : "Note: You must select yes for question 2 in order to get continue."
+          ? "Note: You must select yes for question 1 in order to continue."
+          : "Note: You must select yes for question 2 in order to continue."
       );
     } else {
       props.setResponse((r) => {
