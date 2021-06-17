@@ -135,9 +135,8 @@ function FroggerGame(props: IFroggerGameProps) {
       setTimerSec(0);
       setTimerMin(0);
       setTimeOver(true);
-      
     });
-  
+
     setUnityContent(unityContent);
   }, [participant]);
 
@@ -145,7 +144,7 @@ function FroggerGame(props: IFroggerGameProps) {
     if (mediaRecorder && mediaRecorder.mediaRecorder) {
       mediaRecorder.mediaRecorder.stop();
     }
-    console.log(fruits);
+
     nextState();
   };
 
@@ -166,7 +165,7 @@ function FroggerGame(props: IFroggerGameProps) {
           remaining.
         </h4>
       )}
-   
+
       {loadingProgress !== 1 ? (
         <div>{`Loading ${Math.floor(loadingProgress * 100)} percent...`}</div>
       ) : null}

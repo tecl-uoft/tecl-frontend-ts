@@ -123,12 +123,6 @@ function FroggerPostQuestions(props: {
       q: "Is this part of the game?",
       img: "/assets/frogger/q9i.png",
     },
-    {
-      ref: "q10",
-      state: formState.q10,
-      q: "How do you know where the trophy is?",
-      img: "",
-    },
   ];
 
   const onSubmit = () => {
@@ -143,7 +137,6 @@ function FroggerPostQuestions(props: {
       q7 === undefined ||
       q8 === undefined ||
       q9 === undefined ||
-      q10Res === "" ||
       q11 === "" ||
       q12 === ""
     ) {
@@ -154,9 +147,8 @@ function FroggerPostQuestions(props: {
         postQuestions: {
           ...formState,
           q2: q2Res,
-          q10: q10Res,
-          q11,
-          q12,
+          q10: q11,
+          q11: q12,
           q0: q0State,
         },
       }));

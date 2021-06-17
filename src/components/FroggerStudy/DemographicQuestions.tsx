@@ -420,7 +420,7 @@ function Questions(props: {
     "daily",
   ];
   const questions = [
-    "How often Do you play video games?",
+    "How often do you play video games?",
     "How often do you play platforming games (e.g., Mario)? ",
     "How often do you use technology?",
   ];

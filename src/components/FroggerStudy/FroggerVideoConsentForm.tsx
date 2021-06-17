@@ -15,6 +15,13 @@ function FroggerVideoConsentForm(props: IFroggerConsentFormProps) {
   const address = "University of Toronto, 100 St. George Street, M5S 2E5";
   const telephone = "(416) 978-6903";
   const email = "jessica.sommerville@utoronto.ca";
+  const [isAdult, setIsAdult] = useState(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const isAdult = params.get("type") === "adult";
+    setIsAdult(isAdult);
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -74,14 +81,14 @@ function FroggerVideoConsentForm(props: IFroggerConsentFormProps) {
     () => {
       if (formState.vc1)
         notify.error(
-          "Note: You must select yes for question 1, in order to get paid."
+          "Note: You must select yes for question 1, in order to continue."
         );
       setFormState((s) => ({ ...s, vc1: !s.vc1 }));
     },
     () => {
       if (formState.vc2)
         notify.error(
-          "Note: You must select yes for question 2, in order to get continue."
+          "Note: You must select yes for question 2, in order to continue."
         );
       setFormState((s) => ({ ...s, vc2: !s.vc2 }));
     },
@@ -136,31 +143,68 @@ function FroggerVideoConsentForm(props: IFroggerConsentFormProps) {
               <b>Video Release Consent and Webcam Recording</b>
             </h3>
             <div className="w-full">
-              With your consent, we will film your child’s behaviour via your
-              computer’s webcam and microphone <strong>(via Zoom)</strong> for
-              reliability purposes and/or educational purposes. Your child’s
-              name would never be associated with any of these uses. You, of
-              course, have the right to refuse to allow your child’s film to be
-              used in any of these ways.{" "}
-              <strong>
-                {" "}
-                If consent for video recording is given, the footage will be
-                transferred to and securely stored on the laboratory database
-                without identifying information. However, there is always a
-                small risk that data transmitted over the internet may be
-                intercepted or that the security of stored data may be
-                compromised.{" "}
-              </strong>
-              <br />
-              The footage will only be seen by the research investigators,
-              unless separate consent is given for the videos to be used in
-              other venues (e.g., conferences or in the media). Footage will be
-              destroyed approximately 3 years after the study is complete,
-              unless separate consent for use in future research is given.{" "}
-              <br />
-              Please indicate below whether you do (check “Yes”) or do not
-              (check “No) give us permission to use your child’s film or still
-              photos of your child in each of these ways: <br /> <br />
+              {isAdult ? (
+                <>
+                  With your consent, we will film your behaviour{" "}
+                  <strong>
+                    via your computer’s webcam and microphone (via Zoom)
+                  </strong>{" "}
+                  for reliability purposes and/or educational purposes. Your
+                  name would never be associated with any of these uses. You, of
+                  course, have the right to refuse to allow your film to be used
+                  in any of these ways.{" "}
+                  <strong>
+                    If consent for video recording is given, the footage will be
+                    transferred to and securely stored on the laboratory
+                    database without identifying information. However, there is
+                    always a small risk that data transmitted over the internet
+                    may be intercepted or that the security of stored data may
+                    be compromised.
+                  </strong>{" "}
+                  <br />
+                  <span className="text-gray-700">
+                    The footage will only be seen by the research investigators,
+                    unless separate consent is given for the videos to be used
+                    in other venues (e.g., conferences or in the media). Footage
+                    will be destroyed approximately 3 years after the study is
+                    complete, unless separate consent for use in future research
+                    is given.
+                  </span>{" "}
+                  <br /> Please indicate below whether you do (check "Yes") or
+                  do not (check "No") give us permission to use your film or
+                  still photos in each of these ways
+                </>
+              ) : (
+                <>
+                  With your consent, we will film your child’s behaviour via
+                  your computer’s webcam and microphone{" "}
+                  <strong>(via Zoom)</strong> for reliability purposes and/or
+                  educational purposes. Your child’s name would never be
+                  associated with any of these uses. You, of course, have the
+                  right to refuse to allow your child’s film to be used in any
+                  of these ways.{" "}
+                  <strong>
+                    {" "}
+                    If consent for video recording is given, the footage will be
+                    transferred to and securely stored on the laboratory
+                    database without identifying information. However, there is
+                    always a small risk that data transmitted over the internet
+                    may be intercepted or that the security of stored data may
+                    be compromised.{" "}
+                  </strong>
+                  <br />
+                  The footage will only be seen by the research investigators,
+                  unless separate consent is given for the videos to be used in
+                  other venues (e.g., conferences or in the media). Footage will
+                  be destroyed approximately 3 years after the study is
+                  complete, unless separate consent for use in future research
+                  is given. <br />
+                  Please indicate below whether you do (check “Yes”) or do not
+                  (check “No) give us permission to use your child’s film or
+                  still photos of your child in each of these ways:
+                </>
+              )}{" "}
+              <br /> <br />
               <div className="flex flex-col justify-between">
                 {questions.map((question, idx) => {
                   return (
