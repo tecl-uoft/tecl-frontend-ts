@@ -79,7 +79,7 @@ function FroggerVideoConsentForm(props: IFroggerConsentFormProps) {
 
   const formStateSetter = [
     () => {
-      if (formState.vc1)
+      if (formState.vc1 || isAdult)
         notify.error(
           "Note: You must select yes for question 1, in order to continue."
         );
@@ -101,9 +101,15 @@ function FroggerVideoConsentForm(props: IFroggerConsentFormProps) {
     () => setFormState((s) => ({ ...s, vc9: !s.vc9 })),
   ];
   const submitVideoConsent = () => {
-    if (!formState.vc1 || !formState.vc2) {
+    if (!formState.vc1 && !isAdult) {
       notify.error(
-        "Note: You must select yes for question 1 and 2, in order to get continue."
+        "Note: You must select yes for question 1 in order to get continue."
+      );
+    } else if (!formState.vc2) {
+      notify.error(
+        isAdult
+          ? "Note: You must select yes for question 1 in order to get continue."
+          : "Note: You must select yes for question 2 in order to get continue."
       );
     } else {
       props.setResponse((r) => {
@@ -207,7 +213,7 @@ function FroggerVideoConsentForm(props: IFroggerConsentFormProps) {
               <br /> <br />
               <div className="flex flex-col justify-between">
                 {questions.map((question, idx) => {
-                  if (isAdult && (idx === 0 || idx === 1)) return <> </>;
+                  if (isAdult && (idx === 0 )) return <> </>;
                   return (
                     <div
                       className={`flex justify-between px-10 my-2 py-2 rounded-md ${
@@ -218,7 +224,7 @@ function FroggerVideoConsentForm(props: IFroggerConsentFormProps) {
                       {" "}
                       <p className="w-3/4">
                         {" "}
-                        {isAdult ? idx - 1 : idx + 1}. {question.q}
+                        {isAdult ? idx : idx + 1}. {question.q}
                       </p>{" "}
                       <div className="flex justify-end w-1/4 space-x-4">
                         {" "}
@@ -263,7 +269,8 @@ function FroggerVideoConsentForm(props: IFroggerConsentFormProps) {
                   released to third parties in the case of media consent).{" "}
                 </>
               )}{" "}
-              <br /><br />
+              <br />
+              <br />
               If you have any questions, complaints or concerns regarding this
               research, either now or at any time in the future, please contact
               Dr. Jessica Sommerville at 416-978-1815 or
