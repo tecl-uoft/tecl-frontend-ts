@@ -58,6 +58,25 @@ function FroggerInstructions(props: IFroggerInstructionsProps) {
     }
   };
 
+  const [videoProgress, setVideoProgress] = useState(0)
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const onPause = () => {
+    const videoEl = videoRef.current;
+    if (videoEl && videoSrc) {
+      videoEl.pause()
+    }
+  }
+
+  const onPlay = () => {
+    const videoEl = videoRef.current;
+    if (videoEl && videoSrc) {
+      videoEl.play()
+    }
+  }
+
+  
+
+
   return (
     <div className="container px-2 mx-auto mb-12">
       <StudyTitleText text={"Watch the instructional video below."} />
@@ -65,23 +84,40 @@ function FroggerInstructions(props: IFroggerInstructionsProps) {
         Make sure to learn the objective of the game.
       </h4>
       {videoSrc && (
-        <video
-          onEnded={onVideoFinish}
-          className="px-32 min-h-64 focus:outline-none"
-          controls
-        >
-          <source src={videoSrc} type="video/mp4" />
-          Your browser does not support the video.
-        </video>
+        <div className="flex flex-col">
+          <video
+            onEnded={onVideoFinish}
+            
+            className="px-32 min-h-64 focus:outline-none"
+            ref={videoRef}
+          >
+            <source src={videoSrc} type="video/mp4" />
+            Your browser does not support the video.
+          </video>
+          <div className="flex mt-4 space-x-4">
+            <button
+              onClick={onPlay}
+              className="w-1/2 px-4 py-3 font-bold tracking-wider uppercase bg-green-200 rounded-lg shadow-lg hover:bg-green-400 focus:outline-none"
+            >
+             Play
+            </button>
+            <button
+              onClick={onPause}
+              className="w-1/2 px-4 py-3 font-bold tracking-wider uppercase bg-yellow-200 rounded-lg shadow-lg hover:bg-yellow-400 focus:outline-none"
+            >
+              Pause
+            </button>
+          </div>
+        </div>
       )}
-      <div className="flex justify-around mt-6">
+      {isFinished && <div className="flex justify-around mt-6">
         <button
           onClick={onNextClick}
           className="w-full px-8 py-4 font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400 focus:outline-none"
         >
           Next
         </button>
-      </div>
+      </div>}
     </div>
   );
 }
