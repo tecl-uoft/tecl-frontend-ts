@@ -166,6 +166,7 @@ function FroggerConsentForm(props: IFroggerConsentFormProps) {
                   value={formState.childBirthday}
                   valueSetter={formStateSetter.childBirthday}
                   type="date"
+                  max={new Date().toUTCString()}
                 />{" "}
               </div>{" "}
               <br />
@@ -195,6 +196,7 @@ function FroggerConsentForm(props: IFroggerConsentFormProps) {
                       value={formState.signDate}
                       valueSetter={formStateSetter.signDate}
                       type="date"
+                      min={new Date().toUTCString()}
                     />{" "}
                   </div>{" "}
                 </>

@@ -24,7 +24,7 @@ function DemographicQuestions(props: {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isAdult = params.get("type") === "adult";
-    process.env.NODE_ENV === "development" ? setDemoState(3) : setDemoState(0);
+    process.env.NODE_ENV === "development" ? setDemoState(0) : setDemoState(0);
     setIsAdult(isAdult);
   }, []);
 
@@ -50,7 +50,7 @@ function DemographicQuestions(props: {
   const updateState = (demoState: number) => {
     switch (demoState) {
       case 0:
-        return <InitalInst setDemoState={setNextState} />;
+        return <InitalInst isAdult={isAdult} setDemoState={setNextState} />;
       case 1:
         return (
           <Questions
@@ -146,7 +146,7 @@ function AdultQs(props: {
         </h3>
       </div>
       <div className="w-3/4 h-1 mx-auto bg-blue-200 rounded-lg md:w-1/2" />
-      <div className="flex flex-col justify-center w-3/4 mx-auto space-y-8 md:w-1/2">
+      <div className="container flex flex-col justify-center mx-auto space-y-8">
         {adultAuth.map((q, idx) => {
           return (
             <div>
@@ -479,15 +479,21 @@ function Questions(props: {
   );
 }
 
-function InitalInst(props: { setDemoState: () => void }) {
+function InitalInst(props: { isAdult: boolean; setDemoState: () => void }) {
   return (
-    <div className="flex flex-col w-full pb-8 space-y-4 text-2xl">
+    <div className="flex flex-col w-full pb-8 mt-4 space-y-4 text-2xl">
       <p className="mx-4 my-32 text-center">
-        You’re almost done! We just have some surveys for you to finish. <br />{" "}
-        <br />
-        Some will be for parents to fill out and others will be for children to
-        fill out -- <br />
-        we’ll let you know on every screen who should fill out the form!
+        You're almost done! We just have some surveys for you to finish. <br />{" "}
+        {!props.isAdult ? (
+          <>
+            <br />
+            Some will be for parents to fill out and others will be for children
+            to fill out. <br />
+            We’ll let you know on every screen who should fill out the form!
+          </>
+        ) : (
+          <> </>
+        )}
       </p>
       <NextButton setDemoState={() => props.setDemoState()} />
     </div>

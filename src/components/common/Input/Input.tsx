@@ -40,6 +40,8 @@ function Input(props: {
         value={
           props.value ? DateTime.fromISO(props.value).toJSDate() : new Date()
         }
+        minDate={props.min ? new Date(props.min) : undefined}
+        maxDate={props.max ? new Date(props.max) : undefined}
         onChange={datePickChange}
       />
     );

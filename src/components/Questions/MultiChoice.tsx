@@ -159,6 +159,7 @@ function MultiChoice(props: MultiChoiceProps) {
                 <Input
                   key={index}
                   type="date"
+                  max={question.includes("date of birth") ? new Date().toUTCString() : undefined}
                   value={selectedCustomItems[index]}
                   valueSetter={onDateChange(index)}
                 />

@@ -207,6 +207,7 @@ function FroggerVideoConsentForm(props: IFroggerConsentFormProps) {
               <br /> <br />
               <div className="flex flex-col justify-between">
                 {questions.map((question, idx) => {
+                  if (isAdult && (idx === 0 || idx === 1)) return <> </>;
                   return (
                     <div
                       className={`flex justify-between px-10 my-2 py-2 rounded-md ${
@@ -217,7 +218,7 @@ function FroggerVideoConsentForm(props: IFroggerConsentFormProps) {
                       {" "}
                       <p className="w-3/4">
                         {" "}
-                        {idx + 1}. {question.q}
+                        {isAdult ? idx - 1 : idx + 1}. {question.q}
                       </p>{" "}
                       <div className="flex justify-end w-1/4 space-x-4">
                         {" "}
@@ -245,11 +246,24 @@ function FroggerVideoConsentForm(props: IFroggerConsentFormProps) {
                 })}
               </div>{" "}
               <br />
-              If at any time in the future you change your mind about granting
-              us permission to use you or your child’s video or photos, please
-              notify us and we will stop using it (except in the case of photos
-              already published in books or journals or released to third
-              parties in the case of media consent). <br />
+              {isAdult ? (
+                <>
+                  If at any time in the future you change your mind about
+                  granting us permission to use your video or photos, please
+                  notify us and we will stop using it (except in the case of
+                  photos already published in books or journals or released to
+                  third parties in the case of media consent).
+                </>
+              ) : (
+                <>
+                  If at any time in the future you change your mind about
+                  granting us permission to use you or your child's video or
+                  photos, please notify us and we will stop using it (except in
+                  the case of photos already published in books or journals or
+                  released to third parties in the case of media consent).{" "}
+                </>
+              )}{" "}
+              <br /><br />
               If you have any questions, complaints or concerns regarding this
               research, either now or at any time in the future, please contact
               Dr. Jessica Sommerville at 416-978-1815 or
