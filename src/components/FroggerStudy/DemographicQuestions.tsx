@@ -384,7 +384,8 @@ function MCQuestions(props: {
           const isChildType =
             qa.question.includes("Parent") ||
             qa.question.includes("child") ||
-            qa.question.includes("Parent/Caregiver");
+            qa.question.includes("Parent/Caregiver") ||
+            qa.question.includes("Please indicate the time dedicated for language use");
           qCount = !isChildType || !isAdult ? qCount + 1 : qCount;
           return (
             <div key={idx + 200}>
