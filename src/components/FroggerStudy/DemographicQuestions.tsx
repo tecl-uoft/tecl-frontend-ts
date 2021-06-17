@@ -24,7 +24,7 @@ function DemographicQuestions(props: {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isAdult = params.get("type") === "adult";
-    process.env.NODE_ENV === "development" ? setDemoState(0) : setDemoState(0);
+    process.env.NODE_ENV === "development" ? setDemoState(4) : setDemoState(0);
     setIsAdult(isAdult);
   }, []);
 
@@ -79,6 +79,7 @@ function DemographicQuestions(props: {
       case 4:
         return (
           <MCQuestions
+            isAdult={isAdult}
             setDemoResponse={setDemoResponse}
             nextState={setNextState}
           />
@@ -311,8 +312,9 @@ function PrefrenceQs(props: {
 function MCQuestions(props: {
   nextState: () => void;
   setDemoResponse: DemoResponseDispatch;
+  isAdult: boolean;
 }) {
-  const { nextState, setDemoResponse } = props;
+  const { nextState, setDemoResponse, isAdult } = props;
   const [response, setResponse] = useState<{
     [key: number]: {
       question: string;
@@ -379,21 +381,30 @@ function MCQuestions(props: {
         {questionAndChocices.map((qa, idx) => {
           const qNum = idx + 1;
           const isMultiChoice = qa.question.includes("select more than one");
+          const isChildType =
+            qa.question.includes("Parent") ||
+            qa.question.includes("child") ||
+            qa.question.includes("Parent/Caregiver") 
+            
           return (
             <div key={idx + 200}>
-              <MultiChoice
-                selectMultiple={isMultiChoice}
-                choices={qa.choices}
-                question={qNum + ". " + qa.question}
-                responseSetter={(res: any) =>
-                  setResponse((r) => {
-                    let obj = { ...r };
-                    obj[idx] = { question: qa.question, response: res };
-                    return obj;
-                  })
-                }
-              />
-              <div className="w-full h-1 bg-blue-200 rounded-lg"> </div>
+              {(!isChildType || !isAdult) && (
+                <>
+                  <MultiChoice
+                    selectMultiple={isMultiChoice}
+                    choices={qa.choices}
+                    question={qa.question}
+                    responseSetter={(res: any) =>
+                      setResponse((r) => {
+                        let obj = { ...r };
+                        obj[idx] = { question: qa.question, response: res };
+                        return obj;
+                      })
+                    }
+                  />{" "}
+                  <div className="w-full h-1 bg-blue-200 rounded-lg" />{" "}
+                </>
+              )}
             </div>
           );
         })}
