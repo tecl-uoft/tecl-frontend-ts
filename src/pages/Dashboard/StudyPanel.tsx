@@ -29,18 +29,17 @@ function StudyPanel(props: IStudyPanelProps) {
       {showPanel && (
         <div>
           <AppointmentPanel study={study} />
-          <CoordinatorsPanel studyName={study.studyName} />
-          <ul className="p-4 mt-4 mb-4 overflow-y-scroll bg-gray-100 rounded-lg max-h-48">
+          <h5 className="mt-4">Current Research Assistants:</h5>
+          <ul className="h-32 p-4 mt-2 mb-4 overflow-y-scroll bg-gray-100 rounded-lg">
             {study.leadResearchers.map((researcher, idx) => {
               return (
-                <li key={researcher.email}>{`${idx + 1}. ${
-                  researcher.email
-                } (${researcher.firstName} ${
-                  researcher.lastName ? researcher.lastName : ""
-                }) `}</li>
+                <li key={researcher.email}>{`${idx + 1}. ${researcher.email} (${
+                  researcher.firstName
+                } ${researcher.lastName ? researcher.lastName : ""}) `}</li>
               );
             })}
           </ul>
+          <CoordinatorsPanel studyName={study.studyName} />
           <StatisticsPanel study={study} />
         </div>
       )}
@@ -62,13 +61,13 @@ function StudyTitlePanel({
   return (
     <div
       onClick={onClickHidePanels}
-      className="flex flex-col cursor-pointer md:flex-row md:mt-6 hover:text-gray-600"
+      className="flex flex-col text-lg cursor-pointer md:flex-row md:mt-6 hover:text-gray-600"
     >
       <div
         className="flex-grow h-2 mx-6 my-auto text-white rounded select-none"
         style={{ backgroundColor: study.keyColor }}
       />
-      <div className="inline-block pt-4 text-2xl font-semibold rounded ">
+      <div className="inline-block pt-4 font-semibold rounded ">
         {study.studyName} Study
       </div>
       <div
@@ -76,7 +75,7 @@ function StudyTitlePanel({
         style={{ backgroundColor: study.keyColor }}
       />
       <button
-        className="w-12 m-4 ml-0 text-2xl text-white no-underline rounded-lg"
+        className="w-12 m-4 ml-0 text-white no-underline rounded-lg"
         style={{ backgroundColor: study.keyColor }}
       >
         {showPanel ? "-" : "+"}
@@ -121,10 +120,10 @@ function CoordinatorsPanel({ studyName }: { studyName: string }) {
   };
 
   return (
-    <div className="mt-2">
-      <h4 className="my-auto text-lg">Add Additional RAs:</h4>
+    <div className="flex justify-end space-x-4">
+      {/* <h4 className="my-auto align-center text-md">Add Additional Research Assistants:</h4> */}
       <div
-        className="flex w-1/3 mt-2 space-x-2"
+        className="flex w-1/3 space-x-2 text-md"
         onKeyPress={onCoordinatorEnter}
       >
         {" "}
@@ -138,7 +137,7 @@ function CoordinatorsPanel({ studyName }: { studyName: string }) {
           onClick={addCurrentCoordinator}
           className="px-4 mb-2 text-white bg-orange-600 rounded hover:bg-orange-800 focus:outline-none focus:shadow-outline"
         >
-          <p className="">Add</p>
+          <p className="w-12 text-sm">Add RA</p>
         </button>
       </div>
     </div>
@@ -172,7 +171,7 @@ function AppointmentPanel({ study }: { study: IStudy }) {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full ">
       {showBookedCalendar && (
         <BookedCalendar
           scheduledEvents={bookedList.scheduledEvents}
@@ -180,8 +179,8 @@ function AppointmentPanel({ study }: { study: IStudy }) {
         />
       )}
       <div className="flex justify-between">
-        <h4 className="my-auto text-xl">Upcoming Appointments:</h4>
-        <div className="flex space-x-2">
+        <h4 className="my-auto text-md">Upcoming Appointments:</h4>
+        <div className="flex space-x-2 text-sm">
           {studyCtx && (
             <button
               onClick={onModifyAvailability(study)}
@@ -202,7 +201,7 @@ function AppointmentPanel({ study }: { study: IStudy }) {
       {showModal && <StudyHoursSetterModal setShowModal={setShowModal} />}
       <div className="h-64 m-2 overflow-auto bg-gray-200 rounded-lg">
         <table className="min-w-full bg-white">
-          <thead className="font-semibold text-white bg-gray-700 text-md">
+          <thead className="text-sm font-semibold text-white bg-gray-700">
             <tr>
               <th className="px-4 py-2 text-left">Booked By</th>
               <th className="px-4 py-2 text-left">Child Name</th>
@@ -212,7 +211,7 @@ function AppointmentPanel({ study }: { study: IStudy }) {
               <th className="px-4 py-2 text-left">Child Age</th>
             </tr>
           </thead>
-          <tbody className="text-gray-700">
+          <tbody className="text-sm text-gray-700">
             {bookedList.isLoaded &&
               bookedList.scheduledEvents.map((event, idx) => {
                 return (

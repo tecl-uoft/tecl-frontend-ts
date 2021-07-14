@@ -57,7 +57,7 @@ function Dashboard() {
           `Hello ${authCtx.authState.user.firstName}!`}
       </h1>
       <div className="flex justify-between">
-        <h2 className="text-3xl font-semibold">Your Current Studies</h2>
+        <h2 className="text-2xl underline">Your Current Studies:</h2>
         <div>
           <button
             onClick={onAddStudy}
@@ -65,9 +65,6 @@ function Dashboard() {
           >
             Create Study
           </button>
-          {/* <button className="p-2 ml-4 text-white bg-orange-800 rounded hover:text-orange-300 focus:outline-none focus:shadow-outline">
-            Sync Google Calendar
-          </button> */}
         </div>
       </div>
       {userStudyList &&
