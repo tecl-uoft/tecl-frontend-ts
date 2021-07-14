@@ -129,6 +129,7 @@ interface IUpdateScheduleEventProps {
       dob: string;
     };
     addToSharedDB: boolean;
+    phoneNum?: string;
   };
   additionalCSCChildren: { firstName: string; lastName: string; dob: string }[];
 }

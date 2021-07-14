@@ -96,6 +96,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
           firstName: firstNameField,
           lastName: lastNameField,
           email: emailField,
+          phoneNum,
           child: {
             firstName: childFirstNameField,
             lastName: childLastNameField,
@@ -127,7 +128,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
   return (
     <div>
       <FocusedModal setShowModal={setShowAddSEventModal}>
-        <h1 className="flex md:flex-row flex-col justify-center mx-2 mb-1 text-xl">
+        <h1 className="flex flex-col justify-center mx-2 mb-1 text-xl md:flex-row">
           {" "}
           Join Study:{" "}
           <div className="mx-2 text-xl font-bold">
@@ -148,7 +149,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
                 DateTime.fromJSDate(eventClick.end).toFormat("t ZZZZ")}
           </h2>
 
-          <h2 className="block bg-orange-300 py-1 rounded mb-2 text-lg font-bold text-gray-700">
+          <h2 className="block py-1 mb-2 text-lg font-bold text-gray-700 bg-orange-300 rounded">
             Parent Information
           </h2>
 
@@ -171,7 +172,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
                 placeholder={"Doe"}
               />
             </div>
-            <div className="md:w-7/12 px-3 w-full">
+            <div className="w-full px-3 md:w-7/12">
               <Label text={"Email"} />
               <Input
                 valueSetter={setEmailField}
@@ -180,7 +181,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
                 placeholder={"bob@joemail.com"}
               />
             </div>
-            <div className="md:w-5/12 px-3 mb-2 w-full">
+            <div className="w-full px-3 mb-2 md:w-5/12">
               <Label text={"Phone (Optional)"} />
               <Input
                 valueSetter={setPhoneNum}
@@ -219,7 +220,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
               </div>
 
               <div
-                className="flex justify-between w-full px-3 mb-4 mt-2 md:mt-0 md:mb-2 cursor-pointer"
+                className="flex justify-between w-full px-3 mt-2 mb-4 cursor-pointer md:mt-0 md:mb-2"
                 onClick={onCheckAddInfo}
               >
                 <label className="block text-sm text-left text-gray-700 cursor-pointer select-none">
@@ -230,7 +231,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
                 <input
                   checked={canAddInfo}
                   onChange={onCheckAddInfo}
-                  className="md:w-4 md:h-4 w-8 h-8 mt-2 cursor-pointer"
+                  className="w-8 h-8 mt-2 cursor-pointer md:w-4 md:h-4"
                   type="checkbox"
                 />
               </div>
@@ -238,11 +239,11 @@ function AddSEventModal(props: IAddSEventModalProps) {
                 className="flex justify-between w-full px-3"
                 onClick={onCheckAnotherChildRd}
               >
-                <label className="block text-left text-sm text-gray-700 select-none">
+                <label className="block text-sm text-left text-gray-700 select-none">
                   I would like to add siblings to the CSC Database.
                 </label>
                 <input
-                  className="px-2 h-8 md:h-full md:py-1 text-sm font-bold text-white bg-orange-600 rounded cursor-pointer hover:bg-orange-700"
+                  className="h-8 px-2 text-sm font-bold text-white bg-orange-600 rounded cursor-pointer md:h-full md:py-1 hover:bg-orange-700"
                   type="button"
                   value="Add another child"
                   onClick={onAddAttionalChildren}
