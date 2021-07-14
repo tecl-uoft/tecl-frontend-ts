@@ -65,10 +65,17 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
           DateTime.fromJSDate(selectInfo.start),
           "minutes"
         ).minutes / studyCtx.studyState.defaultTimeInterval;
+      const endDateOffset =
+        (parseInt(interval) - studyCtx.studyState.defaultTimeInterval) *
+        numIntervalBlocks;
+
       const endDateTime = DateTime.fromJSDate(selectInfo.end).plus({
-        minutes: (parseInt(interval) - studyCtx.studyState.defaultTimeInterval) *
-            numIntervalBlocks || -1 * studyCtx.studyState.defaultTimeInterval * numIntervalBlocks,
+        minutes:
+          endDateOffset < 0
+            ? -1 * studyCtx.studyState.defaultTimeInterval * numIntervalBlocks
+            : endDateOffset,
       });
+
       setEndTime(endDateTime.toFormat("HH:mm"));
     }
   }, [startTime, selectInfo, interval, studyCtx]);
