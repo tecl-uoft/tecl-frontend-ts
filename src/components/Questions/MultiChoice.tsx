@@ -22,9 +22,7 @@ type MultiChoiceProps = IQuestionProps<{ num: number; select: string }> & {
  */
 function MultiChoice(props: MultiChoiceProps) {
   const { choices, question, responseSetter, selectMultiple } = props;
-  const [response, setResponse] = useState<{ num: number; select: string }[]>(
-    []
-  );
+
   const [selectedItems, setSelectedItems] = useState<{
     [key: number]: boolean;
   }>({});

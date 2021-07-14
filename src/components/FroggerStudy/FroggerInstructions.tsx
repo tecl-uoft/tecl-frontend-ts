@@ -58,24 +58,20 @@ function FroggerInstructions(props: IFroggerInstructionsProps) {
     }
   };
 
-  const [videoProgress, setVideoProgress] = useState(0)
-  const videoRef = useRef<HTMLVideoElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null);
   const onPause = () => {
     const videoEl = videoRef.current;
     if (videoEl && videoSrc) {
-      videoEl.pause()
+      videoEl.pause();
     }
-  }
+  };
 
   const onPlay = () => {
     const videoEl = videoRef.current;
     if (videoEl && videoSrc) {
-      videoEl.play()
+      videoEl.play();
     }
-  }
-
-  
-
+  };
 
   return (
     <div className="container px-2 mx-auto mb-12">
@@ -87,7 +83,6 @@ function FroggerInstructions(props: IFroggerInstructionsProps) {
         <div className="flex flex-col">
           <video
             onEnded={onVideoFinish}
-            
             className="px-32 min-h-64 focus:outline-none"
             ref={videoRef}
           >
@@ -99,7 +94,7 @@ function FroggerInstructions(props: IFroggerInstructionsProps) {
               onClick={onPlay}
               className="w-1/2 px-4 py-3 font-bold tracking-wider uppercase bg-green-200 rounded-lg shadow-lg hover:bg-green-400 focus:outline-none"
             >
-             Play
+              Play
             </button>
             <button
               onClick={onPause}
@@ -110,14 +105,16 @@ function FroggerInstructions(props: IFroggerInstructionsProps) {
           </div>
         </div>
       )}
-      {isFinished && <div className="flex justify-around mt-6">
-        <button
-          onClick={onNextClick}
-          className="w-full px-8 py-4 font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400 focus:outline-none"
-        >
-          Next
-        </button>
-      </div>}
+      {isFinished && (
+        <div className="flex justify-around mt-6">
+          <button
+            onClick={onNextClick}
+            className="w-full px-8 py-4 font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400 focus:outline-none"
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 }

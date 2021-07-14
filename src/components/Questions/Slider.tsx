@@ -9,7 +9,9 @@ function Slider(props: IQuestionProps<string>) {
   const MIN_VALUE = 0;
 
   useEffect(() => {
-     responseSetter(sliderVal.toString());
+    if (!responseSetter) return;
+    responseSetter(sliderVal.toString());
+    // eslint-disable-next-line
   }, [sliderVal]);
 
   const onChangeSlider = (e: React.ChangeEvent<HTMLInputElement>) => {

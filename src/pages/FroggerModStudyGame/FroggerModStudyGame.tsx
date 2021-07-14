@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import FroggerGame from "../../components/FroggerStudy/FroggerGame";
 import FroggerInstructions from "../../components/FroggerStudy/FroggerInstructions";
 import FroggerPractice from "../../components/FroggerStudy/FroggerPractice";
+import { IFroggerResponse } from "../../components/FroggerStudy/FroggerStudy";
 import ErrorNotFound from "../ErrorNotFound";
 import EndScreen from "./EndScreen";
 
@@ -14,7 +15,8 @@ enum FroggerStudyStates {
 
 function FroggerModStudyGame() {
   const [playerMovements, setPlayerMovements] = useState<string[][]>([]);
-
+   const [response, setResponse] = useState<IFroggerResponse>({});
+  
   const [studyState, setStudyState] = useState(
     process.env.NODE_ENV === "development"
       ? FroggerStudyStates.PracticeGame
@@ -34,7 +36,7 @@ function FroggerModStudyGame() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ playerMovements, studyType, participantId }),
+      body: JSON.stringify({ playerMovements, studyType, participantId, fruits: response.fruits }),
     });
     /* try {
       const csvArr = playerMovements.map((e) => e.join(",")).join("\n");
@@ -74,6 +76,7 @@ function FroggerModStudyGame() {
       case FroggerStudyStates.StudyGame:
         state = (
           <FroggerGame
+            setResponse={setResponse}
             setPlayerMovements={setPlayerMovements}
             nextState={onFinishClick}
           />

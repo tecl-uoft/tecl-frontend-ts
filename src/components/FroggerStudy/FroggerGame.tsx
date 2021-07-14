@@ -3,16 +3,17 @@ import Unity, { UnityContent } from "react-unity-webgl";
 import { useEffect } from "react";
 import streamRecorder from "./streamRecorder";
 import StudyTitleText from "../common/StudyTitleText";
-import { IFroggerParticipant } from "./FroggerStudy";
+import { IFroggerParticipant, IFroggerResponse } from "./FroggerStudy";
 
 interface IFroggerGameProps {
   nextState(): void;
   setPlayerMovements?: React.Dispatch<React.SetStateAction<string[][]>>;
   participant?: IFroggerParticipant;
+  setResponse: React.Dispatch<React.SetStateAction<IFroggerResponse>>;
 }
 
 function FroggerGame(props: IFroggerGameProps) {
-  const { setPlayerMovements, participant } = props;
+  const { setPlayerMovements, participant, setResponse } = props;
   const timerStartTime = {
     minutes: 7,
     seconds: 0,
@@ -24,11 +25,10 @@ function FroggerGame(props: IFroggerGameProps) {
   const [unityContent, setUnityContent] = useState<UnityContent>();
   const [isMod, setIsMod] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
-  const [mediaRecorder, setMediaRecorder] =
-    useState<{
-      mediaRecorder: MediaRecorder;
-      recordedChunks: Blob[];
-    }>();
+  const [mediaRecorder, setMediaRecorder] = useState<{
+    mediaRecorder: MediaRecorder;
+    recordedChunks: Blob[];
+  }>();
   const [fruits, setFruits] = useState({
     cherry: 0,
     pinapple: 0,
@@ -118,7 +118,6 @@ function FroggerGame(props: IFroggerGameProps) {
     });
 
     unityContent.on("GotCherry", () => {
-      console.log("cheer");
       setFruits((f) => ({ ...f, cherry: f.cherry + 1 }));
     });
     unityContent.on("GotPinapple", () => {
@@ -144,7 +143,10 @@ function FroggerGame(props: IFroggerGameProps) {
     if (mediaRecorder && mediaRecorder.mediaRecorder) {
       mediaRecorder.mediaRecorder.stop();
     }
-
+    setResponse((r) => {
+      r.fruits = fruits;
+      return r;
+    });
     nextState();
   };
 

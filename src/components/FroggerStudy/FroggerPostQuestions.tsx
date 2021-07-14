@@ -126,7 +126,7 @@ function FroggerPostQuestions(props: {
   ];
 
   const onSubmit = () => {
-    const { q1, q2, q3, q4, q5, q6, q7, q8, q9, q10 } = formState;
+    const { q1, q3, q4, q5, q6, q7, q8, q9 } = formState;
     if (
       q0State === undefined ||
       q1 === undefined ||

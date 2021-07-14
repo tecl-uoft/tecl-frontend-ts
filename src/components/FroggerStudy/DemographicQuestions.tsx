@@ -340,6 +340,7 @@ function MCQuestions(props: {
       });
       nextState();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isUpdated]);
 
   const submitState = () => {

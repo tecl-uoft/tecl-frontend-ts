@@ -138,6 +138,7 @@ function FroggerStudy() {
           <FroggerGame
             nextState={() => setStudyState(FroggerStudyStates.PostQuestions)}
             participant={participant}
+            setResponse={setResponse}
           />
         );
         break;
