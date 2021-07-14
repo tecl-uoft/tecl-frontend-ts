@@ -30,10 +30,10 @@ function StudyPanel(props: IStudyPanelProps) {
         <div>
           <AppointmentPanel study={study} />
           <CoordinatorsPanel studyName={study.studyName} />
-          <ul className="p-2 mt-4 mb-4 overflow-y-scroll text-lg bg-gray-100 rounded-lg h-96">
+          <ul className="p-4 mt-4 mb-4 overflow-y-scroll bg-gray-100 rounded-lg max-h-48">
             {study.leadResearchers.map((researcher, idx) => {
               return (
-                <li className="flex" key={idx}>{`${idx + 1}. ${
+                <li key={researcher.email}>{`${idx + 1}. ${
                   researcher.email
                 } (${researcher.firstName} ${
                   researcher.lastName ? researcher.lastName : ""
@@ -122,7 +122,7 @@ function CoordinatorsPanel({ studyName }: { studyName: string }) {
 
   return (
     <div className="mt-2">
-      <h4 className="my-auto text-xl">Add Additional RAs:</h4>
+      <h4 className="my-auto text-lg">Add Additional RAs:</h4>
       <div
         className="flex w-1/3 mt-2 space-x-2"
         onKeyPress={onCoordinatorEnter}
