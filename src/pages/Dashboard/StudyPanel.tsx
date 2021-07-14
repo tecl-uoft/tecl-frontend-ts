@@ -30,7 +30,7 @@ function StudyPanel(props: IStudyPanelProps) {
         <div>
           <AppointmentPanel study={study} />
           <CoordinatorsPanel studyName={study.studyName} />
-          <ul className="mb-4 text-lg">
+          <ul className="p-2 mt-4 mb-4 overflow-y-scroll text-lg bg-gray-100 rounded-lg h-96">
             {study.leadResearchers.map((researcher, idx) => {
               return (
                 <li className="flex" key={idx}>{`${idx + 1}. ${
