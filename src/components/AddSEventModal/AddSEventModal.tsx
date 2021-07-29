@@ -51,7 +51,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
     });
   };
 
-  const submitJoinStudy = (e: MouseEvent<HTMLInputElement>) => {
+  const submitJoinStudy = async (e: MouseEvent<HTMLInputElement>) => {
     const childAgeInDays =
       Math.floor(DateTime.fromISO(childDob).diffNow("days").days) * -1;
 
@@ -90,33 +90,35 @@ function AddSEventModal(props: IAddSEventModalProps) {
           ? registerChildern
           : [];
 
-      ScheduleEventService.updateParticipantInfo({
-        participantInfo: {
-          calId: eventClick.id,
-          firstName: firstNameField,
-          lastName: lastNameField,
-          email: emailField,
-          phoneNum,
-          child: {
-            firstName: childFirstNameField,
-            lastName: childLastNameField,
-            dob: childDob,
+      try {
+        await ScheduleEventService.updateParticipantInfo({
+          participantInfo: {
+            calId: eventClick.id,
+            firstName: firstNameField,
+            lastName: lastNameField,
+            email: emailField,
+            phoneNum,
+            child: {
+              firstName: childFirstNameField,
+              lastName: childLastNameField,
+              dob: childDob,
+            },
+            addToSharedDB: canAddInfo,
           },
-          addToSharedDB: canAddInfo,
-        },
-        additionalCSCChildren,
-      })
-        .then(() => {
-          toast.success(
-            "Your appointment has been recived. We will contact you via email shortly.",
-            { duration: 4000 }
-          );
-        })
-        .then(() => {
-          eventClick.remove();
-        })
-        .then(() => setShowAddSEventModal(false))
-        .catch((err) => alert(err));
+          additionalCSCChildren,
+        });
+
+        toast.success(
+          "Your appointment has been recived. We will contact you via email shortly.",
+          { duration: 4000 }
+        );
+        eventClick.remove();
+        
+      } catch (err) {
+        toast.error("Failed to updated. Please contact staff.", { duration: 3000 });
+        
+      }
+      setShowAddSEventModal(false);
     }
   };
 
