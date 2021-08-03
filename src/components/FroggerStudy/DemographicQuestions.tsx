@@ -21,6 +21,7 @@ function DemographicQuestions(props: {
   const [isAdult, setIsAdult] = useState(false);
   const [isUpdated, setIsUpdated] = useState(false);
 
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isAdult = params.get("type") === "adult";
@@ -37,7 +38,7 @@ function DemographicQuestions(props: {
   }, [isUpdated, nextState]);
 
   const setNextState = () => {
-    if (demoState < 4) {
+    if (demoState < 5) {
       setDemoState(demoState + 1);
     } else {
       setResponse((r) => {
@@ -78,6 +79,14 @@ function DemographicQuestions(props: {
         );
       case 4:
         return (
+          <PaymentMethods
+            isAdult={isAdult}
+            setDemoResponse={setDemoResponse}
+            nextState={setNextState}
+          />
+        );
+      case 5:
+        return (
           <MCQuestions
             isAdult={isAdult}
             setDemoResponse={setDemoResponse}
@@ -89,6 +98,171 @@ function DemographicQuestions(props: {
     }
   };
   return updateState(demoState);
+}
+
+function PaymentMethods(props: {
+  nextState: () => void;
+  setDemoResponse: DemoResponseDispatch;
+  isAdult: boolean;
+}) {
+  const { nextState, setDemoResponse, isAdult } = props;
+  const [response, setResponse] = useState<{
+    [key: number]: {
+      question: string;
+      response: any;
+    };
+  }>({});
+  const [isUpdated, setIsUpdated] = useState(false);
+  const [questionAndChocices, setQuestionAndChocices] = useState([
+    {
+      question:
+        "Before we give out our options, can you select your location from the list below?",
+      choices: ["Canada", "United States", "@text Other"],
+    },
+  ]);
+
+  useEffect(() => {
+    const isLocationCanada = response[0]?.response?.selectedItems[0];
+    if (isLocationCanada === undefined) {
+      return;
+    }
+    let choices2: string[] = [];
+    if (isLocationCanada === true) {
+      choices2 = ["Indigo Gift Card (CAD)", "Amazon Gift Card (CAD)"];
+    } else {
+      choices2 = ["Amazon Gift Card (USD)"];
+    }
+
+    setQuestionAndChocices((q) => {
+      const newq = [...q];
+      newq[1] = {
+        question: "Select your method of compensation below.",
+        choices: choices2,
+      };
+      return newq;
+    });
+  }, [response]);
+
+  const [showBanner, setShowBanner] = useState(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("type") === "child") {
+      setShowBanner(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isUpdated) {
+      nextState();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isUpdated]);
+
+  const [resLoc, setResLoc] = useState("");
+  const [resPay, setResPay] = useState("");
+
+  const submitState = () => {
+    if (
+      response[0]?.response === undefined ||
+      response[1]?.response === undefined
+    ) {
+      return notify.error("Please complete all questions to continue.");
+    }
+
+    setDemoResponse((o) => {
+      let obj = { ...o };
+
+      const modResponse = {
+        location: resLoc,
+        payment: resPay,
+      };
+
+      obj["compensation"] = modResponse;
+      setIsUpdated(true);
+      return obj;
+    });
+  };
+  let qCount = 0;
+
+  useEffect(() => {
+    if (response[0] && response[1]) {
+      const q1FinalRes = response[0].response.selectedItems;
+      const q2FinalRes = response[1].response.selectedItems;
+      const modResponse = {
+        location:
+          q1FinalRes[0] === true
+            ? "Canada"
+            : q1FinalRes[1] === true
+            ? "USA"
+            : response[0].response.otherText,
+        payment:
+          q1FinalRes[0] === false
+            ? "Amazon Gift Card (USD)"
+            : q2FinalRes[0] === true
+            ? "Indigo Gift Card (CAD)"
+            : "Amazon Giftcard (CAD)",
+      };
+      setResLoc(modResponse.location);
+      setResPay(modResponse.payment);
+    }
+  }, [response]);
+
+  return (
+    <div>
+      {showBanner && <Banner forChild={false} />}
+      <div className="w-3/4 mx-auto space-y-12 text-lg font-bold text-left">
+        <h2 className="mt-6 text-4xl font-bold tracking-wide text-center">
+          Payment
+        </h2>
+        <p>
+          {" "}
+          As a compensation for your participation, our lab sends out
+          e-giftcards from certain online stores depending on your location.
+        </p>
+        <div className="w-full h-1 bg-blue-200 rounded-lg" />
+      </div>
+      <div className="w-3/4 mx-auto md:w-1/2 ">
+        {questionAndChocices.map((qa, idx) => {
+          const isMultiChoice = qa.question.includes("select more than one");
+          const isChildType =
+            qa.question.includes("Parent") ||
+            qa.question.includes("child") ||
+            qa.question.includes("Parent/Caregiver") ||
+            qa.question.includes(
+              "Please indicate the time dedicated for language use"
+            );
+          qCount = !isChildType || !isAdult ? qCount + 1 : qCount;
+          return (
+            <div key={idx + 6600}>
+              {(!isChildType || !isAdult) && (
+                <>
+                  <MultiChoice
+                    selectMultiple={isMultiChoice}
+                    choices={qa.choices}
+                    question={qCount + ". " + qa.question}
+                    responseSetter={(res: any) =>
+                      setResponse((r) => {
+                        let obj = { ...r };
+
+                        obj[idx] = { question: qa.question, response: res };
+
+                        return obj;
+                      })
+                    }
+                  />{" "}
+                  <div className="w-full h-1 bg-blue-200 rounded-lg" />{" "}
+                </>
+              )}
+            </div>
+          );
+        })}
+      </div>
+      <div className="flex justify-center w-full my-6 ">
+        <NextButton setDemoState={submitState} />
+      </div>
+    </div>
+  );
 }
 
 function AdultQs(props: {
@@ -386,7 +560,9 @@ function MCQuestions(props: {
             qa.question.includes("Parent") ||
             qa.question.includes("child") ||
             qa.question.includes("Parent/Caregiver") ||
-            qa.question.includes("Please indicate the time dedicated for language use");
+            qa.question.includes(
+              "Please indicate the time dedicated for language use"
+            );
           qCount = !isChildType || !isAdult ? qCount + 1 : qCount;
           return (
             <div key={idx + 200}>

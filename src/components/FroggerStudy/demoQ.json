@@ -205,6 +205,16 @@
       ]
     }
   ],
+  "payment":[
+    {
+      "question": "Before we give out our options, can you select your location from the list below?",
+      "choices": [
+        "Canada",
+        "United States",
+        "@text Other"
+      ]
+    }
+  ],
   "prefrence": [
     {
       "question": "What do you think is more important for a child to have? (please choose ONE option)",

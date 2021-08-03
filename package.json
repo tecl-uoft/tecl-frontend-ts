@@ -21,6 +21,7 @@
     "@types/react-router-dom": "^5.1.6",
     "@types/uuid": "^8.3.0",
     "csstype": "^2.6.2",
+    "formik": "^2.2.9",
     "get-blob-duration": "^1.2.0",
     "luxon": "^1.25.0",
     "react": "^16.14.0",
@@ -45,9 +46,10 @@
   },
   "browserslist": {
     "production": [
-      ">0.2%",
+      ">0.3%",
       "not dead",
-      "not op_mini all"
+      "not op_mini all",
+      "not ie 11"
     ],
     "development": [
       "last 1 chrome version",
