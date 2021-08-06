@@ -3,9 +3,9 @@ import StudyEntryBlock from "../../components/StudyEntryBlock";
 
 function TouchStudyEntry() {
   return (
-    <div id="teams-study-entry">
+    <div id="touch-study-entry">
       <StudyEntryBlock
-        studyTitle="Touch"
+        studyTitle="Tablet Study"
         ageRange="4 to 7 years old"
         studyDesc="We’re interested in how kids understand fair and unfair scenarios,
             helping and hindering situations, and how this influences their
@@ -15,9 +15,9 @@ function TouchStudyEntry() {
         social behavior. We’re interested in how kids understand fair and
         unfair scenarios, helping and hindering situations, and how this
         influences their social behavior."
-        studyImgURI="/assets/fair_study.svg"
+        studyImgURI="/assets/touch_intro.svg"
         studyImgAlt="Touch Study"
-        studyTrialURI="/study/fairness/game"
+        studyTrialURI={`/study/touch/game?mode=manual&participant_id=${new Date().getTime()}`}
       />
     </div>
   );
