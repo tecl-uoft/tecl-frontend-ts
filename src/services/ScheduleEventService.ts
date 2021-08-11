@@ -130,6 +130,7 @@ interface IUpdateScheduleEventProps {
     };
     addToSharedDB: boolean;
     phoneNum?: string;
+    isInGta: boolean;
   };
   additionalCSCChildren: { firstName: string; lastName: string; dob: string }[];
 }

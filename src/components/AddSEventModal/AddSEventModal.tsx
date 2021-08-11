@@ -31,6 +31,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
   const [canAddInfo, setCanAddInfo] = useState(false);
   const [anotherChildRd, setAnotherChildRd] = useState(false);
   const [showExtraChildModal, setExtraChildShowModal] = useState(false);
+  const [isInGta, setIsInGta] = useState(false);
   const [registerChildern, setRegisterChildern] = useState<IRegisterChild[]>([
     { firstName: "", lastName: "", dob: "" },
   ]);
@@ -104,6 +105,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
               dob: childDob,
             },
             addToSharedDB: canAddInfo,
+            isInGta,
           },
           additionalCSCChildren,
         });
@@ -113,10 +115,10 @@ function AddSEventModal(props: IAddSEventModalProps) {
           { duration: 4000 }
         );
         eventClick.remove();
-        
       } catch (err) {
-        toast.error("Failed to updated. Please contact staff.", { duration: 3000 });
-        
+        toast.error("Failed to updated. Please contact staff.", {
+          duration: 3000,
+        });
       }
       setShowAddSEventModal(false);
     }
@@ -126,6 +128,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
   const onCheckAnotherChildRd = () => setAnotherChildRd(!anotherChildRd);
   const onAddAttionalChildren = () => setExtraChildShowModal(true);
   const onFormCancel = () => setShowAddSEventModal(false);
+  const onCheckIsInGta = () => setIsInGta(!isInGta);
 
   return (
     <div>
@@ -222,7 +225,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
               </div>
 
               <div
-                className="flex justify-between w-full px-3 mt-2 mb-4 cursor-pointer md:mt-0 md:mb-2"
+                className="flex justify-between w-full px-3 mt-2 mb-4 cursor-pointer md:mt-0 md:mb-2 hover:bg-gray-200"
                 onClick={onCheckAddInfo}
               >
                 <label className="block text-sm text-left text-gray-700 cursor-pointer select-none">
@@ -234,6 +237,20 @@ function AddSEventModal(props: IAddSEventModalProps) {
                   checked={canAddInfo}
                   onChange={onCheckAddInfo}
                   className="w-8 h-8 mt-2 cursor-pointer md:w-4 md:h-4"
+                  type="checkbox"
+                />
+              </div>
+              <div
+                className="flex justify-between w-full px-3 py-1 mt-2 mb-4 cursor-pointer md:mt-0 md:mb-2 hover:bg-gray-200"
+                onClick={onCheckIsInGta}
+              >
+                <label className="block text-sm text-left text-gray-700 cursor-pointer select-none">
+                  I live the Greater Toronto Area (GTA).
+                </label>
+                <input
+                  checked={isInGta}
+                  onChange={onCheckIsInGta}
+                  className="w-8 h-8 mt-1 cursor-pointer md:w-4 md:h-4"
                   type="checkbox"
                 />
               </div>
