@@ -1,4 +1,5 @@
 import { notify } from "../Notification";
+import ysFixWebmDuration from "fix-webm-duration";
 
 interface CanvasElement extends HTMLCanvasElement {
   captureStream(frameRate?: number): MediaStream;
@@ -16,12 +17,12 @@ function streamRecorder(
   // Optional frames per second argument.
   const stream = (canvas as CanvasElement).captureStream(40);
   let recordedChunks: Blob[] = [];
-
+  const startTime = Date.now();
   const options = { mimeType: "video/webm" };
   const mediaRecorder = new MediaRecorder(stream, options);
 
   function handleDataAvailable(event: BlobEvent) {
-    if (event.data.size > 0) {
+    if (event.data && event.data.size > 0) {
       recordedChunks.push(event.data);
       // download();
     } else {
@@ -30,47 +31,46 @@ function streamRecorder(
   }
 
   mediaRecorder.ondataavailable = handleDataAvailable;
-  mediaRecorder.onstop = () => upload(recordedChunks);
+  mediaRecorder.onstop = () => upload(recordedChunks, startTime);
   mediaRecorder.start(10);
 
   // demo: to download after recordingTime sec
   if (recordingTime > 0) {
     setTimeout(() => {
       mediaRecorder.stop();
-      upload(recordedChunks);
+      upload(recordedChunks, startTime);
     }, recordingTime);
   }
 
   return Promise.resolve({ mediaRecorder, recordedChunks });
 }
 
-export function upload(recordedChunks: Blob[]) {
-  const blobFile = new Blob(recordedChunks, { type: "video/webm" });
-  /*  getBlobDuration(blobFile).then(function (duration) {
-    console.log(duration + " seconds");
-  }); */
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-  const studyType = urlParams.get("study_type");
-  const participantId = urlParams.get("participant_id");
-  const trialType = studyType === "2" ? "male" : "female";
-  const fileName =
-    participantId + "_" + trialType + "_" + new Date().getTime() + ".webm";
-  const fd = new FormData();
-  fd.append("video-file", blobFile, fileName);
-  getBlobDuration(blobFile).then((r) => console.log(r));
-  const uploadPromise = fetch("/api/v1/frogger-study/upload-game-video", {
-    method: "POST",
-    body: fd,
-  });
+export function upload(recordedChunks: Blob[], startTime: number) {
+  const buggyBlob = new Blob(recordedChunks, { type: "video/webm" });
+  const duration = Date.now() - startTime;
+  ysFixWebmDuration(buggyBlob, duration, function (blobFile: Blob) {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const studyType = urlParams.get("study_type");
+    const participantId = urlParams.get("participant_id");
+    const trialType = studyType === "2" ? "male" : "female";
+    const fileName =
+      participantId + "_" + trialType + "_" + new Date().getTime() + ".webm";
+    const fd = new FormData();
+    fd.append("video-file", blobFile, fileName);
+    getBlobDuration(blobFile).then((r) => console.log(r));
+    const uploadPromise = fetch("/api/v1/frogger-study/upload-game-video", {
+      method: "POST",
+      body: fd,
+    });
 
-  notify
-    .promise(uploadPromise, {
+    notify.promise(uploadPromise, {
       loading: "Please wait before continuing...",
       success: "You may proceed now.",
       error: "Failed to configure data. Please email coordinator.",
-    })
-    
+    });
+  });
+  
 }
 
 async function getBlobDuration(blob: Blob) {
