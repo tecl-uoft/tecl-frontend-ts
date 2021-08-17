@@ -51,6 +51,7 @@ function FroggerStudy() {
   const [videoRecorder, setVideoRecorder] = useState<{
     mediaRecorder: MediaRecorder;
     recordedChunks: Blob[];
+    startTime: number;
   }>();
   const [response, setResponse] = useState<IFroggerResponse>({});
 
@@ -121,7 +122,9 @@ function FroggerStudy() {
       case FroggerStudyStates.PracticeGame:
         state = (
           <FroggerPractice
+            webcamStartTime={videoRecorder?.startTime}
             nextState={() => setStudyState(FroggerStudyStates.InstructionVideo)}
+            setResponse={setResponse}
           />
         );
         break;
@@ -136,6 +139,7 @@ function FroggerStudy() {
       case FroggerStudyStates.StudyGame:
         state = (
           <FroggerGame
+            webcamStartTime={videoRecorder?.startTime}
             nextState={() => setStudyState(FroggerStudyStates.PostQuestions)}
             participant={participant}
             setResponse={setResponse}

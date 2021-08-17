@@ -8,11 +8,12 @@ interface CanvasElement extends HTMLCanvasElement {
 export interface IRecorder {
   mediaRecorder: MediaRecorder;
   recordedChunks: Blob[];
+  startTime: number;
 }
 
 function streamRecorder(
   canvas: HTMLCanvasElement | HTMLVideoElement,
-  recordingTime: number
+  recordingTime: number,
 ) {
   // Optional frames per second argument.
   const stream = (canvas as CanvasElement).captureStream(40);
@@ -42,7 +43,7 @@ function streamRecorder(
     }, recordingTime);
   }
 
-  return Promise.resolve({ mediaRecorder, recordedChunks });
+  return Promise.resolve({ mediaRecorder, recordedChunks, startTime });
 }
 
 export function upload(recordedChunks: Blob[], startTime: number) {

@@ -10,10 +10,16 @@ interface IFroggerGameProps {
   setPlayerMovements?: React.Dispatch<React.SetStateAction<string[][]>>;
   participant?: IFroggerParticipant;
   setResponse: React.Dispatch<React.SetStateAction<IFroggerResponse>>;
+  webcamStartTime?: number;
 }
 
-function FroggerGame(props: IFroggerGameProps) {
-  const { setPlayerMovements, participant, setResponse } = props;
+const FroggerGame: React.FC<IFroggerGameProps> = ({
+  nextState,
+  setPlayerMovements,
+  participant,
+  setResponse,
+  webcamStartTime,
+}) => {
   const timerStartTime = {
     minutes: 7,
     seconds: 0,
@@ -28,6 +34,7 @@ function FroggerGame(props: IFroggerGameProps) {
   const [mediaRecorder, setMediaRecorder] = useState<{
     mediaRecorder: MediaRecorder;
     recordedChunks: Blob[];
+    startTime: number;
   }>();
   const [fruits, setFruits] = useState({
     cherry: 0,
@@ -99,8 +106,6 @@ function FroggerGame(props: IFroggerGameProps) {
     };
   }, [setPlayerMovements]);
 
-  const { nextState } = props;
-
   useEffect(() => {
     const build =
       participant?.type === "adult"
@@ -145,6 +150,12 @@ function FroggerGame(props: IFroggerGameProps) {
     }
     setResponse((r) => {
       r.fruits = fruits;
+      if (webcamStartTime && mediaRecorder?.startTime) {
+        r.realGameWebcamInfo = {
+          startTime: mediaRecorder.startTime - webcamStartTime,
+          webcamEndTime: Date.now() - webcamStartTime,
+        };
+      }
       return r;
     });
     nextState();
@@ -194,6 +205,6 @@ function FroggerGame(props: IFroggerGameProps) {
       </div>
     </div>
   );
-}
+};
 
 export default FroggerGame;

@@ -1,23 +1,29 @@
 import React, { useEffect, useState } from "react";
 import Unity, { UnityContent } from "react-unity-webgl";
 import StudyTitleText from "../common/StudyTitleText";
+import { IFroggerResponse } from "./FroggerStudy";
 import streamRecorder from "./streamRecorder";
 
 interface IFroggerPracticeProps {
   nextState(): void;
+  webcamStartTime?: number;
+  setResponse?: React.Dispatch<React.SetStateAction<IFroggerResponse>>;
 }
 
-function FroggerPractice(props: IFroggerPracticeProps) {
-  const { nextState } = props;
+const FroggerPractice: React.FC<IFroggerPracticeProps> = ({
+  nextState,
+  webcamStartTime,
+  setResponse,
+}) => {
   const [gameOver, setGameOver] = useState(false);
   const [isMod, setIsMod] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [unityContent, setUnityContent] = useState<UnityContent>();
-  const [mediaRecorder, setMediaRecorder] =
-    useState<{
-      mediaRecorder: MediaRecorder;
-      recordedChunks: Blob[];
-    }>();
+  const [mediaRecorder, setMediaRecorder] = useState<{
+    mediaRecorder: MediaRecorder;
+    recordedChunks: Blob[];
+    startTime: number;
+  }>();
 
   useEffect(() => {
     if (!window.location.pathname.includes("mod")) {
@@ -51,6 +57,17 @@ function FroggerPractice(props: IFroggerPracticeProps) {
     if (mediaRecorder && mediaRecorder.mediaRecorder) {
       mediaRecorder.mediaRecorder.stop();
     }
+    if (setResponse && webcamStartTime && mediaRecorder?.startTime) {
+      setResponse((r) => {
+        if (webcamStartTime && mediaRecorder?.startTime) {
+          r.practiceWebcamInfo = {
+            startTime: mediaRecorder.startTime - webcamStartTime,
+            webcamEndTime: Date.now() - webcamStartTime,
+          };
+        }
+        return r;
+      });
+    }
     nextState();
   };
 
@@ -77,12 +94,14 @@ function FroggerPractice(props: IFroggerPracticeProps) {
         )} percent...`}</div>
       ) : null}
       {unityContent && (
-        <div className="px-32">
-          <Unity unityContent={unityContent} />
+        <div onClick={() => window.scrollTo(0, window.innerHeight)}>
+          <div className="px-16 -mb-12 cursor-pointer">
+            <Unity unityContent={unityContent} />
+          </div>
         </div>
       )}
       {(gameOver || isMod) && (
-        <div className="flex justify-around mt-6">
+        <div className="flex justify-around mt-24">
           <button
             onClick={onNextClick}
             className="w-full px-8 py-4 font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400 focus:outline-none"
@@ -93,6 +112,6 @@ function FroggerPractice(props: IFroggerPracticeProps) {
       )}
     </div>
   );
-}
+};
 
 export default FroggerPractice;
