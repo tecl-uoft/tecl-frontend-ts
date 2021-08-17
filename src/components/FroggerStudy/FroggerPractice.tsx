@@ -1,3 +1,4 @@
+import { DateTime } from "luxon";
 import React, { useEffect, useState } from "react";
 import Unity, { UnityContent } from "react-unity-webgl";
 import StudyTitleText from "../common/StudyTitleText";
@@ -60,9 +61,18 @@ const FroggerPractice: React.FC<IFroggerPracticeProps> = ({
     if (setResponse && webcamStartTime && mediaRecorder?.startTime) {
       setResponse((r) => {
         if (webcamStartTime && mediaRecorder?.startTime) {
+          const webcamStartTimeLuxon = DateTime.fromMillis(webcamStartTime);
+          const currVideoEndLuxon = DateTime.fromMillis(Date.now());
+          const currVideoStartLuxon = DateTime.fromMillis(
+            mediaRecorder.startTime
+          );
           r.practiceWebcamInfo = {
-            startTime: mediaRecorder.startTime - webcamStartTime,
-            webcamEndTime: Date.now() - webcamStartTime,
+            startTime: currVideoStartLuxon
+              .diff(webcamStartTimeLuxon)
+              .toFormat("HH:mm:ss:SSS"),
+            endTime: currVideoEndLuxon
+              .diff(webcamStartTimeLuxon)
+              .toFormat("HH:mm:ss:SSS"),
           };
         }
         return r;
@@ -76,6 +86,7 @@ const FroggerPractice: React.FC<IFroggerPracticeProps> = ({
       <StudyTitleText
         text={"Before starting, let's get familiar with the game..."}
       />
+
       <h2 className="container py-2 mx-auto mb-5 text-2xl font-bold text-center bg-red-200">
         You much complete the practice (find the trophy) in order to continue.
       </h2>

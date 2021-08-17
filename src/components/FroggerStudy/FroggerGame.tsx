@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import streamRecorder from "./streamRecorder";
 import StudyTitleText from "../common/StudyTitleText";
 import { IFroggerParticipant, IFroggerResponse } from "./FroggerStudy";
+import { DateTime } from "luxon";
 
 interface IFroggerGameProps {
   nextState(): void;
@@ -151,9 +152,18 @@ const FroggerGame: React.FC<IFroggerGameProps> = ({
     setResponse((r) => {
       r.fruits = fruits;
       if (webcamStartTime && mediaRecorder?.startTime) {
+        const webcamStartTimeLuxon = DateTime.fromMillis(webcamStartTime);
+        const currVideoEndLuxon = DateTime.fromMillis(Date.now());
+        const currVideoStartLuxon = DateTime.fromMillis(
+          mediaRecorder.startTime
+        );
         r.realGameWebcamInfo = {
-          startTime: mediaRecorder.startTime - webcamStartTime,
-          webcamEndTime: Date.now() - webcamStartTime,
+          startTime: currVideoStartLuxon
+            .diff(webcamStartTimeLuxon)
+            .toFormat("HH:mm:ss:SSS"),
+          endTime: currVideoEndLuxon
+            .diff(webcamStartTimeLuxon)
+            .toFormat("HH:mm:ss:SSS"),
         };
       }
       return r;
