@@ -1,4 +1,5 @@
 import React, { useEffect, useReducer, useRef, useState } from "react";
+import { download } from "./downloadFile";
 import {
   reducer,
   initialState,
@@ -48,6 +49,7 @@ function TouchStudy() {
     if (touchArr && studyState.currentDispatch.type === "finish") {
       const urlParams = new URLSearchParams(window.location.search);
       const participantId = urlParams.get("participant_id");
+      download({ trialInformation: touchArr, participantId });
       fetch("/api/v1/touch-study", {
         method: "POST",
         headers: {
