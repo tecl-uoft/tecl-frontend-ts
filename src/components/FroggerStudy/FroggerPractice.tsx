@@ -47,6 +47,7 @@ const FroggerPractice: React.FC<IFroggerPracticeProps> = ({
 
   useEffect(() => {
     if (loadingProgress === 1) {
+      window.scrollTo(0, window.innerHeight)
       const canvas = document.querySelector<HTMLCanvasElement>("canvas");
       if (canvas) {
         streamRecorder(canvas, 0).then((res) => setMediaRecorder(res));
@@ -82,7 +83,7 @@ const FroggerPractice: React.FC<IFroggerPracticeProps> = ({
   };
 
   return (
-    <div className="px-2 pt-4 mx-auto mb-16">
+    <div className="px-2 pt-4 mx-auto mb-4">
       <StudyTitleText
         text={"Before starting, let's get familiar with the game..."}
       />
@@ -105,17 +106,15 @@ const FroggerPractice: React.FC<IFroggerPracticeProps> = ({
         )} percent...`}</div>
       ) : null}
       {unityContent && (
-        <div onClick={() => window.scrollTo(0, window.innerHeight)}>
-          <div className="px-16 -mb-12 cursor-pointer">
-            <Unity unityContent={unityContent} />
-          </div>
+        <div onClick={() => window.scrollTo(0, window.innerHeight)} style={{ width: 960, height: window.innerHeight - 100 }} className="mx-auto ">
+          <Unity unityContent={unityContent} />
         </div>
       )}
       {(gameOver || isMod) && (
-        <div className="flex justify-around mt-24">
+        <div className="flex justify-around ">
           <button
             onClick={onNextClick}
-            className="w-full px-8 py-4 font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400 focus:outline-none"
+            className="w-full px-8 py-4 mt-24 font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400 focus:outline-none"
           >
             Next
           </button>

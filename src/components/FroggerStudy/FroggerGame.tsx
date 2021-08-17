@@ -67,6 +67,7 @@ const FroggerGame: React.FC<IFroggerGameProps> = ({
   useEffect(() => {
     if (loadingProgress === 1) {
       const canvas = document.querySelector<HTMLCanvasElement>("canvas");
+      window.scrollTo(0, window.innerHeight)
       if (canvas) {
         streamRecorder(canvas, 0).then((res) => setMediaRecorder(res));
       }
@@ -172,7 +173,7 @@ const FroggerGame: React.FC<IFroggerGameProps> = ({
   };
 
   return (
-    <div className="px-2 pt-4 mx-auto mt-6 mb-16" id="frogger-game">
+    <div className="px-2 pt-4 mx-auto mt-6" id="frogger-game">
       {!isMod && !timeOver && (
         <StudyTitleText text={"Complete the objective as shown."} />
       )}
@@ -190,10 +191,10 @@ const FroggerGame: React.FC<IFroggerGameProps> = ({
       )}
 
       {loadingProgress !== 1 ? (
-        <div>{`Loading ${Math.floor(loadingProgress * 100)} percent...`}</div>
+        <div className="w-full py-2 text-2xl font-bold text-center bg-red-300">{`Loading ${Math.floor(loadingProgress * 100)} percent...`}</div>
       ) : null}
       {(!timeOver || isMod) && unityContent ? (
-        <div className="mx-16 md:mx-32">
+        <div onClick={() => window.scrollTo(0, window.innerHeight)} style={{ width: 960, height: window.innerHeight - 100 }} className="mx-auto ">
           <Unity unityContent={unityContent} />
         </div>
       ) : (
@@ -203,11 +204,11 @@ const FroggerGame: React.FC<IFroggerGameProps> = ({
         </div>
       )}
 
-      <div className="flex justify-around mt-6">
+      <div className="flex justify-around mt-2">
         {timeOver || isMod ? (
           <button
             onClick={onNextClick}
-            className="w-full px-8 py-4 font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400 focus:outline-none"
+            className="w-full px-8 py-4 my-6 font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400 focus:outline-none"
           >
             Next
           </button>
