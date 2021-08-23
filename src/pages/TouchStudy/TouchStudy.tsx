@@ -290,6 +290,13 @@ function TouchStudy() {
           key={currentVideoSrc}
           id="video"
           className="px-2 my-auto"
+          crossOrigin={
+            navigator.userAgent.indexOf("Safari") != -1 &&
+            navigator.userAgent.indexOf("Mac") != -1 &&
+            navigator.userAgent.indexOf("Chrome") == -1
+              ? "true"
+              : undefined
+          }
         >
           <source type="video/mp4" src={currentVideoSrc + "#t=0.1"} />
         </video>
