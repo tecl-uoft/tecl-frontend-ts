@@ -4,22 +4,26 @@
     "UnfairSnacksA": "/assets/touch_study/CharacterA_Unfair_Final.mp4",
     "FairSnacksB": "/assets/touch_study/CharacterB_Fair_Final.mp4",
     "UnfairSnacksB": "/assets/touch_study/CharacterB_Unfair_Final.mp4",
+
     "FairToysA": "/assets/touch_study/CharacterA_Fair_Final.mp4",
     "UnfairToysA": "/assets/touch_study/CharacterA_Unfair_Final.mp",
     "FairToysB": "/assets/touch_study/CharacterB_Fair_Final.mp4",
     "UnfairToysB": "/assets/touch_study/CharacterB_Unfair_Final.mp4",
-    "AlexPunishLeft": "/assets/touch_study/CharacterAPunishment_Final_left.mp4",
-    "AlexPunishRight": "/assets/touch_study/CharacterAPunishment_Final_right.mp4",
-    "AlexRewardLeft": "/assets/touch_study/CharacterAReward_Final_left.mp4",
-    "AlexRewardRight": "/assets/touch_study/CharacterAReward_Final_right.mp4",
-    "HayleePunishLeft": "/assets/touch_study/CharacterBPunishment_Final_left.mp4",
-    "HayleePunishRight": "/assets/touch_study/CharacterBPunishment_Final_right.mp4",
-    "HayleeRewardLeft": "/assets/touch_study/CharacterBReward_Final_left.mp4",
-    "HayleeRewardRight": "/assets/touch_study/CharacterBReward_Final_right.mp4",
-    "RachelPunishLeft": "/assets/touch_study/CharacterCPunishment_Final_left.mp4",
-    "RachelPunishRight": "/assets/touch_study/CharacterCPunishment_Final_left.mp4",
-    "RachelRewardLeft": "/assets/touch_study/CharacterCReward_Final_left.mp4",
-    "RachelRewardRight": "/assets/touch_study/CharacterCReward_Final_right.mp4",
+
+    "AlexPunishLeft": "/assets/touch_study/Punish_A_left.mp4",
+    "AlexPunishRight": "/assets/touch_study/Punish_A_right.mp4",
+    "AlexRewardLeft": "/assets/touch_study/Reward_A_left.mp4",
+    "AlexRewardRight": "/assets/touch_study/Reward_A_right.mp4",
+
+    "HayleePunishLeft": "/assets/touch_study/Punish_B_left.mp4",
+    "HayleePunishRight": "/assets/touch_study/Punish_B_right.mp4",
+    "HayleeRewardLeft": "/assets/touch_study/Reward_B_left.mp4",
+    "HayleeRewardRight": "/assets/touch_study/Reward_B_right.mp4",
+
+    "RachelPunishLeft": "/assets/touch_study/Punish_C_left.mp4",
+    "RachelPunishRight": "/assets/touch_study/Punish_C_left.mp4",
+    "RachelRewardLeft": "/assets/touch_study/Reward_C_left.mp4",
+    "RachelRewardRight": "/assets/touch_study/Reward_C_right.mp4",
     "BabyShaker": "/assets/touch_study/baby_shaker.mp4"
   }
 }
