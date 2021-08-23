@@ -1,4 +1,4 @@
-import { VideoLinks } from "./videoLinks.json";
+import { VideoLinks } from "./videoLinks";
 
 export type Action = {
   type: "setup" | "training" | "distribution" | "test" | "finish";
