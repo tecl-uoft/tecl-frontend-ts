@@ -15,6 +15,7 @@ import { registerRoute } from "workbox-routing";
 import { StaleWhileRevalidate, CacheFirst } from "workbox-strategies";
 import { CacheableResponsePlugin } from "workbox-cacheable-response";
 import { RangeRequestsPlugin } from "workbox-range-requests";
+import { VideoLinks } from "./pages/TouchStudy/videoLinks";
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -82,23 +83,32 @@ self.addEventListener("message", (event) => {
 
 // Any other custom service worker logic can go here.
 // Serve from Cache
-self.addEventListener("fetch", (event) => {
-  if (!event.request.url.endsWith(".mp4")) {
-    event.respondWith(
-      caches.match(event.request).then((response) => {
-        return response || fetch(event.request);
-      })
-    );
-  }
-});
+// self.addEventListener("fetch", (event) => {
+//   if (!event.request.url.endsWith(".mp4")) {
+//     event.respondWith(
+//       caches.match(event.request).then((response) => {
+//         return response || fetch(event.request);
+//       })
+//     );
+//   }
+// });
 
 registerRoute(
-  ({ url }) => url.pathname.endsWith(".mp4"),
-  new CacheFirst({
-    cacheName: "video-cache",
-    plugins: [
-      new CacheableResponsePlugin({ statuses: [200] }),
-      new RangeRequestsPlugin(),
-    ],
+  ({ url }) =>
+    url.origin === self.location.origin &&
+    url.pathname.startsWith("/static/media/"),
+  new StaleWhileRevalidate({
+    cacheName: "videos", // Use the same cache name as before.
   })
 );
+
+// registerRoute(
+//   ({ url }) => url.pathname.endsWith(".mp4"),
+//   new CacheFirst({
+//     cacheName: "videos",
+//     plugins: [
+//       new CacheableResponsePlugin({ statuses: [200] }),
+//       new RangeRequestsPlugin(),
+//     ],
+//   })
+// );

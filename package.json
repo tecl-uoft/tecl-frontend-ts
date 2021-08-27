@@ -51,6 +51,7 @@
     "build:stylesheets": "npx tailwindcss build src/styles/index.css -o src/styles/tailwind.css",
     "start": "react-scripts start",
     "build": "npm run build:stylesheets && react-scripts build",
+    "smb": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
