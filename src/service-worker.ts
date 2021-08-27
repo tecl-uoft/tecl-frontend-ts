@@ -12,7 +12,9 @@ import { clientsClaim } from "workbox-core";
 import { ExpirationPlugin } from "workbox-expiration";
 import { precacheAndRoute, createHandlerBoundToURL } from "workbox-precaching";
 import { registerRoute } from "workbox-routing";
-import { StaleWhileRevalidate } from "workbox-strategies";
+import { StaleWhileRevalidate, CacheFirst } from "workbox-strategies";
+import { CacheableResponsePlugin } from "workbox-cacheable-response";
+import { RangeRequestsPlugin } from "workbox-range-requests";
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -80,12 +82,23 @@ self.addEventListener("message", (event) => {
 
 // Any other custom service worker logic can go here.
 // Serve from Cache
-self.addEventListener("fetch", (event) => {
-  if (!event.request.url.endsWith(".mp4")) {
-    event.respondWith(
-      caches.match(event.request).then((response) => {
-        return response || fetch(event.request);
-      })
-    );
-  }
-});
+// self.addEventListener("fetch", (event) => {
+//   if (!event.request.url.endsWith(".mp4")) {
+//     event.respondWith(
+//       caches.match(event.request).then((response) => {
+//         return response || fetch(event.request);
+//       })
+//     );
+//   }
+// });
+
+registerRoute(
+  ({ url }) => url.pathname.endsWith(".mp4"),
+  new CacheFirst({
+    cacheName: "your-cache-name-here",
+    plugins: [
+      new CacheableResponsePlugin({ statuses: [200] }),
+      new RangeRequestsPlugin(),
+    ],
+  })
+);
