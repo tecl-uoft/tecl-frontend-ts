@@ -40,17 +40,16 @@ export function register(config?: Config) {
 
     window.addEventListener("load", () => {
       const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
+      const addToCache = async (urls: string[]) => {
+        const myCache = await window.caches.open("videos");
+        await myCache.addAll(urls);
+      };
+      const allUrls = Object.values(VideoLinks);
+      addToCache(allUrls);
 
       if (isLocalhost) {
         // This is running on localhost. Let's check if a service worker still exists or not.
         checkValidServiceWorker(swUrl, config);
-        const addToCache = async (urls: string[]) => {
-          const myCache = await window.caches.open("videos");
-          await myCache.addAll(urls);
-        };
-        const allUrls = Object.values(VideoLinks);
-        console.log(allUrls);
-        addToCache(allUrls);
 
         // Add some additional logging to localhost, pointing developers to the
         // service worker/PWA documentation.
