@@ -9,7 +9,7 @@ function FroggerStudyEntry() {
         ageRange="7 & 8 years old or 18 to 55 years old"
         studyDesc="We are interested in how social context changes attempts to solve the game."
         studyWorkDesc={
-          <div>
+          <div className="px-4 text-md" >
             You’ll provide us your email, and we’ll send you a link to play as
             Frog and solve a simple platforming game. Then, you will answer some
             questions about your experience and fill out some surveys. It is
@@ -17,8 +17,8 @@ function FroggerStudyEntry() {
             note that only you OR your child can participate. You are not
             eligible if you’ve already done a Frog study with us over Zoom!
             <br /> <br />
-            <span className="text-sm">
-              Please note that video and audio recording are required for this
+            <span className="text-2xl font-bold">
+              **Please note that video and audio recording are required for this
               game so that we can perform quality control. You will not be
               compensated if you do not provide audio and video. Please contact
               tecl.psychology@utoronto.ca if you are uncomfortable consenting to

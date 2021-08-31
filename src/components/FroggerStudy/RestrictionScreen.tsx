@@ -76,7 +76,7 @@ function RestrictionScreen() {
               <b>Child</b>
             </p>
             <p className="h-12 mt-2 text-center text-gray-600">
-              Select this if you are 7 to 10 years old and have a parent or
+              Select this if you are 7 and 8 years old and have a parent or
               guardian over the age 18 present with you.
             </p>
           </div>
