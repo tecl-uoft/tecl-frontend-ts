@@ -70,10 +70,10 @@ const FroggerPractice: React.FC<IFroggerPracticeProps> = ({
           r.practiceWebcamInfo = {
             startTime: currVideoStartLuxon
               .diff(webcamStartTimeLuxon)
-              .toFormat("HH:mm:ss:SSS"),
+              .toFormat("hh:mm:ss:SSS"),
             endTime: currVideoEndLuxon
               .diff(webcamStartTimeLuxon)
-              .toFormat("HH:mm:ss:SSS"),
+              .toFormat("hh:mm:ss:SSS"),
           };
         }
         return r;
