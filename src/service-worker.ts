@@ -12,10 +12,7 @@ import { clientsClaim } from "workbox-core";
 import { ExpirationPlugin } from "workbox-expiration";
 import { precacheAndRoute, createHandlerBoundToURL } from "workbox-precaching";
 import { registerRoute } from "workbox-routing";
-import { StaleWhileRevalidate, CacheFirst } from "workbox-strategies";
-import { CacheableResponsePlugin } from "workbox-cacheable-response";
-import { RangeRequestsPlugin } from "workbox-range-requests";
-import { VideoLinks } from "./pages/TouchStudy/videoLinks";
+import { StaleWhileRevalidate } from "workbox-strategies";
 
 declare const self: ServiceWorkerGlobalScope;
 

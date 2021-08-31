@@ -1,3 +1,5 @@
+import React from "react";
+
 interface IStudyInfoBlockProps {
 
     /* Title of the study */
@@ -10,7 +12,7 @@ interface IStudyInfoBlockProps {
     studyDesc: string
 
     /* A description of how the study works */
-    studyWorkDesc: string
+    studyWorkDesc: string | React.ReactNode
 
     /* A URI of the actual study */
     studyTrialURI: string

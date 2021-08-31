@@ -6,15 +6,27 @@ function FroggerStudyEntry() {
     <div id="frogger-study-entry">
       <StudyEntryBlock
         studyTitle="InFrognito"
-        ageRange="7 to 10 years old"
-        studyDesc="We’re interested in how kids understand fair and unfair scenarios,
-            helping and hindering situations, and how this influences their
-            social behavior."
-        studyWorkDesc="We’re interested in how kids understand fair and unfair scenarios,
-        helping and hindering situations, and how this influences their
-        social behavior. We’re interested in how kids understand fair and
-        unfair scenarios, helping and hindering situations, and how this
-        influences their social behavior."
+        ageRange="7 & 8 years old or 18 to 55 years old"
+        studyDesc="We are interested in how social context changes attempts to solve the game."
+        studyWorkDesc={
+          <div>
+            You’ll provide us your email, and we’ll send you a link to play as
+            Frog and solve a simple platforming game. Then, you will answer some
+            questions about your experience and fill out some surveys. It is
+            important that you’re seeing the game for the first time, so please
+            note that only you OR your child can participate. You are not
+            eligible if you’ve already done a Frog study with us over Zoom!
+            <br /> <br />
+            <span className="text-sm">
+              Please note that video and audio recording are required for this
+              game so that we can perform quality control. You will not be
+              compensated if you do not provide audio and video. Please contact
+              tecl.psychology@utoronto.ca if you are uncomfortable consenting to
+              audio and video recording, and we will be happy to find a more
+              appropriate study.
+            </span>
+          </div>
+        }
         studyImgURI="/assets/frogger_study.svg"
         studyImgAlt="Frogger Study"
         studyTrialURI="/study/frogger/open/game"
