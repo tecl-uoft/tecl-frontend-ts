@@ -109,13 +109,15 @@ const FroggerGame: React.FC<IFroggerGameProps> = ({
   }, [setPlayerMovements]);
 
   useEffect(() => {
+    const urlParas = new URLSearchParams(window.location.search)
+    const part_type = urlParas.get("type") || "child"
     const build =
-      participant?.type === "adult"
+      part_type === "adult"
         ? "/scripts/FroggerAdult_Arnav_5.17.21/Build/FroggerAdult_Arnav_5.17.21.json"
         : "/scripts/FroggerChild_Arnav_5.17.21/Build/FroggerChild_Arnav_5.17.21.json";
 
     const loader =
-      participant?.type === "adult"
+      part_type === "adult"
         ? "/scripts/FroggerAdult_Arnav_5.17.21/Build/UnityLoader.js"
         : "/scripts/FroggerChild_Arnav_5.17.21/Build/UnityLoader.js";
 
