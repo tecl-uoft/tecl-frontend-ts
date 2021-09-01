@@ -21,11 +21,10 @@ function DemographicQuestions(props: {
   const [isAdult, setIsAdult] = useState(false);
   const [isUpdated, setIsUpdated] = useState(false);
 
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isAdult = params.get("type") === "adult";
-    process.env.NODE_ENV === "development" ? setDemoState(4) : setDemoState(0);
+    process.env.NODE_ENV === "development" ? setDemoState(5) : setDemoState(5);
     setIsAdult(isAdult);
   }, []);
 
@@ -79,7 +78,7 @@ function DemographicQuestions(props: {
         );
       case 4:
         return (
-          <PaymentMethods
+          <MCQuestions
             isAdult={isAdult}
             setDemoResponse={setDemoResponse}
             nextState={setNextState}
@@ -87,7 +86,7 @@ function DemographicQuestions(props: {
         );
       case 5:
         return (
-          <MCQuestions
+          <PaymentMethods
             isAdult={isAdult}
             setDemoResponse={setDemoResponse}
             nextState={setNextState}

@@ -14,6 +14,7 @@ import ThanksNote from "./ThanksNote";
 import FroggerStudyService from "../../services/FroggerStudyService";
 import { notify } from "../Notification";
 import NoConsent from "./NoConsent";
+import { QualtricsLink } from "./QualtricsLink";
 
 enum FroggerStudyStates {
   RestrictionScreen = "resScreen",
@@ -28,6 +29,7 @@ enum FroggerStudyStates {
   CameraTest = "camTest",
   DemoQuestions = "DemoQ",
   ThanksNote = "ThankNote",
+  QualtricsLink = "QualLink",
 }
 
 export interface IFroggerParticipant {
@@ -72,7 +74,7 @@ function FroggerStudy() {
     if (id && type) {
       setParticipant({ id, type, study });
       process.env.NODE_ENV === "development"
-        ? setStudyState(FroggerStudyStates.StudyGame)
+        ? setStudyState(FroggerStudyStates.QualtricsLink)
         : setStudyState(FroggerStudyStates.AskConsent);
     }
   }, []);
@@ -149,10 +151,13 @@ function FroggerStudy() {
       case FroggerStudyStates.PostQuestions:
         state = (
           <FroggerPostQuestions
-            nextState={() => setStudyState(FroggerStudyStates.DemoQuestions)}
+            nextState={() => setStudyState(FroggerStudyStates.QualtricsLink)}
             setResponse={setResponse}
           />
         );
+        break;
+      case FroggerStudyStates.QualtricsLink:
+        state = <QualtricsLink nextState={() => setStudyState(FroggerStudyStates.DemoQuestions)} />;
         break;
       case FroggerStudyStates.DemoQuestions:
         state = (
