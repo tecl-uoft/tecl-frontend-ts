@@ -196,7 +196,7 @@ const FroggerGame: React.FC<IFroggerGameProps> = ({
         <div className="w-full py-2 text-2xl font-bold text-center bg-red-300">{`Loading ${Math.floor(loadingProgress * 100)} percent...`}</div>
       ) : null}
       {(!timeOver || isMod) && unityContent ? (
-        <div onClick={() => window.scrollTo(0, window.innerHeight)} style={{ width: 960, height: window.innerHeight - 100 }} className="mx-auto ">
+        <div onClick={() => window.scrollTo(0, window.innerHeight)} className="mx-16 mx-auto md:mx-32">
           <Unity unityContent={unityContent} />
         </div>
       ) : (
