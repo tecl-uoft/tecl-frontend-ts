@@ -63,7 +63,7 @@ function Signup() {
               First Name *
             </label>
             <input
-              className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border rounded appearance-none focus:outline-none focus:bg-white"
+              className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border rounded appearance-none   focus:bg-white"
               type="text"
               value={firstNameInput}
               onChange={(e) => {
@@ -78,7 +78,7 @@ function Signup() {
               Last Name
             </label>
             <input
-              className="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
+              className="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none   focus:bg-white focus:border-gray-500"
               type="text"
               value={lastNameInput}
               onChange={(e) => {
@@ -95,7 +95,7 @@ function Signup() {
               Email *
             </label>
             <input
-              className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
+              className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none   focus:bg-white focus:border-gray-500"
               value={emailInput}
               onChange={(e) => {
                 setEmailInput(e.currentTarget.value);
@@ -112,7 +112,7 @@ function Signup() {
               Password *
             </label>
             <input
-              className="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border rounded appearance-none focus:outline-none focus:bg-white"
+              className="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border rounded appearance-none   focus:bg-white"
               value={passwordInput}
               onChange={(e) => {
                 setPasswordInput(e.currentTarget.value);
@@ -133,7 +133,7 @@ function Signup() {
               Confirm Password *
             </label>
             <input
-              className="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
+              className="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none   focus:bg-white focus:border-gray-500"
               value={passwordConfirmInput}
               onChange={(e) => {
                 setPasswordConfirmInput(e.currentTarget.value);
@@ -146,7 +146,7 @@ function Signup() {
         </div>
         <div className="flex justify-center">
           <input
-            className="w-full px-4 py-2 font-bold text-white bg-orange-500 rounded cursor-pointer hover:bg-orange-700 focus:outline-none focus:shadow-outline"
+            className="w-full px-4 py-2 font-bold text-white bg-orange-500 rounded cursor-pointer hover:bg-orange-700   focus:shadow-outline"
             type="submit"
             value="Register"
           />

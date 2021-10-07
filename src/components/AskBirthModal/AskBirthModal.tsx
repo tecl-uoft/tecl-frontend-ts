@@ -40,7 +40,7 @@ function AskBirthModal(props: IAskBirthModalProps) {
               <Input value={birthDay} valueSetter={setBirthDay} type="date" />
              {/*  <input
                 id="study-name"
-                className="block w-2/3 p-2 mx-auto mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
+                className="block w-2/3 p-2 mx-auto mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none   focus:bg-white focus:border-gray-500"
                 type="date"
                 onChange={(e) => setBirthDay(e.currentTarget.value)}
               /> */}

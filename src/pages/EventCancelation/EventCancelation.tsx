@@ -140,7 +140,7 @@ function EventCancelation() {
                 <span className="flex mt-3 rounded-md shadow-sm sm:mt-0 sm:w-auto">
                   <button
                     type="button"
-                    className="inline-flex justify-center w-32 px-4 py-2 text-base font-medium leading-6 text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-200 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue sm:text-sm sm:leading-5"
+                    className="inline-flex justify-center w-32 px-4 py-2 text-base font-medium leading-6 text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-200   focus:border-blue-300 focus:shadow-outline-blue sm:text-sm sm:leading-5"
                   >
                     Go Back
                   </button>
@@ -150,7 +150,7 @@ function EventCancelation() {
                 <button
                   type="button"
                   onClick={remove}
-                  className="inline-flex justify-center w-32 px-4 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red sm:text-sm sm:leading-5"
+                  className="inline-flex justify-center w-32 px-4 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-500   focus:border-red-700 focus:shadow-outline-red sm:text-sm sm:leading-5"
                 >
                   Remove Me
                 </button>

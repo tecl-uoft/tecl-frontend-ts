@@ -119,7 +119,7 @@ function CalendarRemoveModal(props: ICalendarRemoveModalProps) {
               <button
                 type="button"
                 onClick={onClickDelete}
-                className="inline-flex justify-center w-full px-4 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red sm:text-sm sm:leading-5"
+                className="inline-flex justify-center w-full px-4 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-500 focus:border-red-700 focus:shadow-outline-red sm:text-sm sm:leading-5"
               >
                 Delete
               </button>
@@ -128,7 +128,7 @@ function CalendarRemoveModal(props: ICalendarRemoveModalProps) {
               <button
                 type="button"
                 onClick={props.onCancel}
-                className="inline-flex justify-center w-full px-4 py-2 text-base font-medium leading-6 text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue sm:text-sm sm:leading-5"
+                className="inline-flex justify-center w-full px-4 py-2 text-base font-medium leading-6 text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm hover:text-gray-500 focus:border-blue-300 focus:shadow-outline-blue sm:text-sm sm:leading-5"
               >
                 Cancel
               </button>

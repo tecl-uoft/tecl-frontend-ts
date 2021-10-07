@@ -15,7 +15,7 @@ export function InstructionNav(props: IInstructionNavProps) {
         onClick={() => {
           setCurrentStudy(undefined);
         }}
-        className={`text-md font-semibold rounded-lg bg-orange-500 text-white border-4 focus:outline-none
+        className={`text-md font-semibold rounded-lg bg-orange-500 text-white border-4  
           ${currentStudy === undefined ? "border-gray-800" : "border-white"}`}
       >
         <div className="w-full px-2 py-1 border-2 border-white rounded-lg">

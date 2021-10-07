@@ -85,7 +85,7 @@ function FairnessStudyFeedback() {
             <div className="w-full px-3">
               <textarea
                 onChange={(e) => setFeedback(e.target.value)}
-                className="appearance-none block w-full h-64 bg-gray-100 placeholder-gray-600 text-gray-800 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className="appearance-none block w-full h-64 bg-gray-100 placeholder-gray-600 text-gray-800 border border-gray-200 rounded py-3 px-4 leading-tight   focus:bg-white focus:border-gray-500"
                 placeholder="Add your thoughts here..."
               />
               <p className="text-gray-800 text-xs italic">
@@ -107,7 +107,7 @@ function FairnessStudyFeedback() {
                 }),
               });
             }}
-            className="bg-orange-100 hover:bg-orange-300 w-full mb-6 font-bold rounded-lg py-4 px-8 shadow-lg focus:outline-none uppercase tracking-wider"
+            className="bg-orange-100 hover:bg-orange-300 w-full mb-6 font-bold rounded-lg py-4 px-8 shadow-lg   uppercase tracking-wider"
           >
             Submit
           </button>

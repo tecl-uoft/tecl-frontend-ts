@@ -34,7 +34,7 @@ function Input(props: {
     return (
       <DatePicker
         className={
-          "w-full block p-2 mb-2 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:outline-none focus:bg-white focus:border-gray-500"
+          "w-full block p-2 mb-2 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none   focus:bg-white focus:border-gray-500"
         }
         calendarClassName={"rounded-lg"}
         value={
@@ -50,7 +50,7 @@ function Input(props: {
   return (
     <input
       className={
-        "w-full block p-2 mb-2 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:outline-none focus:bg-white focus:border-gray-500"
+        "w-full block p-2 mb-2 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none   focus:bg-white focus:border-gray-500"
       }
       type={props.type}
       value={props.value}

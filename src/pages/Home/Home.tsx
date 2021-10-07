@@ -51,7 +51,7 @@ function HeroBlock() {
         </h3>
        
         {/* <Link to="/signup">
-          <button className="px-6 py-3 font-bold tracking-wider text-white bg-orange-500 rounded shadow-lg focus:outline-none hover:bg-orange-700">
+          <button className="px-6 py-3 font-bold tracking-wider text-white bg-orange-500 rounded shadow-lg   hover:bg-orange-700">
             Sign Up
           </button>
         </Link> */}

@@ -83,7 +83,7 @@ function FroggerInstructions(props: IFroggerInstructionsProps) {
         <div className="flex flex-col">
           <video
             onEnded={onVideoFinish}
-            className="px-32 min-h-64 focus:outline-none"
+            className="px-32 min-h-64  "
             ref={videoRef}
           >
             <source src={videoSrc} type="video/mp4" />
@@ -92,13 +92,13 @@ function FroggerInstructions(props: IFroggerInstructionsProps) {
           <div className="flex mt-4 space-x-4">
             <button
               onClick={onPlay}
-              className="w-1/2 px-4 py-3 font-bold tracking-wider uppercase bg-green-200 rounded-lg shadow-lg hover:bg-green-400 focus:outline-none"
+              className="w-1/2 px-4 py-3 font-bold tracking-wider uppercase bg-green-200 rounded-lg shadow-lg hover:bg-green-400  "
             >
               Play
             </button>
             <button
               onClick={onPause}
-              className="w-1/2 px-4 py-3 font-bold tracking-wider uppercase bg-yellow-200 rounded-lg shadow-lg hover:bg-yellow-400 focus:outline-none"
+              className="w-1/2 px-4 py-3 font-bold tracking-wider uppercase bg-yellow-200 rounded-lg shadow-lg hover:bg-yellow-400  "
             >
               Pause
             </button>
@@ -109,7 +109,7 @@ function FroggerInstructions(props: IFroggerInstructionsProps) {
         <div className="flex justify-around mt-6">
           <button
             onClick={onNextClick}
-            className="w-full px-8 py-4 font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400 focus:outline-none"
+            className="w-full px-8 py-4 font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400  "
           >
             Next
           </button>

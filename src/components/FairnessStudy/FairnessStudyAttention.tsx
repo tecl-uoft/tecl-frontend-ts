@@ -27,7 +27,7 @@ function FairnessStudyAttention(props: IFairnessStudyAttentionProps) {
             onClick={() => {
               setBallColor("red");
             }}
-            className={`bg-red-100 hover:bg-red-300 w-full mt-6 font-bold rounded-lg py-4 px-8 shadow-lg focus:outline-none uppercase tracking-wider ${
+            className={`bg-red-100 hover:bg-red-300 w-full mt-6 font-bold rounded-lg py-4 px-8 shadow-lg   uppercase tracking-wider ${
               ballColor === "red" ? "bg-red-300" : ""
             }`}
           >
@@ -37,7 +37,7 @@ function FairnessStudyAttention(props: IFairnessStudyAttentionProps) {
             onClick={() => {
               setBallColor("blue");
             }}
-            className={`bg-blue-100 hover:bg-blue-300 w-full mt-6 font-bold rounded-lg py-4 px-8 shadow-lg focus:outline-none uppercase tracking-wider ${
+            className={`bg-blue-100 hover:bg-blue-300 w-full mt-6 font-bold rounded-lg py-4 px-8 shadow-lg   uppercase tracking-wider ${
               ballColor === "blue" ? "bg-blue-300" : ""
             }`}
           >
@@ -47,7 +47,7 @@ function FairnessStudyAttention(props: IFairnessStudyAttentionProps) {
             onClick={() => {
               setBallColor("green");
             }}
-            className={`bg-green-100 hover:bg-green-300 w-full mt-6 font-bold rounded-lg py-4 px-8 shadow-lg focus:outline-none uppercase tracking-wider ${
+            className={`bg-green-100 hover:bg-green-300 w-full mt-6 font-bold rounded-lg py-4 px-8 shadow-lg   uppercase tracking-wider ${
               ballColor === "green" ? "bg-green-300" : ""
             }`}
           >
@@ -63,7 +63,7 @@ function FairnessStudyAttention(props: IFairnessStudyAttentionProps) {
         <input
           type="text"
           onChange={(e) => setAlienName(e.target.value)}
-          className="appearance-none block w-1/2 mx-auto h-12 bg-gray-100 placeholder-gray-600 text-gray-800 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+          className="appearance-none block w-1/2 mx-auto h-12 bg-gray-100 placeholder-gray-600 text-gray-800 border border-gray-200 rounded py-3 px-4 leading-tight   focus:bg-white focus:border-gray-500"
           placeholder="Write the name here here..."
         />
       </div>
@@ -98,7 +98,7 @@ function FairnessStudyAttention(props: IFairnessStudyAttentionProps) {
             });
             setTrialFunc();
           }}
-          className="bg-orange-100 hover:bg-orange-300 w-full mt-12 font-bold rounded-lg py-4 px-8 shadow-lg focus:outline-none uppercase tracking-wider"
+          className="bg-orange-100 hover:bg-orange-300 w-full mt-12 font-bold rounded-lg py-4 px-8 shadow-lg   uppercase tracking-wider"
         >
           {isKidMode ? "Next" : "Submit"}
         </button>

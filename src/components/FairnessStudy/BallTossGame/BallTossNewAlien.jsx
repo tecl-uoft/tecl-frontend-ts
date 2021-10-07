@@ -49,7 +49,7 @@ function BallTossNewAlien(props) {
               onClick={() => {
                 setLikeA(rating);
               }}
-              className={`w-full h-12 bg-orange-100 hover:shadow-lg hover:bg-orange-200  font-bold rounded-lg focus:outline-none  tracking-wider
+              className={`w-full h-12 bg-orange-100 hover:shadow-lg hover:bg-orange-200  font-bold rounded-lg    tracking-wider
               ${rating === likeA ? "bg-orange-400 hover:bg-orange-400" : ""}`}
             >
               {rating}
@@ -78,7 +78,7 @@ function BallTossNewAlien(props) {
               onClick={() => {
                 setLikeB(rating);
               }}
-              className={`w-full h-12 bg-orange-100 hover:shadow-lg hover:bg-orange-200  font-bold rounded-lg focus:outline-none  tracking-wider
+              className={`w-full h-12 bg-orange-100 hover:shadow-lg hover:bg-orange-200  font-bold rounded-lg    tracking-wider
               ${rating === likeB ? "bg-orange-400 hover:bg-orange-400" : ""}`}
             >
               {rating}
@@ -120,7 +120,7 @@ function BallTossNewAlien(props) {
                 ]);
                 nextFunc();
               }}
-              class="bg-orange-100 hover:text-orange-500 w-full font-bold rounded-lg py-4 px-8 shadow-lg focus:outline-none uppercase tracking-wider"
+              class="bg-orange-100 hover:text-orange-500 w-full font-bold rounded-lg py-4 px-8 shadow-lg   uppercase tracking-wider"
             >
               Next
             </button>

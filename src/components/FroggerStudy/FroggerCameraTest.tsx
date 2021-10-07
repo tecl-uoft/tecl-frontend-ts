@@ -74,7 +74,7 @@ function FroggerCameraTest({
       <div className="flex justify-around my-6">
         <button
           onClick={nextState}
-          className="w-3/4 px-8 py-4 font-bold tracking-wider uppercase bg-orange-300 rounded-lg shadow-lg hover:bg-orange-400 focus:outline-none"
+          className="w-3/4 px-8 py-4 font-bold tracking-wider uppercase bg-orange-300 rounded-lg shadow-lg hover:bg-orange-400  "
         >
           Start Study
         </button>

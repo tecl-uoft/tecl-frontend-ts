@@ -210,7 +210,7 @@ const FroggerGame: React.FC<IFroggerGameProps> = ({
         {timeOver || isMod ? (
           <button
             onClick={onNextClick}
-            className="w-full px-8 py-4 my-6 font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400 focus:outline-none"
+            className="w-full px-8 py-4 my-6 font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400  "
           >
             Next
           </button>

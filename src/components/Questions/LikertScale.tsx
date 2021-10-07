@@ -47,7 +47,7 @@ function LikertScale(props: ILikertScaleProps) {
               <button
                 key={index}
                 onClick={() => setResponse(value)}
-                className={` bg-orange-100 hover:shadow-lg hover:bg-orange-200  font-bold rounded-lg focus:outline-none  tracking-wider w-16 py-2 uppercase"}
+                className={` bg-orange-100 hover:shadow-lg hover:bg-orange-200  font-bold rounded-lg    tracking-wider w-16 py-2 uppercase"}
               ${value === response ? "bg-orange-400 hover:bg-orange-400" : ""}`}
               >
                 {value}

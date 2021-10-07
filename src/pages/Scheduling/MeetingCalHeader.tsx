@@ -19,7 +19,7 @@ export function MeetingCalNav(props: IMeetingCalNavProps) {
           setCurrentStudy(study);
         }}
         style={{ backgroundColor: study.keyColor }}
-        className={`text-md font-semibold rounded-lg text-white border-4 focus:outline-none
+        className={`text-md font-semibold rounded-lg text-white border-4  
         ${
           currentStudy && currentStudy.studyName === study.studyName
             ? "border-gray-800"

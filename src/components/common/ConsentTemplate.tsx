@@ -79,7 +79,7 @@ function ChooseConsentButtons(props: IChooseConsentButtonsProps) {
           onClick={() => {
             setConsent(ConsentChoices.Disagree);
           }}
-          className={`bg-orange-100 hover:bg-orange-200 w-1/2 font-bold rounded-lg py-4 px-8 shadow-lg focus:outline-none uppercase tracking-wider 
+          className={`bg-orange-100 hover:bg-orange-200 w-1/2 font-bold rounded-lg py-4 px-8 shadow-lg   uppercase tracking-wider 
               ${
                 consent === ConsentChoices.Disagree
                   ? " bg-orange-300 hover:bg-orange-300"
@@ -92,7 +92,7 @@ function ChooseConsentButtons(props: IChooseConsentButtonsProps) {
           onClick={() => {
             setConsent(ConsentChoices.Agree);
           }}
-          className={`bg-orange-100 hover:bg-orange-200 w-1/2 font-bold rounded-lg py-4 px-8 shadow-lg focus:outline-none uppercase tracking-wider
+          className={`bg-orange-100 hover:bg-orange-200 w-1/2 font-bold rounded-lg py-4 px-8 shadow-lg   uppercase tracking-wider
               ${
                 consent === ConsentChoices.Agree
                   ? "bg-orange-300 hover:bg-orange-300"
@@ -131,7 +131,7 @@ function SubmitConsentButton(props: ISubmitConsentButtonProps) {
                 break;
             }
           }}
-          className="bg-orange-100 hover:bg-orange-200 w-full font-bold rounded-lg py-4 px-8 shadow-lg focus:outline-none uppercase tracking-wider"
+          className="bg-orange-100 hover:bg-orange-200 w-full font-bold rounded-lg py-4 px-8 shadow-lg   uppercase tracking-wider"
         >
           Submit
         </button>

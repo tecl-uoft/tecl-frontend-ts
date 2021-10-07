@@ -35,7 +35,7 @@ function BallTossIntro(props) {
           <div class="flex justify-around">
             <button
               onClick={() => props.nextFunc(1)}
-              class="bg-orange-100 hover:text-orange-500 font-bold w-full rounded-lg py-4 px-8 shadow-lg focus:outline-none uppercase tracking-wider"
+              class="bg-orange-100 hover:text-orange-500 font-bold w-full rounded-lg py-4 px-8 shadow-lg   uppercase tracking-wider"
             >
               Next
             </button>

@@ -359,7 +359,7 @@ function FroggerPostQuestions(props: {
       </div>
       <button
         onClick={onSubmit}
-        className="w-3/4 px-8 py-4 mx-auto mt-4 text-lg font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400 focus:outline-none"
+        className="w-3/4 px-8 py-4 mx-auto mt-4 text-lg font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400  "
       >
         Next
       </button>

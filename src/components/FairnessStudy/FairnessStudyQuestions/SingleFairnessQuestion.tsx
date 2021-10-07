@@ -90,7 +90,7 @@ function SingleFairnessQuestion(props: ISingleFairnessQuestionProps) {
               onClick={() => {
                 setRating(name as number);
               }}
-              className={` bg-orange-100 hover:shadow-lg hover:bg-orange-200  font-bold rounded-lg focus:outline-none  tracking-wider
+              className={` bg-orange-100 hover:shadow-lg hover:bg-orange-200  font-bold rounded-lg    tracking-wider
               ${props.setNum > 2 ? "w-32 h-16" : "w-16 h-16 uppercase"}
               ${rating === name ? "bg-orange-400 hover:bg-orange-400" : ""}`}
             >

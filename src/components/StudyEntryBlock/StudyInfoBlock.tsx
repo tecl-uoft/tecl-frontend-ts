@@ -44,7 +44,7 @@ function StudyEntryBlock(props: IStudyInfoBlockProps) {
           <h4 className="mb-3 text-3xl font-bold"> How does it work? </h4>
           <p className="mb-8 text-xl text-gray-600">{props.studyWorkDesc}</p>
         </div>
-        <div onClick={props.onClickPic} className="w-full h-full px-2 text-gray-800 bg-white rounded-lg md:w-1/2 hover:bg-gray-100 focus:outline-none hover:text-orange-500">
+        <div onClick={props.onClickPic} className="w-full h-full px-2 text-gray-800 bg-white rounded-lg md:w-1/2 hover:bg-gray-100   hover:text-orange-500">
           <Link className="" to={props.studyTrialURI}>
            
             <img

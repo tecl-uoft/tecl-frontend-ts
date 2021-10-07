@@ -11,7 +11,7 @@ function StudyNextButton(props: IStudyNextButtonProps) {
       <button
         onClick={() => nextStateFunc()}
         style={{ userSelect: "none" }}
-        className="bg-orange-200 hover:bg-orange-400 font-bold w-full rounded-lg py-4 px-8 shadow-lg focus:outline-none uppercase tracking-wider"
+        className="bg-orange-200 hover:bg-orange-400 font-bold w-full rounded-lg py-4 px-8 shadow-lg   uppercase tracking-wider"
       >
         Next
       </button>

@@ -174,7 +174,7 @@ function BallTossPickAlien(props) {
               <div class="px-3 w-full flex justify-center">
                 <textarea
                   onChange={(e) => setPickResponse(e.target.value)}
-                  class="appearance-none block w-3/4 h-32 bg-gray-300 placeholder-gray-700 text-gray-800 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  class="appearance-none block w-3/4 h-32 bg-gray-300 placeholder-gray-700 text-gray-800 border border-gray-200 rounded py-3 px-4 leading-tight   focus:bg-white focus:border-gray-500"
                   placeholder="Add your thoughts here..."
                 />
               </div>
