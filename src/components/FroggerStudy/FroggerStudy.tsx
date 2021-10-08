@@ -74,7 +74,7 @@ function FroggerStudy() {
     if (id && type) {
       setParticipant({ id, type, study });
       process.env.NODE_ENV === "development"
-        ? setStudyState(FroggerStudyStates.QualtricsLink)
+        ? setStudyState(FroggerStudyStates.AskConsent)
         : setStudyState(FroggerStudyStates.AskConsent);
     }
   }, []);

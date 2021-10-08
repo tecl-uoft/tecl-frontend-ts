@@ -11,6 +11,14 @@ interface IFroggerConsentFormProps {
   setResponse: Dispatch<SetStateAction<IFroggerResponse>>;
 }
 
+const isRightAge = (date: string, isAdult: boolean) => {
+  const age = DateTime.fromFormat(date, "yyyy-MM-dd").diffNow("years").years * -1;
+  console.log(age, date)
+  if (isAdult && age < 18) return false;
+  if (!isAdult && (age > 8 || age < 7)) return false;
+  return true;
+};
+
 function FroggerConsentForm(props: IFroggerConsentFormProps) {
   const [formState, setFormState] = useState({
     parentName: "",
@@ -25,6 +33,7 @@ function FroggerConsentForm(props: IFroggerConsentFormProps) {
     includeFutureResearch: false,
     futureResearch: "",
   });
+
   const formStateSetter = {
     parentName: (parentName: string) =>
       setFormState((s) => ({ ...s, parentName })),
@@ -54,6 +63,7 @@ function FroggerConsentForm(props: IFroggerConsentFormProps) {
       (isAdult || formState.parentName) &&
       (isAdult || formState.childName) &&
       formState.childBirthday &&
+      isRightAge(formState.childBirthday, isAdult) && // check if adult is under 18
       formState.childGender &&
       (isAdult || formState.sign) &&
       (isAdult || formState.signDate)
@@ -71,6 +81,9 @@ function FroggerConsentForm(props: IFroggerConsentFormProps) {
         notify.error("You have missed the Name of child field.");
       } else if (!formState.childBirthday) {
         notify.error("You have forgotten to update the Birthday field.");
+      } else if (!isRightAge(formState.childBirthday, isAdult)) {
+        notify.error("You cannot participate in this study due to your age.");
+        props.noConsentFunc()
       } else if (!formState.childGender) {
         notify.error("You have missed the Gender field.");
       } else if (!(isAdult || formState.sign)) {
@@ -87,7 +100,10 @@ function FroggerConsentForm(props: IFroggerConsentFormProps) {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isAdult = params.get("type") === "adult";
-    setFormState(s => ({...s, signDate: DateTime.fromJSDate(new Date()).toFormat("yyyy-MM-dd") }) )
+    setFormState((s) => ({
+      ...s,
+      signDate: DateTime.fromJSDate(new Date()).toFormat("yyyy-MM-dd"),
+    }));
     setIsAdult(isAdult);
   }, []);
 
