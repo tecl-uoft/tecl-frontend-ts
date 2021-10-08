@@ -74,12 +74,12 @@ function FroggerStudy() {
     if (id && type) {
       setParticipant({ id, type, study });
       process.env.NODE_ENV === "development"
-        ? setStudyState(FroggerStudyStates.AskConsent)
+        ? setStudyState(FroggerStudyStates.AskVideoConsent)
         : setStudyState(FroggerStudyStates.AskConsent);
     }
   }, []);
 
-  function cycleStudyStates(froggerStudyState: FroggerStudyStates) {
+  const cycleStudyStates = (froggerStudyState: FroggerStudyStates) => {
     let state = null;
     switch (froggerStudyState) {
       case FroggerStudyStates.RestrictionScreen:
@@ -157,7 +157,11 @@ function FroggerStudy() {
         );
         break;
       case FroggerStudyStates.QualtricsLink:
-        state = <QualtricsLink nextState={() => setStudyState(FroggerStudyStates.DemoQuestions)} />;
+        state = (
+          <QualtricsLink
+            nextState={() => setStudyState(FroggerStudyStates.DemoQuestions)}
+          />
+        );
         break;
       case FroggerStudyStates.DemoQuestions:
         state = (

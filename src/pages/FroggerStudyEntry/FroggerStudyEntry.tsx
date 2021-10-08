@@ -1,6 +1,5 @@
 import React from "react";
 import toast from "react-hot-toast";
-import { notify } from "../../components/Notification";
 import StudyEntryBlock from "../../components/StudyEntryBlock";
 
 function FroggerStudyEntry() {

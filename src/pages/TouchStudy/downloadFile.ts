@@ -28,7 +28,7 @@ export const download = (touchStudyInfo: any) => {
     ],
   ];
 
-  trialInformation.map((trialObj: any) => {
+  trialInformation.forEach((trialObj: any) => {
     const {
       currentVideo,
       numTouches,

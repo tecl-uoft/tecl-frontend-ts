@@ -293,7 +293,7 @@ function TouchStudy() {
           crossOrigin={`${
             navigator.userAgent.indexOf("Safari") !== -1 &&
             navigator.userAgent.indexOf("Mac") !== -1 &&
-            navigator.userAgent.indexOf("Chrome") == -1
+            navigator.userAgent.indexOf("Chrome") === -1
               ? "true"
               : "anonymous"
           }`}
