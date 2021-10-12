@@ -88,7 +88,9 @@ function FroggerVideoConsentForm(props: IFroggerConsentFormProps) {
     () => {
       if (formState.vc2)
         notify.error(
-          `Note: You must select yes for question ${isAdult ? 1 : 2}, in order to continue.`
+          `Note: You must select yes for question ${
+            isAdult ? 1 : 2
+          }, in order to continue.`
         );
       setFormState((s) => ({ ...s, vc2: !s.vc2 }));
     },
@@ -210,10 +212,16 @@ function FroggerVideoConsentForm(props: IFroggerConsentFormProps) {
                   still photos of your child in each of these ways:
                 </>
               )}{" "}
+              <br />
+              <b>
+                {" "}
+                Please note: you must use the Google Chrome web browser on a
+                non-mobile device in order for us to record your camera feed and gameplay.{" "}
+              </b>
               <br /> <br />
               <div className="flex flex-col justify-between">
                 {questions.map((question, idx) => {
-                  if (isAdult && (idx === 0 )) return <> </>;
+                  if (isAdult && idx === 0) return <> </>;
                   return (
                     <div
                       className={`flex justify-between px-10 my-2 py-2 rounded-md ${

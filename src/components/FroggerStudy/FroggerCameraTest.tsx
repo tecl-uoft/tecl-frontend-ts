@@ -32,7 +32,7 @@ function FroggerCameraTest({
   return (
     <div className="container pb-6 mx-auto text-center">
       <h2 className="py-2 mb-5 text-2xl font-bold text-center bg-red-200">
-        Note: You will NOT receive the payment if your video and audio are NOT
+        You will NOT receive the payment if your video and audio are NOT
         working{" "}
       </h2>
       <h3 className="mb-8 text-3xl font-semibold text-center text-gray-800 underline">
@@ -41,6 +41,14 @@ function FroggerCameraTest({
       <div className="flex">
         <div className="mx-auto mb-16 text-xl text-gray-800">
           <div className="flex flex-col mx-6 space-y-6 text-left">
+            <p>
+              <b className="text-2xl">
+                {" "}
+                Note: you must use the Google Chrome web browser on a
+                non-mobile device in order for us to record your camera feed and
+                gameplay.{" "}
+              </b>
+            </p>
             <p>
               1. If you are participating through a recorded zoom call or choose
               not share your video, you may skip the next step.
@@ -74,7 +82,7 @@ function FroggerCameraTest({
       <div className="flex justify-around my-6">
         <button
           onClick={nextState}
-          className="w-3/4 px-8 py-4 font-bold tracking-wider uppercase bg-orange-300 rounded-lg shadow-lg hover:bg-orange-400  "
+          className="w-3/4 px-8 py-4 font-bold tracking-wider uppercase bg-orange-300 rounded-lg shadow-lg hover:bg-orange-400 "
         >
           Start Study
         </button>
