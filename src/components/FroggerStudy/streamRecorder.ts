@@ -32,6 +32,8 @@ function streamRecorder(
 
   mediaRecorder.ondataavailable = handleDataAvailable;
   mediaRecorder.onstop = () => upload(recordedChunks, startTime);
+  // Dont add a timescale in start won't record large files
+  // https://github.com/webrtc/samples/issues/1153
   mediaRecorder.start();
 
   // demo: to download after recordingTime sec
