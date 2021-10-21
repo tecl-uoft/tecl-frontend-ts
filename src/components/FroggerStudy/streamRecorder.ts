@@ -13,10 +13,10 @@ export interface IRecorder {
 
 function streamRecorder(
   canvas: HTMLCanvasElement | HTMLVideoElement,
-  recordingTime: number,
+  recordingTime: number
 ) {
   // Optional frames per second argument.
-  const stream = (canvas as CanvasElement).captureStream(40);
+  const stream = (canvas as CanvasElement).captureStream(25);
   let recordedChunks: Blob[] = [];
   const startTime = Date.now();
   const options = { mimeType: "video/webm" };
@@ -25,7 +25,6 @@ function streamRecorder(
   function handleDataAvailable(event: BlobEvent) {
     if (event.data && event.data.size > 0) {
       recordedChunks.push(event.data);
-      // download();
     } else {
       alert("Error, no data captured");
     }
@@ -33,7 +32,7 @@ function streamRecorder(
 
   mediaRecorder.ondataavailable = handleDataAvailable;
   mediaRecorder.onstop = () => upload(recordedChunks, startTime);
-  mediaRecorder.start(10);
+  mediaRecorder.start();
 
   // demo: to download after recordingTime sec
   if (recordingTime > 0) {
@@ -60,18 +59,30 @@ export function upload(recordedChunks: Blob[], startTime: number) {
     const fd = new FormData();
     fd.append("video-file", blobFile, fileName);
     getBlobDuration(blobFile).then((r) => console.log(r));
+
+    // upload the video to the server
     const uploadPromise = fetch("/api/v1/frogger-study/upload-game-video", {
       method: "POST",
       body: fd,
     });
 
+    // download the video on user's computer
+    //     const linkTag = document.createElement("a");
+    //     const linkBlobUrl = URL.createObjectURL(blobFile);
+    //     linkTag.href = linkBlobUrl;
+    //     linkTag.download = fileName;
+    //     const LinkTagid = Date.now();
+    //     linkTag.id = String(LinkTagid);
+    //     alert(linkTag.id);
+    //     document.body.appendChild(linkTag); // Or append it whereever you want
+    //     document.getElementById(linkTag.id)?.click(); //can add an id to be specific if multiple
+    //
     notify.promise(uploadPromise, {
       loading: "Please wait before continuing...",
       success: "You may proceed now.",
       error: "Failed to configure data. Please email coordinator.",
     });
   });
-  
 }
 
 async function getBlobDuration(blob: Blob) {

@@ -46,12 +46,29 @@ const FroggerPractice: React.FC<IFroggerPracticeProps> = ({
   }, []);
 
   useEffect(() => {
-    if (loadingProgress === 1) {
-      window.scrollTo(0, window.innerHeight)
-      const canvas = document.querySelector<HTMLCanvasElement>("canvas");
-      if (canvas) {
-        streamRecorder(canvas, 0).then((res) => setMediaRecorder(res));
-      }
+    if (loadingProgress !== 1) return;
+
+    // async function startCapture(displayMediaOptions: any) {
+    //   let captureStream = null;
+
+    //   try {
+    //     // @ts-ignore
+    //     captureStream = await navigator.mediaDevices.getDisplayMedia(
+    //       displayMediaOptions
+    //     );
+    //   } catch (err) {
+    //     console.error("Error: " + err);
+    //   }
+    //   return captureStream;
+    // }
+    // startCapture({
+    //   video: true,
+    //   audio: true,
+    // });
+    window.scrollTo(0, window.innerHeight)
+    const canvas = document.querySelector<HTMLCanvasElement>("canvas");
+    if (canvas) {
+      streamRecorder(canvas, 0).then((res) => setMediaRecorder(res));
     }
   }, [loadingProgress]);
 
@@ -106,7 +123,11 @@ const FroggerPractice: React.FC<IFroggerPracticeProps> = ({
         )} percent...`}</div>
       ) : null}
       {unityContent && (
-        <div onClick={() => window.scrollTo(0, window.innerHeight)} style={{ width: 960, height: window.innerHeight - 100 }} className="mx-auto ">
+        <div
+          onClick={() => window.scrollTo(0, window.innerHeight)}
+          style={{ width: 960, height: window.innerHeight - 100 }}
+          className="mx-auto "
+        >
           <Unity unityContent={unityContent} />
         </div>
       )}
@@ -114,7 +135,7 @@ const FroggerPractice: React.FC<IFroggerPracticeProps> = ({
         <div className="flex justify-around ">
           <button
             onClick={onNextClick}
-            className="w-full px-8 py-4 mt-24 font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400  "
+            className="w-full px-8 py-4 mt-24 font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400 "
           >
             Next
           </button>
