@@ -15,6 +15,7 @@ import FroggerStudyService from "../../services/FroggerStudyService";
 import { notify } from "../Notification";
 import NoConsent from "./NoConsent";
 import { QualtricsLink } from "./QualtricsLink";
+import { Selection } from "./Selection";
 
 enum FroggerStudyStates {
   RestrictionScreen = "resScreen",
@@ -83,7 +84,8 @@ function FroggerStudy() {
     let state = null;
     switch (froggerStudyState) {
       case FroggerStudyStates.RestrictionScreen:
-        state = <RestrictionScreen />;
+        // state = <RestrictionScreen />;
+        state = <Selection />
         break;
 
       case FroggerStudyStates.AskConsent:
@@ -97,15 +99,15 @@ function FroggerStudy() {
           />
         );
         break;
-      case FroggerStudyStates.AskVideoConsent:
-        state = (
-          <FroggerVideoConsentForm
-            consentFunc={() => setStudyState(FroggerStudyStates.CameraTest)}
-            noConsentFunc={() => setStudyState(FroggerStudyStates.NoConsent)}
-            setResponse={setResponse}
-          />
-        );
-        break;
+      // case FroggerStudyStates.AskVideoConsent:
+      //   state = (
+      //     <FroggerVideoConsentForm
+      //       consentFunc={() => setStudyState(FroggerStudyStates.CameraTest)}
+      //       noConsentFunc={() => setStudyState(FroggerStudyStates.NoConsent)}
+      //       setResponse={setResponse}
+      //     />
+      //   );
+      //   break;
       case FroggerStudyStates.CameraTest:
         state = (
           <FroggerCameraTest
