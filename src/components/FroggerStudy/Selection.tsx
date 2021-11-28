@@ -1,13 +1,15 @@
 import React, { useCallback, useState } from "react";
 import { useHistory } from "react-router";
 
-interface ISelectionProps {}
+interface ISelectionProps {
+  nextState: () => void
+}
 
-export const Selection = (props: ISelectionProps) => {
-  const [videoType, setVideoType] = useState("child");
-  const [partcipantType, setParticpantType] = useState("ad_exp");
+export const Selection: React.FC<ISelectionProps> = (props) => {
+  const [videoType, setVideoType] = useState("ad_exp");
+  const [partcipantType, setParticpantType] = useState("child");
   const [participantId, setParticipantId] = useState("");
-  const [videoGender, setVideoGender] = useState("m_exp");
+  const [videoDesc, setVideoDesc] = useState("pl_exp");
 
   const hist = useHistory();
 
@@ -28,7 +30,7 @@ export const Selection = (props: ISelectionProps) => {
 
   const onVideoGenderTypeChange: React.ChangeEventHandler<HTMLSelectElement> =
     useCallback((e) => {
-      setVideoGender(e.currentTarget.value);
+      setVideoDesc(e.currentTarget.value);
     }, []);
 
   const onGenLinkClick: React.MouseEventHandler<HTMLButtonElement> =
@@ -36,12 +38,12 @@ export const Selection = (props: ISelectionProps) => {
       const genLink =
         `/study/frogger/open/game` +
         `?participant_id=${participantId}` +
-        `&type=${partcipantType}` +
-        `&vid_g=${videoGender}` +
+        `&p_type=${partcipantType}` +
+        `&vid_desc=${videoDesc}` +
         `&vid_t=${videoType}`;
-
       hist.push(genLink);
-    }, [participantId, partcipantType, videoGender, videoType, hist]);
+      props.nextState()
+    }, [participantId, partcipantType, videoDesc, videoType, hist]);
 
   return (
     <div className="">
@@ -81,14 +83,14 @@ export const Selection = (props: ISelectionProps) => {
             </select>
           </label>
           <label className="block">
-            <span className="text-gray-700">Instruction Video Gender</span>
+            <span className="text-gray-700">Instruction Video Method</span>
             <select
               onChange={onVideoGenderTypeChange}
-              value={videoGender}
+              value={videoDesc}
               className="block w-full p-2 mt-1 form-select"
             >
-              <option value="m_exp">Male Explanation</option>
-              <option value="f_exp">Female Explanation</option>
+              <option value="pl_exp">Playful Explanation</option>
+              <option value="pe_exp">Pedagogical Explanation</option>
             </select>
           </label>
         </div>

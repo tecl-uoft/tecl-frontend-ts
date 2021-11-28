@@ -36,7 +36,7 @@ enum FroggerStudyStates {
 export interface IFroggerParticipant {
   id: string;
   type: string;
-  study: "playful" | "pedogagical" | "";
+  study: "playful" | "pedagogical" | "";
 }
 export interface IFroggerResponse {
   [key: string]: { [key: string]: string | boolean | Object };
@@ -70,13 +70,18 @@ function FroggerStudy() {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get("participant_id");
-    const type = Math.random() < 0.5 ? "adult" : "child";
-    const study = Math.random() < 0.5 ? "playful" : "pedogagical";
-    if (id && type) {
+    const typeParam = urlParams.get("vid_t")
+    const type = typeParam === "ad_exp" ? "adult" : "child";
+    const study =
+      urlParams.get("vid_desc") === "pl_exp" ? "playful" : "pedagogical";
+
+    if (id && type && typeParam) {
       setParticipant({ id, type, study });
       process.env.NODE_ENV === "development"
-        ? setStudyState(FroggerStudyStates.PracticeGame)
-        : setStudyState(FroggerStudyStates.AskConsent);
+        ? setStudyState(FroggerStudyStates.CameraTest)
+        : setStudyState(FroggerStudyStates.CameraTest);
+    } else {
+      setStudyState(FroggerStudyStates.RestrictionScreen);
     }
   }, []);
 
@@ -85,7 +90,11 @@ function FroggerStudy() {
     switch (froggerStudyState) {
       case FroggerStudyStates.RestrictionScreen:
         // state = <RestrictionScreen />;
-        state = <Selection />
+        state = (
+          <Selection
+            nextState={() => setStudyState(FroggerStudyStates.CameraTest)}
+          />
+        );
         break;
 
       case FroggerStudyStates.AskConsent:
@@ -183,7 +192,7 @@ function FroggerStudy() {
         state = <ErrorNotFound />;
     }
     return state;
-  }
+  };
 
   return <div>{cycleStudyStates(studyState)}</div>;
 }

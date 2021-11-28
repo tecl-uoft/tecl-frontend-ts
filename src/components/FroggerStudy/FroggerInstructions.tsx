@@ -26,10 +26,15 @@ function FroggerInstructions(props: IFroggerInstructionsProps) {
           : "Frogger_Instructions_Male.mp4");
       setVideoSrc(videoSrcLink);
     } else if (participant) {
-      const { type, study } = participant;
+      // const { type, study } = participant;
       const mainURL =
         "https://tecl-frogger-exp-videos.s3.ca-central-1.amazonaws.com/";
       let videoFile = "";
+
+      const type = urlParams.get("vid_t") === "ad_exp" ? "adult" : "child";
+      const study =
+        urlParams.get("vid_desc") === "pl_exp" ? "playful" : "pedagogical";
+
       if (type === "child") {
         videoFile =
           study === "playful"
@@ -83,7 +88,7 @@ function FroggerInstructions(props: IFroggerInstructionsProps) {
         <div className="flex flex-col">
           <video
             onEnded={onVideoFinish}
-            className="px-32 min-h-64  "
+            className="px-32 min-h-64 "
             ref={videoRef}
           >
             <source src={videoSrc} type="video/mp4" />
@@ -92,13 +97,13 @@ function FroggerInstructions(props: IFroggerInstructionsProps) {
           <div className="flex mt-4 space-x-4">
             <button
               onClick={onPlay}
-              className="w-1/2 px-4 py-3 font-bold tracking-wider uppercase bg-green-200 rounded-lg shadow-lg hover:bg-green-400  "
+              className="w-1/2 px-4 py-3 font-bold tracking-wider uppercase bg-green-200 rounded-lg shadow-lg hover:bg-green-400 "
             >
               Play
             </button>
             <button
               onClick={onPause}
-              className="w-1/2 px-4 py-3 font-bold tracking-wider uppercase bg-yellow-200 rounded-lg shadow-lg hover:bg-yellow-400  "
+              className="w-1/2 px-4 py-3 font-bold tracking-wider uppercase bg-yellow-200 rounded-lg shadow-lg hover:bg-yellow-400 "
             >
               Pause
             </button>
@@ -109,7 +114,7 @@ function FroggerInstructions(props: IFroggerInstructionsProps) {
         <div className="flex justify-around mt-6">
           <button
             onClick={onNextClick}
-            className="w-full px-8 py-4 font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400  "
+            className="w-full px-8 py-4 font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400 "
           >
             Next
           </button>
