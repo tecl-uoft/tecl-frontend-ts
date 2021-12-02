@@ -84,6 +84,12 @@ function FroggerInstructions(props: IFroggerInstructionsProps) {
       <h4 className="mb-4 text-2xl text-center text-gray-800">
         Make sure to learn the objective of the game.
       </h4>
+     
+      <h3 className="flex flex-col justify-between w-full mb-4 text-2xl text-center rounded-lg">
+        <div className="underline">Note: Parents should not help their children at all</div>
+        
+      </h3>
+  
       {videoSrc && (
         <div className="flex flex-col">
           <video

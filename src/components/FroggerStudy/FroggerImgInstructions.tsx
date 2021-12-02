@@ -5,7 +5,7 @@ function FroggerImgInstructions({ nextState }: { nextState: () => void }) {
   const [currentPage, setCurrentPage] = useState(1);
 
   const onNextClick = () => {
-    if (currentPage < 5) {
+    if (currentPage < 6) {
       setCurrentPage(currentPage + 1);
     } else {
       console.log(currentPage);
@@ -47,6 +47,14 @@ function FroggerImgInstructions({ nextState }: { nextState: () => void }) {
               className="h-48 mx-auto"
               src={"/assets/frogger/inp2.png"}
             />
+          </div>
+        );
+        break;
+      case 6:
+        state = (
+          <div>
+            Parents, you can help with practice but to make sure that kids do as
+            much as possible!
           </div>
         );
         break;
