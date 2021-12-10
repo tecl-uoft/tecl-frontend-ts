@@ -225,7 +225,7 @@ function TouchStudy() {
         {manualMode && studyState.currentDispatch.trial === 0 && (
           <div className="flex flex-col space-y-6">
             <h2 className="mt-12 text-xl text-center">
-              Manul Mode: <br /> Please choose your specfic condition.
+              Manul Mode: <br /> Please choose your specific condition.
             </h2>
             <div className="flex flex-col justify-between mt-24 space-y-4">
               <label className="block">

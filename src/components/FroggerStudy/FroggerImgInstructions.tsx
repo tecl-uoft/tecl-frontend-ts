@@ -53,8 +53,18 @@ function FroggerImgInstructions({ nextState }: { nextState: () => void }) {
       case 6:
         state = (
           <div>
-            Parents, you can help with practice but to make sure that kids do as
+            Parents, you can help with practice but make sure that kids do as
             much as possible!
+          </div>
+        );
+        break;
+      case 7:
+        state = (
+          <div>
+            “IMPORTANT: Parents! We want to see what your child does all on
+            their own, so please don’t help them or say anything at all, even if
+            your child asks questions. The moderator will intervene if there is
+            a technical error.
           </div>
         );
         break;

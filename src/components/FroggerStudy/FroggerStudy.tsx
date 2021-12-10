@@ -16,6 +16,7 @@ import { notify } from "../Notification";
 import NoConsent from "./NoConsent";
 import { QualtricsLink } from "./QualtricsLink";
 import { Selection } from "./Selection";
+import ParentWarning from "./ParentWarning";
 
 enum FroggerStudyStates {
   RestrictionScreen = "resScreen",
@@ -31,6 +32,7 @@ enum FroggerStudyStates {
   DemoQuestions = "DemoQ",
   ThanksNote = "ThankNote",
   QualtricsLink = "QualLink",
+  ParentWarning = "ParentWarning"
 }
 
 export interface IFroggerParticipant {
@@ -78,8 +80,8 @@ function FroggerStudy() {
     if (id && type && typeParam) {
       setParticipant({ id, type, study });
       process.env.NODE_ENV === "development"
-        ? setStudyState(FroggerStudyStates.CameraTest)
-        : setStudyState(FroggerStudyStates.CameraTest);
+        ? setStudyState(FroggerStudyStates.ImgInstructions)
+        : setStudyState(FroggerStudyStates.ImgInstructions);
     } else {
       setStudyState(FroggerStudyStates.RestrictionScreen);
     }
@@ -117,14 +119,14 @@ function FroggerStudy() {
       //     />
       //   );
       //   break;
-      case FroggerStudyStates.CameraTest:
-        state = (
-          <FroggerCameraTest
-            setVideoRecorder={setVideoRecorder}
-            nextState={() => setStudyState(FroggerStudyStates.ImgInstructions)}
-          />
-        );
-        break;
+      // case FroggerStudyStates.CameraTest:
+      //   state = (
+      //     <FroggerCameraTest
+      //       setVideoRecorder={setVideoRecorder}
+      //       nextState={() => setStudyState(FroggerStudyStates.ImgInstructions)}
+      //     />
+      //   );
+      //   break;
       case FroggerStudyStates.ImgInstructions:
         state = (
           <FroggerImgInstructions
@@ -148,6 +150,11 @@ function FroggerStudy() {
             nextState={() => setStudyState(FroggerStudyStates.StudyGame)}
           />
         );
+        break;
+      case FroggerStudyStates.ParentWarning:
+        state = (
+          <ParentWarning />
+        )
         break;
       case FroggerStudyStates.StudyGame:
         state = (

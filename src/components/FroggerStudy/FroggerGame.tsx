@@ -46,11 +46,12 @@ const FroggerGame: React.FC<IFroggerGameProps> = ({
 
   useEffect(() => {
     const pathString = window.location.pathname;
-    if (pathString.includes("/mod")) {
-      setIsMod(true);
-    }
+    const IS_TIME_STOPPED = true
+    // if (pathString.includes("/mod")) {
+      setIsMod(IS_TIME_STOPPED);
+    // }
 
-    if (loadingProgress === 1 && !pathString.includes("/mod")) {
+    if (loadingProgress === 1 && !pathString.includes("/mod") && !IS_TIME_STOPPED ) {
       setTimeout(() => {
         if (timerSec === 0 && timerMin > 0) {
           setTimerSec(59);
@@ -210,7 +211,7 @@ const FroggerGame: React.FC<IFroggerGameProps> = ({
         {timeOver || isMod ? (
           <button
             onClick={onNextClick}
-            className="w-full px-8 py-4 my-6 font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400  "
+            className="w-full px-8 py-4 my-6 font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400 "
           >
             Next
           </button>
