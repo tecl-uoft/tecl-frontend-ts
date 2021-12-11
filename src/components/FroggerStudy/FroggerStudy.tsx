@@ -80,7 +80,7 @@ function FroggerStudy() {
     if (id && type && typeParam) {
       setParticipant({ id, type, study });
       process.env.NODE_ENV === "development"
-        ? setStudyState(FroggerStudyStates.ImgInstructions)
+        ? setStudyState(FroggerStudyStates.ParentWarning)
         : setStudyState(FroggerStudyStates.ImgInstructions);
     } else {
       setStudyState(FroggerStudyStates.RestrictionScreen);
@@ -94,7 +94,7 @@ function FroggerStudy() {
         // state = <RestrictionScreen />;
         state = (
           <Selection
-            nextState={() => setStudyState(FroggerStudyStates.CameraTest)}
+            nextState={() => setStudyState(FroggerStudyStates.ImgInstructions)}
           />
         );
         break;
@@ -147,20 +147,20 @@ function FroggerStudy() {
         state = (
           <FroggerInstructions
             participant={participant}
-            nextState={() => setStudyState(FroggerStudyStates.StudyGame)}
+            nextState={() => setStudyState(FroggerStudyStates.ParentWarning)}
           />
         );
         break;
       case FroggerStudyStates.ParentWarning:
         state = (
-          <ParentWarning />
+          <ParentWarning nextState={() => setStudyState(FroggerStudyStates.StudyGame)} />
         )
         break;
       case FroggerStudyStates.StudyGame:
         state = (
           <FroggerGame
             webcamStartTime={videoRecorder?.startTime}
-            nextState={() => setStudyState(FroggerStudyStates.PostQuestions)}
+            nextState={() => setStudyState(FroggerStudyStates.ThanksNote)}
             participant={participant}
             setResponse={setResponse}
           />
