@@ -10,8 +10,14 @@ export const Selection: React.FC<ISelectionProps> = (props) => {
   const [partcipantType, setParticpantType] = useState("child");
   const [participantId, setParticipantId] = useState("");
   const [videoDesc, setVideoDesc] = useState("pl_exp");
+  const [prac, setPrac] = useState("y")
 
   const hist = useHistory();
+
+  const onPracTypeChange: React.ChangeEventHandler<HTMLSelectElement> =
+    useCallback((e) => {
+      setPrac(e.currentTarget.value);
+    }, []);
 
   const onParicipantTypeChange: React.ChangeEventHandler<HTMLSelectElement> =
     useCallback((e) => {
@@ -40,10 +46,11 @@ export const Selection: React.FC<ISelectionProps> = (props) => {
         `?participant_id=${participantId}` +
         `&p_type=${partcipantType}` +
         `&vid_desc=${videoDesc}` +
-        `&vid_t=${videoType}`;
+        `&vid_t=${videoType}` +
+        `&prac=${prac}`;
       hist.push(genLink);
       props.nextState()
-    }, [participantId, partcipantType, videoDesc, videoType, hist]);
+    }, [participantId, partcipantType, videoDesc, videoType, hist, prac]);
 
   return (
     <div className="">
@@ -91,6 +98,17 @@ export const Selection: React.FC<ISelectionProps> = (props) => {
             >
               <option value="pl_exp">Playful Explanation</option>
               <option value="pe_exp">Pedagogical Explanation</option>
+            </select>
+          </label>
+          <label className="block">
+            <span className="text-gray-700">Include Practice Video</span>
+            <select
+              onChange={onPracTypeChange}
+              value={prac}
+              className="block w-full p-2 mt-1 form-select"
+            >
+              <option value="y">Yes</option>
+              <option value="n">No</option>
             </select>
           </label>
         </div>

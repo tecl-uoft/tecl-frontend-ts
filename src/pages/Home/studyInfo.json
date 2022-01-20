@@ -10,11 +10,11 @@
     },
     {
       "studyTitle": "InFrognito",
-      "studyDesc": "This study investigates how social context affects children's attempts to solve a puzzle, as well as how these attempts may differ from adults.",
+      "studyDesc": "This study investigates how social context affects children's attempts to solve a puzzle, as well as how these attempts may differ from adults. Please ask to be enrolled in this study.",
       "imgURI": "/assets/frogger_study.svg",
       "imgAlt": "InFrognito study",
       "ageRange": "7 to 10 years old",
-      "studyInfoURI": "/study/frogger/information"
+      "studyInfoURI": "/"
     },
     {
       "studyTitle": "Teams",

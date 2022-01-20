@@ -6,9 +6,15 @@ function FroggerImgInstructions({ nextState }: { nextState: () => void }) {
 
   const onNextClick = () => {
     if (currentPage < 6) {
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const isAdult = urlParams.get('p_type') === "adult"
+      if (isAdult && (currentPage === 5)){  // if adult skip
+        nextState()
+      }
       setCurrentPage(currentPage + 1);
     } else {
-      console.log(currentPage);
+      // console.log(currentPage);
       nextState();
     }
   };

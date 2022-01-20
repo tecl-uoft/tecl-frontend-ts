@@ -32,7 +32,7 @@ enum FroggerStudyStates {
   DemoQuestions = "DemoQ",
   ThanksNote = "ThankNote",
   QualtricsLink = "QualLink",
-  ParentWarning = "ParentWarning"
+  ParentWarning = "ParentWarning",
 }
 
 export interface IFroggerParticipant {
@@ -72,7 +72,7 @@ function FroggerStudy() {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get("participant_id");
-    const typeParam = urlParams.get("vid_t")
+    const typeParam = urlParams.get("vid_t");
     const type = typeParam === "ad_exp" ? "adult" : "child";
     const study =
       urlParams.get("vid_desc") === "pl_exp" ? "playful" : "pedagogical";
@@ -138,7 +138,11 @@ function FroggerStudy() {
         state = (
           <FroggerPractice
             webcamStartTime={videoRecorder?.startTime}
-            nextState={() => setStudyState(FroggerStudyStates.InstructionVideo)}
+            nextState={
+              new URLSearchParams(window.location.search).get("prac") === "y"
+                ? () => setStudyState(FroggerStudyStates.InstructionVideo)
+                : () => setStudyState(FroggerStudyStates.ParentWarning)
+            }
             setResponse={setResponse}
           />
         );
@@ -153,8 +157,10 @@ function FroggerStudy() {
         break;
       case FroggerStudyStates.ParentWarning:
         state = (
-          <ParentWarning nextState={() => setStudyState(FroggerStudyStates.StudyGame)} />
-        )
+          <ParentWarning
+            nextState={() => setStudyState(FroggerStudyStates.StudyGame)}
+          />
+        );
         break;
       case FroggerStudyStates.StudyGame:
         state = (

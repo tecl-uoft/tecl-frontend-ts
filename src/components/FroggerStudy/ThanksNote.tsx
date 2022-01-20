@@ -3,7 +3,7 @@ import React from "react";
 function ThanksNote() {
   return (
     <div className="flex flex-col p-8 my-16 space-y-6 text-2xl tracking-wide text-left bg-orange-200 rounded-lg md:mx-auto md:w-3/4">
-      <p>
+      {/* <p>
         Thank you for playing! We couldn't do our research without our
         participants, and we appreciate that you took the time to complete our
         study. An experimenter will review your audio and video recording, if
@@ -32,7 +32,7 @@ function ThanksNote() {
         </a>
         . Thank you for your patience today – we know our game can be
         frustrating!
-      </p>
+      </p> */}
       <p>
         {" "}
         Once the loading message at the top of the page has finished, you may

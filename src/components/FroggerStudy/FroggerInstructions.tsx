@@ -80,16 +80,27 @@ function FroggerInstructions(props: IFroggerInstructionsProps) {
 
   return (
     <div className="container px-2 mx-auto mb-12">
-      <StudyTitleText text={"Watch the instructional video below."} />
+      <StudyTitleText
+        text={
+          new URLSearchParams(window.location.search).get("vid_desc") ===
+          "pe_exp"
+            ? "Watch the instructional video below."
+            : "Watch the example video below."
+        }
+      />
       <h4 className="mb-4 text-2xl text-center text-gray-800">
         Make sure to learn the objective of the game.
       </h4>
-     
-      <h3 className="flex flex-col justify-between w-full mb-4 text-2xl text-center rounded-lg">
-        <div className="underline">Note: Parents should not help their children at all</div>
-        
-      </h3>
-  
+
+      {new URLSearchParams(window.location.search).get("p_type") !==
+        "adult" && (
+        <h3 className="flex flex-col justify-between w-full mb-4 text-2xl text-center rounded-lg">
+          <div className="underline">
+            Note: Parents should not help their children at all
+          </div>
+        </h3>
+      )}
+
       {videoSrc && (
         <div className="flex flex-col">
           <video
