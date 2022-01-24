@@ -80,7 +80,7 @@ function FroggerStudy() {
     if (id && type && typeParam) {
       setParticipant({ id, type, study });
       process.env.NODE_ENV === "development"
-        ? setStudyState(FroggerStudyStates.ParentWarning)
+        ? setStudyState(FroggerStudyStates.StudyGame)
         : setStudyState(FroggerStudyStates.ImgInstructions);
     } else {
       setStudyState(FroggerStudyStates.RestrictionScreen);

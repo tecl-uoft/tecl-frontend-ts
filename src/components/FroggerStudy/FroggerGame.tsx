@@ -23,7 +23,7 @@ const FroggerGame: React.FC<IFroggerGameProps> = ({
 }) => {
   const timerStartTime = {
     minutes: 7,
-    seconds: 0,
+    seconds: 2,
   };
 
   const [timerSec, setTimerSec] = useState(timerStartTime.seconds);
@@ -45,13 +45,13 @@ const FroggerGame: React.FC<IFroggerGameProps> = ({
   });
 
   useEffect(() => {
-    const pathString = window.location.pathname;
-    const IS_TIME_STOPPED = true
+    // const pathString = window.location.pathname;
+    // const IS_TIME_STOPPED = true
     // if (pathString.includes("/mod")) {
-      setIsMod(IS_TIME_STOPPED);
+     // setIsMod(IS_TIME_STOPPED);
     // }
-
-    if (loadingProgress === 1 && !pathString.includes("/mod") && !IS_TIME_STOPPED ) {
+    // const countDownTimer = !pathString.includes("/mod") && !IS_TIME_STOPPED
+    if (loadingProgress === 1 ) {
       setTimeout(() => {
         if (timerSec === 0 && timerMin > 0) {
           setTimerSec(59);
@@ -111,7 +111,7 @@ const FroggerGame: React.FC<IFroggerGameProps> = ({
 
   useEffect(() => {
     const urlParas = new URLSearchParams(window.location.search)
-    const part_type = urlParas.get("type") || "child"
+    const part_type = urlParas.get("p_type") || urlParas.get("type") ||  "child"
     const build =
       part_type === "adult"
         ? "/scripts/FroggerAdult_Arnav_5.17.21/Build/FroggerAdult_Arnav_5.17.21.json"
@@ -180,7 +180,7 @@ const FroggerGame: React.FC<IFroggerGameProps> = ({
       {!isMod && !timeOver && (
         <StudyTitleText text={"Complete the objective as shown."} />
       )}
-      {!isMod && !timeOver && (
+      {!timeOver && (
         <h4 className="mt-4 mb-4 text-2xl text-center text-gray-800">
           You have:{" "}
           <b className="bold">
@@ -196,7 +196,7 @@ const FroggerGame: React.FC<IFroggerGameProps> = ({
       {loadingProgress !== 1 ? (
         <div className="w-full py-2 text-2xl font-bold text-center bg-red-300">{`Loading ${Math.floor(loadingProgress * 100)} percent...`}</div>
       ) : null}
-      {(!timeOver || isMod) && unityContent ? (
+      {(!timeOver ) && unityContent ? (
         <div onClick={() => window.scrollTo(0, window.innerHeight)} className="mx-16 mx-auto md:mx-32">
           <Unity unityContent={unityContent} />
         </div>
@@ -208,7 +208,7 @@ const FroggerGame: React.FC<IFroggerGameProps> = ({
       )}
 
       <div className="flex justify-around mt-2">
-        {timeOver || isMod ? (
+        {timeOver ? (
           <button
             onClick={onNextClick}
             className="w-full px-8 py-4 my-6 font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400 "

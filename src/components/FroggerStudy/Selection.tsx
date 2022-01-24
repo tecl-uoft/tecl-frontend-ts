@@ -101,7 +101,7 @@ export const Selection: React.FC<ISelectionProps> = (props) => {
             </select>
           </label>
           <label className="block">
-            <span className="text-gray-700">Include Practice Video</span>
+            <span className="text-gray-700">Include Video</span>
             <select
               onChange={onPracTypeChange}
               value={prac}
