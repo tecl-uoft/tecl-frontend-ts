@@ -17,6 +17,7 @@ import NoConsent from "./NoConsent";
 import { QualtricsLink } from "./QualtricsLink";
 import { Selection } from "./Selection";
 import ParentWarning from "./ParentWarning";
+import GoalReminder from "./GoalReminder";
 
 enum FroggerStudyStates {
   RestrictionScreen = "resScreen",
@@ -33,6 +34,7 @@ enum FroggerStudyStates {
   ThanksNote = "ThankNote",
   QualtricsLink = "QualLink",
   ParentWarning = "ParentWarning",
+  GoalReminder = "GoalReminder"
 }
 
 export interface IFroggerParticipant {
@@ -158,8 +160,13 @@ function FroggerStudy() {
       case FroggerStudyStates.ParentWarning:
         state = (
           <ParentWarning
-            nextState={() => setStudyState(FroggerStudyStates.StudyGame)}
+            nextState={() => setStudyState(FroggerStudyStates.GoalReminder)}
           />
+        );
+        break;
+      case FroggerStudyStates.GoalReminder:
+        state = (
+          <GoalReminder nextState={() => setStudyState(FroggerStudyStates.StudyGame)} />
         );
         break;
       case FroggerStudyStates.StudyGame:

@@ -180,7 +180,7 @@ const FroggerGame: React.FC<IFroggerGameProps> = ({
       {!isMod && !timeOver && (
         <StudyTitleText text={"Complete the objective as shown."} />
       )}
-      {!timeOver && (
+      {/* {!timeOver && (
         <h4 className="mt-4 mb-4 text-2xl text-center text-gray-800">
           You have:{" "}
           <b className="bold">
@@ -191,7 +191,7 @@ const FroggerGame: React.FC<IFroggerGameProps> = ({
           </b>{" "}
           remaining.
         </h4>
-      )}
+      )} */}
 
       {loadingProgress !== 1 ? (
         <div className="w-full py-2 text-2xl font-bold text-center bg-red-300">{`Loading ${Math.floor(loadingProgress * 100)} percent...`}</div>
