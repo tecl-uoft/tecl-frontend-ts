@@ -44,7 +44,7 @@ function FroggerInstructions(props: IFroggerInstructionsProps) {
         videoFile =
           study === "playful"
             ? "Infrognito_Playful_Adult.mp4"
-            : "Infrognito_Pedogagical_Adult.mp4";
+            : "Infrognito_Pedagogical_Adult.mp4";
       }
       setVideoSrc(mainURL + videoFile);
     }
