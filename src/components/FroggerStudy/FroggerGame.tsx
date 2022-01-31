@@ -178,7 +178,7 @@ const FroggerGame: React.FC<IFroggerGameProps> = ({
   return (
     <div className="px-2 pt-4 mx-auto mt-6" id="frogger-game">
       {!isMod && !timeOver && (
-        <StudyTitleText text={"Complete the objective as shown."} />
+        <StudyTitleText text={"The game will end after you find a trophy or after 7 minutes have passed."} />
       )}
       {/* {!timeOver && (
         <h4 className="mt-4 mb-4 text-2xl text-center text-gray-800">

@@ -8,9 +8,10 @@ const GoalReminder: React.FC<IGoalReminder> = ({ nextState }) => {
   return (
     <div className="flex justify-center w-full h-screen p-4">
       <h3 className="flex flex-col justify-between w-full text-4xl text-center rounded-lg">
-        <div>
-          Remember, the main goal of the game is to find a trophy, but you can
-          do it any way you find!
+        <div> </div>
+        <div className="">
+        Remember, the main goal of the game is to find a trophy, <br /> but you can do
+        it any way you find!
         </div>
         <button
           onClick={nextState}

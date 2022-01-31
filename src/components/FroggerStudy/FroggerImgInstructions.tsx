@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ErrorNotFound from "../../pages/ErrorNotFound";
 
 function FroggerImgInstructions({ nextState }: { nextState: () => void }) {
   const [currentPage, setCurrentPage] = useState(1);
+  const [showNext, setShowNext] = useState(true);
 
   const onNextClick = () => {
     if (currentPage < 6) {
       const queryString = window.location.search;
       const urlParams = new URLSearchParams(queryString);
-      const isAdult = urlParams.get('p_type') === "adult"
-      if (isAdult && (currentPage === 5)){  // if adult skip
-        nextState()
+      const isAdult = urlParams.get("p_type") === "adult";
+      if (isAdult && currentPage === 5) {
+        // if adult skip
+        nextState();
       }
       setCurrentPage(currentPage + 1);
     } else {
@@ -18,6 +20,15 @@ function FroggerImgInstructions({ nextState }: { nextState: () => void }) {
       nextState();
     }
   };
+
+  useEffect(() => {
+    if (currentPage === 6 || currentPage === 7) {
+      setShowNext(false);
+      setTimeout(() => {
+        setShowNext(true);
+      }, 10 * 1000);
+    }
+  }, [currentPage]);
 
   const cycleStudyStates = (instructionPage: number) => {
     let state = null;
@@ -110,12 +121,19 @@ function FroggerImgInstructions({ nextState }: { nextState: () => void }) {
       <h3 className="flex flex-col justify-between w-full text-4xl text-center rounded-lg">
         <div className="underline">Page {currentPage}</div>
         {cycleStudyStates(currentPage)}
-        <button
-          onClick={onNextClick}
-          className="w-1/2 px-8 py-4 mx-auto mb-4 text-lg font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400 "
-        >
-          Next
-        </button>
+
+        {showNext ? (
+          <button
+            onClick={onNextClick}
+            className="w-1/2 px-8 py-4 mx-auto mb-4 text-lg font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400 "
+          >
+            Next
+          </button>
+        ) : (
+          <div className="w-1/2 px-8 py-4 mx-auto mb-4 text-lg font-bold tracking-wider bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400 ">
+            Please read the message above. The next button will appear in 10 seconds.
+          </div>
+        )}
       </h3>
     </div>
   );
