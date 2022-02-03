@@ -43,7 +43,7 @@ function FroggerImgInstructions({ nextState }: { nextState: () => void }) {
             ) : (
               <>
                 {" "}
-                Please make sure to read each screen out loud. Either you or
+                Please make sure to read each screen out loud. <br /> Either you or
                 your child can read the directions out loud.{" "}
               </>
             )}
