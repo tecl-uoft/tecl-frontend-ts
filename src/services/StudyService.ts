@@ -28,6 +28,7 @@ export interface ICreateStudyProps {
   endDate: string;
   keyColor: string;
   gcalId: string;
+  sendgridId: string;
   minAgeDays: number;
   maxAgeDays: number;
   description: string;

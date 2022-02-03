@@ -10,8 +10,10 @@ function AddStudyForm(props: IAddStudyFormProps) {
   const [defaultInterval, setDefaultInterval] = useState(60);
   const [apptGoals, setApptGoals] = useState(0);
   const [ gcalId, setGcalId ] = useState("");
+  const [sendgridId, setSendgridId] = useState("")
 
   const onGcalIdChange = (e: ChangeEvent<HTMLInputElement>) => setGcalId(e.currentTarget.value)
+  const onSendgridIdChange = (e: ChangeEvent<HTMLInputElement>) => setSendgridId(e.currentTarget.value)
 
   const onDefaultIntervalChange = (e: ChangeEvent<HTMLInputElement>) =>
     setDefaultInterval(parseInt(e.currentTarget.value));
@@ -67,6 +69,7 @@ function AddStudyForm(props: IAddStudyFormProps) {
         endDate,
         keyColor,
         gcalId,
+        sendgridId,
         minAgeDays: minTotalDays,
         maxAgeDays: maxTotalDays,
         description,
@@ -92,7 +95,7 @@ function AddStudyForm(props: IAddStudyFormProps) {
             </label>
             <input
               id="study-name"
-              className="block w-full p-2 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none   focus:bg-white focus:border-gray-500"
+              className="block w-full p-2 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:bg-white focus:border-gray-500"
               type="text"
               placeholder="ex. TECL Funtime"
             />
@@ -109,7 +112,7 @@ function AddStudyForm(props: IAddStudyFormProps) {
               minLength={3}
               rows={3}
               placeholder="ex. TECL Funtime teaches kids how to have fun!"
-              className="w-full p-2 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none resize-y   focus:bg-white focus:border-gray-500"
+              className="w-full p-2 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none resize-y focus:bg-white focus:border-gray-500"
             ></textarea>
           </div>
         </div>
@@ -119,7 +122,7 @@ function AddStudyForm(props: IAddStudyFormProps) {
               Weekly Appointment Goals:{" "}
             </label>
             <input
-              className="block w-16 p-2 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none   focus:bg-white focus:border-gray-500"
+              className="block w-16 p-2 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:bg-white focus:border-gray-500"
               type="number"
               value={apptGoals}
               onChange={(e) => setApptGoals(parseInt(e.currentTarget.value))}
@@ -131,7 +134,7 @@ function AddStudyForm(props: IAddStudyFormProps) {
             </label>
             <input
               id="key-color"
-              className="block w-16 h-10 p-1 leading-tight text-gray-700 bg-gray-200 rounded-lg cursor-pointer select-none   focus:bg-white"
+              className="block w-16 h-10 p-1 leading-tight text-gray-700 bg-gray-200 rounded-lg cursor-pointer select-none focus:bg-white"
               type="color"
               defaultValue="#ed8936"
             />
@@ -164,7 +167,7 @@ function AddStudyForm(props: IAddStudyFormProps) {
             </label>
             <div className="flex items-end justify-center">
               <input
-                className="block w-20 p-2 mb-2 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none   focus:bg-white focus:border-gray-500"
+                className="block w-20 p-2 mb-2 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:bg-white focus:border-gray-500"
                 type="number"
                 value={defaultInterval}
                 onChange={onDefaultIntervalChange}
@@ -178,7 +181,7 @@ function AddStudyForm(props: IAddStudyFormProps) {
             </label>
             <input
               id="start-date"
-              className="block w-full p-2 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none   focus:bg-white"
+              className="block w-full p-2 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:bg-white"
               type="date"
             />
           </div>
@@ -188,7 +191,7 @@ function AddStudyForm(props: IAddStudyFormProps) {
             </label>
             <input
               id="end-date"
-              className="block w-full p-2 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none   focus:bg-white focus:border-gray-500"
+              className="block w-full p-2 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:bg-white focus:border-gray-500"
               type="date"
             ></input>
           </div>
@@ -200,7 +203,20 @@ function AddStudyForm(props: IAddStudyFormProps) {
               value={gcalId} 
               onChange={onGcalIdChange}
               placeholder="ex. an13jnd1jjwndbr3g@group.calendar.google.com"
-              className="block w-full p-2 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none   focus:bg-white focus:border-gray-500"
+              className="block w-full p-2 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:bg-white focus:border-gray-500"
+              type="text"
+            />
+          </div>
+        </div>
+
+        <div className="mb-4 space-y-2">
+          <h3>Particpant Sendgrid Email ID:</h3>
+          <div className="w-full px-1 ">
+            <input
+              value={sendgridId} 
+              onChange={onSendgridIdChange}
+              placeholder="ex. alnd1jwndbr3jnd1wndn1ndbr3"
+              className="block w-full p-2 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:bg-white focus:border-gray-500"
               type="text"
             />
           </div>
@@ -228,7 +244,7 @@ function AgeBoxes(props: { yearId: string; monthId: string; dayId: string }) {
         <div className="text-xs">Years</div>
         <input
           id={yearId}
-          className="block w-full px-2 py-1 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none   focus:bg-white"
+          className="block w-full px-2 py-1 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:bg-white"
           min="0"
           defaultValue="0"
           type="number"
@@ -238,7 +254,7 @@ function AgeBoxes(props: { yearId: string; monthId: string; dayId: string }) {
         <div className="text-xs">Months</div>
         <input
           id={monthId}
-          className="block w-full px-2 py-1 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none   focus:bg-white"
+          className="block w-full px-2 py-1 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:bg-white"
           min="0"
           defaultValue="0"
           type="number"
@@ -248,7 +264,7 @@ function AgeBoxes(props: { yearId: string; monthId: string; dayId: string }) {
         <div className="text-xs">Days</div>
         <input
           id={dayId}
-          className="block w-full px-2 py-1 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none   focus:bg-white"
+          className="block w-full px-2 py-1 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:bg-white"
           min="0"
           defaultValue="0"
           type="number"
