@@ -34,7 +34,7 @@ enum FroggerStudyStates {
   ThanksNote = "ThankNote",
   QualtricsLink = "QualLink",
   ParentWarning = "ParentWarning",
-  GoalReminder = "GoalReminder"
+  GoalReminder = "GoalReminder",
 }
 
 export interface IFroggerParticipant {
@@ -153,7 +153,11 @@ function FroggerStudy() {
         state = (
           <FroggerInstructions
             participant={participant}
-            nextState={() => setStudyState(FroggerStudyStates.ParentWarning)}
+            nextState={
+              new URLSearchParams(window.location.search).get("p_type") === "child"
+                ? () => setStudyState(FroggerStudyStates.ParentWarning)
+                : () => setStudyState(FroggerStudyStates.GoalReminder)
+            }
           />
         );
         break;
@@ -166,7 +170,9 @@ function FroggerStudy() {
         break;
       case FroggerStudyStates.GoalReminder:
         state = (
-          <GoalReminder nextState={() => setStudyState(FroggerStudyStates.StudyGame)} />
+          <GoalReminder
+            nextState={() => setStudyState(FroggerStudyStates.StudyGame)}
+          />
         );
         break;
       case FroggerStudyStates.StudyGame:

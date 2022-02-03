@@ -36,8 +36,17 @@ function FroggerImgInstructions({ nextState }: { nextState: () => void }) {
       case 1:
         state = (
           <div>
-            Great! We’re ready to start! <br /> Please make sure to carefully
-            read each screen.
+            Great! We’re ready to start! <br />
+            {new URLSearchParams(window.location.search).get("p_type") !==
+            "child" ? (
+              <>Please make sure to carefully read each screen.</>
+            ) : (
+              <>
+                {" "}
+                Please make sure to read each screen out loud. Either you or
+                your child can read the directions out loud.{" "}
+              </>
+            )}
           </div>
         );
         break;
@@ -131,7 +140,8 @@ function FroggerImgInstructions({ nextState }: { nextState: () => void }) {
           </button>
         ) : (
           <div className="w-1/2 px-8 py-4 mx-auto mb-4 text-lg font-bold tracking-wider bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400 ">
-            Please read the message above. The next button will appear in 10 seconds.
+            Please read the message above. The next button will appear in 10
+            seconds.
           </div>
         )}
       </h3>
