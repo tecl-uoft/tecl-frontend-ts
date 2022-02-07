@@ -9,26 +9,31 @@ interface IAddStudyFormProps {
 function AddStudyForm(props: IAddStudyFormProps) {
   const [defaultInterval, setDefaultInterval] = useState(60);
   const [apptGoals, setApptGoals] = useState(0);
-  const [ gcalId, setGcalId ] = useState("");
-  const [sendgridId, setSendgridId] = useState("")
+  const [gcalId, setGcalId] = useState("");
+  const [sendgridId, setSendgridId] = useState("");
+  const [sendgridConfirmId, setSendgridConfirmId] = useState("");
 
-  const onGcalIdChange = (e: ChangeEvent<HTMLInputElement>) => setGcalId(e.currentTarget.value)
-  const onSendgridIdChange = (e: ChangeEvent<HTMLInputElement>) => setSendgridId(e.currentTarget.value)
+  const onGcalIdChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setGcalId(e.currentTarget.value);
+  const onSendgridIdChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setSendgridId(e.currentTarget.value);
+  const onSendgridConfirmIdChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setSendgridConfirmId(e.currentTarget.value);
 
   const onDefaultIntervalChange = (e: ChangeEvent<HTMLInputElement>) =>
     setDefaultInterval(parseInt(e.currentTarget.value));
 
   const submitStudy = async () => {
     const minDays = document.querySelector<HTMLInputElement>("#min-day")?.value;
-    const minMonths = document.querySelector<HTMLInputElement>("#min-month")
-      ?.value;
-    const minYears = document.querySelector<HTMLInputElement>("#min-year")
-      ?.value;
+    const minMonths =
+      document.querySelector<HTMLInputElement>("#min-month")?.value;
+    const minYears =
+      document.querySelector<HTMLInputElement>("#min-year")?.value;
     const maxDays = document.querySelector<HTMLInputElement>("#max-day")?.value;
-    const maxMonths = document.querySelector<HTMLInputElement>("#max-month")
-      ?.value;
-    const maxYears = document.querySelector<HTMLInputElement>("#max-year")
-      ?.value;
+    const maxMonths =
+      document.querySelector<HTMLInputElement>("#max-month")?.value;
+    const maxYears =
+      document.querySelector<HTMLInputElement>("#max-year")?.value;
 
     /*  Conver min and max ages into total days the represent */
     /* Since default input is set to 0, input is always defined */
@@ -41,17 +46,16 @@ function AddStudyForm(props: IAddStudyFormProps) {
       parseInt(maxMonths as string) * 30 +
       parseInt(maxYears as string) * 365;
 
-    const studyName = document.querySelector<HTMLInputElement>("#study-name")
-      ?.value;
-    const startDate = document.querySelector<HTMLInputElement>("#start-date")
-      ?.value;
-    const endDate = document.querySelector<HTMLInputElement>("#end-date")
-      ?.value;
-    const keyColor = document.querySelector<HTMLInputElement>("#key-color")
-      ?.value;
-    const description = document.querySelector<HTMLInputElement>(
-      "#study-description"
-    )?.value;
+    const studyName =
+      document.querySelector<HTMLInputElement>("#study-name")?.value;
+    const startDate =
+      document.querySelector<HTMLInputElement>("#start-date")?.value;
+    const endDate =
+      document.querySelector<HTMLInputElement>("#end-date")?.value;
+    const keyColor =
+      document.querySelector<HTMLInputElement>("#key-color")?.value;
+    const description =
+      document.querySelector<HTMLInputElement>("#study-description")?.value;
     const defaultIntervalInt = defaultInterval;
 
     /* Check if inputs have valid values and send request to create the study  */
@@ -70,6 +74,7 @@ function AddStudyForm(props: IAddStudyFormProps) {
         keyColor,
         gcalId,
         sendgridId,
+        sendgridConfirmId,
         minAgeDays: minTotalDays,
         maxAgeDays: maxTotalDays,
         description,
@@ -200,7 +205,7 @@ function AddStudyForm(props: IAddStudyFormProps) {
           <h3>TECL Google Calendar ID:</h3>
           <div className="w-full px-1 ">
             <input
-              value={gcalId} 
+              value={gcalId}
               onChange={onGcalIdChange}
               placeholder="ex. an13jnd1jjwndbr3g@group.calendar.google.com"
               className="block w-full p-2 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:bg-white focus:border-gray-500"
@@ -210,11 +215,24 @@ function AddStudyForm(props: IAddStudyFormProps) {
         </div>
 
         <div className="mb-4 space-y-2">
-          <h3>Particpant Sendgrid Email ID:</h3>
+          <h3>Particpant Sendgrid Reminder Email ID:</h3>
           <div className="w-full px-1 ">
             <input
-              value={sendgridId} 
+              value={sendgridId}
               onChange={onSendgridIdChange}
+              placeholder="ex. alnd1jwndbr3jnd1wndn1ndbr3"
+              className="block w-full p-2 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:bg-white focus:border-gray-500"
+              type="text"
+            />
+          </div>
+        </div>
+
+        <div className="mb-4 space-y-2">
+          <h3>Particpant Sendgrid Confirmation Email ID:</h3>
+          <div className="w-full px-1 ">
+            <input
+              value={sendgridConfirmId}
+              onChange={onSendgridConfirmIdChange}
               placeholder="ex. alnd1jwndbr3jnd1wndn1ndbr3"
               className="block w-full p-2 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:bg-white focus:border-gray-500"
               type="text"
