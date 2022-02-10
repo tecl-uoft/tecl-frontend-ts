@@ -34,6 +34,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
   const [showAddSEventModal, setShowAddSEventModal] = useState(false);
   const [endTime, setEndTime] = useState("");
   const [endRepeat, setEndRepeat] = useState<DateTime | undefined>(undefined);
+  const [zoomMeetingID, setZoomMeetingID] = useState("");
 
   /* Sets the shown time interval as study default time interval */
   useEffect(() => {
@@ -102,6 +103,9 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
 
   const onStartTimeChange = (e: ChangeEvent<HTMLInputElement>) =>
     setStartTime(e.currentTarget.value);
+
+  const onZoomMeetingIDChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setZoomMeetingID(e.currentTarget.value);
 
   const updateBookingDeadline = (e: ChangeEvent<HTMLSelectElement>) =>
     setBookingDeadline(e.currentTarget.value);
@@ -228,14 +232,14 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                             onChange={onStartTimeChange}
                             type="time"
                             step={300}
-                            className="block w-full p-2 text-gray-700 bg-gray-200 border rounded cursor-text   focus:bg-white"
+                            className="block w-full p-2 text-gray-700 bg-gray-200 border rounded cursor-text focus:bg-white"
                           />
                         </div>
                         {props.selectInfo && (
                           <div className="px-3 mb-6 md:mb-0">
                             <Label text={"Parent booking deadline:"} />
                             <select
-                              className="block w-full p-2 mx-auto text-gray-700 bg-gray-200 border rounded cursor-pointer   focus:bg-white"
+                              className="block w-full p-2 mx-auto text-gray-700 bg-gray-200 border rounded cursor-pointer focus:bg-white"
                               value={bookingDeadline}
                               onChange={updateBookingDeadline}
                             >
@@ -299,6 +303,16 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                     </div>
                   </div>
                 )}
+                <div className="w-3/4 mx-auto">
+                  <Label text={"Zoom Meeting ID"} />
+                  <input
+                    value={zoomMeetingID}
+                    onChange={onZoomMeetingIDChange}
+                    type="text"
+                    step={300}
+                    className="block w-full p-2 text-gray-700 bg-gray-200 border rounded cursor-text focus:bg-white"
+                  />
+                </div>
 
                 <div
                   className="flex justify-between px-8 mt-2 cursor-pointer"
@@ -321,7 +335,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                 <button
                   onClick={() => props.setShowEventModal(false)}
                   type="button"
-                  className="inline-flex justify-center w-24 px-4 py-2 text-base font-medium leading-6 text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-300   focus:border-blue-300 focus:shadow-outline-blue sm:text-sm sm:leading-5"
+                  className="inline-flex justify-center w-24 px-4 py-2 text-base font-medium leading-6 text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-300 focus:border-blue-300 focus:shadow-outline-blue sm:text-sm sm:leading-5"
                 >
                   Cancel
                 </button>
@@ -330,7 +344,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                 <button
                   onClick={onAdd}
                   type="button"
-                  className="inline-flex justify-center w-24 px-4 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-500   focus:border-green-700 focus:shadow-outline-green sm:text-sm sm:leading-5"
+                  className="inline-flex justify-center w-24 px-4 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-500 focus:border-green-700 focus:shadow-outline-green sm:text-sm sm:leading-5"
                 >
                   Add
                 </button>
