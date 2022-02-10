@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useState } from "react";
 import StudyService from "../../services/StudyService";
+import Input from "../common/Input";
 import { HeadExitButton } from "../HeadExitButton";
 
 interface IAddStudyFormProps {
@@ -12,6 +13,8 @@ function AddStudyForm(props: IAddStudyFormProps) {
   const [gcalId, setGcalId] = useState("");
   const [sendgridId, setSendgridId] = useState("");
   const [sendgridConfirmId, setSendgridConfirmId] = useState("");
+  const [startDate, setStartDate] = useState("")
+  const [endDate, setEndDate] = useState("")
 
   const onGcalIdChange = (e: ChangeEvent<HTMLInputElement>) =>
     setGcalId(e.currentTarget.value);
@@ -48,10 +51,10 @@ function AddStudyForm(props: IAddStudyFormProps) {
 
     const studyName =
       document.querySelector<HTMLInputElement>("#study-name")?.value;
-    const startDate =
-      document.querySelector<HTMLInputElement>("#start-date")?.value;
-    const endDate =
-      document.querySelector<HTMLInputElement>("#end-date")?.value;
+    // const startDate =
+    //   document.querySelector<HTMLInputElement>("#start-date")?.value;
+    // const endDate =
+    //   document.querySelector<HTMLInputElement>("#end-date")?.value;
     const keyColor =
       document.querySelector<HTMLInputElement>("#key-color")?.value;
     const description =
@@ -184,21 +187,23 @@ function AddStudyForm(props: IAddStudyFormProps) {
             <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase">
               Start Date
             </label>
-            <input
+             <Input valueSetter={setStartDate} value={startDate} type="date" />
+            {/* <input
               id="start-date"
               className="block w-full p-2 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:bg-white"
               type="date"
-            />
+            /> */}
           </div>
           <div className="w-full px-1 md:w-1/3">
             <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase">
               End Date
             </label>
-            <input
+             <Input valueSetter={setEndDate} value={endDate} type="date" />
+            {/* <input
               id="end-date"
               className="block w-full p-2 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none select-none focus:bg-white focus:border-gray-500"
               type="date"
-            ></input>
+            ></input> */}
           </div>
         </div>
         <div className="mb-4 space-y-2">
@@ -215,7 +220,7 @@ function AddStudyForm(props: IAddStudyFormProps) {
         </div>
 
         <div className="mb-4 space-y-2">
-          <h3>Particpant Sendgrid Reminder Email ID:</h3>
+          <h3>Participant Sendgrid Confirmation Email ID:</h3>
           <div className="w-full px-1 ">
             <input
               value={sendgridId}
@@ -228,7 +233,7 @@ function AddStudyForm(props: IAddStudyFormProps) {
         </div>
 
         <div className="mb-4 space-y-2">
-          <h3>Particpant Sendgrid Confirmation Email ID:</h3>
+          <h3>Participant Sendgrid Reminder Email ID:</h3>
           <div className="w-full px-1 ">
             <input
               value={sendgridConfirmId}
