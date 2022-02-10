@@ -104,7 +104,6 @@ function SchedulingV2() {
       });
     }
     
-
     setNavPanels(NavPanels);
   }, [givenAge, currentStudy, studyHeaders.studies]);
 
