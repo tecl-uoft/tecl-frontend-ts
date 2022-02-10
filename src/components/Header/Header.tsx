@@ -57,7 +57,7 @@ function Header() {
 function MobileNavPanel() {
   return (
     <nav className="block lg:hidden">
-      <button className="flex items-center px-3 py-2 text-gray-500 border border-gray-600 rounded appearance-none hover:text-gray-800 hover:border-teal-500  ">
+      <button className="flex items-center px-3 py-2 text-gray-500 border border-gray-600 rounded appearance-none hover:text-gray-800 hover:border-teal-500 ">
         <svg
           className="w-3 h-3 fill-current"
           viewBox="0 0 20 20"
@@ -94,7 +94,7 @@ function NavPanel(props: INavPanel) {
       text: "Home",
     },
     {
-      link: "/participation/signup",
+      link: "/participation/selection",
       text: "Sign Up",
     },
     /* {

@@ -36,7 +36,7 @@ function ParticipationSelection() {
         <div className="w-full m-2 border-2 border-gray-500 rounded-lg">
           <Link
             to="/participation/signup"
-            className="text-blue-600 no-underline hover:underline"
+            className="text-blue-600 no-underline"
           >
             <div className="p-4 pb-8 rounded-lg shadow hover:bg-gray-200 hover:text-orange-500">
               <img
