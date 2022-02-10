@@ -40,6 +40,20 @@ function MeetingCalHeader({ currentStudy }: { currentStudy: IStudyName }) {
       <h3 className="text-4xl font-bold text-center underline md:pl-12">
         {`${currentStudy.studyName}`} Schedule
       </h3>
+      <span className="flex justify-center mb-2 text-lg">
+        <h3 className="mr-2 ">Schedule Link: </h3>
+        <a
+          href={`https://www.teclonline.ca/scheduling?study=${currentStudy.studyName}`}
+          className="text-blue-600 visited:text-purple-600 hover:underline"
+          target="_blank"
+          rel="noreferrer"
+        >
+          {" "}
+          https://www.teclonline.ca/scheduling?study={
+            currentStudy.studyName
+          }{" "}
+        </a>
+      </span>
       <div className="flex flex-col justify-between w-full pb-4 space-y-4 md:flex-row md:space-y-0 md:py-0">
         <div className="w-64 text-xl md:h-32" />
 
@@ -72,6 +86,7 @@ function MeetingCalHeader({ currentStudy }: { currentStudy: IStudyName }) {
           </div>
         </h3>
       </div>
+      
     </div>
   );
 }

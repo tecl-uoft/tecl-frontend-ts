@@ -72,6 +72,7 @@ function SchedulingV2() {
         }
       });
     }
+
     NavPanels.unshift(
       <InstructionNav
         key={-1}
@@ -79,6 +80,30 @@ function SchedulingV2() {
         currentStudy={currentStudy}
       />
     );
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const studyType = urlParams.get("study");
+    if (studyType) {
+      NavPanels = studyHeaders.studies.map((study: IStudyName, idx: number) => {
+        if (studyType === study.studyName) {
+          setShowNotAvailable(false);
+          setCurrentStudy(study);
+          return (
+            <MeetingCalNav
+              study={study}
+              currentStudy={currentStudy}
+              setCurrentStudy={setCurrentStudy}
+              order={idx}
+              key={idx}
+            />
+          );
+        } else {
+          return <> </>;
+        }
+      });
+    }
+    
 
     setNavPanels(NavPanels);
   }, [givenAge, currentStudy, studyHeaders.studies]);
