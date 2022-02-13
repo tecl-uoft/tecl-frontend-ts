@@ -142,6 +142,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
       endRecurringDate: endRepeat.toISO(),
       recurringInterval: parseInt(interval),
       bookingDeadline,
+      zoomMeetingID
     };
     studyCtx
       .createScheduleEvent(availability)

@@ -23,6 +23,7 @@ export interface ICreateScheduleEventProps {
   endRecurringDate: string;
   recurringInterval: number;
   bookingDeadline: string;
+  zoomMeetingID: string;
 }
 
 export interface ICompleteScheduleEvent {
