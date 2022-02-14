@@ -1,3 +1,4 @@
+import { DateTime } from "luxon";
 import React, { ChangeEvent, useState } from "react";
 import StudyService from "../../services/StudyService";
 import Input from "../common/Input";
@@ -60,20 +61,22 @@ function AddStudyForm(props: IAddStudyFormProps) {
     const description =
       document.querySelector<HTMLInputElement>("#study-description")?.value;
     const defaultIntervalInt = defaultInterval;
-
+    console.log(endDate, startDate)
     /* Check if inputs have valid values and send request to create the study  */
     if (
       studyName &&
-      startDate &&
-      endDate &&
       keyColor &&
       description &&
       defaultIntervalInt
     ) {
+      // console.log("oringal:", startDate, endDate)
+      const realStartDate = startDate === "" || startDate === null || startDate === undefined ? DateTime.fromJSDate(new Date()).toFormat("yyyy-MM-dd") : startDate
+      const realEndDate = endDate === "" || endDate === null || endDate === undefined ? DateTime.fromJSDate(new Date()).plus({days: 1}).toFormat("yyyy-MM-dd") : endDate
+      //console.log("real", realEndDate, realStartDate)
       StudyService.create({
         studyName,
-        startDate,
-        endDate,
+        startDate: realStartDate,
+        endDate: realEndDate,
         keyColor,
         gcalId,
         sendgridId,
