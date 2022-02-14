@@ -309,6 +309,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                   <input
                     value={zoomMeetingID}
                     onChange={onZoomMeetingIDChange}
+                    placeholder="ex. 111 111 1111"
                     type="text"
                     step={300}
                     className="block w-full p-2 text-gray-700 bg-gray-200 border rounded cursor-text focus:bg-white"
