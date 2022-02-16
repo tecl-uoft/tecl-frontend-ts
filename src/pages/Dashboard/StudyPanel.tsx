@@ -135,7 +135,7 @@ function CoordinatorsPanel({ studyName }: { studyName: string }) {
         />{" "}
         <button
           onClick={addCurrentCoordinator}
-          className="px-4 mb-2 text-white bg-orange-600 rounded hover:bg-orange-800   focus:shadow-outline"
+          className="px-4 mb-2 text-white bg-orange-600 rounded hover:bg-orange-800 focus:shadow-outline"
         >
           <p className="w-12 text-sm">Add RA</p>
         </button>
@@ -184,7 +184,7 @@ function AppointmentPanel({ study }: { study: IStudy }) {
           {studyCtx && (
             <button
               onClick={onModifyAvailability(study)}
-              className="px-2 text-white bg-orange-500 rounded hover:bg-orange-800   focus:shadow-outline"
+              className="px-2 text-white bg-orange-500 rounded hover:bg-orange-800 focus:shadow-outline"
             >
               Modify Availability
             </button>
@@ -192,7 +192,7 @@ function AppointmentPanel({ study }: { study: IStudy }) {
 
           <button
             onClick={() => setShowBookedCalendar(true)}
-            className="p-2 text-white bg-orange-500 rounded hover:bg-orange-800   focus:shadow-outline"
+            className="p-2 text-white bg-orange-500 rounded hover:bg-orange-800 focus:shadow-outline"
           >
             All Booked
           </button>

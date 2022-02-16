@@ -52,7 +52,7 @@ export function StudyProvider({ children }: Props) {
           leadResearchers: [...studyState.leadResearchers],
         }); */
       })
-      .catch((err) => alert(err.message));
+      .catch((err) => { console.log(err) });
   }
 
   /* Remove schedule event from the current study */
@@ -101,7 +101,8 @@ export function StudyProvider({ children }: Props) {
           scheduleEvents: [...studyState.scheduleEvents, scheduleEvent],
         });
       } catch (err) {
-        alert(`Error in Study context, Received: ${err.message}`);
+        const errMsg = (err as any).message
+        alert(`Error in Study context, Received: ${errMsg}`);
       }
 
       return;

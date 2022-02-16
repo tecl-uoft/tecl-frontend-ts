@@ -117,7 +117,7 @@ async function update(studyToUpdate: any): Promise<void> {
     },
     body: JSON.stringify({ study: studyToUpdate }),
   });
-
+  
   if (response.ok) {
     return;
   } else {
