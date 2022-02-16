@@ -92,28 +92,30 @@ function AddSEventModal(props: IAddSEventModalProps) {
           : [];
 
       try {
-        await ScheduleEventService.updateParticipantInfo({
-          participantInfo: {
-            calId: eventClick.id,
-            firstName: firstNameField,
-            lastName: lastNameField,
-            email: emailField,
-            phoneNum,
-            child: {
-              firstName: childFirstNameField,
-              lastName: childLastNameField,
-              dob: childDob,
+        const updateScheduleEventPromise =
+          ScheduleEventService.updateParticipantInfo({
+            participantInfo: {
+              calId: eventClick.id,
+              firstName: firstNameField,
+              lastName: lastNameField,
+              email: emailField,
+              phoneNum,
+              child: {
+                firstName: childFirstNameField,
+                lastName: childLastNameField,
+                dob: childDob,
+              },
+              addToSharedDB: canAddInfo,
+              isInGta,
             },
-            addToSharedDB: canAddInfo,
-            isInGta,
-          },
-          additionalCSCChildren,
+            additionalCSCChildren,
+          });
+        toast.promise(updateScheduleEventPromise, {
+          loading: "Loading...",
+          success:
+            "Your appointment has been recived. We will contact you via email shortly.",
+          error: "Error when updating, please contact the staff.",
         });
-
-        toast.success(
-          "Your appointment has been recived. We will contact you via email shortly.",
-          { duration: 4000 }
-        );
         eventClick.remove();
       } catch (err) {
         toast.error("Failed to updated. Please contact staff.", {

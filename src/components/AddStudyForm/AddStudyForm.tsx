@@ -69,10 +69,10 @@ function AddStudyForm(props: IAddStudyFormProps) {
       description &&
       defaultIntervalInt
     ) {
-      // console.log("oringal:", startDate, endDate)
+      
       const realStartDate = startDate === "" || startDate === null || startDate === undefined ? DateTime.fromJSDate(new Date()).toFormat("yyyy-MM-dd") : startDate
       const realEndDate = endDate === "" || endDate === null || endDate === undefined ? DateTime.fromJSDate(new Date()).plus({days: 1}).toFormat("yyyy-MM-dd") : endDate
-      //console.log("real", realEndDate, realStartDate)
+      
       StudyService.create({
         studyName,
         startDate: realStartDate,
