@@ -20,7 +20,7 @@ function ParticipationSelection() {
               />
 
               <p className="mt-4 text-xl text-center text-gray-600">
-                <b>Book a study session by youself!</b>
+                <b>Book a study session by yourself!</b>
               </p>
               <p className="mt-2 text-center text-gray-600 md:h-64">
                 In this option, you will be able to select a study based on your
@@ -34,8 +34,11 @@ function ParticipationSelection() {
           </Link>
         </div>
         <div className="w-full m-2 border-2 border-gray-500 rounded-lg">
-          <Link
-            to="/participation/signup"
+          <a
+            // to="/participation/signup"
+            href="https://www.tecl.ca/signup"
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-blue-600 no-underline"
           >
             <div className="p-4 pb-8 rounded-lg shadow hover:bg-gray-200 hover:text-orange-500">
@@ -58,7 +61,7 @@ function ParticipationSelection() {
                 you in.
               </p>
             </div>
-          </Link>
+          </a>
         </div>
       </div>
     </div>
