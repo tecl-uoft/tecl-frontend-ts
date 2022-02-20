@@ -48,10 +48,10 @@ const FroggerGame: React.FC<IFroggerGameProps> = ({
     // const pathString = window.location.pathname;
     // const IS_TIME_STOPPED = true
     // if (pathString.includes("/mod")) {
-     // setIsMod(IS_TIME_STOPPED);
+    // setIsMod(IS_TIME_STOPPED);
     // }
     // const countDownTimer = !pathString.includes("/mod") && !IS_TIME_STOPPED
-    if (loadingProgress === 1 ) {
+    if (loadingProgress === 1) {
       setTimeout(() => {
         if (timerSec === 0 && timerMin > 0) {
           setTimerSec(59);
@@ -68,7 +68,7 @@ const FroggerGame: React.FC<IFroggerGameProps> = ({
   useEffect(() => {
     if (loadingProgress === 1) {
       const canvas = document.querySelector<HTMLCanvasElement>("canvas");
-      window.scrollTo(0, window.innerHeight)
+      window.scrollTo(0, window.innerHeight);
       if (canvas) {
         streamRecorder(canvas, 0).then((res) => setMediaRecorder(res));
       }
@@ -110,8 +110,8 @@ const FroggerGame: React.FC<IFroggerGameProps> = ({
   }, [setPlayerMovements]);
 
   useEffect(() => {
-    const urlParas = new URLSearchParams(window.location.search)
-    const part_type = urlParas.get("p_type") || urlParas.get("type") ||  "child"
+    const urlParas = new URLSearchParams(window.location.search);
+    const part_type = urlParas.get("p_type") || urlParas.get("type") || "child";
     const build =
       part_type === "adult"
         ? "/scripts/FroggerAdult_Arnav_5.17.21/Build/FroggerAdult_Arnav_5.17.21.json"
@@ -178,7 +178,11 @@ const FroggerGame: React.FC<IFroggerGameProps> = ({
   return (
     <div className="px-2 pt-4 mx-auto mt-6" id="frogger-game">
       {!isMod && !timeOver && (
-        <StudyTitleText text={"The game will end after you find a trophy or after 7 minutes have passed."} />
+        <StudyTitleText
+          text={
+            "The game will end after you find a trophy or after 7 minutes have passed."
+          }
+        />
       )}
       {/* {!timeOver && (
         <h4 className="mt-4 mb-4 text-2xl text-center text-gray-800">
@@ -194,18 +198,25 @@ const FroggerGame: React.FC<IFroggerGameProps> = ({
       )} */}
 
       {loadingProgress !== 1 ? (
-        <div className="w-full py-2 text-2xl font-bold text-center bg-red-300">{`Loading ${Math.floor(loadingProgress * 100)} percent...`}</div>
+        <div className="w-full py-2 text-2xl font-bold text-center bg-red-300">{`Loading ${Math.floor(
+          loadingProgress * 100
+        )} percent...`}</div>
       ) : null}
-      {(!timeOver ) && unityContent ? (
-        <div onClick={() => window.scrollTo(0, window.innerHeight)} className="mx-16 mx-auto md:mx-32">
+      {unityContent && (
+        <div
+          onClick={() => window.scrollTo(0, window.innerHeight)}
+          className="mx-16 mx-auto md:mx-32"
+        >
           <Unity unityContent={unityContent} />
         </div>
-      ) : (
-        <div className="py-64 text-6xl text-center text-gray-800 bg-gray-500 rounded-lg">
-          {" "}
-          Game Completed!{" "}
-        </div>
       )}
+
+      {/* // : (
+      //   <div className="py-64 text-6xl text-center text-gray-800 bg-gray-500 rounded-lg">
+      //     {" "}
+      //     Game Completed!{" "}
+      //   </div>
+      // )} */}
 
       <div className="flex justify-around mt-2">
         {timeOver ? (
