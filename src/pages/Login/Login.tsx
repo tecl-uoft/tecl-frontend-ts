@@ -38,7 +38,7 @@ function Login() {
             Email
           </label>
           <input
-            className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none   focus:shadow-outline"
+            className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:shadow-outline"
             id="email"
             value={emailInput}
             onChange={(e) => setEmailInput(e.currentTarget.value)}
@@ -51,7 +51,7 @@ function Login() {
             Password
           </label>
           <input
-            className="w-full px-3 py-2 mb-3 leading-tight text-gray-700 border rounded shadow appearance-none   focus:shadow-outline"
+            className="w-full px-3 py-2 mb-3 leading-tight text-gray-700 border rounded shadow appearance-none focus:shadow-outline"
             id="password"
             type="password"
             value={passwordInput}
@@ -61,7 +61,7 @@ function Login() {
         </div>
         <div className="flex items-center justify-between">
           <button
-            className="px-4 py-2 font-bold text-white bg-gray-800 rounded hover:text-orange-500   focus:shadow-outline"
+            className="px-4 py-2 font-bold text-white bg-gray-800 rounded hover:text-orange-500 focus:shadow-outline"
             type="button"
             onClick={(e) => {
               e.preventDefault();
@@ -70,9 +70,9 @@ function Login() {
           >
             Sign In
           </button>
-          <button className="inline-block text-sm font-bold text-blue-500 align-baseline cursor-pointer hover:text-blue-800">
+          {/* <button className="inline-block text-sm font-bold text-blue-500 align-baseline cursor-pointer hover:text-blue-800">
             <Link to="/forgot-password">Forgot Password?</Link>
-          </button>
+          </button> */}
         </div>
       </form>
 
@@ -81,7 +81,7 @@ function Login() {
       </label>
       <Link to="/signup">
         <button
-          className="w-full px-4 py-2 font-bold text-white bg-orange-500 rounded hover:bg-orange-700   focus:shadow-outline"
+          className="w-full px-4 py-2 font-bold text-white bg-orange-500 rounded hover:bg-orange-700 focus:shadow-outline"
           type="button"
         >
           Signup
