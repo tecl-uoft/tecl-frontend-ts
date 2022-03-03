@@ -31,6 +31,7 @@ const TeamsStudyGame = lazy(() => import("./pages/TeamsStudyGame"));
 const EyeTrackingGame = lazy(() => import("./pages/EyeTrackingGame"));
 const FroggerStudyGame = lazy(() => import("./pages/FroggerStudyGame"));
 const TouchStudy = lazy(() => import("./pages/TouchStudy/TouchStudy"));
+const PresStudy = lazy(() => import("./pages/PresStudy/PresStudy"));
 /* End Route Pages */
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
                 <Route exact path="/" component={Home} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
+                <Route exact path="/study/pres/game" component={PresStudy} />
                 <Route
                   exact
                   path="/participation/selection"
