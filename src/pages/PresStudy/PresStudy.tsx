@@ -9,7 +9,7 @@ interface CanvasElement extends HTMLCanvasElement {
 
 function PresStudy(props: React.FC<{}>) {
   const [imageMap, setImageMap] = useState<string[]>([]);
-  const [currImage, setCurrImage] = useState(image_map.story_links.length - 1);
+  const [currImage, setCurrImage] = useState(0);
   const [videoRecorder, setVideoRecorder] = useState<{
     mediaRecorder: MediaRecorder;
     recordedChunks: Blob[];
