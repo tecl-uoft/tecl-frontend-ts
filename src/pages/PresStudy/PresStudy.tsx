@@ -111,6 +111,10 @@ function PresStudy(props: React.FC<{}>) {
   );
 }
 
+
+const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+const videoMimeType = isSafari ? "video/mp4" : "video/webm"
+
 function streamRecorder(
   canvas: HTMLCanvasElement | HTMLVideoElement,
   recordingTime: number
@@ -119,7 +123,7 @@ function streamRecorder(
   const stream = (canvas as CanvasElement).captureStream(25);
   let recordedChunks: Blob[] = [];
   const startTime = Date.now();
-  const options = { mimeType: "video/webm" };
+  const options = { mimeType: videoMimeType };
   const mediaRecorder = new MediaRecorder(stream, options);
 
   function handleDataAvailable(event: BlobEvent) {
@@ -148,13 +152,14 @@ function streamRecorder(
 }
 
 export function upload(recordedChunks: Blob[], startTime: number) {
-  const buggyBlob = new Blob(recordedChunks, { type: "video/webm" });
+
+  const buggyBlob = new Blob(recordedChunks, { type: videoMimeType });
   const duration = Date.now() - startTime;
   ysFixWebmDuration(buggyBlob, duration, function (blobFile: Blob) {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const participantId = urlParams.get("participant_id");
-    const fileName = participantId + "_" + new Date().getTime() + ".webm";
+    const fileName = participantId + "_" + new Date().getTime() + `${videoMimeType === "video/webm" ? ".webm" : ".mp4"}`;
     const fd = new FormData();
     fd.append("video-file", blobFile, fileName);
     getBlobDuration(blobFile).then((r) => console.log(r));
