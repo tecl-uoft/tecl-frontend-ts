@@ -273,11 +273,19 @@ function AddSEventModal(props: IAddSEventModalProps) {
             </div>
           </div>
 
-          <label className="flex text-xs font-bold text-left text-gray-700 select-none ">
+          <span className="flex text-xs font-bold text-left text-gray-700 select-none ">
             *The Child Study Center (CSC) at the University of Toronto St.
             George campus is a group of research labs devoted to studying
             various aspects of developmental psychology.
-          </label>
+          </span>
+          <span className="flex text-xs font-bold text-left text-gray-700 select-none ">
+            **Please note: if you have previously signed up for one of our
+            studies please use the same email address. Appointment confirmation
+            details and reminders will be sent to this address. If you would
+            like to add a secondary email or change the email address we have on
+            file please email tecl.psychology@utoronto.ca
+          </span>
+          <br />
           <div className="flex justify-center mx-2 mt-2 space-x-4">
             <div className="w-32 px-3">
               <input
