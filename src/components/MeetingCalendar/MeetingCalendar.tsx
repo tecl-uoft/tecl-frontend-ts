@@ -70,7 +70,7 @@ function MeetingCalendar(props: IMeetingCalendarProps) {
             }}
             initialEvents={studyState.study.scheduleEvents}
             allDaySlot={false}
-            slotDuration={"01:00:00"}
+            slotDuration={"00:30:00"}
             nowIndicator={true}
             dayMaxEventRows={5}
             plugins={[
