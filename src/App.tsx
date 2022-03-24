@@ -60,7 +60,6 @@ function App() {
                   component={ParticipationSignup}
                 />
                 <Route
-                  exact
                   path="/scheduling/cancel-event"
                   component={EventCancelation}
                 />
