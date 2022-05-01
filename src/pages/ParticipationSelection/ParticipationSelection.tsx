@@ -36,7 +36,7 @@ function ParticipationSelection() {
         <div className="w-full m-2 border-2 border-gray-500 rounded-lg">
           <a
             // to="/participation/signup"
-            href="https://www.tecl.ca/signup"
+            href="https://www.tecl.ca/sign-up"
             target="_blank"
             rel="noopener noreferrer"
             className="text-blue-600 no-underline"
