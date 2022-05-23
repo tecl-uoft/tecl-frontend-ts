@@ -23,6 +23,7 @@ import { Toaster } from "react-hot-toast";
 import { ParticipationSelection } from "./pages/ParticipationSelection";
 import { ParticipationSignup } from "./pages/ParticipationSignup";
 import { TouchStudyEntry } from "./pages/TouchStudyEntry";
+import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 
 const FroggerModStudyGame = lazy(
   () => import("./pages/FroggerModStudyGame/FroggerModStudyGame")
@@ -107,6 +108,11 @@ function App() {
                   exact
                   path="/study/eyetracking/game"
                   component={EyeTrackingGame}
+                />
+                <Route
+                  exact
+                  path="/forgot-password"
+                  component={ForgotPassword}
                 />
 
                 <Route path="/404" component={ErrorNotFound} />

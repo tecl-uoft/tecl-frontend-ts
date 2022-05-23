@@ -37,7 +37,7 @@ async function signup(user: TeclUserCreateInput): Promise<boolean> {
 
     return res.ok;
   } catch (err) {
-    return err;
+    return false;
   }
 }
 

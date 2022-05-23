@@ -13,6 +13,7 @@ interface IAuthContext {
   logout(): Promise<void>;
   register(user: TeclUserCreateInput): Promise<void>;
   authState: UserAuthState;
+  forgotPassword(email: string): Promise<void>
 }
 export const AuthContext = createContext<IAuthContext | undefined>(undefined);
 
@@ -51,6 +52,10 @@ export function AuthProvider({ children }: Props) {
       });
   }
 
+  async function forgotPassword(email: string) {
+    return
+  }
+
   const googleLogin = () => {
     UserService.googleLogin()
       .then()
@@ -87,6 +92,7 @@ export function AuthProvider({ children }: Props) {
     googleLogin,
     logout,
     register,
+    forgotPassword
   };
 
   return (
