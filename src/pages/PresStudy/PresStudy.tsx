@@ -101,61 +101,90 @@ function PresStudy(props: React.FC<{}>) {
         </div>
       )
     }
+    const NextButton: React.FC<{ onNextClick: () => void }> = (props) => <div className="flex justify-around px-2 my-6 space-x-2">
+      <button
+        onClick={props.onNextClick}
+        className="w-1/2 px-8 py-4 font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400"
+      >
+        Next
+      </button>
+    </div>
 
     switch (page) {
-      case 11:
+      case 8:
         return choiceComponent([
           { name: "Give Croissant", onClick: () => setCurrImage(i => i + 1) },
           { name: "Keep Croissant", onClick: () => setCurrImage(i => i + 2) },
           { name: "Other", onClick: () => setCurrImage(i => i + 2) }])
+      case 9:
+        return <NextButton onNextClick={() => setCurrImage(i => i + 2)} />
 
       case 11:
         return choiceComponent([
           { name: "Cam", onClick: () => setCurrImage(i => i + 2) },
           { name: "Alex", onClick: () => setCurrImage(i => i + 1) }])
+      case 12:
+        return <NextButton onNextClick={() => setCurrImage(i => i + 2)} />
 
       case 19:
         return choiceComponent([
           { name: "Give Band-Aid", onClick: () => setCurrImage(i => i + 1) },
           { name: "Keep Band-Aid", onClick: () => setCurrImage(i => i + 2) },
           { name: "Other", onClick: () => setCurrImage(i => i + 2) }])
+      case 20:
+        return <NextButton onNextClick={() => setCurrImage(i => i + 2)} />
 
-      case 28:
+      case 22:
         return choiceComponent([
           { name: "Felix", onClick: () => setCurrImage(i => i + 1) },
           { name: "Alex", onClick: () => setCurrImage(i => i + 2) }])
+      case 23:
+        return <NextButton onNextClick={() => setCurrImage(i => i + 2)} />
 
       case 28:
         return choiceComponent([
           { name: "Give Blanket", onClick: () => setCurrImage(i => i + 1) },
           { name: "Keep Blanket", onClick: () => setCurrImage(i => i + 2) },
           { name: "Other", onClick: () => setCurrImage(i => i + 2) }])
+      case 29:
+        return <NextButton onNextClick={() => setCurrImage(i => i + 2)} />
 
       case 31:
         return choiceComponent([
           { name: "Alex", onClick: () => setCurrImage(i => i + 1) },
           { name: "Cam", onClick: () => setCurrImage(i => i + 2) },])
+      case 32:
+        return <NextButton onNextClick={() => setCurrImage(i => i + 2)} />
 
       case 38:
         return choiceComponent([
           { name: "Give Extra Balloon", onClick: () => setCurrImage(i => i + 1) },
           { name: "Keep Extra Balloon", onClick: () => setCurrImage(i => i + 2) },
           { name: "Other", onClick: () => setCurrImage(i => i + 2) }])
+      case 39:
+        return <NextButton onNextClick={() => setCurrImage(i => i + 2)} />
+
       case 41:
         return choiceComponent([
           { name: "Alisa", onClick: () => setCurrImage(i => i + 2) },
           { name: "Alex", onClick: () => setCurrImage(i => i + 1) },])
+      case 42:
+        return <NextButton onNextClick={() => setCurrImage(i => i + 2)} />
 
       case 47:
         return choiceComponent([
           { name: "Give the Ladder", onClick: () => setCurrImage(i => i + 1) },
           { name: "Keep the Ladder", onClick: () => setCurrImage(i => i + 2) },
           { name: "Other", onClick: () => setCurrImage(i => i + 2) }])
+      case 48:
+        return <NextButton onNextClick={() => setCurrImage(i => i + 2)} />
 
       case 50:
         return choiceComponent([
           { name: "Alex", onClick: () => setCurrImage(i => i + 1) },
           { name: "Alisa", onClick: () => setCurrImage(i => i + 2) },])
+      case 51:
+        return <NextButton onNextClick={() => setCurrImage(i => i + 2)} />
 
       case image_map.story_links.length:
         return choiceComponent([
@@ -191,87 +220,111 @@ function PresStudy(props: React.FC<{}>) {
       )
     }
 
+    const NextButton: React.FC<{ onNextClick: () => void }> = (props) => <div className="flex justify-around px-2 my-6 space-x-2">
+      <button
+        onClick={props.onNextClick}
+        className="w-1/2 px-8 py-4 font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400"
+      >
+        Next
+      </button>
+    </div>
+
     switch (page) {
       case 8:
         return choiceComponent([
           { name: "Blake", onClick: () => setCurrImage(i => i + 2) },
           { name: "Avery", onClick: () => setCurrImage(i => i + 1) }])
+      case 9:
+        return <NextButton onNextClick={() => setCurrImage(i => i + 2)} />
 
       case 11:
         return choiceComponent([
           { name: "Band-Aid", onClick: () => setCurrImage(i => i + 1) },
           { name: "Toys", onClick: () => setCurrImage(i => i + 2) },
           { name: "Other", onClick: () => setCurrImage(i => i + 2) }])
+      case 12:
+        return <NextButton onNextClick={() => setCurrImage(i => i + 2)} />
 
       case 18:
         return choiceComponent([
           { name: "Blake", onClick: () => setCurrImage(i => i + 1) },
           { name: "Avery", onClick: () => setCurrImage(i => i + 2) }])
+      case 19:
+        return <NextButton onNextClick={() => setCurrImage(i => i + 2)} />
 
       case 21:
         return choiceComponent([
           { name: "Soccer Ball", onClick: () => setCurrImage(i => i + 1) },
           { name: "Puzzle Box", onClick: () => setCurrImage(i => i + 2) },
           { name: "Other", onClick: () => setCurrImage(i => i + 2) }])
+      case 21:
+        return <NextButton onNextClick={() => setCurrImage(i => i + 2)} />
 
       case 28:
         return choiceComponent([
           { name: "Blake", onClick: () => setCurrImage(i => i + 2) },
           { name: "Avery", onClick: () => setCurrImage(i => i + 1) }])
+      case 29:
+        return <NextButton onNextClick={() => setCurrImage(i => i + 2)} />
 
       case 31:
         return choiceComponent([
           { name: "Milk", onClick: () => setCurrImage(i => i + 1) },
           { name: "Sandwhich", onClick: () => setCurrImage(i => i + 2) },
           { name: "Other", onClick: () => setCurrImage(i => i + 2) }])
+      case 32:
+        return <NextButton onNextClick={() => setCurrImage(i => i + 2)} />
 
       case 36:
         return choiceComponent([
           { name: "Avery", onClick: () => setCurrImage(i => i + 2) },
           { name: "Blake", onClick: () => setCurrImage(i => i + 1) },])
+      case 37:
+        return <NextButton onNextClick={() => setCurrImage(i => i + 2)} />
 
       case 39:
         return choiceComponent([
           { name: "Sweater", onClick: () => setCurrImage(i => i + 1) },
           { name: "Stickers", onClick: () => setCurrImage(i => i + 2) },
           { name: "Other", onClick: () => setCurrImage(i => i + 2) }])
+      case 40:
+        return <NextButton onNextClick={() => setCurrImage(i => i + 2)} />
+
       case 45:
         return choiceComponent([
           { name: "Blake", onClick: () => setCurrImage(i => i + 1) },
           { name: "Connor", onClick: () => setCurrImage(i => i + 2) },])
+      case 46:
+        return <NextButton onNextClick={() => setCurrImage(i => i + 2)} />
 
       case 48:
         return choiceComponent([
           { name: "Hat", onClick: () => setCurrImage(i => i + 2) },
           { name: "Toy", onClick: () => setCurrImage(i => i + 1) },
           { name: "Other", onClick: () => setCurrImage(i => i + 2) }])
+      case 49:
+        return <NextButton onNextClick={() => setCurrImage(i => i + 2)} />
 
       case image_map.story_links.length:
         return choiceComponent([
           { name: "Finish", onClick: onFinishClick }])
 
       default:
-        return <div className="flex justify-around px-2 my-6 space-x-2">
-          <button
-            onClick={onNextClick}
-            className="w-1/2 px-8 py-4 font-bold tracking-wider uppercase bg-orange-200 rounded-lg shadow-lg hover:bg-orange-400"
-          >
-            Next
-          </button>
-        </div>
+        return <NextButton onNextClick={() => setCurrImage(i => i + 1)} />
     }
 
   }
 
   return (
-    <div className="h-screen bg-blue-200 ">
-      <div className="flex justify-center w-screen py-1">
+    <div className="flex flex-col h-screen bg-blue-200">
+      <div className="flex justify-center py-1">
         <img
+          style={{width: "30%"}}
           className="pr-4 "
           alt={`map sequence ${currImage}`}
           src={imageMap[currImage]}
         />
-        <div className="w-1/4 h-full">
+        <div className="w-1/4">
           <video
             className="p-1 mx-auto bg-gray-100 rounded-lg "
             ref={videoRef}
@@ -284,7 +337,9 @@ function PresStudy(props: React.FC<{}>) {
           </video>
         </div>
       </div>
-      {story === "sb1" ? showButtonsSb1(currImage + 1) : showButtonSb2(currImage + 1)}
+      <div className="h-1/4">
+        {story === "sb1" ? showButtonsSb1(currImage + 1) : showButtonSb2(currImage + 1)}
+      </div>
     </div>
   );
 }
