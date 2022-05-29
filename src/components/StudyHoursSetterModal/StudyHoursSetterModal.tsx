@@ -75,7 +75,8 @@ function StudyHoursSetterModal(props: IStudyHoursSetterModalProps) {
                   events={studyCtx.studyState.scheduleEvents}
                   selectable
                   slotDuration={
-                    "00:" + studyCtx.studyState.defaultTimeInterval + ":00"
+                    // "00:" + studyCtx.studyState.defaultTimeInterval + ":00"
+                    "00:30:00"
                   }
                   nowIndicator={true}
                   plugins={[timeGridPlugin, interactionPlugin, listPlugin]}
