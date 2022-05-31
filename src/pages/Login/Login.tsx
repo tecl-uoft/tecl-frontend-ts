@@ -17,12 +17,15 @@ function Login() {
     if (auth) {
       auth
         .login(user)
-        .then(() => {
-          toast.success("Login Sucessful!");
+        .then((isSuccess) => {
+          if (isSuccess) {
+            toast.success("Login Sucessful!");
+            history.push("/scheduling");
+          } else {
+            toast.error("Login Unsucessful.")
+          }
+
         })
-        .then(() => {
-          history.push("/scheduling");
-        });
     }
   };
   return (

@@ -8,7 +8,7 @@ import UserService, {
 import { Props } from "./commonTypes";
 
 interface IAuthContext {
-  login(teclUserLoginInput: TeclUserLoginInput): Promise<void>;
+  login(teclUserLoginInput: TeclUserLoginInput): Promise<boolean>;
   googleLogin(): void;
   logout(): Promise<void>;
   register(user: TeclUserCreateInput): Promise<void>;
@@ -38,7 +38,8 @@ export function AuthProvider({ children }: Props) {
   }
 
   /* Function to login the user, returns true iff login is successful */
-  async function login(teclUserLoginInput: TeclUserLoginInput): Promise<void> {
+  async function login(teclUserLoginInput: TeclUserLoginInput): Promise<boolean> {
+    let isSuccess = true
     UserService.login(teclUserLoginInput)
       .then((loggedInUser) => {
         const loggedInAuthState = {
@@ -48,8 +49,10 @@ export function AuthProvider({ children }: Props) {
         setAuthState(loggedInAuthState);
       })
       .catch((err) => {
-        alert("Incorrect login. Please try again.");
+        isSuccess = false
+        // alert("Incorrect login. Please try again.");
       });
+    return isSuccess
   }
 
   async function forgotPassword(email: string) {
