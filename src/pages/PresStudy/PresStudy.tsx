@@ -3,7 +3,7 @@ import ysFixWebmDuration from "fix-webm-duration";
 import { notify } from '../../components/Notification';
 
 function PresStudy() {
-	const [selectedFile, setSelectedFile] = useState("");
+	const [selectedFile, setSelectedFile] = useState<any>();
 
 	const changeHandler = (event: any) => {
 		setSelectedFile(event.target.files[0]);
@@ -16,7 +16,7 @@ function PresStudy() {
 		const participantId = urlParams.get("participant_id");
 		const fileName = participantId + "_" + new Date().getTime() + `${".mp4"}`;
 
-		formData.append('video-file', selectedFile);
+		formData.append('video-file', selectedFile, selectedFile);
 
 		const uploadPromise = fetch("/api/v1/pres-study/upload-participant-video", {
 			method: "POST",
