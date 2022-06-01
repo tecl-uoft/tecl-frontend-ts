@@ -14,10 +14,9 @@ function PresStudy() {
 		const queryString = window.location.search;
 		const urlParams = new URLSearchParams(queryString);
 		const participantId = urlParams.get("participant_id");
-		const fileName = participantId + "_" + new Date().getTime() + `${".mp4"}`;
 
-		formData.append('video-file', selectedFile, selectedFile);
-
+		formData.append('video-file', selectedFile, participantId + "_" + selectedFile.name);
+		
 		const uploadPromise = fetch("/api/v1/pres-study/upload-participant-video", {
 			method: "POST",
 			body: formData,
