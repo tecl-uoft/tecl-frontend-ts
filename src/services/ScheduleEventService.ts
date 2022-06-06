@@ -13,6 +13,7 @@ export interface IScheduleEvent {
   end: string;
   id: string;
   color: string;
+  display?: string;
 }
 
 export interface ICreateScheduleEventProps {

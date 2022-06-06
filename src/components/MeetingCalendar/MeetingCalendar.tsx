@@ -8,6 +8,7 @@ import { AddSEventModal } from "../AddSEventModal";
 import StudyService, { IStudy } from "../../services/StudyService";
 import listPlugin from "@fullcalendar/list";
 import { notify } from "../Notification";
+import { DateTime } from "luxon";
 
 interface IMeetingCalendarProps {
   studyState: IStudy | undefined;
@@ -29,6 +30,7 @@ function MeetingCalendar(props: IMeetingCalendarProps) {
     "timeGridWeek"
   );
 
+
   useEffect(() => {
     if (props.studyName) {
       StudyService.read(props.studyName)
@@ -42,9 +44,11 @@ function MeetingCalendar(props: IMeetingCalendarProps) {
   }, [props.studyName, props.studyState]);
 
   const handleEventClick = (clickInfo: EventClickArg) => {
+
     setShowAddSEventModal(true);
     setEventClick(clickInfo.event);
   };
+
   useLayoutEffect(() => {
     if (window.innerWidth < 768) {
       setDefaultView("listWeek");
@@ -54,6 +58,7 @@ function MeetingCalendar(props: IMeetingCalendarProps) {
   if (!studyState.isLoaded) {
     return <div>Loading...</div>;
   }
+
 
   return (
     <div className="pb-6">
@@ -68,7 +73,16 @@ function MeetingCalendar(props: IMeetingCalendarProps) {
               center: "title",
               right: "dayGridMonth,timeGridWeek,listWeek",
             }}
-            initialEvents={studyState.study.scheduleEvents}
+            initialEvents={
+              studyState.study.scheduleEvents
+                .sort((a, b) => (new Date(a.start).getTime() - new Date(b.start).getTime()))
+                .map(se => ({
+                  ...se,
+                  display: "background",
+                  title: DateTime.fromISO(se.start).toFormat("t") + " - " + DateTime.fromISO(se.end).toFormat("t"),
+                  extendedProps: { owner: se.title }
+                }))
+            }
             allDaySlot={false}
             slotDuration={"00:30:00"}
             nowIndicator={true}

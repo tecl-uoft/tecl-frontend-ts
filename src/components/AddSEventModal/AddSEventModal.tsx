@@ -142,7 +142,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
             {studyState && studyState.studyName},{" "}
           </div>
           Lead By:{" "}
-          <div className="mx-2 text-xl font-bold">{eventClick?.title} </div>
+          <div className="mx-2 text-xl font-bold">{eventClick?.extendedProps.owner} </div>
         </h1>
 
         <form className="max-w-lg">

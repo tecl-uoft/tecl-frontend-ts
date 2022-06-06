@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { IBookedScheduleEvent } from "../../services/ScheduleEventService";
 import { EventInfoModal } from "../EventInfoModal";
 import { HeadExitButton } from "../HeadExitButton";
+import "./bookedCal.css"
 
 interface IBookedCalendarProps {
   exitFunc(): void;
