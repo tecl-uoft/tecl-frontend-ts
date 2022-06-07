@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import "./meetingCalendar.css";
+// import "./meetingCalendar.css";
 import FullCalendar, { EventApi, EventClickArg } from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -78,8 +78,8 @@ function MeetingCalendar(props: IMeetingCalendarProps) {
                 .sort((a, b) => (new Date(a.start).getTime() - new Date(b.start).getTime()))
                 .map(se => ({
                   ...se,
-                  display: "background",
-                  title: DateTime.fromISO(se.start).toFormat("t") + " - " + DateTime.fromISO(se.end).toFormat("t"),
+                  // display: "background",
+                  // title: DateTime.fromISO(se.start).toFormat("t") + " - " + DateTime.fromISO(se.end).toFormat("t"),
                   extendedProps: { owner: se.title }
                 }))
             }
