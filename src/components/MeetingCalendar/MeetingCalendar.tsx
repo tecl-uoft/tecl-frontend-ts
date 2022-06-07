@@ -99,8 +99,9 @@ function MeetingCalendar(props: IMeetingCalendarProps) {
         </div>
       )}
 
-      {showAddSEventModal && (
+      {showAddSEventModal && studyState.study && (
         <AddSEventModal
+          timeEvents={studyState.study.scheduleEvents.filter((e) => new Date(e.start).getTime() === eventClick?.start?.getTime())}
           studyState={studyState.study}
           eventClick={eventClick}
           setShowAddSEventModal={setShowAddSEventModal}

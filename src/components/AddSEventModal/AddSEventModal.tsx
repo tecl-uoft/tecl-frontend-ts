@@ -2,7 +2,7 @@ import { EventApi } from "@fullcalendar/react";
 import { DateTime } from "luxon";
 import React, { MouseEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import ScheduleEventService from "../../services/ScheduleEventService";
+import ScheduleEventService, { IScheduleEvent } from "../../services/ScheduleEventService";
 import { IStudy } from "../../services/StudyService";
 import { AddExtraChildModal } from "../AddExtraChildModal";
 import Input from "../common/Input";
@@ -13,6 +13,7 @@ interface IAddSEventModalProps {
   setShowAddSEventModal: React.Dispatch<React.SetStateAction<boolean>>;
   eventClick: EventApi | undefined;
   studyState: IStudy | undefined;
+  timeEvents: IScheduleEvent[];
 }
 export interface IRegisterChild {
   firstName: string;
@@ -35,8 +36,10 @@ function AddSEventModal(props: IAddSEventModalProps) {
   const [registerChildern, setRegisterChildern] = useState<IRegisterChild[]>([
     { firstName: "", lastName: "", dob: "" },
   ]);
+  const [eventClickSEId, setEventClickSEId] = useState<string | undefined>(props.eventClick?.id)
 
-  const { setShowAddSEventModal, eventClick, studyState } = props;
+  const { setShowAddSEventModal, eventClick, studyState, timeEvents } = props;
+
 
   useEffect(() => {
     setChildDob(DateTime.fromJSDate(new Date()).toFormat("yyyy-MM-dd"));
@@ -82,6 +85,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
     /* Set event as background when it is booked */
     if (
       eventClick &&
+      eventClickSEId &&
       studyState &&
       studyState.minAgeDays <= childAgeInDays &&
       studyState.maxAgeDays >= childAgeInDays
@@ -95,7 +99,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
         const updateScheduleEventPromise =
           ScheduleEventService.updateParticipantInfo({
             participantInfo: {
-              calId: eventClick.id,
+              calId: eventClickSEId,
               firstName: firstNameField,
               lastName: lastNameField,
               email: emailField,
@@ -116,7 +120,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
             "Your appointment has been recived. We will contact you via email shortly.",
           error: "Error when updating, please contact the staff.",
         });
-        eventClick.remove();
+        eventClick?.remove();
       } catch (err) {
         toast.error("Failed to updated. Please contact staff.", {
           duration: 3000,
@@ -142,7 +146,13 @@ function AddSEventModal(props: IAddSEventModalProps) {
             {studyState && studyState.studyName},{" "}
           </div>
           Lead By:{" "}
-          <div className="mx-2 text-xl font-bold">{eventClick?.extendedProps.owner} </div>
+          {timeEvents.length === 1 ?
+            <div className="px-3 mx-2 bg-gray-200 rounded-md text-md">{eventClick?.extendedProps.owner} </div>
+            : <select onChange={(e) => { setEventClickSEId(e.currentTarget.value); console.log(e.currentTarget.value)  } }  className="px-1 mx-2 rounded-md cursor-pointer text-md" >
+              {timeEvents.map(e => (<option className="cursor-pointer text-md" value={e.id}>{e.title}</option>))}
+            </select>
+          }
+          {/* <div className="mx-2 text-xl font-bold">{eventClick?.extendedProps.owner} </div> */}
         </h1>
 
         <form className="max-w-lg">
@@ -152,8 +162,8 @@ function AddSEventModal(props: IAddSEventModalProps) {
             {eventClick?.start &&
               eventClick?.end &&
               DateTime.fromJSDate(eventClick.start).toFormat("ff") +
-                " - " +
-                DateTime.fromJSDate(eventClick.end).toFormat("t ZZZZ")}
+              " - " +
+              DateTime.fromJSDate(eventClick.end).toFormat("t ZZZZ")}
           </h2>
 
           <h2 className="block py-1 mb-2 text-lg font-bold text-gray-700 bg-orange-300 rounded">

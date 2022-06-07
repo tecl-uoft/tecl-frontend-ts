@@ -58,26 +58,31 @@
 }
 
 .fc .fc-bg-event:hover {
-  outline-style: solid;
+  /* outline-style: solid;
   outline-color: black;
-  outline-width: small;
+  outline-width: small; */
   cursor: pointer;
-  z-index: 10;
   opacity: 1;
+  z-index: -1;
 }
 
 .fc .fc-bg-event .fc-event-title::inside {
   font-size: 1pt;
   color: black;
   opacity: 1;
-  z-index: 100;
+  z-index: 10;
   display: block;
 }
 
-/* .fc .fc-bg-event .fc-event-title {
-  visibility: hidden;
+.fc .fc-bg-event .fc-event-title::first-line {
+  /* color: transparent; */
+  /* visibility: hidden; */
+  font-size: 9pt;
 }
 
 .fc .fc-bg-event:hover .fc-event-title {
+  z-index: 50;
   visibility: visible;
-} */
+  text-decoration: underline overline;
+  /* font-weight: bold; */
+}

@@ -355,13 +355,13 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
           </div>
         </div>
       </div>
-      {eventAPI && showAddSEventModal && (
+      {/* {eventAPI && showAddSEventModal && (
         <AddSEventModal
           setShowAddSEventModal={props.setShowEventModal}
           studyState={studyCtx?.studyState}
           eventClick={eventAPI}
         />
-      )}
+      )} */}
     </>
   );
 }
