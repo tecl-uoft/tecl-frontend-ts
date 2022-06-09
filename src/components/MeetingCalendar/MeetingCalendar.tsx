@@ -77,19 +77,25 @@ function MeetingCalendar(props: IMeetingCalendarProps) {
             initialEvents={
               studyState.study.scheduleEvents
                 .sort((a, b) => (new Date(a.start).getTime() - new Date(b.start).getTime()))
-                // .reduce((prev, curr, idx, arr) => {
-                //   if (prev.length === 0) {
-                //     return [curr]
-                //   }
-                //   const prevSe = prev[prev.length - 1]
+                .map(se => ({
+                  ...se,
+                  // display: "background",
+                  // title: DateTime.fromISO(se.start).toFormat("t") + " - " + DateTime.fromISO(se.end).toFormat("t"),
+                  extendedProps: { owner: se.title }
+                }))
+              // .reduce((prev, curr, idx, arr) => {
+              //   if (prev.length === 0) {
+              //     return [curr]
+              //   }
+              //   const prevSe = prev[prev.length - 1]
 
-                //   if (new Date(prevSe.end).getTime() === new Date(curr.start).getTime()) {
-                //     return [...prev]
-                //   } else {
-                //     return [...prev, curr]
-                //   }
+              //   if (new Date(prevSe.end).getTime() === new Date(curr.start).getTime()) {
+              //     return [...prev]
+              //   } else {
+              //     return [...prev, curr]
+              //   }
 
-                // }, [] as IScheduleEvent[])
+              // }, [] as IScheduleEvent[])
               // .sort((a, b) => (new Date(a.start).getTime() - new Date(b.start).getTime()))
               // .map(se => ({
               //   ...se,
