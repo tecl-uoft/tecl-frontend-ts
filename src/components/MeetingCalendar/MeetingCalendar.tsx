@@ -79,23 +79,26 @@ function MeetingCalendar(props: IMeetingCalendarProps) {
                 .sort((a, b) => (new Date(a.start).getTime() - new Date(b.start).getTime()))
                 .map(se => ({
                   ...se,
+                  title: "",
+                  color: se.color + "80",
                   // display: "background",
                   // title: DateTime.fromISO(se.start).toFormat("t") + " - " + DateTime.fromISO(se.end).toFormat("t"),
                   extendedProps: { owner: se.title }
                 }))
-              // .reduce((prev, curr, idx, arr) => {
-              //   if (prev.length === 0) {
-              //     return [curr]
-              //   }
-              //   const prevSe = prev[prev.length - 1]
+                .reduce((prev, curr, idx, arr) => {
+                  if (prev.length === 0) {
+                    return [curr]
+                  }
+                  const prevSe = prev[prev.length - 1]
 
-              //   if (new Date(prevSe.end).getTime() === new Date(curr.start).getTime()) {
-              //     return [...prev]
-              //   } else {
-              //     return [...prev, curr]
-              //   }
+                  if (new Date(prevSe.start).getTime() === new Date(curr.start).getTime()) {
+                    return [...prev]
+                  } else {
+                    // prevSe["title"] = "Availability: 1"
+                    return [...prev, curr]
+                  }
 
-              // }, [] as IScheduleEvent[])
+                }, [] as IScheduleEvent[])
               // .sort((a, b) => (new Date(a.start).getTime() - new Date(b.start).getTime()))
               // .map(se => ({
               //   ...se,
