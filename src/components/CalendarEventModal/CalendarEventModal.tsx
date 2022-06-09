@@ -35,6 +35,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
   const [endTime, setEndTime] = useState("");
   const [endRepeat, setEndRepeat] = useState<DateTime | undefined>(undefined);
   const [zoomMeetingID, setZoomMeetingID] = useState("");
+  const [parkLocation ,setParkLocation] = useState("")
 
   /* Sets the shown time interval as study default time interval */
   useEffect(() => {
@@ -142,7 +143,8 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
       endRecurringDate: endRepeat.toISO(),
       recurringInterval: parseInt(interval),
       bookingDeadline,
-      zoomMeetingID
+      zoomMeetingID,
+      parkLocation
     };
     studyCtx
       .createScheduleEvent(availability)
@@ -312,6 +314,16 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                     placeholder="ex. 111 111 1111"
                     type="text"
                     step={300}
+                    className="block w-full p-2 text-gray-700 bg-gray-200 border rounded cursor-text focus:bg-white"
+                  />
+                </div>
+                <div className="w-3/4 mx-auto">
+                  <Label text={"Park Location (in-person studies only):"} />
+                  <input
+                    value={parkLocation}
+                    onChange={(e) => setParkLocation(e.currentTarget.value)}
+                    placeholder="Elm Street"
+                    type="text"
                     className="block w-full p-2 text-gray-700 bg-gray-200 border rounded cursor-text focus:bg-white"
                   />
                 </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
-// import "./meetingCalendar.css";
+import "./meetingCalendar.css";
 import FullCalendar, { EventApi, EventClickArg } from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -9,6 +9,7 @@ import StudyService, { IStudy } from "../../services/StudyService";
 import listPlugin from "@fullcalendar/list";
 import { notify } from "../Notification";
 import { DateTime } from "luxon";
+import { IScheduleEvent } from "../../services/ScheduleEventService";
 
 interface IMeetingCalendarProps {
   studyState: IStudy | undefined;
@@ -76,12 +77,26 @@ function MeetingCalendar(props: IMeetingCalendarProps) {
             initialEvents={
               studyState.study.scheduleEvents
                 .sort((a, b) => (new Date(a.start).getTime() - new Date(b.start).getTime()))
-                .map(se => ({
-                  ...se,
-                  // display: "background",
-                  // title: DateTime.fromISO(se.start).toFormat("t") + " - " + DateTime.fromISO(se.end).toFormat("t"),
-                  extendedProps: { owner: se.title }
-                }))
+                // .reduce((prev, curr, idx, arr) => {
+                //   if (prev.length === 0) {
+                //     return [curr]
+                //   }
+                //   const prevSe = prev[prev.length - 1]
+
+                //   if (new Date(prevSe.end).getTime() === new Date(curr.start).getTime()) {
+                //     return [...prev]
+                //   } else {
+                //     return [...prev, curr]
+                //   }
+
+                // }, [] as IScheduleEvent[])
+              // .sort((a, b) => (new Date(a.start).getTime() - new Date(b.start).getTime()))
+              // .map(se => ({
+              //   ...se,
+              //   // display: "background",
+              //   // title: DateTime.fromISO(se.start).toFormat("t") + " - " + DateTime.fromISO(se.end).toFormat("t"),
+              //   extendedProps: { owner: se.title }
+              // }))
             }
             allDaySlot={false}
             slotDuration={"00:30:00"}
