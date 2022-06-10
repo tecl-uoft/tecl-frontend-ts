@@ -35,7 +35,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
   const [endTime, setEndTime] = useState("");
   const [endRepeat, setEndRepeat] = useState<DateTime | undefined>(undefined);
   const [zoomMeetingID, setZoomMeetingID] = useState("");
-  const [parkLocation ,setParkLocation] = useState("")
+  const [parkLocation, setParkLocation] = useState("")
 
   /* Sets the shown time interval as study default time interval */
   useEffect(() => {
@@ -327,6 +327,19 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                     className="block w-full p-2 text-gray-700 bg-gray-200 border rounded cursor-text focus:bg-white"
                   />
                 </div>
+                {/* <div className="flex w-3/4 mx-auto">
+                  <Label text={"Appointment Owner:"} />
+                  <select className="block w-full p-2 text-gray-700 bg-gray-200 border rounded cursor-text focus:bg-white">
+                    <option value="">{}</option>
+                  </select >
+                   <input
+                    value={parkLocation}
+                    onChange={(e) => setParkLocation(e.currentTarget.value)}
+                    placeholder="Elm Street"
+                    type=""
+                    className="block w-full p-2 text-gray-700 bg-gray-200 border rounded cursor-text focus:bg-white"
+                  /> 
+                </div> */}
 
                 <div
                   className="flex justify-between px-8 mt-2 cursor-pointer"

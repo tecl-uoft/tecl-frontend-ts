@@ -36,9 +36,13 @@ function AddSEventModal(props: IAddSEventModalProps) {
   const [registerChildern, setRegisterChildern] = useState<IRegisterChild[]>([
     { firstName: "", lastName: "", dob: "" },
   ]);
-  const [eventClickSEId, setEventClickSEId] = useState<string | undefined>(props.eventClick?.id)
+  const [eventClickSEId, setEventClickSEId] = useState<string | undefined>()
 
   const { setShowAddSEventModal, eventClick, studyState, timeEvents } = props;
+
+  useEffect(() => {
+    setEventClickSEId(props.eventClick?.id)
+  }, [props.eventClick?.id])
 
 
   useEffect(() => {
@@ -56,6 +60,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
   };
 
   const submitJoinStudy = async (e: MouseEvent<HTMLInputElement>) => {
+
     const childAgeInDays =
       Math.floor(DateTime.fromISO(childDob).diffNow("days").days) * -1;
 
@@ -71,6 +76,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
       return;
     }
 
+
     if (
       studyState &&
       (studyState.minAgeDays > childAgeInDays ||
@@ -82,6 +88,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
       return;
     }
 
+    debugger
     /* Set event as background when it is booked */
     if (
       eventClick &&
@@ -122,6 +129,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
         });
         eventClick?.remove();
       } catch (err) {
+        console.log("EERR", err)
         toast.error("Failed to updated. Please contact staff.", {
           duration: 3000,
         });
@@ -148,11 +156,11 @@ function AddSEventModal(props: IAddSEventModalProps) {
           Lead By:{" "}
           {timeEvents.length === 1 ?
             <div className="px-3 mx-2 bg-gray-200 rounded-md text-md">{eventClick?.extendedProps.owner} </div>
-            : <select onChange={(e) => { setEventClickSEId(e.currentTarget.value); console.log(e.currentTarget.value)  } }  className="px-1 mx-2 rounded-md cursor-pointer text-md" >
+            : <select onChange={(e) => { setEventClickSEId(e.currentTarget.value); console.log(e.currentTarget.value) }} className="px-1 mx-2 rounded-md cursor-pointer text-md" >
               {timeEvents.map(e => (<option className="cursor-pointer text-md" value={e.id}>{e.title}</option>))}
             </select>
           }
-          {/* <div className="mx-2 text-xl font-bold">{eventClick?.extendedProps.owner} </div> */}
+
         </h1>
 
         <form className="max-w-lg">
@@ -306,12 +314,12 @@ function AddSEventModal(props: IAddSEventModalProps) {
               />
             </div>
             <div className="w-32 px-3">
-              <input
+              {<input
                 className="px-4 py-2 font-bold text-white bg-gray-800 rounded cursor-pointer hover:text-orange-500"
                 type="button"
                 value="Submit"
                 onClick={submitJoinStudy}
-              />
+              />}
             </div>
           </div>
         </form>

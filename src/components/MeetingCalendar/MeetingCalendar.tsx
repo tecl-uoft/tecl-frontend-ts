@@ -8,7 +8,6 @@ import { AddSEventModal } from "../AddSEventModal";
 import StudyService, { IStudy } from "../../services/StudyService";
 import listPlugin from "@fullcalendar/list";
 import { notify } from "../Notification";
-import { DateTime } from "luxon";
 import { IScheduleEvent } from "../../services/ScheduleEventService";
 
 interface IMeetingCalendarProps {
@@ -94,18 +93,9 @@ function MeetingCalendar(props: IMeetingCalendarProps) {
                   if (new Date(prevSe.start).getTime() === new Date(curr.start).getTime()) {
                     return [...prev]
                   } else {
-                    // prevSe["title"] = "Availability: 1"
                     return [...prev, curr]
                   }
-
                 }, [] as IScheduleEvent[])
-              // .sort((a, b) => (new Date(a.start).getTime() - new Date(b.start).getTime()))
-              // .map(se => ({
-              //   ...se,
-              //   // display: "background",
-              //   // title: DateTime.fromISO(se.start).toFormat("t") + " - " + DateTime.fromISO(se.end).toFormat("t"),
-              //   extendedProps: { owner: se.title }
-              // }))
             }
             allDaySlot={false}
             slotDuration={"00:30:00"}
