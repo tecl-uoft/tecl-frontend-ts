@@ -121,6 +121,10 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
   const updateBookingDeadline = (e: ChangeEvent<HTMLSelectElement>) =>
     setBookingDeadline(e.currentTarget.value);
 
+  const onAppointmentOwnerChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
+    setApptOwner(e.currentTarget.value)
+  }
+
   const onAdd = () => {
     const selectInfo = props.selectInfo;
     if (!selectInfo || !studyCtx || !authCtx || !authCtx.authState.user) {
@@ -134,7 +138,14 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
       return;
     }
 
-    const eventTitle = `${authCtx.authState.user?.firstName}`;
+    // const eventTitle = `${authCtx.authState.user?.firstName}`;
+    const eventTitle = props.owners.find(owner => owner.email === apptOwner)?.firstName
+
+    if (!eventTitle) {
+      toast.error("No Name for selected owner")
+      return;
+    }
+
     const startTimeStr = new Date(selectInfo.startStr).setHours(
       parseInt(startTime.slice(0, 2)),
       parseInt(startTime.slice(3, 5))
@@ -157,6 +168,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
       parkLocation,
       appointmentOwnerEmail: apptOwner
     };
+   
     studyCtx
       .createScheduleEvent(availability)
       .then(() => {
@@ -319,7 +331,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                 )}
                 <div className="w-3/4 mx-auto">
                   <Label text={"Appointment Owner:"} />
-                  <select value={apptOwner} onChange={(e) => { setApptOwner(e.target.value) }}
+                  <select value={apptOwner} onChange={onAppointmentOwnerChange}
                     className="block w-full p-2 text-gray-700 bg-gray-200 border rounded cursor-pointer focus:bg-white">
                     {props.owners.map(owner => <option value={owner.email} > {owner.firstName + " " + owner.lastName} </option>)}
                   </select >

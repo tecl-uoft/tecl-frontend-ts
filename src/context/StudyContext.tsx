@@ -91,6 +91,7 @@ export function StudyProvider({ children }: Props) {
       };
 
       try {
+       
         await ScheduleEventService.create(
           studyState.studyName,
           createScheduleEventProps
