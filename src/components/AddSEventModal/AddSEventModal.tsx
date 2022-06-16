@@ -217,7 +217,7 @@ function AddSEventModal(props: IAddSEventModalProps) {
               />
             </div>
           </div>
-          <h3 className="flex justify-between block px-4 py-1 mb-2 text-lg font-bold text-gray-700 bg-orange-300 rounded">
+          <h3 className="flex justify-between px-4 py-1 mb-2 text-lg font-bold text-gray-700 bg-orange-300 rounded">
             <div className="mx-auto my-auto">Child Information</div>
           </h3>
           <div className="mb-2">
