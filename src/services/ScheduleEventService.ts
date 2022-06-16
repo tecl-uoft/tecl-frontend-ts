@@ -26,6 +26,7 @@ export interface ICreateScheduleEventProps {
   bookingDeadline: string;
   zoomMeetingID: string;
   parkLocation: string;
+  appointmentOwnerEmail: string;
 }
 
 export interface ICompleteScheduleEvent {

@@ -11,9 +11,11 @@ import { CalendarRemoveModal } from "../CalendarRemoveModal";
 import { CalendarEventModal } from "../CalendarEventModal";
 import { HeadExitButton } from "../HeadExitButton";
 import listPlugin from "@fullcalendar/list";
+import { IStudy } from "../../services/StudyService";
 
 interface IStudyHoursSetterModalProps {
   setShowModal(showModal: boolean): void;
+  study: IStudy;
 }
 
 function StudyHoursSetterModal(props: IStudyHoursSetterModalProps) {
@@ -95,6 +97,7 @@ function StudyHoursSetterModal(props: IStudyHoursSetterModalProps) {
             )}
             {showEventModal && (
               <CalendarEventModal
+                owners={props.study.leadResearchers}
                 createEventFunc={() => {}}
                 selectInfo={selectInfo}
                 eventAPI={eventClick}

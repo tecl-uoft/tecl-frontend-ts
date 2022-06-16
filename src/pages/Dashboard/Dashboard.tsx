@@ -61,7 +61,7 @@ function Dashboard() {
         <div>
           <button
             onClick={onAddStudy}
-            className="p-2 py-2 ml-4 text-white bg-gray-800 rounded hover:text-orange-500   focus:shadow-outline"
+            className="p-2 py-2 ml-4 text-white bg-gray-800 rounded hover:text-orange-500 focus:shadow-outline"
           >
             Create Study
           </button>

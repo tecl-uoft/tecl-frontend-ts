@@ -198,7 +198,7 @@ function AppointmentPanel({ study }: { study: IStudy }) {
           </button>
         </div>
       </div>
-      {showModal && <StudyHoursSetterModal setShowModal={setShowModal} />}
+      {showModal && <StudyHoursSetterModal study={study}  setShowModal={setShowModal} />}
       <div className="h-64 m-2 overflow-auto bg-gray-200 rounded-lg">
         <table className="min-w-full bg-white">
           <thead className="text-sm font-semibold text-white bg-gray-700">

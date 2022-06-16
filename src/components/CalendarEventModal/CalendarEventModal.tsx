@@ -14,12 +14,14 @@ import Label from "../common/Label";
 import { AddSEventModal } from "../AddSEventModal";
 import Input from "../common/Input";
 import toast from "react-hot-toast";
+import { IStudy } from "../../services/StudyService";
 
 interface ICalendarEventModalProps {
   selectInfo: DateSelectArg | undefined;
   setShowEventModal: Dispatch<SetStateAction<boolean>>;
   createEventFunc(): void;
   eventAPI?: EventApi;
+  owners: IStudy["leadResearchers"]
 }
 
 function CalendarEventModal(props: ICalendarEventModalProps) {
@@ -44,6 +46,13 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
       setInterval(String(studyCtx.studyState.defaultTimeInterval));
     }
   }, [studyCtx]);
+
+  useEffect(() => {
+    if (authCtx?.authState.user) {
+      setApptOwner(authCtx.authState.user.email)
+    }
+
+  }, [authCtx])
 
   /* Updates Date ISO string for repeating weeks */
   useEffect(() => {
@@ -145,7 +154,8 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
       recurringInterval: parseInt(interval),
       bookingDeadline,
       zoomMeetingID,
-      parkLocation
+      parkLocation,
+      appointmentOwnerEmail: apptOwner
     };
     studyCtx
       .createScheduleEvent(availability)
@@ -308,6 +318,14 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                   </div>
                 )}
                 <div className="w-3/4 mx-auto">
+                  <Label text={"Appointment Owner:"} />
+                  <select value={apptOwner} onChange={(e) => { setApptOwner(e.target.value) }}
+                    className="block w-full p-2 text-gray-700 bg-gray-200 border rounded cursor-pointer focus:bg-white">
+                    {props.owners.map(owner => <option value={owner.email} > {owner.firstName + " " + owner.lastName} </option>)}
+                  </select >
+
+                </div>
+                <div className="w-3/4 mx-auto">
                   <Label text={"Zoom Meeting ID"} />
                   <input
                     value={zoomMeetingID}
@@ -328,13 +346,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
                     className="block w-full p-2 text-gray-700 bg-gray-200 border rounded cursor-text focus:bg-white"
                   />
                 </div>
-                <div className="w-3/4 mx-auto">
-                  <Label text={"Appointment Owner:"} />
-                  <select value={apptOwner} onChange={(e) => {setApptOwner(e.target.value)}} className="block w-full p-2 text-gray-700 bg-gray-200 border rounded cursor-text focus:bg-white">
-                    <option value="">{}</option>
-                  </select >
-                 
-                </div>
+
 
                 <div
                   className="flex justify-between px-8 mt-2 cursor-pointer"
