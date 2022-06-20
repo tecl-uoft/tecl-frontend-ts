@@ -61,9 +61,9 @@ function MeetingCalHeader({ currentStudy }: { currentStudy: IStudyName }) {
           {currentStudy.description}
         </h3>
 
-        <h3 className="flex flex-col h-40 p-2 mx-2 my-6 text-lg text-center bg-gray-200 rounded-lg md:text-left">
+        <h3 className="flex flex-col h-40 p-2 mx-2 my-6 text-center bg-gray-200 rounded-lg text-md md:text-left">
           <div className="underline max-w-1/3">Required Age Range</div>
-          <div className="w-64 mx-auto text-lg">
+          <div style={{width: '19rem'}} className="mx-auto ">
             {" "}
             {
               <div className="flex flex-col text-left md:ml-4">
@@ -81,7 +81,7 @@ function MeetingCalHeader({ currentStudy }: { currentStudy: IStudyName }) {
             }
           </div>
           <div className="mt-1 underline">Current Time Zone</div>
-          <div className="block w-full text-lg md:pl-4">
+          <div className="block w-full md:pl-4">
             {DateTime.local().toFormat("ZZZZZ (ZZZZ)")}
           </div>
         </h3>
