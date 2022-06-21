@@ -33,9 +33,8 @@ function StudyPanel(props: IStudyPanelProps) {
           <ul className="h-32 p-4 mt-2 mb-4 overflow-y-scroll bg-gray-100 rounded-lg">
             {study.leadResearchers.map((researcher, idx) => {
               return (
-                <li key={researcher.email}>{`${idx + 1}. ${researcher.email} (${
-                  researcher.firstName
-                } ${researcher.lastName ? researcher.lastName : ""}) `}</li>
+                <li key={researcher.email}>{`${idx + 1}. ${researcher.email} (${researcher.firstName
+                  } ${researcher.lastName ? researcher.lastName : ""}) `}</li>
               );
             })}
           </ul>
@@ -181,6 +180,12 @@ function AppointmentPanel({ study }: { study: IStudy }) {
       <div className="flex justify-between">
         <h4 className="my-auto text-md">Upcoming Appointments:</h4>
         <div className="flex space-x-2 text-sm">
+          {/* <button
+            onClick={() => setShowBookedCalendar(true)}
+            className="p-2 text-white bg-orange-500 rounded hover:bg-orange-800 focus:shadow-outline"
+          >
+            Edit Study
+          </button> */}
           {studyCtx && (
             <button
               onClick={onModifyAvailability(study)}
@@ -196,9 +201,11 @@ function AppointmentPanel({ study }: { study: IStudy }) {
           >
             All Booked
           </button>
+
+
         </div>
       </div>
-      {showModal && <StudyHoursSetterModal study={study}  setShowModal={setShowModal} />}
+      {showModal && <StudyHoursSetterModal study={study} setShowModal={setShowModal} />}
       <div className="h-64 m-2 overflow-auto bg-gray-200 rounded-lg">
         <table className="min-w-full bg-white">
           <thead className="text-sm font-semibold text-white bg-gray-700">
@@ -218,15 +225,14 @@ function AppointmentPanel({ study }: { study: IStudy }) {
                   new Date(event.start) >= new Date() && (
                     <tr
                       key={idx}
-                      className={`hover:shadow-md hover:text-red-800 cursor-pointer ${
-                        idx % 2 === 0 && "bg-orange-200"
-                      }`}
+                      className={`hover:shadow-md hover:text-red-800 cursor-pointer ${idx % 2 === 0 && "bg-orange-200"
+                        }`}
                     >
                       <td className="px-4 py-2 text-left">
                         {event.bookedBy
                           ? event.bookedBy.firstName +
-                            " " +
-                            event.bookedBy.lastName
+                          " " +
+                          event.bookedBy.lastName
                           : "Parent"}
                       </td>
                       <td className="px-4 py-2 text-left">
