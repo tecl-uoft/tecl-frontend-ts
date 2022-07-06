@@ -56,14 +56,14 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
 
   /* Updates Date ISO string for repeating weeks */
   useEffect(() => {
-    if (selectInfo) {
+    if (startTime) {
       setEndRepeat(
-        DateTime.fromISO(selectInfo.startStr).plus({
-          weeks: parseInt(repeatUntilWeeks) || 0,
+        DateTime.fromISO(startTime).plus({
+          weeks: parseInt(repeatUntilWeeks ) || 0,
         })
       );
     }
-  }, [repeatUntilWeeks, selectInfo]);
+  }, [repeatUntilWeeks, startTime]);
 
   /* Updates end time display string as interval changes */
   useEffect(() => {
@@ -168,7 +168,7 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
       parkLocation,
       appointmentOwnerEmail: apptOwner
     };
-   
+
     studyCtx
       .createScheduleEvent(availability)
       .then(() => {
