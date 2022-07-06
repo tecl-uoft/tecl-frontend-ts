@@ -56,14 +56,14 @@ function CalendarEventModal(props: ICalendarEventModalProps) {
 
   /* Updates Date ISO string for repeating weeks */
   useEffect(() => {
-    if (startTime) {
+    if (selectInfo) {
       setEndRepeat(
-        DateTime.fromISO(startTime).plus({
-          weeks: parseInt(repeatUntilWeeks ) || 0,
+        DateTime.fromISO(selectInfo.startStr).plus({
+          weeks: parseInt(repeatUntilWeeks) || 0,
         })
       );
     }
-  }, [repeatUntilWeeks, startTime]);
+  }, [repeatUntilWeeks, selectInfo]);
 
   /* Updates end time display string as interval changes */
   useEffect(() => {
