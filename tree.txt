@@ -1,0 +1,219 @@
+src
+├── App.tsx
+├── components
+│   ├── AddExtraChildModal
+│   │   ├── AddExtraChildModal.tsx
+│   │   └── index.ts
+│   ├── AddSEventModal
+│   │   ├── AddSEventModal.tsx
+│   │   └── index.ts
+│   ├── AddStudyForm
+│   │   ├── AddStudyForm.tsx
+│   │   └── index.ts
+│   ├── AskBirthModal
+│   │   ├── AskBirthModal.tsx
+│   │   └── index.ts
+│   ├── BookedCalendar
+│   │   ├── BookedCalendar.tsx
+│   │   └── index.ts
+│   ├── CalendarEventModal
+│   │   ├── CalendarEventModal.tsx
+│   │   └── index.ts
+│   ├── CalendarRemoveModal
+│   │   ├── CalendarRemoveModal.tsx
+│   │   └── index.ts
+│   ├── common
+│   │   ├── ConsentTemplate.tsx
+│   │   ├── Input
+│   │   ├── Label.tsx
+│   │   ├── StudyNextButton.tsx
+│   │   └── StudyTitleText.tsx
+│   ├── EventInfoModal
+│   │   ├── EventInfoModal.tsx
+│   │   └── index.ts
+│   ├── EyeTrackingStudy
+│   │   ├── EyeTrackingAccuracyCheck.tsx
+│   │   ├── EyeTrackingCalibration2.tsx
+│   │   ├── EyeTrackingCalibration3.tsx
+│   │   ├── EyeTrackingCalibration.tsx
+│   │   ├── EyeTrackingConsent.tsx
+│   │   ├── EyeTrackingInstructions.tsx
+│   │   ├── EyeTrackingStudy.tsx
+│   │   ├── index.ts
+│   │   ├── IWebgazerType.ts
+│   │   └── webgazerHooks.ts
+│   ├── FairnessStudy
+│   │   ├── Aliens
+│   │   ├── apiCalls.ts
+│   │   ├── BallTossContext.ts
+│   │   ├── BallTossGame
+│   │   ├── BallTossTransition.tsx
+│   │   ├── FairnessStudyAttention.tsx
+│   │   ├── FairnessStudyConsent.tsx
+│   │   ├── FairnessStudyFeedback.tsx
+│   │   ├── FairnessStudyFinishedKids.tsx
+│   │   ├── FairnessStudyMachine.tsx
+│   │   ├── FairnessStudyNoConsent.tsx
+│   │   ├── FairnessStudyQuestions
+│   │   ├── FairnessStudy.tsx
+│   │   └── index.ts
+│   ├── FocusedModal
+│   │   ├── FocusedModal.tsx
+│   │   └── index.ts
+│   ├── FroggerStudy
+│   │   ├── DemographicQuestions.tsx
+│   │   ├── demoQ.json
+│   │   ├── FroggerCameraTest.tsx
+│   │   ├── FroggerConsentForm.tsx
+│   │   ├── frogger.d.ts
+│   │   ├── FroggerGame.tsx
+│   │   ├── FroggerImgInstructions.tsx
+│   │   ├── FroggerInstructions.tsx
+│   │   ├── FroggerPostQuestions.tsx
+│   │   ├── FroggerPractice.tsx
+│   │   ├── FroggerStudy.tsx
+│   │   ├── FroggerVideoConsentForm.tsx
+│   │   ├── GoalReminder.tsx
+│   │   ├── index.ts
+│   │   ├── NoConsent.tsx
+│   │   ├── ParentWarning.tsx
+│   │   ├── QualtricsLink.tsx
+│   │   ├── RestrictionScreen.tsx
+│   │   ├── Selection.tsx
+│   │   ├── streamRecorder.ts
+│   │   └── ThanksNote.tsx
+│   ├── Header
+│   │   ├── Header.tsx
+│   │   └── index.ts
+│   ├── HeadExitButton
+│   │   ├── HeadExitButton.tsx
+│   │   └── index.ts
+│   ├── MeetingCalendar
+│   │   ├── index.ts
+│   │   ├── meetingCalendar.css
+│   │   └── MeetingCalendar.tsx
+│   ├── Notification
+│   │   ├── index.ts
+│   │   └── Notification.tsx
+│   ├── Questions
+│   │   ├── index.ts
+│   │   ├── IQuestionProps.ts
+│   │   ├── LikertScale.tsx
+│   │   ├── MultiChoice.tsx
+│   │   ├── slider.module.css
+│   │   └── Slider.tsx
+│   ├── StudyDesc
+│   │   ├── index.ts
+│   │   ├── IStudyDescProps.ts
+│   │   └── StudyDesc.tsx
+│   ├── StudyEntryBlock
+│   │   ├── index.ts
+│   │   ├── IStudyEntryBlockProps.ts
+│   │   └── StudyInfoBlock.tsx
+│   └── StudyHoursSetterModal
+│       ├── index.ts
+│       └── StudyHoursSetterModal.tsx
+├── context
+│   ├── AuthContext.tsx
+│   ├── commonTypes.ts
+│   └── StudyContext.tsx
+├── index.tsx
+├── pages
+│   ├── Dashboard
+│   │   ├── Dashboard.tsx
+│   │   ├── index.ts
+│   │   └── StudyPanel.tsx
+│   ├── ErrorNotFound
+│   │   ├── ErrorNotFound.tsx
+│   │   └── index.ts
+│   ├── EventCancelation
+│   │   ├── EventCancelation.tsx
+│   │   └── index.ts
+│   ├── EyeTrackingEntry
+│   │   ├── EyeTrackingEntry.tsx
+│   │   └── index.ts
+│   ├── EyeTrackingGame
+│   │   ├── EyeTrackingGame.tsx
+│   │   └── index.ts
+│   ├── ForgotPassword
+│   │   └── ForgotPassword.tsx
+│   ├── FroggerModStudyGame
+│   │   ├── EndScreen.tsx
+│   │   ├── FroggerModStudyGame.tsx
+│   │   └── index.ts
+│   ├── FroggerStudyEntry
+│   │   ├── FroggerStudyEntry.tsx
+│   │   └── index.ts
+│   ├── FroggerStudyGame
+│   │   ├── FroggerStudyGame.tsx
+│   │   └── index.ts
+│   ├── Home
+│   │   ├── home.css
+│   │   ├── Home.tsx
+│   │   ├── index.ts
+│   │   └── studyInfo.json
+│   ├── Loading
+│   │   ├── index.ts
+│   │   └── Loading.tsx
+│   ├── Login
+│   │   ├── index.ts
+│   │   └── Login.tsx
+│   ├── ParticipationSelection
+│   │   ├── index.ts
+│   │   └── ParticipationSelection.tsx
+│   ├── ParticipationSignup
+│   │   ├── index.ts
+│   │   └── ParticipationSignup.tsx
+│   ├── PresStudy
+│   │   ├── image_map.json
+│   │   ├── image_map_sb1.json
+│   │   ├── image_map_sb2.json
+│   │   ├── index.ts
+│   │   ├── PresStudy_B.tsx
+│   │   └── PresStudy.tsx
+│   ├── PrivacyPolicy
+│   │   ├── index.ts
+│   │   └── PrivacyPolicy.tsx
+│   ├── Scheduling
+│   │   ├── AskBirthModal.tsx
+│   │   ├── index.ts
+│   │   ├── Instructions.tsx
+│   │   ├── MeetingCalHeader.tsx
+│   │   ├── NoStudiesAvailable.tsx
+│   │   ├── Scheduling.tsx
+│   │   └── SchedulingV2.tsx
+│   ├── Signup
+│   │   ├── index.ts
+│   │   └── Signup.tsx
+│   ├── TeamsStudyEntry
+│   │   ├── index.ts
+│   │   └── TeamsStudyEntry.tsx
+│   ├── TeamsStudyGame
+│   │   ├── index.ts
+│   │   └── TeamsStudyGame.tsx
+│   ├── TouchStudy
+│   │   ├── downloadFile.ts
+│   │   ├── index.ts
+│   │   ├── StudyReducer.tsx
+│   │   ├── touch_study
+│   │   ├── touchStudy.css
+│   │   ├── TouchStudy.tsx
+│   │   ├── videoLinks.ts
+│   │   └── videos.d.ts
+│   └── TouchStudyEntry
+│       ├── index.ts
+│       └── TouchStudyEntry.tsx
+├── react-app-env.d.ts
+├── services
+│   ├── FroggerStudyService.ts
+│   ├── ScheduleEventService.ts
+│   ├── StudyService.ts
+│   └── UserService.ts
+├── serviceWorkerRegistration.ts
+├── service-worker.ts
+├── setupTests.ts
+└── styles
+    ├── index.css
+    └── tailwind.css
+
+53 directories, 163 files

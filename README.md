@@ -1,44 +1,61 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Project Preview
 
-## Available Scripts
+Below is a brief description of each component and page within the `./src` directory.
 
-test - In the project directory, you can run:
+## Components
 
-### `npm start`
+- **AddExtraChildModal**: A modal for adding extra child elements to a form.
+- **AddSEventModal**: A modal for adding an event to the calendar.
+- **AddStudyForm**: A form for adding a new study to the project.
+- **AskBirthModal**: A modal for requesting the user's date of birth.
+- **BookedCalendar**: A calendar component displaying booked events.
+- **CalendarEventModal**: A modal for showing event details in the calendar.
+- **CalendarRemoveModal**: A modal for removing events from the calendar.
+- **common/Input**: A reusable input component for forms.
+- **EventInfoModal**: A modal displaying detailed information about an event.
+- **EyeTrackingStudy**: A component for the eye-tracking study.
+- **FairnessStudy**: A collection of components for the fairness study, including:
+  - **Aliens**: Alien components (AlienA to AlienN) representing different types of aliens in the study.
+  - **BallTossGame**: A game component for the ball toss game within the fairness study.
+  - **FairnessStudyQuestions**: A component containing questions related to the fairness study.
+- **FocusedModal**: A generic modal component with a focused state.
+- **FroggerStudy**: A component for the Frogger study.
+- **Header**: A header component for the project.
+- **HeadExitButton**: A button component for exiting the application.
+- **MeetingCalendar**: A calendar component for managing meetings.
+- **Notification**: A notification component for displaying messages.
+- **Questions**: A component containing general questions for the application.
+- **StudyDesc**: A component for displaying study descriptions.
+- **StudyEntryBlock**: A component for study entry blocks.
+- **StudyHoursSetterModal**: A modal for setting study hours.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Pages
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+- **Dashboard**: The main dashboard page for the project.
+- **ErrorNotFound**: A 404 error page for not found resources.
+- **EventCancelation**: A page for handling event cancelations.
+- **EyeTrackingEntry**: The entry page for the eye-tracking study.
+- **EyeTrackingGame**: The game page for the eye-tracking study.
+- **ForgotPassword**: A page for resetting a forgotten password.
+- **FroggerModStudyGame**: The modified Frogger study game page.
+- **FroggerStudyEntry**: The entry page for the Frogger study.
+- **FroggerStudyGame**: The game page for the Frogger study.
+- **Home**: The home page of the project.
+- **Loading**: A page to display while the application is loading.
+- **Login**: The login page for the project.
+- **ParticipationSelection**: A page for selecting the type of participation in the studies.
+- **ParticipationSignup**: A page for signing up to participate in studies.
+- **PresStudy**: A page for the presentation study.
+- **PrivacyPolicy**: The privacy policy page for the project.
+- **Scheduling**: A page for scheduling study sessions.
+- **Signup**: The signup page for new users.
+- **TeamsStudyEntry**: The entry page for the teams study.
+- **TeamsStudyGame**: The game page for the teams study.
+- **TouchStudy**: A folder containing the touch study components:
+  - **touch_study**: The main touch study component.
+- **TouchStudyEntry**: The entry page for the touch study.
 
-### `npm test`
+## Other Folders
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **context**: A folder containing application context
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
